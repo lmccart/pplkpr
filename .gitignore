@@ -5,9 +5,19 @@
 
 # Compiled Dynamic libraries
 *.so
-*.dylib
 
 # Compiled Static libraries
 *.lai
 *.la
-*.a
+#*.a
+
+#Compiled apps
+*.app
+*.xcuserstate
+*.DS_Store
+
+*.xcodeproj/xcuserdata/*.xcuserdatad
+*.xcodeproj/project.xcworkspace/xcuserdata/*.xcuserdatad
+
+#emacs fragments
+*~
