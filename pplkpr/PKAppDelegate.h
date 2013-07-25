@@ -7,9 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
 
-@interface PKAppDelegate : UIResponder <UIApplicationDelegate>
+@interface PKAppDelegate : UIResponder <UIApplicationDelegate, CLLocationManagerDelegate> {
+	
+	CLLocationManager *locationManager;
+}
 
 @property (strong, nonatomic) UIWindow *window;
+@property (retain, nonatomic) CLLocationManager *locationManager;
+
+- (void)stopUpdatingLocation:(NSString *)state;
 
 @end

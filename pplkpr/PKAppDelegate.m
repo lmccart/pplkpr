@@ -10,12 +10,34 @@
 
 @implementation PKAppDelegate
 
+
+@synthesize locationManager;
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
-    return YES;
+	
+	if ([CLLocationManager locationServicesEnabled]) {
+		
+		if (nil == locationManager)
+			locationManager = [[CLLocationManager alloc] init];
+		locationManager.delegate = self;
+		
+		/*locationManager.desiredAccuracy = kCLLocationAccuracyKilometer;
+		 locationManager.distanceFilter = 0; // movement threshold for new events
+		 [locationManager startUpdatingLocation];*/
+		
+		[locationManager startMonitoringSignificantLocationChanges];
+		
+	} else {
+		
+		UIAlertView *servicesDisabledAlert = [[UIAlertView alloc] initWithTitle:@"Location Services Disabled" message:@"You currently have all location services for this device disabled. Please enable them in Settings." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+		[servicesDisabledAlert show];
+		[servicesDisabledAlert release];
+		
+	}
+	return YES;
 }
-							
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
 	// Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -41,6 +63,60 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
 	// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+#pragma location stuff
+
+// Delegate method from the CLLocationManagerDelegate protocol.
+- (void)locationManager:(CLLocationManager *)manager
+     didUpdateLocations:(NSArray *)locations {
+	NSLog(@"update\n");
+	// If it's a relatively recent event, turn off updates to save power
+	CLLocation* location = [locations lastObject];
+	// NSDate* eventDate = location.timestamp;
+	// NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
+	//if (abs(howRecent) < 15.0) {
+    // If the event is recent, do something with it.
+    NSLog(@"latitude %+.6f, longitude %+.6f\n",
+          location.coordinate.latitude,
+          location.coordinate.longitude);
+	
+    
+    UILocalNotification * theNotification = [[UILocalNotification alloc] init];
+    theNotification.alertBody = @"Are you about to meet someone or did you leave someone?";
+    theNotification.alertAction = @"Yes";
+    theNotification.hasAction = YES;
+	
+    theNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
+    
+    [[UIApplication sharedApplication] scheduleLocalNotification:theNotification];
+	//}
+	
+}
+
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+	// The location "unknown" error simply means the manager is currently unable to get the location.
+	if ([error code] != kCLErrorLocationUnknown) {
+		[self stopUpdatingLocation:NSLocalizedString(@"Error", @"Error")];
+	}
+}
+
+- (void)stopUpdatingLocation:(NSString *)state {
+	[locationManager stopMonitoringSignificantLocationChanges];
+	locationManager.delegate = nil;
+}
+
+- (void)didReceiveLocalNotification:(UILocalNotification *)notification {
+	NSLog(@"did you move?");
+}
+
+
+
+
+- (void)dealloc {
+	[locationManager release];
+	[super dealloc];
 }
 
 @end
