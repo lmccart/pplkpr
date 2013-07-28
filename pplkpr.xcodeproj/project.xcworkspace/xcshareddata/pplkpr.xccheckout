@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>18D5A57C-51C7-4033-8AFA-FEEE3881617A</string>
+	<key>IDESourceControlProjectName</key>
+	<string>pplkpr</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>3DCFD58B-EDC0-4974-8E97-2744A024F1D5</key>
+		<string>ssh://github.com/lmccart/pplkpr.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>pplkpr.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>3DCFD58B-EDC0-4974-8E97-2744A024F1D5</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/lmccart/pplkpr.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>3DCFD58B-EDC0-4974-8E97-2744A024F1D5</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>3DCFD58B-EDC0-4974-8E97-2744A024F1D5</string>
+			<key>IDESourceControlWCCName</key>
+			<string>pplkpr</string>
+		</dict>
+	</array>
+</dict>
+</plist>

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		65E0AFAC17A1C1D300E0FD0C /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65E0AFAB17A1C1D300E0FD0C /* FacebookSDK.framework */; };
 		65FC7C5117A1A37F0045BFF2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65FC7C5017A1A37F0045BFF2 /* Foundation.framework */; };
 		65FC7C5317A1A37F0045BFF2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65FC7C5217A1A37F0045BFF2 /* CoreGraphics.framework */; };
 		65FC7C5517A1A37F0045BFF2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65FC7C5417A1A37F0045BFF2 /* UIKit.framework */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		65E0AFAB17A1C1D300E0FD0C /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		65FC7C4D17A1A37F0045BFF2 /* pplkpr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pplkpr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65FC7C5017A1A37F0045BFF2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		65FC7C5217A1A37F0045BFF2 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -72,6 +74,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				65FC7C5317A1A37F0045BFF2 /* CoreGraphics.framework in Frameworks */,
+				65E0AFAC17A1C1D300E0FD0C /* FacebookSDK.framework in Frameworks */,
 				65FC7C5517A1A37F0045BFF2 /* UIKit.framework in Frameworks */,
 				65FC7C5117A1A37F0045BFF2 /* Foundation.framework in Frameworks */,
 			);
@@ -112,6 +115,7 @@
 		65FC7C4F17A1A37F0045BFF2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				65E0AFAB17A1C1D300E0FD0C /* FacebookSDK.framework */,
 				65FC7C5017A1A37F0045BFF2 /* Foundation.framework */,
 				65FC7C5217A1A37F0045BFF2 /* CoreGraphics.framework */,
 				65FC7C5417A1A37F0045BFF2 /* UIKit.framework */,
@@ -397,6 +401,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../FacebookSDK",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "pplkpr/pplkpr-Prefix.pch";
 				INFOPLIST_FILE = "pplkpr/pplkpr-Info.plist";
@@ -410,6 +418,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../FacebookSDK",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "pplkpr/pplkpr-Prefix.pch";
 				INFOPLIST_FILE = "pplkpr/pplkpr-Info.plist";
@@ -477,6 +489,7 @@
 				65FC7C8117A1A37F0045BFF2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		65FC7C8217A1A37F0045BFF2 /* Build configuration list for PBXNativeTarget "pplkprTests" */ = {
 			isa = XCConfigurationList;
@@ -485,6 +498,7 @@
 				65FC7C8417A1A37F0045BFF2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

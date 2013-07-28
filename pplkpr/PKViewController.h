@@ -7,16 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <FacebookSDK/FacebookSDK.h>
 
-@interface PKViewController : UIViewController <UITextFieldDelegate> {
-	
-	IBOutlet UITextField *whoTextField;
-	NSString *whoString;
-}
+@interface PKViewController : UIViewController <UITextFieldDelegate, FBFriendPickerDelegate>
 
-@property (nonatomic, retain) UITextField *whoTextField;
-@property (nonatomic, copy) NSString *whoString;
-
-- (void)reset;
+- (IBAction)pickFriendsButtonTouch:(id)sender;
 
 @end

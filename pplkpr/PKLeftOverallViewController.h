@@ -10,4 +10,6 @@
 
 @interface PKLeftOverallViewController : UIViewController
 
+- (IBAction)submit:(id)sender;
+
 @end
