@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#include "PKInteractionData.h"
 
 @interface PKLeftViewController : UIViewController
 
+@property (retain, nonatomic) PKInteractionData *data;
+
 @end
+

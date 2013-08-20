@@ -8,6 +8,8 @@
 
 #import "PKViewController.h"
 #import "PKMeetViewController.h"
+#import "PKLeftViewController.h"
+#import "PKInteractionData.h"
 
 @interface PKViewController()
 
@@ -26,9 +28,6 @@
 @implementation PKViewController
 
 
-@synthesize whoString = _whoString;
-@synthesize whoTextField = _whoTextField;
-@synthesize friendPickerController = _friendPickerController;
 
 - (void)viewDidLoad
 {
@@ -75,36 +74,29 @@
     // if the session is open, then load the data for our view controller
     if (!FBSession.activeSession.isOpen) {
         // if the session is closed, then we open it here, and establish a handler for state changes
-        [FBSession openActiveSessionWithReadPermissions:nil
-                                           allowLoginUI:YES
-                                      completionHandler:^(FBSession *session,
-														  FBSessionState state,
-														  NSError *error) {
-										  if (error) {
-											  UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
-																								  message:error.localizedDescription
-																								 delegate:nil
-																						cancelButtonTitle:@"OK"
-																						otherButtonTitles:nil];
-											  [alertView show];
-										  } else if (session.isOpen) {
-											  [self pickFriendsButtonTouch:sender];
-										  }
-									  }];
+        [FBSession openActiveSessionWithReadPermissions:nil allowLoginUI:YES completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {
+			if (error) {
+				UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:error.localizedDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+				[alertView show];
+			} else if (session.isOpen) {
+				[self pickFriendsButtonTouch:sender];
+			}
+		}];
         return;
     }
 	
-    if (self.friendPickerController == nil) {
+    if (_friendPickerController == nil) {
         // Create friend picker, and get data loaded into it.
-        self.friendPickerController = [[FBFriendPickerViewController alloc] init];
-        self.friendPickerController.title = @"Pick Friends";
-        self.friendPickerController.delegate = self;
+       _friendPickerController = [[FBFriendPickerViewController alloc] init];
+        _friendPickerController.title = @"Pick Friend";
+        _friendPickerController.delegate = self;
+		_friendPickerController.allowsMultipleSelection = NO;
     }
 	
-    [self.friendPickerController loadData];
-    [self.friendPickerController clearSelection];
+    [_friendPickerController loadData];
+    [_friendPickerController clearSelection];
 	
-    [self presentViewController:self.friendPickerController animated:YES completion:nil];
+    [self presentViewController:_friendPickerController animated:YES completion:nil];
 }
 
 - (void)facebookViewControllerDoneWasPressed:(id)sender {
@@ -112,7 +104,7 @@
     
     // we pick up the users from the selection, and create a string that we use to update the text view
     // at the bottom of the display; note that self.selection is a property inherited from our base class
-    for (id<FBGraphUser> user in self.friendPickerController.selection) {
+    for (id<FBGraphUser> user in _friendPickerController.selection) {
         if ([text length]) {
             [text appendString:@", "];
         }
@@ -123,11 +115,11 @@
 }
 
 - (void)facebookViewControllerCancelWasPressed:(id)sender {
-    [self fillTextBoxAndDismiss:@"<Cancelled>"];
+    [self dismissViewControllerAnimated:NO completion:nil];
 }
 
 - (void)fillTextBoxAndDismiss:(NSString *)text {
-    self.whoTextField.text = text;
+    _whoTextField.text = text;
     
     [self dismissViewControllerAnimated:NO completion:nil];
 }
@@ -141,25 +133,33 @@
 
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-	[self.whoTextField resignFirstResponder];
-	self.whoTextField.text = self.whoString;
+	[_whoTextField resignFirstResponder];
 	[super touchesBegan:touches withEvent:event];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-	if ( [segue.identifier isEqualToString:@"MeetSegue"] ) {
-		PKMeetViewController *mvc = (PKMeetViewController*)segue.destinationViewController;
-		NSLog(@"HI\n");
+	if ( [segue.identifier isEqualToString:@"MeetSegue"] ){
+		//PKMeetViewController *mvc = (PKMeetViewController*)segue.destinationViewController;
 		
 	}
-	
+	else if ([segue.identifier isEqualToString:@"LeftSegue"]){
+		PKLeftViewController *lvc = (PKLeftViewController*) segue.destinationViewController;
+		lvc.data = [[PKInteractionData alloc] initWithName:_whoTextField.text];
+	}
 }
 
 - (void)viewDidUnload {
-	self.whoString = nil;
-    self.whoTextField = nil;
-	self.friendPickerController = nil;
+	_whoString = nil;
+    _whoTextField = nil;
+	_friendPickerController = nil;
 	[super viewDidUnload];
+}
+
+- (void)dealloc {
+	[_whoString release];
+	[_whoTextField release];
+	[_friendPickerController release];
+	[super dealloc];
 }
 
 @end

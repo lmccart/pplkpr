@@ -8,8 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PKLeftOverallViewController : UIViewController
+@interface PKLeftOverallViewController : UIViewController {
+	IBOutlet UISlider *ratingSlider;
+	
+}
 
+@property (strong, nonatomic) UISlider *ratingSlider;
 - (IBAction)submit:(id)sender;
 
 @end

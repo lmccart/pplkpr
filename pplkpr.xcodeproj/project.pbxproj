@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		656B880117C4126500FE4ABE /* PKInteractionData.m in Sources */ = {isa = PBXBuildFile; fileRef = 656B880017C4126500FE4ABE /* PKInteractionData.m */; };
+		656B880217C4126500FE4ABE /* PKInteractionData.m in Sources */ = {isa = PBXBuildFile; fileRef = 656B880017C4126500FE4ABE /* PKInteractionData.m */; };
+		65AA165917A5E4A7007F89BA /* PKLeftOverallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65FC7C8F17A1A6E80045BFF2 /* PKLeftOverallViewController.m */; };
 		65E0AFAC17A1C1D300E0FD0C /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65E0AFAB17A1C1D300E0FD0C /* FacebookSDK.framework */; };
 		65FC7C5117A1A37F0045BFF2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65FC7C5017A1A37F0045BFF2 /* Foundation.framework */; };
 		65FC7C5317A1A37F0045BFF2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65FC7C5217A1A37F0045BFF2 /* CoreGraphics.framework */; };
@@ -38,6 +41,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		656B87FF17C4126500FE4ABE /* PKInteractionData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKInteractionData.h; sourceTree = "<group>"; };
+		656B880017C4126500FE4ABE /* PKInteractionData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKInteractionData.m; sourceTree = "<group>"; };
 		65E0AFAB17A1C1D300E0FD0C /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		65FC7C4D17A1A37F0045BFF2 /* pplkpr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pplkpr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65FC7C5017A1A37F0045BFF2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -142,6 +147,8 @@
 				65FC7C9117A1A7030045BFF2 /* PKPersonSummaryViewController.m */,
 				65FC7C6817A1A37F0045BFF2 /* Images.xcassets */,
 				65FC7C5717A1A37F0045BFF2 /* Supporting Files */,
+				656B87FF17C4126500FE4ABE /* PKInteractionData.h */,
+				656B880017C4126500FE4ABE /* PKInteractionData.m */,
 			);
 			path = pplkpr;
 			sourceTree = "<group>";
@@ -276,6 +283,8 @@
 				65FC7C8D17A1A6DA0045BFF2 /* PKLeftViewController.m in Sources */,
 				65FC7C5D17A1A37F0045BFF2 /* main.m in Sources */,
 				65FC7C8A17A1A6C40045BFF2 /* PKMeetViewController.m in Sources */,
+				656B880117C4126500FE4ABE /* PKInteractionData.m in Sources */,
+				65AA165917A5E4A7007F89BA /* PKLeftOverallViewController.m in Sources */,
 				65FC7C6717A1A37F0045BFF2 /* PKViewController.m in Sources */,
 				65FC7C6117A1A37F0045BFF2 /* PKAppDelegate.m in Sources */,
 				65FC7C9217A1A7030045BFF2 /* PKPersonSummaryViewController.m in Sources */,
@@ -287,6 +296,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				65FC7C7C17A1A37F0045BFF2 /* pplkprTests.m in Sources */,
+				656B880217C4126500FE4ABE /* PKInteractionData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
