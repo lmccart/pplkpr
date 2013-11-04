@@ -7,6 +7,7 @@
 //
 
 #import "PKLeftViewController.h"
+#import "PKLeftOverallViewController.h"
 
 @interface PKLeftViewController () <UIPickerViewDataSource, UIPickerViewDelegate>
 
@@ -24,7 +25,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-		
+		NSLog(@"init\n");
     }
     return self;
 }
@@ -37,9 +38,24 @@
 		[_personNameLabel setText:[_data personName]];
 	}
 	
-    _emotionPicker.delegate = self;
-    _emotionPicker.dataSource = self;
+    [_emotionPicker setDelegate:self];
+    [_emotionPicker setDataSource:self];
+	[_descriptionField setDelegate:self];
+	[_descriptionField setClearButtonMode:UITextFieldViewModeWhileEditing];
 }
+
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+	NSLog(@"return\n");
+    [textField resignFirstResponder];
+    return YES;
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+	[_descriptionField resignFirstResponder];
+	[super touchesBegan:touches withEvent:event];
+}
+
 
 #pragma mark - UIPickerView DataSource
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
@@ -70,6 +86,16 @@
     //Let's print in the console what the user had chosen;
     NSLog(@"Chosen item: %@", [[_data emotionsArray] objectAtIndex:row]);
 }
+
+
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+	PKLeftOverallViewController *lovc = (PKLeftOverallViewController*) segue.destinationViewController;
+	NSLog(@"person name %@\n", [[_data emotionsArray] objectAtIndex:0]);
+	NSLog(@"person name %@\n", [_data personName]);
+	//lovc.data = _data;
+}
+
 
 
 - (void)didReceiveMemoryWarning

@@ -7,13 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PKInteractionData.h"
 
-@interface PKLeftOverallViewController : UIViewController {
-	IBOutlet UISlider *ratingSlider;
-	
-}
+@interface PKLeftOverallViewController : UIViewController <UITextFieldDelegate>
 
-@property (strong, nonatomic) UISlider *ratingSlider;
+@property (retain, nonatomic) PKInteractionData *data;
+
 - (IBAction)submit:(id)sender;
 
 @end

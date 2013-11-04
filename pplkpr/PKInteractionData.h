@@ -11,6 +11,7 @@
 @interface PKInteractionData : NSObject
 
 @property (retain) NSString *personName;
+@property (retain) NSMutableArray *momentsArray;
 @property (retain) NSString *overallDescription;
 @property (assign) float *overallRating;
 

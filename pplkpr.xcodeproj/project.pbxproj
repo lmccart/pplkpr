@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		653E3B2118280B95008EA7FC /* libhxm2sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 653E3B1F18280B95008EA7FC /* libhxm2sdk.a */; };
+		653E3B2218280B95008EA7FC /* libhxm2sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 653E3B1F18280B95008EA7FC /* libhxm2sdk.a */; };
 		656B880117C4126500FE4ABE /* PKInteractionData.m in Sources */ = {isa = PBXBuildFile; fileRef = 656B880017C4126500FE4ABE /* PKInteractionData.m */; };
 		656B880217C4126500FE4ABE /* PKInteractionData.m in Sources */ = {isa = PBXBuildFile; fileRef = 656B880017C4126500FE4ABE /* PKInteractionData.m */; };
 		65AA165917A5E4A7007F89BA /* PKLeftOverallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65FC7C8F17A1A6E80045BFF2 /* PKLeftOverallViewController.m */; };
@@ -41,6 +43,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		653E3B1E18280B95008EA7FC /* HxMBLEConnectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HxMBLEConnectionManager.h; sourceTree = "<group>"; };
+		653E3B1F18280B95008EA7FC /* libhxm2sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libhxm2sdk.a; sourceTree = "<group>"; };
+		653E3B2018280B95008EA7FC /* PhysiologicalData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysiologicalData.h; sourceTree = "<group>"; };
 		656B87FF17C4126500FE4ABE /* PKInteractionData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKInteractionData.h; sourceTree = "<group>"; };
 		656B880017C4126500FE4ABE /* PKInteractionData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKInteractionData.m; sourceTree = "<group>"; };
 		65E0AFAB17A1C1D300E0FD0C /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
@@ -80,6 +85,7 @@
 			files = (
 				65FC7C5317A1A37F0045BFF2 /* CoreGraphics.framework in Frameworks */,
 				65E0AFAC17A1C1D300E0FD0C /* FacebookSDK.framework in Frameworks */,
+				653E3B2118280B95008EA7FC /* libhxm2sdk.a in Frameworks */,
 				65FC7C5517A1A37F0045BFF2 /* UIKit.framework in Frameworks */,
 				65FC7C5117A1A37F0045BFF2 /* Foundation.framework in Frameworks */,
 			);
@@ -92,15 +98,27 @@
 				65FC7C7017A1A37F0045BFF2 /* XCTest.framework in Frameworks */,
 				65FC7C7217A1A37F0045BFF2 /* UIKit.framework in Frameworks */,
 				65FC7C7117A1A37F0045BFF2 /* Foundation.framework in Frameworks */,
+				653E3B2218280B95008EA7FC /* libhxm2sdk.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		653E3B1D18280B95008EA7FC /* HxM2 iOS Library */ = {
+			isa = PBXGroup;
+			children = (
+				653E3B1E18280B95008EA7FC /* HxMBLEConnectionManager.h */,
+				653E3B1F18280B95008EA7FC /* libhxm2sdk.a */,
+				653E3B2018280B95008EA7FC /* PhysiologicalData.h */,
+			);
+			path = "HxM2 iOS Library";
+			sourceTree = "<group>";
+		};
 		65FC7C4417A1A37F0045BFF2 = {
 			isa = PBXGroup;
 			children = (
+				653E3B1D18280B95008EA7FC /* HxM2 iOS Library */,
 				65FC7C5617A1A37F0045BFF2 /* pplkpr */,
 				65FC7C7517A1A37F0045BFF2 /* pplkprTests */,
 				65FC7C4F17A1A37F0045BFF2 /* Frameworks */,
@@ -418,7 +436,15 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "pplkpr/pplkpr-Prefix.pch";
 				INFOPLIST_FILE = "pplkpr/pplkpr-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/HxM2\\ iOS\\ Library",
+					"$(SRCROOT)/pplkpr/HxM2\\ iOS\\ Library",
+				);
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -435,7 +461,14 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "pplkpr/pplkpr-Prefix.pch";
 				INFOPLIST_FILE = "pplkpr/pplkpr-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/HxM2\\ iOS\\ Library",
+					"$(SRCROOT)/pplkpr/HxM2\\ iOS\\ Library",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -456,6 +489,11 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "pplkprTests/pplkprTests-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/HxM2\\ iOS\\ Library",
+					"$(SRCROOT)/pplkpr/HxM2\\ iOS\\ Library",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -474,6 +512,11 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "pplkpr/pplkpr-Prefix.pch";
 				INFOPLIST_FILE = "pplkprTests/pplkprTests-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/HxM2\\ iOS\\ Library",
+					"$(SRCROOT)/pplkpr/HxM2\\ iOS\\ Library",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;

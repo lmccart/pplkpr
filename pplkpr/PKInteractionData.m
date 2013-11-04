@@ -23,6 +23,7 @@
     if (self) {
         _personName = aPersonName;
 		_emotionsArray = [[NSArray alloc] initWithObjects:@"Excited",@"Aroused",@"Angry",@"Scared", @"Anxious", @"Bored", @"Calm", nil];
+		_momentsArray = [NSMutableArray alloc];
     }
 	
     return self;
@@ -30,6 +31,8 @@
 
 - (void)dealloc {
 	[_personName release];
+	[_emotionsArray release];
+	[_momentsArray release];
 	[super dealloc];
 }
 

@@ -15,7 +15,6 @@
 
 
 @property (strong, nonatomic) UITextField *whoTextField;
-@property (copy, nonatomic) NSString *whoString;
 @property (strong, nonatomic) FBFriendPickerViewController *friendPickerController;
 
 - (void)fillTextBoxAndDismiss:(NSString *)text;
@@ -32,8 +31,19 @@
 - (void)viewDidLoad
 {
 	// When the user starts typing, show the clear button in the text field.
-	self.whoTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-    [super viewDidLoad];
+	[_whoTextField setDelegate:self];
+    [_whoTextField setClearButtonMode:UITextFieldViewModeWhileEditing];
+	
+	
+    if (_friendPickerController == nil) {
+        // Create friend picker, and get data loaded into it.
+		_friendPickerController = [[FBFriendPickerViewController alloc] init];
+        _friendPickerController.title = @"Pick Friend";
+        _friendPickerController.delegate = self;
+		_friendPickerController.allowsMultipleSelection = NO;
+    }
+	
+	[super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -48,22 +58,6 @@
 {
     [super viewWillAppear:animated];
 }
-//
-//- (void)reset {
-//	self.whoTextField.text = @"";
-//	self.whoString = @"";
-//}
-
-- (BOOL)textFieldShouldReturn:(UITextField *)theTextField {
-	if (theTextField == self.whoTextField) {
-		NSLog(@"resign\n");
-		[self.whoTextField resignFirstResponder];
-	}
-	else NSLog(@"not who field\n");
-	return YES;
-}
-
-
 
 #pragma mark UI handlers
 
@@ -83,14 +77,6 @@
 			}
 		}];
         return;
-    }
-	
-    if (_friendPickerController == nil) {
-        // Create friend picker, and get data loaded into it.
-       _friendPickerController = [[FBFriendPickerViewController alloc] init];
-        _friendPickerController.title = @"Pick Friend";
-        _friendPickerController.delegate = self;
-		_friendPickerController.allowsMultipleSelection = NO;
     }
 	
     [_friendPickerController loadData];
@@ -131,6 +117,10 @@
 
 #pragma mark -
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
+}
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 	[_whoTextField resignFirstResponder];
@@ -140,7 +130,6 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 	if ( [segue.identifier isEqualToString:@"MeetSegue"] ){
 		//PKMeetViewController *mvc = (PKMeetViewController*)segue.destinationViewController;
-		
 	}
 	else if ([segue.identifier isEqualToString:@"LeftSegue"]){
 		PKLeftViewController *lvc = (PKLeftViewController*) segue.destinationViewController;
@@ -149,14 +138,12 @@
 }
 
 - (void)viewDidUnload {
-	_whoString = nil;
     _whoTextField = nil;
 	_friendPickerController = nil;
 	[super viewDidUnload];
 }
 
 - (void)dealloc {
-	[_whoString release];
 	[_whoTextField release];
 	[_friendPickerController release];
 	[super dealloc];
