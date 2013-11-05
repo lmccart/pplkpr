@@ -9,12 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "HxmBLEConnectionManager.h"
 
-@interface PKMeetViewController : UIViewController<HxMBLEManagerDelegate, UITableViewDelegate, UITableViewDataSource> {
+@interface PKMeetViewController : UIViewController<CBCentralManagerDelegate, CBPeripheralDelegate, HxMBLEManagerDelegate> {
 	
-    IBOutlet UILabel *hrLbl, *deviceWornLbl, *deviceNameLbl,*statusLbl;
+	CBCentralManager *peripheralManager;
+    CBPeripheral *selectedPeripheral;
+	
     HxMBLEConnectionManager *bleManager;
     NSTimer *guiRefreshTimer;
-    IBOutlet UITableView *devicesTableView;
     NSMutableArray *devicesArray;
     CBPeripheral *selectedDevice;
     
@@ -23,12 +24,12 @@
 
 @property(nonatomic,retain) NSTimer *guiRefreshTimer;
 @property(nonatomic,retain) HxMBLEConnectionManager *bleManager;
--(IBAction) connectClicked:(id)sender;
--(IBAction) disconnectClicked:(id)sender;
+
+@property(nonatomic,retain) CBCentralManager *peripheralManager;
+@property(strong, retain) CBPeripheral *selectedPeripheral;
+
 -(IBAction) startScanClicked:(id)sender;
 -(IBAction) stopScanClicked:(id)sender;
--(IBAction) exitClicked:(id)sender;
--(IBAction)backClicked:(id)sender;
 
 
 @end
