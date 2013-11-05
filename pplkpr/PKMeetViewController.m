@@ -31,6 +31,7 @@
 {
     [super viewDidLoad];
     self.bleManager = [[HxMBLEConnectionManager alloc] initWithDeleget:self];
+	[bleManager.]
     devicesArray = [[NSMutableArray alloc] init];
 }
 
@@ -69,6 +70,13 @@
 -(IBAction) stopScanClicked:(id)sender
 {
     [bleManager stopScan];
+    selectedDevice = [devicesArray objectAtIndex:0];
+	
+    if(selectedDevice) {
+        [bleManager setReconnectOnDisconnect:YES];
+        [bleManager connectToHxmDevice:selectedDevice];
+    }
+    
 }
 -(IBAction) exitClicked:(id)sender
 {
