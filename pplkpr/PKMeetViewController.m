@@ -96,6 +96,38 @@
 	
 	peripheral.delegate = self;
 	// PEND: set reconnect [bleManager setReconnectOnDisconnect:YES];
+	// PEND: handle errors
+	[peripheral discoverServices:nil];
+}
+
+- (void)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error {
+	
+    for (CBService *service in peripheral.services) {
+        NSLog(@"Discovered service %@", service);
+		[peripheral discoverCharacteristics:nil forService:service]; // pend pass UDID of characteristic
+    }
+}
+
+- (void)peripheral:(CBPeripheral *)peripheral
+didDiscoverCharacteristicsForService:(CBService *)service
+			 error:(NSError *)error {
+	
+    for (CBCharacteristic *characteristic in service.characteristics) {
+        NSLog(@"Discovered characteristic %@ for service %@", characteristic, service);
+		[peripheral readValueForCharacteristic:characteristic];
+    }
+}
+
+- (void)peripheral:(CBPeripheral *)peripheral
+didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic
+             error:(NSError *)error {
+	
+	if (!error) {
+		NSData *data = characteristic.value;
+		// parse the data as needed
+        NSLog(@"Read value %@ for characteristic %@", data, characteristic);
+		
+	}
 }
 
 -(void) onUnspportedHarware:(NSString *) error
