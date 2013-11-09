@@ -7,14 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HxmBLEConnectionManager.h"
+#import <Foundation/Foundation.h>
+#import <CoreBluetooth/CBCentralManager.h>
+#import <CoreBluetooth/CBPeripheral.h>
+#import <CoreBluetooth/CBService.h>
+#import <CoreBluetooth/CBUUID.h>
+#import <CoreBluetooth/CBCharacteristic.h>
 
-@interface PKMeetViewController : UIViewController<CBCentralManagerDelegate, CBPeripheralDelegate, HxMBLEManagerDelegate> {
+@interface PKMeetViewController : UIViewController<CBCentralManagerDelegate, CBPeripheralDelegate> {
 	
 	CBCentralManager *peripheralManager;
     CBPeripheral *selectedPeripheral;
 	
-    HxMBLEConnectionManager *bleManager;
     NSTimer *guiRefreshTimer;
     NSMutableArray *devicesArray;
     CBPeripheral *selectedDevice;
@@ -23,7 +27,6 @@
 }
 
 @property(nonatomic,retain) NSTimer *guiRefreshTimer;
-@property(nonatomic,retain) HxMBLEConnectionManager *bleManager;
 
 @property(nonatomic,retain) CBCentralManager *peripheralManager;
 @property(strong, retain) CBPeripheral *selectedPeripheral;

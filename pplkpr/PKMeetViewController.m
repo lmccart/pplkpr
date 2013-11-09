@@ -16,7 +16,7 @@
 
 @implementation PKMeetViewController
 
-@synthesize bleManager, guiRefreshTimer, peripheralManager, selectedPeripheral;
+@synthesize guiRefreshTimer, peripheralManager, selectedPeripheral;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -30,7 +30,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.bleManager = [[HxMBLEConnectionManager alloc] initWithDeleget:self];
 	devicesArray = [[NSMutableArray alloc] init];
 	
 	self.peripheralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil options:nil];
@@ -43,11 +42,6 @@
 }
 
 
--(IBAction) disconnectClicked:(id)sende
-{
-    [bleManager setReconnectOnDisconnect:NO];
-    [bleManager disconnectHxmDevice];
-}
 -(IBAction) startScanClicked:(id)sender
 {
 	[peripheralManager scanForPeripheralsWithServices:nil options:nil];
@@ -63,10 +57,6 @@
     if(guiRefreshTimer) {
         [guiRefreshTimer invalidate];
         guiRefreshTimer = nil;
-    }
-    if(bleManager) {
-        [bleManager release];
-        bleManager = nil;
     }
     [super dealloc];
 }
@@ -228,35 +218,6 @@ public static Command parseHxmPacket(byte[] packet, Command command) {
 }
 
 */
-
--(void) onUnspportedHarware:(NSString *) error
-{
-    NSLog(@"$$$$$$$$$$$ Iphone does not support BLE.   Error:%@",error);
-}
--(void) onHxmDeviceDiscovered:(CBPeripheral *) device
-{
-    NSLog(@"$$$$$$$$$$$ HxM device discovered: %@",device);
-    if(device && ![devicesArray containsObject:device]) {
-        [devicesArray addObject:device];
-    }
-}
--(void) onHxmDeviceConnected:(CBPeripheral *) device
-{
-    NSLog(@"$$$$$$$$$$$ HxM device Connected: %@",device);
-}
--(void) onHxmdeviceFialedToConnect:(CBPeripheral *)device error:(NSError *)error
-{
-    NSLog(@"$$$$$$$$$$$ HxM device Failed to connect: %@      Error is:%@",device, error);
-}
--(void) onHxmDeviceDisconnected:(CBPeripheral *)device error:(NSError *)error
-{
-    NSLog(@"$$$$$$$$$$$ HxM device disconnected: %@      Error is:%@",device, error);
-}
--(void) onPhysiologicalDataReceived:(PhysiologicalData *) data
-{
-    NSLog(@"$$$$$$$$$$$ Hxm device data received. HR:%d    isDeviceWorn: %@",[data heartRate],
-		  [data isDeviceWorn]?@"YES":@"NO");
-}
 
 
 @end
