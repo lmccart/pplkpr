@@ -10,7 +10,10 @@
 #import "PKInteractionData.h"
 
 
-@interface PKLeftOverallViewController ()
+@interface PKLeftOverallViewController () {
+	
+	NSMutableData *receivedData;
+}
 	
 
 @property (retain, nonatomic) IBOutlet UILabel *personNameLabel;
@@ -51,26 +54,60 @@
 }
 
 - (IBAction)submit:(id)sender {
-	
-	NSString *bodyData = [NSString stringWithFormat:@"type=interaction&user=lauren&name=%@&moments=none&rating=%f", [[PKInteractionData data] personName], [_overallSlider value]];
-	
-	NSMutableURLRequest *postRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://lauren-mccarthy.com/pplkpr-server/submit.php?"]];
-	[postRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-	[postRequest setHTTPMethod:@"POST"];
-	[postRequest setHTTPBody:[NSData dataWithBytes:[bodyData UTF8String] length:strlen([bodyData UTF8String])]];
-	
-	NSURLConnection *connection=[[NSURLConnection alloc] initWithRequest:postRequest delegate:self];
-	if (connection) {
-		// Create the NSMutableData to hold the received data.
-		// receivedData is an instance variable declared elsewhere.
-		//[self reset];
-		NSLog(@"success");
-	} else {
-		NSLog(@"fail");
-	}
-	
 
+	NSString *moments = [[[PKInteractionData data] momentsArray] componentsJoinedByString:@";"];
+	
+	NSArray *keys = [NSArray arrayWithObjects:@"func", @"user", @"name", @"moments", nil];
+	NSArray *objects = [NSArray arrayWithObjects:@"interaction", @"lauren", [[PKInteractionData data] personName], moments, nil];
+	NSDictionary *dict = [NSDictionary dictionaryWithObjects:objects forKeys:keys];
+	
+	NSData * jsonData = [NSJSONSerialization dataWithJSONObject:dict options:0 error:nil];
+
+	
+	NSLog(@"jsonData is %@", jsonData);
+	
+	NSURL *url = [NSURL URLWithString:@"http://lauren-mccarthy.com/pplkpr-server/submit.php"];
+	
+	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+														   cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
+	
+	[request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+	[request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+	[request setValue:@"json" forHTTPHeaderField:@"Data-Type"];
+	[request setValue:[NSString stringWithFormat:@"%d", [jsonData length]] forHTTPHeaderField:@"Content-Length"];
+	[request setHTTPMethod:@"POST"];
+	[request setHTTPBody:jsonData];
+	
+	
+	receivedData = [[NSMutableData alloc] init];
+	
+	NSURLConnection *connection = [[NSURLConnection alloc]initWithRequest:request delegate:self];
+	if (!connection) {
+		receivedData = nil;
+		NSLog(@"connection failed");
+	}
 }
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
+	[receivedData setLength:0];
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+	[receivedData appendData:data];
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+	NSLog(@"Succeeded! Received %d bytes of data", [receivedData length]);
+//	NSString *responeString = [[NSString alloc] initWithData:receivedData encoding:NSUTF8StringEncoding];
+
+	NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:receivedData options:0 error:nil];
+	NSDictionary *jsonDictionary = (NSDictionary *)jsonObject;
+	NSLog(@"%@",jsonDictionary);
+
+	connection = nil;
+    receivedData = nil;
+}
+
 
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {

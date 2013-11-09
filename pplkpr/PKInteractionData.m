@@ -29,7 +29,7 @@
 	
     if (self = [super init]) {
 		_emotionsArray = [[NSArray alloc] initWithObjects:@"Excited",@"Aroused",@"Angry",@"Scared", @"Anxious", @"Bored", @"Calm", nil];
-		_momentsArray = [NSMutableArray alloc];
+		_momentsArray = [[NSMutableArray alloc] init];
     }
 	
     return self;

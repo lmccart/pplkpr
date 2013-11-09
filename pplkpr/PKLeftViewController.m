@@ -15,6 +15,7 @@
 @property (retain, nonatomic) IBOutlet UILabel *personNameLabel;
 @property (retain, nonatomic) IBOutlet UITextField *descriptionField;
 @property (retain, nonatomic) IBOutlet UIPickerView *emotionPicker;
+@property (retain) NSString *emotion;
 
 @end
 
@@ -41,6 +42,8 @@
     [_emotionPicker setDataSource:self];
 	[_descriptionField setDelegate:self];
 	[_descriptionField setClearButtonMode:UITextFieldViewModeWhileEditing];
+	
+	_emotion = [[[PKInteractionData data] emotionsArray] objectAtIndex:0];
 }
 
 
@@ -84,12 +87,13 @@
 {
     //Let's print in the console what the user had chosen;
     NSLog(@"Chosen item: %@", [[[PKInteractionData data] emotionsArray] objectAtIndex:row]);
+	_emotion = [[[PKInteractionData data] emotionsArray] objectAtIndex:row];
 }
 
 
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-
+	[[[PKInteractionData data] momentsArray] addObject:_emotion];
 }
 
 
