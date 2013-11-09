@@ -7,11 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PKInteractionData.h"
 
 @interface PKLeftViewController : UIViewController <UITextFieldDelegate>
 
-@property (retain, nonatomic) PKInteractionData *data;
 
 @end
 

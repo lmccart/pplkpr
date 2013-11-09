@@ -15,13 +15,19 @@
 
 @implementation PKInteractionData
 
++ (id)data {
+    static PKInteractionData *data = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        data = [[self alloc] init];
+    });
+    return data;
+}
 
--(id)initWithName:(NSString *)aPersonName {
+
+-(id)init {
 	
-	self = [super init];
-	
-    if (self) {
-        _personName = aPersonName;
+    if (self = [super init]) {
 		_emotionsArray = [[NSArray alloc] initWithObjects:@"Excited",@"Aroused",@"Angry",@"Scared", @"Anxious", @"Bored", @"Calm", nil];
 		_momentsArray = [NSMutableArray alloc];
     }

@@ -7,6 +7,7 @@
 //
 
 #import "PKLeftOverallViewController.h"
+#import "PKInteractionData.h"
 
 
 @interface PKLeftOverallViewController ()
@@ -36,9 +37,8 @@
 {
     [super viewDidLoad];
 	
-	if ([_data personName]) {
-		[_personNameLabel setText:[_data personName]];
-	}
+	[_personNameLabel setText:[[PKInteractionData data] personName]];
+	
 	[_overallField setDelegate:self];
 	[_overallField setClearButtonMode:UITextFieldViewModeWhileEditing];
 	
@@ -52,21 +52,20 @@
 
 - (IBAction)submit:(id)sender {
 	
-	NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"http://lauren-mccarthy.com/pplkpr-server/submit.php?type=interaction&user=lauren&name=friend&moments=none&rating=%f", [_overallSlider value]]];
-	NSURLRequest *theRequest=[NSURLRequest requestWithURL:URL
-											  cachePolicy:NSURLRequestUseProtocolCachePolicy
-										  timeoutInterval:60.0];
+	NSString *bodyData = [NSString stringWithFormat:@"type=interaction&user=lauren&name=%@&moments=none&rating=%f", [[PKInteractionData data] personName], [_overallSlider value]];
 	
-	// create the connection with the request
-	// and start loading the data
-	NSURLConnection *theConnection=[[NSURLConnection alloc] initWithRequest:theRequest delegate:self];
-	if (theConnection) {
+	NSMutableURLRequest *postRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://lauren-mccarthy.com/pplkpr-server/submit.php?"]];
+	[postRequest setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+	[postRequest setHTTPMethod:@"POST"];
+	[postRequest setHTTPBody:[NSData dataWithBytes:[bodyData UTF8String] length:strlen([bodyData UTF8String])]];
+	
+	NSURLConnection *connection=[[NSURLConnection alloc] initWithRequest:postRequest delegate:self];
+	if (connection) {
 		// Create the NSMutableData to hold the received data.
 		// receivedData is an instance variable declared elsewhere.
 		//[self reset];
 		NSLog(@"success");
 	} else {
-		// Inform the user that the connection failed.
 		NSLog(@"fail");
 	}
 	

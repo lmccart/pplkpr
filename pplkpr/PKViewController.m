@@ -132,8 +132,7 @@
 		//PKMeetViewController *mvc = (PKMeetViewController*)segue.destinationViewController;
 	}
 	else if ([segue.identifier isEqualToString:@"LeftSegue"]){
-		PKLeftViewController *lvc = (PKLeftViewController*) segue.destinationViewController;
-		lvc.data = [[PKInteractionData alloc] initWithName:_whoTextField.text];
+		[[PKInteractionData data] setPersonName:_whoTextField.text];
 	}
 }
 

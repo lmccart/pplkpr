@@ -8,6 +8,7 @@
 
 #import "PKLeftViewController.h"
 #import "PKLeftOverallViewController.h"
+#import "PKInteractionData.h"
 
 @interface PKLeftViewController () <UIPickerViewDataSource, UIPickerViewDelegate>
 
@@ -32,11 +33,9 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
 	
-	if ([_data personName]) {
-		[_personNameLabel setText:[_data personName]];
-	}
+    [super viewDidLoad];
+	[_personNameLabel setText:[[PKInteractionData data] personName]];
 	
     [_emotionPicker setDelegate:self];
     [_emotionPicker setDataSource:self];
@@ -65,7 +64,7 @@
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    return [[_data emotionsArray] count];
+    return [[[PKInteractionData data] emotionsArray] count];
 }
 
 
@@ -77,23 +76,20 @@
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    return [[_data emotionsArray] objectAtIndex:row];
+    return [[[PKInteractionData data] emotionsArray] objectAtIndex:row];
 }
 
 //If the user chooses from the pickerview, it calls this function;
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     //Let's print in the console what the user had chosen;
-    NSLog(@"Chosen item: %@", [[_data emotionsArray] objectAtIndex:row]);
+    NSLog(@"Chosen item: %@", [[[PKInteractionData data] emotionsArray] objectAtIndex:row]);
 }
 
 
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-	PKLeftOverallViewController *lovc = (PKLeftOverallViewController*) segue.destinationViewController;
-	NSLog(@"person name %@\n", [[_data emotionsArray] objectAtIndex:0]);
-	NSLog(@"person name %@\n", [_data personName]);
-	//lovc.data = _data;
+
 }
 
 

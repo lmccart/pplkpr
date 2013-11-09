@@ -17,8 +17,8 @@
 
 @property (nonatomic, strong) NSArray *emotionsArray;
 
-
--(id)initWithName:(NSString *)aPersonName;
++(id)data;
+-(id)init;
 
 @end
 

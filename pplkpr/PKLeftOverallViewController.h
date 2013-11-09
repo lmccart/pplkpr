@@ -7,11 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PKInteractionData.h"
 
 @interface PKLeftOverallViewController : UIViewController <UITextFieldDelegate>
 
-@property (retain, nonatomic) PKInteractionData *data;
 
 - (IBAction)submit:(id)sender;
 
