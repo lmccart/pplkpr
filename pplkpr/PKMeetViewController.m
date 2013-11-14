@@ -124,6 +124,9 @@ didDiscoverDescriptorsForCharacteristic:(CBCharacteristic *)characteristic
 		if([[descriptor.UUID data] isEqualToData:[target data]]) {
 			// need to configure here according to https://developer.bluetooth.org/gatt/descriptors/Pages/DescriptorViewer.aspx?u=org.bluetooth.descriptor.gatt.client_characteristic_configuration.xml
 			NSLog(@"Ready to configure heart rate notifications");
+			[peripheral setNotifyValue:YES forCharacteristic:characteristic];
+			// stopScan should call the following
+			// [peripheral setNotifyValue:NO forCharacteristic:characteristic];
 		}
 	}
 }
@@ -131,9 +134,72 @@ didDiscoverDescriptorsForCharacteristic:(CBCharacteristic *)characteristic
 - (void)peripheral:(CBPeripheral *)peripheral
 didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic
              error:(NSError *)error {
+	if (error) {
+		return;
+	}
+	CBUUID* target = [CBUUID UUIDWithString:@"2a37"]; // heart rate measurement characteristic
+	if([[characteristic.UUID data] isEqualToData:[target data]]) {
+		NSData* data = characteristic.value;
+		
+		int readOffset = 0;
+		
+		uint8_t flags;
+		[data getBytes:&flags range:NSMakeRange(readOffset, 1)];
+		readOffset += 1;
+		
+		uint8_t HeartRateValueFormat = (flags & (1 << 0)) >> 0;
+		uint8_t SensorContactStatus = (flags & (3 << 1)) >> 1;
+		uint8_t EnergyExpendedStatus = (flags & (1 << 3)) >> 3;
+		uint8_t RRInterval = (flags & (1 << 4)) >> 4;
+		
+//        NSLog(@"Heart Rate %@ flags %hhu, %hhu, %hhu, %hhu for %@", characteristic.value, HeartRateValueFormat, SensorContactStatus, EnergyExpendedStatus, RRInterval, characteristic.UUID);
+		
+		if(HeartRateValueFormat) {
+			uint16_t HeartRateMeasurementValue;
+			[data getBytes:&HeartRateMeasurementValue range:NSMakeRange(readOffset, sizeof(HeartRateMeasurementValue))];
+			readOffset += sizeof(HeartRateMeasurementValue);
+			NSLog(@"Heart rate is %hu", HeartRateMeasurementValue);
+		} else {
+			uint8_t HeartRateMeasurementValue;
+			[data getBytes:&HeartRateMeasurementValue range:NSMakeRange(readOffset, sizeof(HeartRateMeasurementValue))];
+			readOffset += sizeof(HeartRateMeasurementValue);
+			NSLog(@"Heart rate is %hhu", HeartRateMeasurementValue);
+		}
+		
+		if(SensorContactStatus == 2) {
+			NSLog(@"Sensor contact is not detected");
+		} else if(SensorContactStatus == 3) {
+//			NSLog(@"Sensor contact is detected");
+		}
+		
+		if(EnergyExpendedStatus == 1) {
+			uint16_t EnergyExpended;
+			[data getBytes:&EnergyExpended range:NSMakeRange(readOffset, sizeof(EnergyExpended))];
+			readOffset += sizeof(EnergyExpended);
+			NSLog(@"Energy expended is %hu", EnergyExpended);
+		}
+		
+		if(RRInterval) {
+//			NSLog(@"One or more RR-Interval values are present.");
+			uint8_t entry = 0;
+			while(readOffset < data.length) {
+				uint16_t rr;
+				[data getBytes:&rr range:NSMakeRange(readOffset, sizeof(rr))];
+				NSLog(@"RR-Interval %hhu: %hu", entry, rr);
+				entry++;
+				readOffset += sizeof(rr);
+			}
+		}
+	} else {
+		NSLog(@"Heart Rate %@ for %@", characteristic.value, characteristic.UUID);
+	}
+}
+
+- (void)peripheral:(CBPeripheral *)peripheral
+didUpdateNotificationStateForCharacteristic:(CBCharacteristic *)characteristic
+			 error:(NSError *)error {
 	if (!error) {
-		// parse the data as needed
-        NSLog(@"Read value %@ for characteristic %@", characteristic.value, characteristic.UUID);
+        NSLog(@"didUpdateNotificationStateForCharacteristic %@ for %@", characteristic.value, characteristic.UUID);
 	}
 }
 
