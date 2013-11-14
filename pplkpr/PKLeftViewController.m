@@ -93,7 +93,7 @@
 
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-	[[[PKInteractionData data] momentsArray] addObject:_emotion];
+	[[PKInteractionData data] setEmotion:_emotion];
 }
 
 
