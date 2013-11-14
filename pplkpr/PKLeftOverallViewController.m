@@ -55,16 +55,15 @@
 
 - (IBAction)submit:(id)sender {
 
-	NSString *moments = [[[PKInteractionData data] momentsArray] componentsJoinedByString:@";"];
 	
-	NSArray *keys = [NSArray arrayWithObjects:@"func", @"user", @"name", @"moments", nil];
-	NSArray *objects = [NSArray arrayWithObjects:@"interaction", @"lauren", [[PKInteractionData data] personName], moments, nil];
+	NSArray *keys = [NSArray arrayWithObjects:@"func", @"user", @"name", @"emotion", nil];
+	NSArray *objects = [NSArray arrayWithObjects:@"interaction", @"lauren", [[PKInteractionData data] personName], [[PKInteractionData data] emotion], nil];
 	NSDictionary *dict = [NSDictionary dictionaryWithObjects:objects forKeys:keys];
 	
 	NSData * jsonData = [NSJSONSerialization dataWithJSONObject:dict options:0 error:nil];
 
 	
-	NSLog(@"jsonData is %@", jsonData);
+	NSLog(@"emotion is %@", [[PKInteractionData data] emotion]);
 	
 	NSURL *url = [NSURL URLWithString:@"http://lauren-mccarthy.com/pplkpr-server/submit.php"];
 	
