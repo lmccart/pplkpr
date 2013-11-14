@@ -1,40 +1,20 @@
+service:
+180d
+	heart rate
+	https://developer.bluetooth.org/gatt/services/Pages/ServiceViewer.aspx?u=org.bluetooth.service.heart_rate.xml
 
-<CBService: 0x155ac5d0>
-<CBCharacteristic: 0x155b5a90>
-	<01>
-<CBCharacteristic: 0x155b86e0>
-
-
-<CBService: 0x155cc580>
-<CBCharacteristic: 0x155ba560> 
-<CBCharacteristic: 0x155b9b50> 
-	<ed78bd00 00296abc>
-<CBCharacteristic: 0x155b33f0>
-	<48784d32 00>
-<CBCharacteristic: 0x155ba490>
-	<48584d32 30303030 35353030 00>
-<CBCharacteristic: 0x155caa30>
-	<76312e31 2e322e30 2f312e30 2e302e30 00000000>
-<CBCharacteristic: 0x1558c320>
-	<39383030 2e303139 37763161 00>
-<CBCharacteristic: 0x1558c3f0>
-	<76312e34 2e332e30 2f312e33 2e302e30 00000000>
-<CBCharacteristic: 0x15589520>
-	<5a657068 79722054 6563686e 6f6c6f67 7900>
-<CBCharacteristic: 0x155cd2e0>
-	<fe006578 70657269 6d656e74 616c>
-<CBCharacteristic: 0x155b3a60> 
-	<010d0000 001001>
-
-
-<CBService: 0x155b0370>
-<CBCharacteristic: 0x156a4020>
-	<5b>
-
-<CBService: 0x155ba150>
-<CBCharacteristic: 0x155ca1d0>
-<CBCharacteristic: 0x155ade50>
-
-<CBService: 0x15587aa0>
-<CBCharacteristic: 0x155add80>
-<CBCharacteristic: 0x155ca400>
+characteristics:
+2a37
+	heart rate measurement
+	https://developer.bluetooth.org/gatt/characteristics/Pages/CharacteristicViewer.aspx?u=org.bluetooth.characteristic.heart_rate_measurement.xml
+2a38
+	body location
+	https://developer.bluetooth.org/gatt/characteristics/Documents/org.bluetooth.characteristic.body_sensor_location.xml
+2a39
+	heart rate control point
+	https://developer.bluetooth.org/gatt/characteristics/Documents/org.bluetooth.characteristic.heart_rate_control_point.xml
+	
+descriptors:
+2902
+	client characteristic configuration
+	https://developer.bluetooth.org/gatt/descriptors/Pages/DescriptorViewer.aspx?u=org.bluetooth.descriptor.gatt.client_characteristic_configuration.xml

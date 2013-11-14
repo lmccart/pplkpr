@@ -13,6 +13,7 @@
 #import <CoreBluetooth/CBService.h>
 #import <CoreBluetooth/CBUUID.h>
 #import <CoreBluetooth/CBCharacteristic.h>
+#import <CoreBluetooth/CBDescriptor.h>
 
 @interface PKMeetViewController : UIViewController<CBCentralManagerDelegate, CBPeripheralDelegate> {
 	
