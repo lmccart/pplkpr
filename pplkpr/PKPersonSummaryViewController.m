@@ -8,7 +8,10 @@
 
 #import "PKPersonSummaryViewController.h"
 
-@interface PKPersonSummaryViewController ()
+@interface PKPersonSummaryViewController () {
+	
+	NSMutableData *receivedData;
+}
 
 @end
 
@@ -26,7 +29,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+	
+	
+	for(id key in [[PKInteractionData data] summary]) {
+		id value = [[[PKInteractionData data] summary] objectForKey:key];
+		NSLog(@"%@ %@", value, key);
+	}
+	
 }
 
 - (void)didReceiveMemoryWarning

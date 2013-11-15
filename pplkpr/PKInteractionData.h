@@ -16,6 +16,8 @@
 @property (retain) NSString *overallDescription;
 @property (assign) float *overallRating;
 
+@property (retain) NSDictionary *summary;
+
 @property (nonatomic, strong) NSArray *emotionsArray;
 
 +(id)data;
