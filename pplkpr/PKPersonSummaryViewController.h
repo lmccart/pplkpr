@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PKInteractionData.h"
 
 @interface PKPersonSummaryViewController : UIViewController
 

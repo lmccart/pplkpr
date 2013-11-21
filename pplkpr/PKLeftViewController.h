@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PKPersonSummaryViewController.h"
 
 @interface PKLeftViewController : UIViewController <UITextFieldDelegate>
 
+
+- (IBAction)submit:(id)sender;
 
 @end
 

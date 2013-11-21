@@ -44,7 +44,6 @@
 	
 	[_overallField setDelegate:self];
 	[_overallField setClearButtonMode:UITextFieldViewModeWhileEditing];
-	
 }
 
 - (void)didReceiveMemoryWarning
