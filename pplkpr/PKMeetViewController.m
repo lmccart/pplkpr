@@ -46,6 +46,7 @@
 {
 	[peripheralManager scanForPeripheralsWithServices:nil options:nil];
 	
+	
 }
 -(IBAction) stopScanClicked:(id)sender
 {
