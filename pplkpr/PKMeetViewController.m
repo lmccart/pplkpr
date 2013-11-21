@@ -16,7 +16,7 @@
 
 @implementation PKMeetViewController
 
-@synthesize guiRefreshTimer, peripheralManager, selectedPeripheral;
+@synthesize peripheralManager, selectedPeripheral;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -55,10 +55,6 @@
 
 -(void)dealloc
 {
-    if(guiRefreshTimer) {
-        [guiRefreshTimer invalidate];
-        guiRefreshTimer = nil;
-    }
     [super dealloc];
 }
 

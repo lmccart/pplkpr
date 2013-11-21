@@ -19,15 +19,9 @@
 	
 	CBCentralManager *peripheralManager;
     CBPeripheral *selectedPeripheral;
-	
-    NSTimer *guiRefreshTimer;
     NSMutableArray *devicesArray;
-    CBPeripheral *selectedDevice;
-    
-    IBOutlet UIView *connectView;
 }
 
-@property(nonatomic,retain) NSTimer *guiRefreshTimer;
 
 @property(nonatomic,retain) CBCentralManager *peripheralManager;
 @property(strong, retain) CBPeripheral *selectedPeripheral;
