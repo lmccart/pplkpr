@@ -18,6 +18,7 @@
 
 @property (strong, nonatomic) IBOutlet UITextField *whoTextField;
 @property (strong, nonatomic) FBFriendPickerViewController *friendPickerController;
+@property (retain, nonatomic) IBOutlet UISlider *intensitySlider;
 
 - (void)fillTextBoxAndDismiss:(NSString *)text;
 
@@ -174,8 +175,8 @@
 	[[PKInteractionData data] setPersonName:_whoTextField.text];
 	NSLog(@"%@ %@", [[PKInteractionData data] emotion] , [[PKInteractionData data] personName]);
 	
-	NSArray *keys = [NSArray arrayWithObjects:@"func", @"user", @"name", @"emotion", nil];
-	NSArray *objects = [NSArray arrayWithObjects:@"interaction", @"lauren", [[PKInteractionData data] personName], [[PKInteractionData data] emotion], nil];
+	NSArray *keys = [NSArray arrayWithObjects:@"func", @"user", @"name", @"emotion", @"intensity", nil];
+	NSArray *objects = [NSArray arrayWithObjects:@"interaction", @"lauren", [[PKInteractionData data] personName], [[PKInteractionData data] emotion], [_intensitySlider value], nil];
 	NSDictionary *dict = [NSDictionary dictionaryWithObjects:objects forKeys:keys];
 	
 	NSData * jsonData = [NSJSONSerialization dataWithJSONObject:dict options:0 error:nil];
@@ -245,6 +246,7 @@
     _whoTextField = nil;
 	_friendPickerController = nil;
 	_emotionPicker = nil;
+	_intensitySlider = nil;
 	[super viewDidUnload];
 }
 
@@ -252,6 +254,7 @@
 	[_whoTextField release];
 	[_friendPickerController release];
 	[_emotionPicker release];
+	[_intensitySlider release];
 	[super dealloc];
 }
 @end
