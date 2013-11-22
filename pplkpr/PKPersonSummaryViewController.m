@@ -38,6 +38,12 @@
 	
 }
 
+-(void)showMore:(id)sender {
+
+	[self.navigationController popToRootViewControllerAnimated:YES];
+}
+	
+	
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

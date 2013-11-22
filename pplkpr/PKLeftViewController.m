@@ -175,8 +175,8 @@
 	[[PKInteractionData data] setPersonName:_whoTextField.text];
 	NSLog(@"%@ %@", [[PKInteractionData data] emotion] , [[PKInteractionData data] personName]);
 	
-	NSArray *keys = [NSArray arrayWithObjects:@"func", @"user", @"name", @"emotion", @"intensity", nil];
-	NSArray *objects = [NSArray arrayWithObjects:@"interaction", @"lauren", [[PKInteractionData data] personName], [[PKInteractionData data] emotion], [_intensitySlider value], nil];
+	NSArray *keys = [NSArray arrayWithObjects:@"func", @"user", @"name", @"emotion",@"intensity", nil];
+	NSArray *objects = [NSArray arrayWithObjects:@"interaction", @"lauren", [[PKInteractionData data] personName], [[PKInteractionData data] emotion], [NSNumber numberWithFloat:[_intensitySlider value]], nil];
 	NSDictionary *dict = [NSDictionary dictionaryWithObjects:objects forKeys:keys];
 	
 	NSData * jsonData = [NSJSONSerialization dataWithJSONObject:dict options:0 error:nil];

@@ -11,4 +11,6 @@
 
 @interface PKPersonSummaryViewController : UIViewController
 
+-(IBAction) showMore:(id)sender;
+
 @end
