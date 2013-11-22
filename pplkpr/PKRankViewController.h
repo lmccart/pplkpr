@@ -11,7 +11,5 @@
 @interface PKRankViewController : UIViewController <UITextFieldDelegate>
 
 
-- (IBAction)submit:(id)sender;
-
 @end
 
