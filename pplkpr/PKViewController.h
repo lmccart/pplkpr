@@ -7,10 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <FacebookSDK/FacebookSDK.h>
 
-@interface PKViewController : UIViewController <UITextFieldDelegate, FBFriendPickerDelegate>
+@interface PKViewController : UIViewController <UITextFieldDelegate>
 
-- (IBAction)pickFriendsButtonTouch:(id)sender;
 
 @end

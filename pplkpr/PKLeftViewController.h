@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <FacebookSDK/FacebookSDK.h>
 #import "PKPersonSummaryViewController.h"
 
-@interface PKLeftViewController : UIViewController <UITextFieldDelegate>
+@interface PKLeftViewController : UIViewController <UITextFieldDelegate, FBFriendPickerDelegate>
 
 
+- (IBAction)pickFriendsButtonTouch:(id)sender;
 - (IBAction)submit:(id)sender;
 
 @end

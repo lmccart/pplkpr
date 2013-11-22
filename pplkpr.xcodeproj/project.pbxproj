@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		656B880117C4126500FE4ABE /* PKInteractionData.m in Sources */ = {isa = PBXBuildFile; fileRef = 656B880017C4126500FE4ABE /* PKInteractionData.m */; };
 		656B880217C4126500FE4ABE /* PKInteractionData.m in Sources */ = {isa = PBXBuildFile; fileRef = 656B880017C4126500FE4ABE /* PKInteractionData.m */; };
-		65AA165917A5E4A7007F89BA /* PKLeftOverallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65FC7C8F17A1A6E80045BFF2 /* PKLeftOverallViewController.m */; };
+		656E72C4183F86E600F59652 /* PKRankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 656E72C3183F86E600F59652 /* PKRankViewController.m */; };
 		65E0AFAC17A1C1D300E0FD0C /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65E0AFAB17A1C1D300E0FD0C /* FacebookSDK.framework */; };
 		65FC7C5117A1A37F0045BFF2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65FC7C5017A1A37F0045BFF2 /* Foundation.framework */; };
 		65FC7C5317A1A37F0045BFF2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65FC7C5217A1A37F0045BFF2 /* CoreGraphics.framework */; };
@@ -43,6 +43,8 @@
 /* Begin PBXFileReference section */
 		656B87FF17C4126500FE4ABE /* PKInteractionData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKInteractionData.h; sourceTree = "<group>"; };
 		656B880017C4126500FE4ABE /* PKInteractionData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKInteractionData.m; sourceTree = "<group>"; };
+		656E72C2183F86E600F59652 /* PKRankViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKRankViewController.h; sourceTree = "<group>"; };
+		656E72C3183F86E600F59652 /* PKRankViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKRankViewController.m; sourceTree = "<group>"; };
 		6585979E182B3108004ED170 /* File */ = {isa = PBXFileReference; lastKnownFileType = text; path = File; sourceTree = "<group>"; };
 		65E0AFAB17A1C1D300E0FD0C /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		65FC7C4D17A1A37F0045BFF2 /* pplkpr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pplkpr.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -68,8 +70,6 @@
 		65FC7C8617A1A69A0045BFF2 /* PKMeetViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PKMeetViewController.m; sourceTree = "<group>"; };
 		65FC7C8B17A1A6DA0045BFF2 /* PKLeftViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKLeftViewController.h; sourceTree = "<group>"; };
 		65FC7C8C17A1A6DA0045BFF2 /* PKLeftViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKLeftViewController.m; sourceTree = "<group>"; };
-		65FC7C8E17A1A6E80045BFF2 /* PKLeftOverallViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PKLeftOverallViewController.h; sourceTree = "<group>"; };
-		65FC7C8F17A1A6E80045BFF2 /* PKLeftOverallViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PKLeftOverallViewController.m; sourceTree = "<group>"; };
 		65FC7C9017A1A7030045BFF2 /* PKPersonSummaryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKPersonSummaryViewController.h; sourceTree = "<group>"; };
 		65FC7C9117A1A7030045BFF2 /* PKPersonSummaryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKPersonSummaryViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -133,9 +133,9 @@
 		65FC7C5617A1A37F0045BFF2 /* pplkpr */ = {
 			isa = PBXGroup;
 			children = (
+				65FC7C6217A1A37F0045BFF2 /* Main.storyboard */,
 				65FC7C5F17A1A37F0045BFF2 /* PKAppDelegate.h */,
 				65FC7C6017A1A37F0045BFF2 /* PKAppDelegate.m */,
-				65FC7C6217A1A37F0045BFF2 /* Main.storyboard */,
 				65FC7C6517A1A37F0045BFF2 /* PKViewController.h */,
 				65FC7C6617A1A37F0045BFF2 /* PKViewController.m */,
 				65FC7C8517A1A69A0045BFF2 /* PKMeetViewController.h */,
@@ -143,10 +143,10 @@
 				6585979E182B3108004ED170 /* File */,
 				65FC7C8B17A1A6DA0045BFF2 /* PKLeftViewController.h */,
 				65FC7C8C17A1A6DA0045BFF2 /* PKLeftViewController.m */,
-				65FC7C8E17A1A6E80045BFF2 /* PKLeftOverallViewController.h */,
-				65FC7C8F17A1A6E80045BFF2 /* PKLeftOverallViewController.m */,
 				65FC7C9017A1A7030045BFF2 /* PKPersonSummaryViewController.h */,
 				65FC7C9117A1A7030045BFF2 /* PKPersonSummaryViewController.m */,
+				656E72C2183F86E600F59652 /* PKRankViewController.h */,
+				656E72C3183F86E600F59652 /* PKRankViewController.m */,
 				65FC7C6817A1A37F0045BFF2 /* Images.xcassets */,
 				65FC7C5717A1A37F0045BFF2 /* Supporting Files */,
 				656B87FF17C4126500FE4ABE /* PKInteractionData.h */,
@@ -289,10 +289,10 @@
 				65FC7C5D17A1A37F0045BFF2 /* main.m in Sources */,
 				65FC7C8A17A1A6C40045BFF2 /* PKMeetViewController.m in Sources */,
 				656B880117C4126500FE4ABE /* PKInteractionData.m in Sources */,
-				65AA165917A5E4A7007F89BA /* PKLeftOverallViewController.m in Sources */,
 				65FC7C6717A1A37F0045BFF2 /* PKViewController.m in Sources */,
 				65FC7C6117A1A37F0045BFF2 /* PKAppDelegate.m in Sources */,
 				65FC7C9217A1A7030045BFF2 /* PKPersonSummaryViewController.m in Sources */,
+				656E72C4183F86E600F59652 /* PKRankViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
