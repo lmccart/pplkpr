@@ -15,6 +15,7 @@
 }
 
 @property (retain, nonatomic) IBOutlet UIPickerView *emotionPicker;
+@property (retain) NSString *emotion;
 
 @property (strong, nonatomic) IBOutlet UITextField *whoTextField;
 @property (strong, nonatomic) FBFriendPickerViewController *friendPickerController;
@@ -55,7 +56,7 @@
     [_whoTextField setClearButtonMode:UITextFieldViewModeWhileEditing];
     [_emotionPicker setDelegate:self];
     [_emotionPicker setDataSource:self];
-	[[PKInteractionData data] setEmotion:[[[PKInteractionData data] emotionsArray] objectAtIndex:0]];
+	_emotion = [[NSString alloc] init];
 	
 }
 
@@ -155,7 +156,7 @@
 {
     //Let's print in the console what the user had chosen;
     NSLog(@"Chosen item: %@", [[[PKInteractionData data] emotionsArray] objectAtIndex:row]);
-	[[PKInteractionData data] setEmotion:[[[PKInteractionData data] emotionsArray] objectAtIndex:row]];
+	_emotion = [[[PKInteractionData data] emotionsArray] objectAtIndex:row];
 }
 
 
@@ -176,13 +177,13 @@
 	NSLog(@"%@ %@", [[PKInteractionData data] emotion] , [[PKInteractionData data] personName]);
 	
 	NSArray *keys = [NSArray arrayWithObjects:@"func", @"user", @"name", @"emotion",@"intensity", nil];
-	NSArray *objects = [NSArray arrayWithObjects:@"interaction", @"lauren", [[PKInteractionData data] personName], [[PKInteractionData data] emotion], [NSNumber numberWithFloat:[_intensitySlider value]], nil];
+	NSArray *objects = [NSArray arrayWithObjects:@"interaction", @"lauren", [[PKInteractionData data] personName], _emotion, [NSNumber numberWithFloat:[_intensitySlider value]], nil];
 	NSDictionary *dict = [NSDictionary dictionaryWithObjects:objects forKeys:keys];
 	
 	NSData * jsonData = [NSJSONSerialization dataWithJSONObject:dict options:0 error:nil];
 	
 	
-	NSLog(@"emotion is %@", [[PKInteractionData data] emotion]);
+	NSLog(@"emotion is %@", _emotion);
 	
 	NSURL *url = [NSURL URLWithString:@"http://lauren-mccarthy.com/pplkpr-server/submit.php"];
 	
@@ -246,6 +247,7 @@
     _whoTextField = nil;
 	_friendPickerController = nil;
 	_emotionPicker = nil;
+	_emotion = nil;
 	_intensitySlider = nil;
 	[super viewDidUnload];
 }
@@ -254,6 +256,7 @@
 	[_whoTextField release];
 	[_friendPickerController release];
 	[_emotionPicker release];
+	[_emotion release];
 	[_intensitySlider release];
 	[super dealloc];
 }

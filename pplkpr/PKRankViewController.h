@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PKRankViewController : UIViewController <UITextFieldDelegate>
+@interface PKRankViewController : UIViewController <UITextFieldDelegate, UIScrollViewDelegate>
 
 
 @end

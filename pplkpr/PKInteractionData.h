@@ -13,8 +13,6 @@
 @property (retain) NSString *personName;
 @property (retain) NSMutableArray *dataArray;
 @property (retain) NSString *emotion;
-@property (retain) NSString *overallDescription;
-@property (assign) float *overallRating;
 
 @property (retain) NSDictionary *summary;
 
