@@ -16,6 +16,11 @@
 
 @property (retain, nonatomic) IBOutlet UIPickerView *emotionPicker;
 @property (retain) NSString *emotion;
+
+@property (nonatomic, strong) NSArray *valenceArray;
+@property (retain, nonatomic) IBOutlet UIPickerView *valencePicker;
+@property (retain) NSString *valence;
+
 @property (retain, nonatomic) NSDictionary *rankData;
 @property (retain, nonatomic) IBOutlet UITableView *rankView;
 
@@ -42,6 +47,13 @@
     [_emotionPicker setDelegate:self];
     [_emotionPicker setDataSource:self];
 	[_emotion initWithString: [[[PKInteractionData data] emotionsArray] objectAtIndex:0]];
+	NSLog(@"%@", _emotion);
+	
+	
+    [_valencePicker setDelegate:self];
+    [_valencePicker setDataSource:self];
+	_valenceArray = [[NSArray alloc] initWithObjects:@"more",@"less", nil];
+	[_valence initWithString: [_valenceArray objectAtIndex:0]];
 	
 	_rankData = [[NSDictionary alloc] init];
 	[_rankView setDelegate:self];
@@ -72,7 +84,11 @@
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-	return [[[PKInteractionData data] emotionsArray] count];
+	if (pickerView == _emotionPicker) {
+		return [[[PKInteractionData data] emotionsArray] count];
+	} else {
+		return [_valenceArray count];
+	}
 }
 
 
@@ -84,15 +100,24 @@
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-	return [[[PKInteractionData data] emotionsArray] objectAtIndex:row];
+	if (pickerView == _emotionPicker) {
+		return [[[PKInteractionData data] emotionsArray] objectAtIndex:row];
+	} else {
+		return [_valenceArray objectAtIndex:row];
+	}
 }
 
 //If the user chooses from the pickerview, it calls this function;
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    //Let's print in the console what the user had chosen;
-	NSLog(@"Chosen item: %@", [[[PKInteractionData data] emotionsArray] objectAtIndex:row]);
-	_emotion = [[[PKInteractionData data] emotionsArray] objectAtIndex:row];
+	if (pickerView == _emotionPicker) {
+		//Let's print in the console what the user had chosen;
+		NSLog(@"Chosen item: %@", [[[PKInteractionData data] emotionsArray] objectAtIndex:row]);
+		_emotion = [[[PKInteractionData data] emotionsArray] objectAtIndex:row];
+	} else {
+		NSLog(@"Chosen item: %@", [_valenceArray objectAtIndex:row]);
+		_valence = [_valenceArray objectAtIndex:row];
+	}
 	[self updateView];
 }
 
