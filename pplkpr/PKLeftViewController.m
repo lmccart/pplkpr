@@ -88,7 +88,7 @@
 {
 }
 
-- (void)pushOverallViewController
+- (void)pushPersonViewController
 {
 	[[PKInteractionData data] setJumpToName:[[PKInteractionData data] personName]];
 	[self.tabBarController setSelectedIndex:1];
@@ -151,7 +151,7 @@
 	connection = nil;
     receivedData = nil;
 	
-	[self pushOverallViewController];
+	[self pushPersonViewController];
 	
 }
 

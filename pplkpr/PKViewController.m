@@ -118,6 +118,8 @@
 	//    [alert show];
 	//    [alert release];
 	
+	
+	[self pushPersonViewController:[_priorityData objectAtIndex:indexPath.row]];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
@@ -194,19 +196,13 @@
 }
 
 
-
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-	if ( [segue.identifier isEqualToString:@"MeetSegue"] ){
-		//PKMeetViewController *mvc = (PKMeetViewController*)segue.destinationViewController;
-	}
-	else if ([segue.identifier isEqualToString:@"LeftSegue"]){
-		//[[PKInteractionData data] setPersonName:_whoTextField.text];
-	}
-	else if ([segue.identifier isEqualToString:@"RankSegue"]){
-		//[[PKInteractionData data] setPersonName:_whoTextField.text];
-	}
+- (void)pushPersonViewController:(NSString *)name
+{
+	[[PKInteractionData data] setJumpToName:[[PKInteractionData data] name]];
+	[self.tabBarController setSelectedIndex:1];
 }
+
+
 
 - (void)viewDidUnload {
 	[super viewDidUnload];
