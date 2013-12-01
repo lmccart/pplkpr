@@ -14,6 +14,7 @@
 	NSMutableData *receivedData;
 }
 
+@property (retain, nonatomic) IBOutlet UILabel *personLabel;
 @property (retain, nonatomic) IBOutlet UIPickerView *emotionPicker;
 @property (retain) NSString *emotion;
 @property (retain, nonatomic) IBOutlet UISlider *intensitySlider;
@@ -41,7 +42,11 @@
     [_emotionPicker setDelegate:self];
     [_emotionPicker setDataSource:self];
 	_emotion = [[NSString alloc] init];
-	
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+	[_personLabel setText:[[PKInteractionData data] personName]];
+	_emotion = [[[PKInteractionData data] emotionsArray] objectAtIndex:0];
 }
 
 
@@ -162,6 +167,7 @@
 
 - (void)viewDidUnload {
 	
+	_personLabel = nil;
 	_emotionPicker = nil;
 	_emotion = nil;
 	_intensitySlider = nil;
@@ -169,6 +175,7 @@
 }
 
 - (void)dealloc {
+	[_personLabel release];
 	[_emotionPicker release];
 	[_emotion release];
 	[_intensitySlider release];

@@ -12,6 +12,8 @@
 
 @interface PKMeetViewController ()
 
+@property (retain, nonatomic) IBOutlet UILabel *personLabel;
+
 @end
 
 @implementation PKMeetViewController
