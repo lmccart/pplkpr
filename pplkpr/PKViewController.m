@@ -119,7 +119,7 @@
 	//    [alert release];
 	
 	
-	[self pushPersonViewController:[_priorityData objectAtIndex:indexPath.row]];
+	[self pushPersonViewController:[[_priorityData objectAtIndex:indexPath.row] objectAtIndex:0]];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
@@ -198,7 +198,8 @@
 
 - (void)pushPersonViewController:(NSString *)name
 {
-	[[PKInteractionData data] setJumpToName:[[PKInteractionData data] name]];
+	NSLog(@"name %@", name);
+	[[PKInteractionData data] setJumpToName:name];
 	[self.tabBarController setSelectedIndex:1];
 }
 
