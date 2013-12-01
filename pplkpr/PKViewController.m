@@ -27,14 +27,6 @@
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
-	UIImage *tabImage = [UIImage imageNamed:@"pplkpr.png"];
-	UIImage *tabImageSel = [UIImage imageNamed:@"pplkpr_sel.png"];
-	
-	tabImage = [tabImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-	tabImageSel = [tabImageSel imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-	
-	self.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"" image:tabImage selectedImage:tabImageSel];
-	self.tabBarItem.imageInsets = UIEdgeInsetsMake(9, 0, -9, 0);
 }
 
 

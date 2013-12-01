@@ -44,15 +44,6 @@
 	
     [super viewDidLoad];
 	
-	UIImage *tabImage = [UIImage imageNamed:@"rank.png"];
-	UIImage *tabImageSel = [UIImage imageNamed:@"rank_sel.png"];
-	
-	tabImage = [tabImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-	tabImageSel = [tabImageSel imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-	
-	self.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"" image:tabImage selectedImage:tabImageSel];
-	self.tabBarItem.imageInsets = UIEdgeInsetsMake(9, 0, -9, 0);
-	
     [_emotionPicker setDelegate:self];
     [_emotionPicker setDataSource:self];
 	[_emotion initWithString: [[[PKInteractionData data] emotionsArray] objectAtIndex:0]];

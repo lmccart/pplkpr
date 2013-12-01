@@ -35,17 +35,6 @@
 {
     [super viewDidLoad];
 	
-	
-	UIImage *tabImage = [UIImage imageNamed:@"report.png"];
-	UIImage *tabImageSel = [UIImage imageNamed:@"report_sel.png"];
-	
-	tabImage = [tabImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-	tabImageSel = [tabImageSel imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-	
-	self.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"" image:tabImage selectedImage:tabImageSel];
-	self.tabBarItem.imageInsets = UIEdgeInsetsMake(9, 0, -9, 0);
-	
-	
     if (_friendPickerController == nil) {
         // Create friend picker, and get data loaded into it.
 		_friendPickerController = [[FBFriendPickerViewController alloc] init];
