@@ -85,7 +85,8 @@
 
 - (void)pushOverallViewController
 {
-	[self performSegueWithIdentifier:@"overallSegue" sender:self];
+	[[PKInteractionData data] setJumpToName:[[PKInteractionData data] personName]];
+	[self.tabBarController setSelectedIndex:1];
 }
 
 

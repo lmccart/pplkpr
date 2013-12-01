@@ -16,7 +16,10 @@
 
 @property (retain) NSDictionary *summary;
 
+@property (retain) NSString *jumpToName;
+
 @property (nonatomic, strong) NSArray *emotionsArray;
+
 
 +(id)data;
 -(id)init;

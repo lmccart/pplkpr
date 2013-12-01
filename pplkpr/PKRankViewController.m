@@ -43,24 +43,32 @@
 {
 	
     [super viewDidLoad];
-	
-    [_emotionPicker setDelegate:self];
-    [_emotionPicker setDataSource:self];
+
+	[_emotionPicker setDelegate:self];
+	[_emotionPicker setDataSource:self];
 	[_emotion initWithString: [[[PKInteractionData data] emotionsArray] objectAtIndex:0]];
 	NSLog(@"%@", _emotion);
 	
 	
-    [_valencePicker setDelegate:self];
-    [_valencePicker setDataSource:self];
+	[_valencePicker setDelegate:self];
+	[_valencePicker setDataSource:self];
 	_valenceArray = [[NSArray alloc] initWithObjects:@"more",@"less", nil];
 	[_valence initWithString: [_valenceArray objectAtIndex:0]];
 	
 	_rankData = [[NSDictionary alloc] init];
 	[_rankView setDelegate:self];
-    [_rankView setDataSource:self];
+	[_rankView setDataSource:self];
 	
 	[self requestData];
 	
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+	
+	if ([[PKInteractionData data] jumpToName]) {
+		[self performSegueWithIdentifier:@"personSegue" sender:self];
+		[[PKInteractionData data] setJumpToName:nil];
+	}
 }
 
 
