@@ -168,23 +168,11 @@
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-//    NSString *continent = [self tableView:tableView titleForHeaderInSection:indexPath.section];
-//    NSString *country = [[self.countries valueForKey:continent] objectAtIndex:indexPath.row];
-//	
-//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:@"You selected %@!", country] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//    [alert show];
-//    [alert release];
-	
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	[self pushPersonViewController:[[_rankData objectForKey:_emotion] objectAtIndex:indexPath.row]];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-}
 
 
 - (void)requestData {
@@ -252,6 +240,12 @@
 }
 
 
+
+- (void)pushPersonViewController:(NSString *)name
+{
+	[[PKInteractionData data] setJumpToName:name];
+	[self performSegueWithIdentifier:@"personSegue" sender:self];
+}
 
 
 - (void)didReceiveMemoryWarning

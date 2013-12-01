@@ -90,8 +90,7 @@
 	} else return 0;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellIdentifier = @"priority_cell";
 	
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -109,23 +108,13 @@
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-	//    NSString *continent = [self tableView:tableView titleForHeaderInSection:indexPath.section];
-	//    NSString *country = [[self.countries valueForKey:continent] objectAtIndex:indexPath.row];
-	//
-	//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:@"You selected %@!", country] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-	//    [alert show];
-	//    [alert release];
-	
-	
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	[self pushPersonViewController:[[_priorityData objectAtIndex:indexPath.row] objectAtIndex:0]];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *text = [NSString stringWithFormat:@"%@ makes you most %@", [[_priorityData objectAtIndex:indexPath.row] objectAtIndex:0], [[_priorityData objectAtIndex:indexPath.row] objectAtIndex:1]];
 
 	NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:17.0f]}];
@@ -198,7 +187,6 @@
 
 - (void)pushPersonViewController:(NSString *)name
 {
-	NSLog(@"name %@", name);
 	[[PKInteractionData data] setJumpToName:name];
 	[self.tabBarController setSelectedIndex:1];
 }
