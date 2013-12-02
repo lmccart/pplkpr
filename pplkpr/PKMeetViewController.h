@@ -7,27 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <Foundation/Foundation.h>
-#import <CoreBluetooth/CBCentralManager.h>
-#import <CoreBluetooth/CBPeripheral.h>
-#import <CoreBluetooth/CBService.h>
-#import <CoreBluetooth/CBUUID.h>
-#import <CoreBluetooth/CBCharacteristic.h>
-#import <CoreBluetooth/CBDescriptor.h>
 
-@interface PKMeetViewController : UIViewController<CBCentralManagerDelegate, CBPeripheralDelegate> {
-	
-	CBCentralManager *peripheralManager;
-    CBPeripheral *selectedPeripheral;
-    NSMutableArray *devicesArray;
-}
-
-
-@property(nonatomic,retain) CBCentralManager *peripheralManager;
-@property(strong, retain) CBPeripheral *selectedPeripheral;
-
--(IBAction) startScanClicked:(id)sender;
--(IBAction) stopScanClicked:(id)sender;
+@interface PKMeetViewController : UIViewController
 
 
 @end
