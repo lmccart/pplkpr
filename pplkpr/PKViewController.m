@@ -60,11 +60,26 @@
 
 
 -(IBAction) startScanClicked:(id)sender {
+	NSLog(@"start scan");
 	[peripheralManager scanForPeripheralsWithServices:nil options:nil];
+	
+	// start log to file
+	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+	NSString *documentsDirectory = [paths objectAtIndex:0];
+	NSString *fileName =[NSString stringWithFormat:@"%@.log",[NSDate date]];
+	NSString *logFilePath = [documentsDirectory stringByAppendingPathComponent:fileName];
+	freopen([logFilePath cStringUsingEncoding:NSASCIIStringEncoding],"a+",stderr);
+	 
 }
 
 -(IBAction) stopScanClicked:(id)sender {
 	
+	// log back to console
+	int stderrSave = dup(STDERR_FILENO);
+	fflush(stderr);
+	dup2(stderrSave, STDERR_FILENO);
+	close(stderrSave);
+	NSLog(@"stop scan");
 }
 
 
