@@ -11,30 +11,20 @@
 
 @implementation PKAppDelegate
 
-
 @synthesize locationManager;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	
 	if ([CLLocationManager locationServicesEnabled]) {
-		
-		if (nil == locationManager)
+		if (locationManager == nil) {
 			locationManager = [[CLLocationManager alloc] init];
+		}
 		locationManager.delegate = self;
-		
-		/*locationManager.desiredAccuracy = kCLLocationAccuracyKilometer;
-		 locationManager.distanceFilter = 0; // movement threshold for new events
-		 [locationManager startUpdatingLocation];*/
-		
 		[locationManager startMonitoringSignificantLocationChanges];
-		
 	} else {
-		
 		UIAlertView *servicesDisabledAlert = [[UIAlertView alloc] initWithTitle:@"Location Services Disabled" message:@"You currently have all location services for this device disabled. Please enable them in Settings." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
 		[servicesDisabledAlert show];
 		[servicesDisabledAlert release];
-		
 	}
 	
 	// tab bar items
@@ -91,32 +81,53 @@
 	// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-#pragma location stuff
+#pragma Location
+
+/*
+ notes on location:
+ - energy usage can be analyzed with the instruments tool
+ - regular gps usage destroys battery life (15% of battery every few hours)
+ - significant location changes do not use gps, and use less power
+ - enabling the gps once every 10-15 minutes is not a viable option
+ - iphone 5+ has allowDeferredLocationUpdatesUntilTraveled, accurate & low power
+ 
+ location update logic
+ trigger notification unless:
+ - time since last update is small (e.g., <30 min, moving in a car)
+ - distance since last update is small (e.g., <100m, sitting in one place)
+ */
 
 // Delegate method from the CLLocationManagerDelegate protocol.
 - (void)locationManager:(CLLocationManager *)manager
      didUpdateLocations:(NSArray *)locations {
-	NSLog(@"update\n");
-	// If it's a relatively recent event, turn off updates to save power
-	CLLocation* location = [locations lastObject];
-	// NSDate* eventDate = location.timestamp;
-	// NSTimeInterval howRecent = [eventDate timeIntervalSinceNow];
-	//if (abs(howRecent) < 15.0) {
-    // If the event is recent, do something with it.
-    NSLog(@"latitude %+.6f, longitude %+.6f\n",
-          location.coordinate.latitude,
-          location.coordinate.longitude);
 	
+	CLLocation* current = [locations lastObject];
     
-    UILocalNotification * theNotification = [[UILocalNotification alloc] init];
-    theNotification.alertBody = @"Are you about to meet someone or did you leave someone?";
-    theNotification.alertAction = @"Yes";
-    theNotification.hasAction = YES;
+	NSLog(@"didUpdateLocations: %+.6f, %+.6f\n",
+          current.coordinate.latitude,
+          current.coordinate.longitude);
 	
-    theNotification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
+	NSUInteger count = [locations count];
+	if(count > 1) {
+		CLLocation* previous = [locations objectAtIndex:(count - 2)];
+		NSTimeInterval time = [[current timestamp] timeIntervalSinceDate:[previous timestamp]];
+		NSTimeInterval timeThresholdInSeconds = 15 * 60; // 15 minutes
+		if(time < timeThresholdInSeconds) {
+			return;
+		}
+		CLLocationDistance distance = [current distanceFromLocation:previous];
+		CLLocationDistance distanceThresholdInMeters = 100; // 100 meters
+		if(distance < distanceThresholdInMeters) {
+			return;
+		}
+	}
     
-    [[UIApplication sharedApplication] scheduleLocalNotification:theNotification];
-	//}
+    UILocalNotification * notification = [[UILocalNotification alloc] init];
+    notification.alertBody = @"Are you about to meet someone or did you leave someone?";
+    notification.alertAction = @"Yes";
+    notification.hasAction = YES;
+    notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
+    [[UIApplication sharedApplication] scheduleLocalNotification:notification];
 	
 }
 

@@ -80,3 +80,15 @@ ArrayList<Float> successiveDifferences(List<Float> list) {
   }
   return results;
 }
+
+ArrayList<Float> successiveRatios(List<Float> list) {
+  ArrayList<Float> results = new ArrayList<Float>();
+  Float prev = null;
+  for(Float cur : list) {
+    if(prev != null) {
+      results.add(cur / prev);
+    }
+    prev = cur;
+  }
+  return results;
+}

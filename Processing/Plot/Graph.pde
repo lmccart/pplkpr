@@ -7,12 +7,14 @@ class Graph extends ArrayList<Float> {
   void add(float value) {
     if(value == Float.NEGATIVE_INFINITY ||
       value == Float.POSITIVE_INFINITY ||
-      value != value)
+      value != value) {
       return;
-    if(value > maxValue)
+    }
+    if(value > maxValue) {
       maxValue = value;
-    if(value < minValue)
+    } else if(value < minValue) {
       minValue = value;
+    }
     super.add(value);
   }
   float normalize(float x) {
@@ -29,6 +31,14 @@ class Graph extends ArrayList<Float> {
     }
     endShape();
     
+    pushStyle();
+    stroke(255, 0, 0);
+    for(int i = 0; i < size(); i++) {
+      point(map(i, 0, size() - 1, 0, width), height - getNorm(i) * height);
+    }
+    popStyle();
+
+  
 //    fill(0);
 //    textAlign(RIGHT, TOP);
 //    text(nf(maxValue, 0, 0), width - 10, 10);
