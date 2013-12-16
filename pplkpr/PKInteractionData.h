@@ -12,6 +12,7 @@
 
 @property (retain) NSString *personName;
 @property (retain) NSMutableArray *dataArray;
+@property (retain) NSMutableArray *locationsArray;
 @property (retain) NSString *emotion;
 
 @property (retain) NSDictionary *summary;

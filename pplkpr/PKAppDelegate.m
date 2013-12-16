@@ -8,6 +8,7 @@
 
 #import "PKAppDelegate.h"
 #import "PKViewController.h"
+#import "PKInteractionData.h"
 
 @implementation PKAppDelegate
 
@@ -101,23 +102,28 @@
 - (void)locationManager:(CLLocationManager *)manager
      didUpdateLocations:(NSArray *)locations {
 	
-	CLLocation* current = [locations lastObject];
+	NSMutableArray* locationsArray = [[PKInteractionData data] locationsArray];
+	[locationsArray addObjectsFromArray:locations];
+	CLLocation* current = [locationsArray lastObject];
     
 	NSLog(@"didUpdateLocations: %+.6f, %+.6f\n",
           current.coordinate.latitude,
           current.coordinate.longitude);
 	
-	NSUInteger count = [locations count];
+	NSTimeInterval timeThresholdInSeconds = 15 * 60; // 15 minutes
+	CLLocationDistance distanceThresholdInMeters = 100; // 100 meters
+	
+	NSUInteger count = [locationsArray count];
 	if(count > 1) {
-		CLLocation* previous = [locations objectAtIndex:(count - 2)];
+		CLLocation* previous = [locationsArray objectAtIndex:(count - 2)];
 		NSTimeInterval time = [[current timestamp] timeIntervalSinceDate:[previous timestamp]];
-		NSTimeInterval timeThresholdInSeconds = 15 * 60; // 15 minutes
 		if(time < timeThresholdInSeconds) {
+			NSLog(@"too recent: %f < %f\n", time, timeThresholdInSeconds);
 			return;
 		}
 		CLLocationDistance distance = [current distanceFromLocation:previous];
-		CLLocationDistance distanceThresholdInMeters = 100; // 100 meters
 		if(distance < distanceThresholdInMeters) {
+			NSLog(@"too close: %f < %f\n", distance, distanceThresholdInMeters);
 			return;
 		}
 	}
