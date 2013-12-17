@@ -11,7 +11,6 @@
 		653F8F79185FA9A50009F785 /* pplkpr.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 653F8F77185FA9A50009F785 /* pplkpr.xcdatamodeld */; };
 		653F8F8218608BA50009F785 /* Report.m in Sources */ = {isa = PBXBuildFile; fileRef = 653F8F8118608BA50009F785 /* Report.m */; };
 		656B880117C4126500FE4ABE /* PKInteractionData.m in Sources */ = {isa = PBXBuildFile; fileRef = 656B880017C4126500FE4ABE /* PKInteractionData.m */; };
-		656B880217C4126500FE4ABE /* PKInteractionData.m in Sources */ = {isa = PBXBuildFile; fileRef = 656B880017C4126500FE4ABE /* PKInteractionData.m */; };
 		656E72C4183F86E600F59652 /* PKRankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 656E72C3183F86E600F59652 /* PKRankViewController.m */; };
 		65E0AFAC17A1C1D300E0FD0C /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65E0AFAB17A1C1D300E0FD0C /* FacebookSDK.framework */; };
 		65E398F6184972FB00E3B2B4 /* pplkpr_sel.png in Resources */ = {isa = PBXBuildFile; fileRef = 65E398F0184972FB00E3B2B4 /* pplkpr_sel.png */; };
@@ -32,25 +31,10 @@
 		65FC7C6417A1A37F0045BFF2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65FC7C6217A1A37F0045BFF2 /* Main.storyboard */; };
 		65FC7C6717A1A37F0045BFF2 /* PKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65FC7C6617A1A37F0045BFF2 /* PKViewController.m */; };
 		65FC7C6917A1A37F0045BFF2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65FC7C6817A1A37F0045BFF2 /* Images.xcassets */; };
-		65FC7C7017A1A37F0045BFF2 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65FC7C6F17A1A37F0045BFF2 /* XCTest.framework */; };
-		65FC7C7117A1A37F0045BFF2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65FC7C5017A1A37F0045BFF2 /* Foundation.framework */; };
-		65FC7C7217A1A37F0045BFF2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65FC7C5417A1A37F0045BFF2 /* UIKit.framework */; };
-		65FC7C7A17A1A37F0045BFF2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 65FC7C7817A1A37F0045BFF2 /* InfoPlist.strings */; };
-		65FC7C7C17A1A37F0045BFF2 /* pplkprTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 65FC7C7B17A1A37F0045BFF2 /* pplkprTests.m */; };
 		65FC7C8A17A1A6C40045BFF2 /* PKMeetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65FC7C8617A1A69A0045BFF2 /* PKMeetViewController.m */; };
 		65FC7C8D17A1A6DA0045BFF2 /* PKLeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65FC7C8C17A1A6DA0045BFF2 /* PKLeftViewController.m */; };
 		65FC7C9217A1A7030045BFF2 /* PKPersonSummaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65FC7C9117A1A7030045BFF2 /* PKPersonSummaryViewController.m */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		65FC7C7317A1A37F0045BFF2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 65FC7C4517A1A37F0045BFF2 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 65FC7C4C17A1A37F0045BFF2;
-			remoteInfo = pplkpr;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		653F8F75185FA9760009F785 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -86,11 +70,7 @@
 		65FC7C6517A1A37F0045BFF2 /* PKViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PKViewController.h; sourceTree = "<group>"; };
 		65FC7C6617A1A37F0045BFF2 /* PKViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PKViewController.m; sourceTree = "<group>"; };
 		65FC7C6817A1A37F0045BFF2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		65FC7C6E17A1A37F0045BFF2 /* pplkprTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = pplkprTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		65FC7C6F17A1A37F0045BFF2 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		65FC7C7717A1A37F0045BFF2 /* pplkprTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "pplkprTests-Info.plist"; sourceTree = "<group>"; };
-		65FC7C7917A1A37F0045BFF2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		65FC7C7B17A1A37F0045BFF2 /* pplkprTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = pplkprTests.m; sourceTree = "<group>"; };
 		65FC7C8517A1A69A0045BFF2 /* PKMeetViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PKMeetViewController.h; sourceTree = "<group>"; };
 		65FC7C8617A1A69A0045BFF2 /* PKMeetViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PKMeetViewController.m; sourceTree = "<group>"; };
 		65FC7C8B17A1A6DA0045BFF2 /* PKLeftViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKLeftViewController.h; sourceTree = "<group>"; };
@@ -112,19 +92,39 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		65FC7C6B17A1A37F0045BFF2 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				65FC7C7017A1A37F0045BFF2 /* XCTest.framework in Frameworks */,
-				65FC7C7217A1A37F0045BFF2 /* UIKit.framework in Frameworks */,
-				65FC7C7117A1A37F0045BFF2 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		27ED09CB1860E5C000ABCC76 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				65FC7C6517A1A37F0045BFF2 /* PKViewController.h */,
+				65FC7C6617A1A37F0045BFF2 /* PKViewController.m */,
+				65FC7C8517A1A69A0045BFF2 /* PKMeetViewController.h */,
+				65FC7C8617A1A69A0045BFF2 /* PKMeetViewController.m */,
+				65E398FC184976FF00E3B2B4 /* PKReportViewController.h */,
+				65E398FD184976FF00E3B2B4 /* PKReportViewController.m */,
+				65FC7C8B17A1A6DA0045BFF2 /* PKLeftViewController.h */,
+				65FC7C8C17A1A6DA0045BFF2 /* PKLeftViewController.m */,
+				65FC7C9017A1A7030045BFF2 /* PKPersonSummaryViewController.h */,
+				65FC7C9117A1A7030045BFF2 /* PKPersonSummaryViewController.m */,
+				656E72C2183F86E600F59652 /* PKRankViewController.h */,
+				656E72C3183F86E600F59652 /* PKRankViewController.m */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		27ED09CC1860E6B100ABCC76 /* Data Structures */ = {
+			isa = PBXGroup;
+			children = (
+				656B87FF17C4126500FE4ABE /* PKInteractionData.h */,
+				656B880017C4126500FE4ABE /* PKInteractionData.m */,
+				653F8F8018608BA50009F785 /* Report.h */,
+				653F8F8118608BA50009F785 /* Report.m */,
+			);
+			name = "Data Structures";
+			sourceTree = "<group>";
+		};
 		65E398D81849619300E3B2B4 /* assets */ = {
 			isa = PBXGroup;
 			children = (
@@ -145,7 +145,6 @@
 			isa = PBXGroup;
 			children = (
 				65FC7C5617A1A37F0045BFF2 /* pplkpr */,
-				65FC7C7517A1A37F0045BFF2 /* pplkprTests */,
 				65FC7C4F17A1A37F0045BFF2 /* Frameworks */,
 				65FC7C4E17A1A37F0045BFF2 /* Products */,
 			);
@@ -155,7 +154,6 @@
 			isa = PBXGroup;
 			children = (
 				65FC7C4D17A1A37F0045BFF2 /* pplkpr.app */,
-				65FC7C6E17A1A37F0045BFF2 /* pplkprTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -176,28 +174,14 @@
 		65FC7C5617A1A37F0045BFF2 /* pplkpr */ = {
 			isa = PBXGroup;
 			children = (
-				653F8F8018608BA50009F785 /* Report.h */,
-				653F8F8118608BA50009F785 /* Report.m */,
-				65E398D81849619300E3B2B4 /* assets */,
 				65FC7C6217A1A37F0045BFF2 /* Main.storyboard */,
 				65FC7C5F17A1A37F0045BFF2 /* PKAppDelegate.h */,
 				65FC7C6017A1A37F0045BFF2 /* PKAppDelegate.m */,
-				65FC7C6517A1A37F0045BFF2 /* PKViewController.h */,
-				65FC7C6617A1A37F0045BFF2 /* PKViewController.m */,
-				65FC7C8517A1A69A0045BFF2 /* PKMeetViewController.h */,
-				65FC7C8617A1A69A0045BFF2 /* PKMeetViewController.m */,
-				65E398FC184976FF00E3B2B4 /* PKReportViewController.h */,
-				65E398FD184976FF00E3B2B4 /* PKReportViewController.m */,
-				65FC7C8B17A1A6DA0045BFF2 /* PKLeftViewController.h */,
-				65FC7C8C17A1A6DA0045BFF2 /* PKLeftViewController.m */,
-				65FC7C9017A1A7030045BFF2 /* PKPersonSummaryViewController.h */,
-				65FC7C9117A1A7030045BFF2 /* PKPersonSummaryViewController.m */,
-				656E72C2183F86E600F59652 /* PKRankViewController.h */,
-				656E72C3183F86E600F59652 /* PKRankViewController.m */,
+				27ED09CC1860E6B100ABCC76 /* Data Structures */,
+				27ED09CB1860E5C000ABCC76 /* View Controllers */,
 				65FC7C6817A1A37F0045BFF2 /* Images.xcassets */,
+				65E398D81849619300E3B2B4 /* assets */,
 				65FC7C5717A1A37F0045BFF2 /* Supporting Files */,
-				656B87FF17C4126500FE4ABE /* PKInteractionData.h */,
-				656B880017C4126500FE4ABE /* PKInteractionData.m */,
 			);
 			path = pplkpr;
 			sourceTree = "<group>";
@@ -209,24 +193,6 @@
 				65FC7C5917A1A37F0045BFF2 /* InfoPlist.strings */,
 				65FC7C5C17A1A37F0045BFF2 /* main.m */,
 				65FC7C5E17A1A37F0045BFF2 /* pplkpr-Prefix.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		65FC7C7517A1A37F0045BFF2 /* pplkprTests */ = {
-			isa = PBXGroup;
-			children = (
-				65FC7C7B17A1A37F0045BFF2 /* pplkprTests.m */,
-				65FC7C7617A1A37F0045BFF2 /* Supporting Files */,
-			);
-			path = pplkprTests;
-			sourceTree = "<group>";
-		};
-		65FC7C7617A1A37F0045BFF2 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				65FC7C7717A1A37F0045BFF2 /* pplkprTests-Info.plist */,
-				65FC7C7817A1A37F0045BFF2 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -251,24 +217,6 @@
 			productReference = 65FC7C4D17A1A37F0045BFF2 /* pplkpr.app */;
 			productType = "com.apple.product-type.application";
 		};
-		65FC7C6D17A1A37F0045BFF2 /* pplkprTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 65FC7C8217A1A37F0045BFF2 /* Build configuration list for PBXNativeTarget "pplkprTests" */;
-			buildPhases = (
-				65FC7C6A17A1A37F0045BFF2 /* Sources */,
-				65FC7C6B17A1A37F0045BFF2 /* Frameworks */,
-				65FC7C6C17A1A37F0045BFF2 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				65FC7C7417A1A37F0045BFF2 /* PBXTargetDependency */,
-			);
-			name = pplkprTests;
-			productName = pplkprTests;
-			productReference = 65FC7C6E17A1A37F0045BFF2 /* pplkprTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -281,9 +229,6 @@
 				TargetAttributes = {
 					65FC7C4C17A1A37F0045BFF2 = {
 						DevelopmentTeam = 6W492ETQGY;
-					};
-					65FC7C6D17A1A37F0045BFF2 = {
-						TestTargetID = 65FC7C4C17A1A37F0045BFF2;
 					};
 				};
 			};
@@ -301,7 +246,6 @@
 			projectRoot = "";
 			targets = (
 				65FC7C4C17A1A37F0045BFF2 /* pplkpr */,
-				65FC7C6D17A1A37F0045BFF2 /* pplkprTests */,
 			);
 		};
 /* End PBXProject section */
@@ -322,14 +266,6 @@
 				65E398F8184972FB00E3B2B4 /* rank_sel.png in Resources */,
 				65FC7C6417A1A37F0045BFF2 /* Main.storyboard in Resources */,
 				65E398F9184972FB00E3B2B4 /* rank.png in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		65FC7C6C17A1A37F0045BFF2 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				65FC7C7A17A1A37F0045BFF2 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -354,24 +290,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		65FC7C6A17A1A37F0045BFF2 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				65FC7C7C17A1A37F0045BFF2 /* pplkprTests.m in Sources */,
-				656B880217C4126500FE4ABE /* PKInteractionData.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		65FC7C7417A1A37F0045BFF2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 65FC7C4C17A1A37F0045BFF2 /* pplkpr */;
-			targetProxy = 65FC7C7317A1A37F0045BFF2 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		65FC7C5917A1A37F0045BFF2 /* InfoPlist.strings */ = {
@@ -388,14 +307,6 @@
 				65FC7C6317A1A37F0045BFF2 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		65FC7C7817A1A37F0045BFF2 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				65FC7C7917A1A37F0045BFF2 /* en */,
-			);
-			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -524,56 +435,6 @@
 			};
 			name = Release;
 		};
-		65FC7C8317A1A37F0045BFF2 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/pplkpr.app/pplkpr";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(SYSTEM_APPS_DIR)/Xcode5-DP3.app/Contents/Developer/Library/Frameworks",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "pplkpr/pplkpr-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "pplkprTests/pplkprTests-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/HxM2\\ iOS\\ Library",
-					"$(SRCROOT)/pplkpr/HxM2\\ iOS\\ Library",
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		65FC7C8417A1A37F0045BFF2 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/pplkpr.app/pplkpr";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(SYSTEM_APPS_DIR)/Xcode5-DP3.app/Contents/Developer/Library/Frameworks",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "pplkpr/pplkpr-Prefix.pch";
-				INFOPLIST_FILE = "pplkprTests/pplkprTests-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/HxM2\\ iOS\\ Library",
-					"$(SRCROOT)/pplkpr/HxM2\\ iOS\\ Library",
-				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -591,15 +452,6 @@
 			buildConfigurations = (
 				65FC7C8017A1A37F0045BFF2 /* Debug */,
 				65FC7C8117A1A37F0045BFF2 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		65FC7C8217A1A37F0045BFF2 /* Build configuration list for PBXNativeTarget "pplkprTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				65FC7C8317A1A37F0045BFF2 /* Debug */,
-				65FC7C8417A1A37F0045BFF2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
