@@ -12,7 +12,7 @@
 
 @interface Report : NSManagedObject
 
-@property (nonatomic, retain) NSDate * timestamp;
+@property (nonatomic, retain) NSNumber *timestamp;
 @property (nonatomic, retain) NSNumber * rating;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * emotion;

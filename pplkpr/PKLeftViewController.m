@@ -169,13 +169,14 @@
 - (IBAction)addReport:(id)sender
 {
 	
-	NSLog(@"ADDING REPORT %@ %@", [[PKInteractionData data] emotion] , [[PKInteractionData data] personName]);
+	NSLog(@"ADDING REPORT %@ %@", _emotion, [[PKInteractionData data] personName]);
 
 	Report * newReport = [NSEntityDescription insertNewObjectForEntityForName:@"Report"
 													   inManagedObjectContext:self.managedObjectContext];
 	newReport.name = [[PKInteractionData data] personName];
-	newReport.emotion = [[PKInteractionData data] emotion];
+	newReport.emotion = _emotion;
 	newReport.rating = [NSNumber numberWithFloat:[_intensitySlider value]];
+	newReport.timestamp = [NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]];
 	NSError *error;
 	if (![self.managedObjectContext save:&error]) {
 		NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
