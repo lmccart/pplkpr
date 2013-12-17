@@ -10,7 +10,6 @@
 
 @interface PKInteractionData : NSObject
 
-@property (retain) NSMutableArray *dataArray;
 @property (retain) NSMutableArray *locationsArray;
 
 @property (retain) NSDictionary *summary;

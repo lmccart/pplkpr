@@ -34,7 +34,6 @@
 	
     if (self = [super init]) {
 		_emotionsArray = [[NSArray alloc] initWithObjects:@"Excited",@"Aroused",@"Angry",@"Scared", @"Anxious", @"Bored", @"Calm", nil];
-		_dataArray = [[NSMutableArray alloc] initWithObjects:[NSNumber numberWithFloat: 0.2], [NSNumber numberWithFloat: 0.8], [NSNumber numberWithFloat: 0.6], nil];
 		_locationsArray = [[NSMutableArray alloc] init];
 		_summary = [[NSDictionary alloc] init];
 		
@@ -82,7 +81,6 @@
 - (void)dealloc {
 	[_locationsArray release];
 	[_emotionsArray release];
-	[_dataArray release];
 	[_summary release];
 	[_jumpToName release];
 	[super dealloc];
