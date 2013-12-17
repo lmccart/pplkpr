@@ -17,6 +17,14 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (retain, nonatomic) CLLocationManager *locationManager;
 
+@property (nonatomic, retain, readonly) NSManagedObjectModel *managedObjectModel;
+@property (nonatomic, retain, readonly) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, retain, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+
+
+
 - (void)stopUpdatingLocation:(NSString *)state;
+
+- (NSArray*) getAllReports;
 
 @end

@@ -10,6 +10,8 @@
 #import "PKMeetViewController.h"
 #import "PKLeftViewController.h"
 #import "PKInteractionData.h"
+#import "PKAppDelegate.h"
+#import "Report.h"
 
 @interface PKViewController() <UITableViewDataSource, UITableViewDelegate> {
 	
@@ -20,6 +22,8 @@
 @property (retain, nonatomic) NSArray *priorityData;
 @property (retain, nonatomic) IBOutlet UITableView *priorityView;
 
+@property (nonatomic,strong) NSArray* fetchedReportsArray;
+@property (retain, nonatomic) IBOutlet UITableView *reportsView;
 
 @end
 
@@ -42,9 +46,14 @@
 	[_priorityView setDelegate:self];
     [_priorityView setDataSource:self];
 	
+	PKAppDelegate* appDelegate = (PKAppDelegate*)[UIApplication sharedApplication].delegate;
+	_fetchedReportsArray = [appDelegate getAllReports];
+	[_reportsView setDelegate:self];
+    [_reportsView setDataSource:self];
+	[_reportsView reloadData];
+	
 	[self requestData];
 }
-
 
 - (void)didReceiveMemoryWarning
 {
@@ -55,6 +64,9 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+	PKAppDelegate* appDelegate = (PKAppDelegate*)[UIApplication sharedApplication].delegate;
+	_fetchedReportsArray = [appDelegate getAllReports];
+	[_reportsView reloadData];
 }
 
 
@@ -240,60 +252,82 @@ didUpdateNotificationStateForCharacteristic:(CBCharacteristic *)characteristic
 
 
 #pragma table
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-	if (_priorityData) {
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+	if (tableView == _priorityView) {
+		if (_priorityData) {
+			return 1;
+		}
+		else return 0;
+	} else if (tableView == _reportsView && [_fetchedReportsArray count] > 0) {
 		return 1;
-	}
-    else return 0;
+	} else return 0;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     return @"NOTIFICATIONS";
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-	if (_priorityData) {
-		return [_priorityData count];
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+	if (tableView == _priorityView) {
+		if (_priorityData) {
+			return [_priorityData count];
+		} else return 0;
+	} else if (tableView == _reportsView) {
+		return [_fetchedReportsArray count];
 	} else return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellIdentifier = @"priority_cell";
+	
+    static NSString *cellIdentifier = @"cell";
 	
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier] autorelease];
     }
 	
-	cell.textLabel.text = [NSString stringWithFormat:@"%@ makes you most %@", [[_priorityData objectAtIndex:indexPath.row] objectAtIndex:0], [[_priorityData objectAtIndex:indexPath.row] objectAtIndex:1]];
+	if (tableView == _priorityView) {
+		cell.textLabel.text = [NSString stringWithFormat:@"%@ makes you most %@", [[_priorityData objectAtIndex:indexPath.row] objectAtIndex:0], [[_priorityData objectAtIndex:indexPath.row] objectAtIndex:1]];
+	} else if (tableView == _reportsView) {
+		Report * report = [self.fetchedReportsArray objectAtIndex:indexPath.row];
+		cell.textLabel.text = [NSString stringWithFormat:@"%@, %@, %@",report.name, report.emotion, report.rating];
+	}
+	
     cell.textLabel.numberOfLines = 0;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-	
-	
-	NSLog(@"%d %@", indexPath.row, [_priorityData objectAtIndex:indexPath.row]);
-	
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	[self pushPersonViewController:[[_priorityData objectAtIndex:indexPath.row] objectAtIndex:0]];
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+	
+	if (tableView == _priorityView) {
+		[self pushPersonViewController:[[_priorityData objectAtIndex:indexPath.row] objectAtIndex:0]];
+		[tableView deselectRowAtIndexPath:indexPath animated:YES];
+	}
 }
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *text = [NSString stringWithFormat:@"%@ makes you most %@", [[_priorityData objectAtIndex:indexPath.row] objectAtIndex:0], [[_priorityData objectAtIndex:indexPath.row] objectAtIndex:1]];
+	if (tableView == _priorityView) {
+		NSString *text = [NSString stringWithFormat:@"%@ makes you most %@", [[_priorityData objectAtIndex:indexPath.row] objectAtIndex:0], [[_priorityData objectAtIndex:indexPath.row] objectAtIndex:1]];
 
-	NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:17.0f]}];
-	
-	CGRect rect = [attributedText boundingRectWithSize:(CGSize){260, CGFLOAT_MAX}
-											   options:NSStringDrawingUsesLineFragmentOrigin
-											   context:nil];
-    return rect.size.height+25;
-
+		NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:17.0f]}];
+		
+		CGRect rect = [attributedText boundingRectWithSize:(CGSize){260, CGFLOAT_MAX}
+												   options:NSStringDrawingUsesLineFragmentOrigin
+												   context:nil];
+		return rect.size.height+25;
+	} else if (tableView == _reportsView) {
+		NSString *text = [[_fetchedReportsArray objectAtIndex:indexPath.row] name];
+		
+		NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:17.0f]}];
+		
+		CGRect rect = [attributedText boundingRectWithSize:(CGSize){260, CGFLOAT_MAX}
+												   options:NSStringDrawingUsesLineFragmentOrigin
+												   context:nil];
+		return rect.size.height+25;
+	}
+	else return 0;
 }
 
 

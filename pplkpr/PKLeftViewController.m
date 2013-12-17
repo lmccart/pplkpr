@@ -8,6 +8,8 @@
 
 #import "PKLeftViewController.h"
 #import "PKInteractionData.h"
+#import "Report.h"
+#import "PKAppDelegate.h"
 
 @interface PKLeftViewController () <UIPickerViewDataSource, UIPickerViewDelegate> {
 	
@@ -38,6 +40,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	
+	PKAppDelegate* appDelegate = (PKAppDelegate*)[UIApplication sharedApplication].delegate;
+	self.managedObjectContext = appDelegate.managedObjectContext;
 	
     [_emotionPicker setDelegate:self];
     [_emotionPicker setDataSource:self];
@@ -97,6 +102,8 @@
 
 - (IBAction)submit:(id)sender {
 	
+	[self addReport:sender];
+	
 	NSLog(@"%@ %@", [[PKInteractionData data] emotion] , [[PKInteractionData data] personName]);
 	
 	NSArray *keys = [NSArray arrayWithObjects:@"func", @"user", @"name", @"emotion",@"intensity", nil];
@@ -130,6 +137,7 @@
 	}
 }
 
+
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
 	[receivedData setLength:0];
 }
@@ -156,6 +164,24 @@
 }
 
 
+
+
+- (IBAction)addReport:(id)sender
+{
+	
+	NSLog(@"ADDING REPORT %@ %@", [[PKInteractionData data] emotion] , [[PKInteractionData data] personName]);
+
+	Report * newReport = [NSEntityDescription insertNewObjectForEntityForName:@"Report"
+													   inManagedObjectContext:self.managedObjectContext];
+	newReport.name = [[PKInteractionData data] personName];
+	newReport.emotion = [[PKInteractionData data] emotion];
+	newReport.rating = [NSNumber numberWithFloat:[_intensitySlider value]];
+	NSError *error;
+	if (![self.managedObjectContext save:&error]) {
+		NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+	}
+	[self.view endEditing:YES];
+}
 
 
 

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		653F8F76185FA9760009F785 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 653F8F75185FA9760009F785 /* CoreData.framework */; };
+		653F8F79185FA9A50009F785 /* pplkpr.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 653F8F77185FA9A50009F785 /* pplkpr.xcdatamodeld */; };
+		653F8F8218608BA50009F785 /* Report.m in Sources */ = {isa = PBXBuildFile; fileRef = 653F8F8118608BA50009F785 /* Report.m */; };
 		656B880117C4126500FE4ABE /* PKInteractionData.m in Sources */ = {isa = PBXBuildFile; fileRef = 656B880017C4126500FE4ABE /* PKInteractionData.m */; };
 		656B880217C4126500FE4ABE /* PKInteractionData.m in Sources */ = {isa = PBXBuildFile; fileRef = 656B880017C4126500FE4ABE /* PKInteractionData.m */; };
 		656E72C4183F86E600F59652 /* PKRankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 656E72C3183F86E600F59652 /* PKRankViewController.m */; };
@@ -50,6 +53,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		653F8F75185FA9760009F785 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		653F8F78185FA9A50009F785 /* pplkpr.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = pplkpr.xcdatamodel; sourceTree = "<group>"; };
+		653F8F8018608BA50009F785 /* Report.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Report.h; sourceTree = "<group>"; };
+		653F8F8118608BA50009F785 /* Report.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Report.m; sourceTree = "<group>"; };
 		656B87FF17C4126500FE4ABE /* PKInteractionData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKInteractionData.h; sourceTree = "<group>"; };
 		656B880017C4126500FE4ABE /* PKInteractionData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKInteractionData.m; sourceTree = "<group>"; };
 		656E72C2183F86E600F59652 /* PKRankViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKRankViewController.h; sourceTree = "<group>"; };
@@ -97,6 +104,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				653F8F76185FA9760009F785 /* CoreData.framework in Frameworks */,
 				65FC7C5317A1A37F0045BFF2 /* CoreGraphics.framework in Frameworks */,
 				65E0AFAC17A1C1D300E0FD0C /* FacebookSDK.framework in Frameworks */,
 				65FC7C5517A1A37F0045BFF2 /* UIKit.framework in Frameworks */,
@@ -120,6 +128,7 @@
 		65E398D81849619300E3B2B4 /* assets */ = {
 			isa = PBXGroup;
 			children = (
+				653F8F77185FA9A50009F785 /* pplkpr.xcdatamodeld */,
 				65E398FF184A3E6500E3B2B4 /* left.png */,
 				65E39900184A3E6500E3B2B4 /* meet.png */,
 				65E398F0184972FB00E3B2B4 /* pplkpr_sel.png */,
@@ -154,6 +163,7 @@
 		65FC7C4F17A1A37F0045BFF2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				653F8F75185FA9760009F785 /* CoreData.framework */,
 				65E0AFAB17A1C1D300E0FD0C /* FacebookSDK.framework */,
 				65FC7C5017A1A37F0045BFF2 /* Foundation.framework */,
 				65FC7C5217A1A37F0045BFF2 /* CoreGraphics.framework */,
@@ -166,6 +176,8 @@
 		65FC7C5617A1A37F0045BFF2 /* pplkpr */ = {
 			isa = PBXGroup;
 			children = (
+				653F8F8018608BA50009F785 /* Report.h */,
+				653F8F8118608BA50009F785 /* Report.m */,
 				65E398D81849619300E3B2B4 /* assets */,
 				65FC7C6217A1A37F0045BFF2 /* Main.storyboard */,
 				65FC7C5F17A1A37F0045BFF2 /* PKAppDelegate.h */,
@@ -268,7 +280,7 @@
 				ORGANIZATIONNAME = "Lauren McCarthy";
 				TargetAttributes = {
 					65FC7C4C17A1A37F0045BFF2 = {
-						DevelopmentTeam = 6W492ETQGY;
+						DevelopmentTeam = U8S7N2677U;
 					};
 					65FC7C6D17A1A37F0045BFF2 = {
 						TestTargetID = 65FC7C4C17A1A37F0045BFF2;
@@ -328,6 +340,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				653F8F79185FA9A50009F785 /* pplkpr.xcdatamodeld in Sources */,
 				65FC7C8D17A1A6DA0045BFF2 /* PKLeftViewController.m in Sources */,
 				65FC7C5D17A1A37F0045BFF2 /* main.m in Sources */,
 				65E398FE184976FF00E3B2B4 /* PKReportViewController.m in Sources */,
@@ -335,6 +348,7 @@
 				656B880117C4126500FE4ABE /* PKInteractionData.m in Sources */,
 				65FC7C6717A1A37F0045BFF2 /* PKViewController.m in Sources */,
 				65FC7C6117A1A37F0045BFF2 /* PKAppDelegate.m in Sources */,
+				653F8F8218608BA50009F785 /* Report.m in Sources */,
 				65FC7C9217A1A7030045BFF2 /* PKPersonSummaryViewController.m in Sources */,
 				656E72C4183F86E600F59652 /* PKRankViewController.m in Sources */,
 			);
@@ -591,6 +605,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		653F8F77185FA9A50009F785 /* pplkpr.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				653F8F78185FA9A50009F785 /* pplkpr.xcdatamodel */,
+			);
+			currentVersion = 653F8F78185FA9A50009F785 /* pplkpr.xcdatamodel */;
+			path = pplkpr.xcdatamodeld;
+			sourceTree = SOURCE_ROOT;
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 65FC7C4517A1A37F0045BFF2 /* Project object */;
 }

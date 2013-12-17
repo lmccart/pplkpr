@@ -10,6 +10,8 @@
 
 @interface PKLeftViewController : UIViewController <UITextFieldDelegate>
 
+@property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
+
 - (IBAction)submit:(id)sender;
 
 @end
