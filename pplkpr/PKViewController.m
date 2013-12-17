@@ -46,8 +46,7 @@
 	[_priorityView setDelegate:self];
     [_priorityView setDataSource:self];
 	
-	PKAppDelegate* appDelegate = (PKAppDelegate*)[UIApplication sharedApplication].delegate;
-	_fetchedReportsArray = [appDelegate getAllReports];
+	_fetchedReportsArray = [[PKInteractionData data] getAllReports];
 	[_reportsView setDelegate:self];
     [_reportsView setDataSource:self];
 	[_reportsView reloadData];
@@ -64,8 +63,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-	PKAppDelegate* appDelegate = (PKAppDelegate*)[UIApplication sharedApplication].delegate;
-	_fetchedReportsArray = [appDelegate getAllReports];
+	_fetchedReportsArray = [[PKInteractionData data] getAllReports];
 	[_reportsView reloadData];
 }
 

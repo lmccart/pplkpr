@@ -118,7 +118,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-	[[PKInteractionData data] setPersonName:_whoTextField.text];
+	//[[PKInteractionData data] setPersonName:_whoTextField.text];
 }
 
 - (void)pushOverallViewController

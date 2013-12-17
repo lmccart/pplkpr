@@ -10,10 +10,8 @@
 
 @interface PKInteractionData : NSObject
 
-@property (retain) NSString *personName;
 @property (retain) NSMutableArray *dataArray;
 @property (retain) NSMutableArray *locationsArray;
-@property (retain) NSString *emotion;
 
 @property (retain) NSDictionary *summary;
 
@@ -22,8 +20,15 @@
 @property (nonatomic, strong) NSArray *emotionsArray;
 
 
+
+
+@property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
+
 +(id)data;
 -(id)init;
+
+- (void)addReport:(NSString *)name withEmotion:(NSString *)emotion withRating:(NSNumber *)rating;
+- (NSArray*) getAllReports;
 
 @end
 

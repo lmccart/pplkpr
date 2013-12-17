@@ -202,25 +202,6 @@
 	NSLog(@"did you move?");
 }
 
--(NSArray*)getAllReports
-{
-	// initializing NSFetchRequest
-	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-	
-	//Setting Entity to be Queried
-	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Report"
-											  inManagedObjectContext:self.managedObjectContext];
-	[fetchRequest setEntity:entity];
-	NSError* error;
-	
-	// Query on managedObjectContext With Generated fetchRequest
-	NSArray *fetchedReports = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
-	
-	// Returning Fetched Records
-	return fetchedReports;
-}
-
-
 - (void)dealloc {
 	[locationManager release];
 	[super dealloc];

@@ -25,6 +25,5 @@
 
 - (void)stopUpdatingLocation:(NSString *)state;
 
-- (NSArray*) getAllReports;
 
 @end

@@ -7,6 +7,8 @@
 //
 
 #import "PKInteractionData.h"
+#import "Report.h"
+#import "PKAppDelegate.h"
 
 @interface PKInteractionData()
 
@@ -14,6 +16,9 @@
 @end
 
 @implementation PKInteractionData
+
+
+@synthesize managedObjectContext = _managedObjectContext;
 
 + (id)data {
     static PKInteractionData *data = nil;
@@ -32,14 +37,49 @@
 		_dataArray = [[NSMutableArray alloc] initWithObjects:[NSNumber numberWithFloat: 0.2], [NSNumber numberWithFloat: 0.8], [NSNumber numberWithFloat: 0.6], nil];
 		_locationsArray = [[NSMutableArray alloc] init];
 		_summary = [[NSDictionary alloc] init];
+		
 		_jumpToName = nil;
     }
+	
+	PKAppDelegate* appDelegate = (PKAppDelegate*)[UIApplication sharedApplication].delegate;
+	self.managedObjectContext = appDelegate.managedObjectContext;
 	
     return self;
 }
 
+
+
+-(NSArray*)getAllReports {
+	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Report"
+											  inManagedObjectContext:self.managedObjectContext];
+	[fetchRequest setEntity:entity];
+	NSError* error;
+	NSArray *fetchedReports = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+	return fetchedReports;
+}
+
+
+- (void)addReport:(NSString *)name withEmotion:(NSString *)emotion withRating:(NSNumber *)rating {
+	
+	NSLog(@"ADDING REPORT %@ %@ %@", name, rating, emotion);
+	
+	Report * newReport = [NSEntityDescription insertNewObjectForEntityForName:@"Report"
+													   inManagedObjectContext:self.managedObjectContext];
+	newReport.name = name;
+	newReport.emotion = emotion;
+	newReport.rating = rating;
+	newReport.timestamp = [NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]];
+	NSError *error;
+	if (![self.managedObjectContext save:&error]) {
+		NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+	}
+}
+
+
+
+
 - (void)dealloc {
-	[_personName release];
 	[_locationsArray release];
 	[_emotionsArray release];
 	[_dataArray release];

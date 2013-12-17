@@ -8,8 +8,6 @@
 
 #import "PKLeftViewController.h"
 #import "PKInteractionData.h"
-#import "Report.h"
-#import "PKAppDelegate.h"
 
 @interface PKLeftViewController () <UIPickerViewDataSource, UIPickerViewDelegate> {
 	
@@ -41,16 +39,13 @@
 {
     [super viewDidLoad];
 	
-	PKAppDelegate* appDelegate = (PKAppDelegate*)[UIApplication sharedApplication].delegate;
-	self.managedObjectContext = appDelegate.managedObjectContext;
-	
     [_emotionPicker setDelegate:self];
     [_emotionPicker setDataSource:self];
 	_emotion = [[NSString alloc] init];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-	[_personLabel setText:[[PKInteractionData data] personName]];
+	//[_personLabel setText:[[PKInteractionData data] personName]];
 	_emotion = [[[PKInteractionData data] emotionsArray] objectAtIndex:0];
 }
 
@@ -95,19 +90,18 @@
 
 - (void)pushPersonViewController
 {
-	[[PKInteractionData data] setJumpToName:[[PKInteractionData data] personName]];
+	//[[PKInteractionData data] setJumpToName:[[PKInteractionData data] personName]];
 	[self.tabBarController setSelectedIndex:1];
 }
 
 
 - (IBAction)submit:(id)sender {
 	
-	[self addReport:sender];
+	[[PKInteractionData data] addReport:@"JOHN" withEmotion:_emotion withRating:[NSNumber numberWithFloat:[_intensitySlider value]]];
 	
-	NSLog(@"%@ %@", [[PKInteractionData data] emotion] , [[PKInteractionData data] personName]);
 	
 	NSArray *keys = [NSArray arrayWithObjects:@"func", @"user", @"name", @"emotion",@"intensity", nil];
-	NSArray *objects = [NSArray arrayWithObjects:@"interaction", @"lauren", [[PKInteractionData data] personName], _emotion, [NSNumber numberWithFloat:[_intensitySlider value]], nil];
+	NSArray *objects = [NSArray arrayWithObjects:@"interaction", @"lauren", @"JOHN", _emotion, [NSNumber numberWithFloat:[_intensitySlider value]], nil];
 	NSDictionary *dict = [NSDictionary dictionaryWithObjects:objects forKeys:keys];
 	
 	NSData * jsonData = [NSJSONSerialization dataWithJSONObject:dict options:0 error:nil];
@@ -164,25 +158,6 @@
 }
 
 
-
-
-- (IBAction)addReport:(id)sender
-{
-	
-	NSLog(@"ADDING REPORT %@ %@", _emotion, [[PKInteractionData data] personName]);
-
-	Report * newReport = [NSEntityDescription insertNewObjectForEntityForName:@"Report"
-													   inManagedObjectContext:self.managedObjectContext];
-	newReport.name = [[PKInteractionData data] personName];
-	newReport.emotion = _emotion;
-	newReport.rating = [NSNumber numberWithFloat:[_intensitySlider value]];
-	newReport.timestamp = [NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]];
-	NSError *error;
-	if (![self.managedObjectContext save:&error]) {
-		NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
-	}
-	[self.view endEditing:YES];
-}
 
 
 
