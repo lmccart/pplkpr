@@ -20,17 +20,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	if ([CLLocationManager locationServicesEnabled]) {
-		if (locationManager == nil) {
-			locationManager = [[CLLocationManager alloc] init];
-		}
-		locationManager.delegate = self;
-		[locationManager startMonitoringSignificantLocationChanges];
-	} else {
-		UIAlertView *servicesDisabledAlert = [[UIAlertView alloc] initWithTitle:@"Location Services Disabled" message:@"You currently have all location services for this device disabled. Please enable them in Settings." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-		[servicesDisabledAlert show];
-		[servicesDisabledAlert release];
-	}
+	[self startUpdatingLocation];
 	
 	// tab bar items
 	
@@ -130,7 +120,7 @@
 	return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
 }
 
-#pragma Location
+#pragma location
 
 /*
  notes on location:
@@ -187,19 +177,32 @@
 
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
-	// The location "unknown" error simply means the manager is currently unable to get the location.
-	if ([error code] != kCLErrorLocationUnknown) {
-		[self stopUpdatingLocation:NSLocalizedString(@"Error", @"Error")];
-	}
+	NSLog(@"locationManager failed with error %@", error);
 }
 
-- (void)stopUpdatingLocation:(NSString *)state {
+- (void)startUpdatingLocation {
+	if ([CLLocationManager locationServicesEnabled]) {
+		if (locationManager == nil) {
+			locationManager = [[CLLocationManager alloc] init];
+		}
+		locationManager.delegate = self;
+		[locationManager startMonitoringSignificantLocationChanges];
+	} else {
+		UIAlertView *servicesDisabledAlert = [[UIAlertView alloc] initWithTitle:@"Location Services Disabled" message:@"You currently have all location services for this device disabled. Please enable them in Settings." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+		[servicesDisabledAlert show];
+		[servicesDisabledAlert release];
+	}
+	NSLog(@"startUpdatingLocation");
+}
+
+- (void)stopUpdatingLocation {
 	[locationManager stopMonitoringSignificantLocationChanges];
 	locationManager.delegate = nil;
+	NSLog(@"stopUpdatingLocation");
 }
 
 - (void)didReceiveLocalNotification:(UILocalNotification *)notification {
-	NSLog(@"did you move?");
+	
 }
 
 - (void)dealloc {

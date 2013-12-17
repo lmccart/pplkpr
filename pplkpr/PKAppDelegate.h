@@ -22,8 +22,8 @@
 @property (nonatomic, retain, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
 
-
-- (void)stopUpdatingLocation:(NSString *)state;
+- (void)startUpdatingLocation;
+- (void)stopUpdatingLocation;
 
 
 @end

@@ -280,7 +280,7 @@
 				ORGANIZATIONNAME = "Lauren McCarthy";
 				TargetAttributes = {
 					65FC7C4C17A1A37F0045BFF2 = {
-						DevelopmentTeam = U8S7N2677U;
+						DevelopmentTeam = 6W492ETQGY;
 					};
 					65FC7C6D17A1A37F0045BFF2 = {
 						TestTargetID = 65FC7C4C17A1A37F0045BFF2;
