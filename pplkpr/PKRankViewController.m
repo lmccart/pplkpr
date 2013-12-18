@@ -49,7 +49,6 @@
 	[_emotion initWithString: [[[PKInteractionData data] emotionsArray] objectAtIndex:0]];
 	NSLog(@"%@", _emotion);
 	
-	
 	[_valencePicker setDelegate:self];
 	[_valencePicker setDataSource:self];
 	_valenceArray = [[NSArray alloc] initWithObjects:@"more",@"less", nil];
@@ -169,7 +168,9 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	[self pushPersonViewController:[[_rankData objectForKey:_emotion] objectAtIndex:indexPath.row]];
+	
+	[[PKInteractionData data] setJumpToName:[[_rankData objectForKey:_emotion] objectAtIndex:indexPath.row]];
+	[self performSegueWithIdentifier:@"personSegue" sender:self];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
@@ -237,14 +238,6 @@
 		NSLog(@"%@", [_rankData objectForKey:_emotion]);
 	//}
 	[_rankView reloadData];
-}
-
-
-
-- (void)pushPersonViewController:(NSString *)name
-{
-	[[PKInteractionData data] setJumpToName:name];
-	[self performSegueWithIdentifier:@"personSegue" sender:self];
 }
 
 

@@ -32,7 +32,6 @@
 {
     [super viewDidLoad];
 	
-	
 	for(id key in [[PKInteractionData data] summary]) {
 		id value = [[[PKInteractionData data] summary] objectForKey:key];
 		NSLog(@"%@ %@", value, key);

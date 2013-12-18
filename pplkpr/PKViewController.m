@@ -12,6 +12,7 @@
 #import "PKInteractionData.h"
 #import "PKAppDelegate.h"
 #import "Report.h"
+#import "Person.h"
 
 @interface PKViewController() <UITableViewDataSource, UITableViewDelegate> {
 	
@@ -22,7 +23,7 @@
 @property (retain, nonatomic) NSArray *priorityData;
 @property (retain, nonatomic) IBOutlet UITableView *priorityView;
 
-@property (nonatomic,strong) NSArray* fetchedReportsArray;
+@property (nonatomic,strong) NSArray* fetchedPeopleArray;
 @property (retain, nonatomic) IBOutlet UITableView *reportsView;
 
 @end
@@ -40,7 +41,7 @@
 	[_priorityView setDelegate:self];
     [_priorityView setDataSource:self];
 	
-	_fetchedReportsArray = [[PKInteractionData data] getAllReports];
+	_fetchedPeopleArray = [[PKInteractionData data] getAllPeople];
 	[_reportsView setDelegate:self];
     [_reportsView setDataSource:self];
 	[_reportsView reloadData];
@@ -57,7 +58,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-	_fetchedReportsArray = [[PKInteractionData data] getAllReports];
+	_fetchedPeopleArray = [[PKInteractionData data] getAllPeople];
 	[_reportsView reloadData];
 }
 
@@ -80,7 +81,7 @@
 			return 1;
 		}
 		else return 0;
-	} else if (tableView == _reportsView && [_fetchedReportsArray count] > 0) {
+	} else if (tableView == _reportsView && [_fetchedPeopleArray count] > 0) {
 		return 1;
 	} else return 0;
 }
@@ -95,7 +96,7 @@
 			return [_priorityData count];
 		} else return 0;
 	} else if (tableView == _reportsView) {
-		return [_fetchedReportsArray count];
+		return [_fetchedPeopleArray count];
 	} else return 0;
 }
 
@@ -111,8 +112,11 @@
 	if (tableView == _priorityView) {
 		cell.textLabel.text = [NSString stringWithFormat:@"%@ makes you most %@", [[_priorityData objectAtIndex:indexPath.row] objectAtIndex:0], [[_priorityData objectAtIndex:indexPath.row] objectAtIndex:1]];
 	} else if (tableView == _reportsView) {
-		Report * report = [self.fetchedReportsArray objectAtIndex:indexPath.row];
-		cell.textLabel.text = [NSString stringWithFormat:@"%@, %@, %@",report.name, report.emotion, report.rating];
+		Person *person = [self.fetchedPeopleArray objectAtIndex:indexPath.row];
+		cell.textLabel.text = [NSString stringWithFormat:@"%@, %d",person.name, [person.reports count]];
+		
+		Report *report = (Report*)[[person.reports allObjects] objectAtIndex:0];
+		cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, %@", report.emotion, report.rating];
 	}
 	
     cell.textLabel.numberOfLines = 0;
@@ -140,7 +144,7 @@
 												   context:nil];
 		return rect.size.height+25;
 	} else if (tableView == _reportsView) {
-		NSString *text = [[_fetchedReportsArray objectAtIndex:indexPath.row] name];
+		NSString *text = [[_fetchedPeopleArray objectAtIndex:indexPath.row] name];
 		
 		NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:17.0f]}];
 		

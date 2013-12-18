@@ -8,6 +8,7 @@
 
 #import "PKInteractionData.h"
 #import "Report.h"
+#import "Person.h"
 #import "PKAppDelegate.h"
 
 @interface PKInteractionData()
@@ -48,7 +49,7 @@
 
 
 
--(NSArray*)getAllReports {
+- (NSArray*)getRankedReports {
 	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
 	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Report"
 											  inManagedObjectContext:self.managedObjectContext];
@@ -58,10 +59,35 @@
 	return fetchedReports;
 }
 
+- (NSArray*)getAllPeople {
+	
+	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Person"
+											  inManagedObjectContext:self.managedObjectContext];
+	[fetchRequest setEntity:entity];
+	NSError* error;
+	NSArray *fetchedPeople = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+	return fetchedPeople;
+}
+
+
+- (NSArray*)getAllReports {
+	
+	NSFetchRequest *request = [[NSFetchRequest alloc] init];
+	
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@", @"JOHN"];
+	[request setEntity:[NSEntityDescription entityForName:@"Report" inManagedObjectContext:self.managedObjectContext]];
+	[request setPredicate:predicate];
+	NSError* error;
+	NSArray *fetchedReports = [self.managedObjectContext executeFetchRequest:request error:&error];
+	return fetchedReports;
+}
+
 
 - (void)addReport:(NSString *)name withEmotion:(NSString *)emotion withRating:(NSNumber *)rating {
 	
 	NSLog(@"ADDING REPORT %@ %@ %@", name, rating, emotion);
+	
 	
 	Report * newReport = [NSEntityDescription insertNewObjectForEntityForName:@"Report"
 													   inManagedObjectContext:self.managedObjectContext];
@@ -69,12 +95,20 @@
 	newReport.emotion = emotion;
 	newReport.rating = rating;
 	newReport.timestamp = [NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]];
+	
+	
+	Person * newPerson = [NSEntityDescription insertNewObjectForEntityForName:@"Person"
+													   inManagedObjectContext:self.managedObjectContext];
+	newPerson.name = name;
+	newPerson.reports = [NSSet setWithObjects:newReport, nil];
+	
+	
 	NSError *error;
 	if (![self.managedObjectContext save:&error]) {
 		NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
 	}
+	
 }
-
 
 
 
