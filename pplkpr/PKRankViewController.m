@@ -20,7 +20,7 @@
 
 @property (nonatomic, strong) NSArray *valenceArray;
 @property (retain, nonatomic) IBOutlet UIPickerView *valencePicker;
-@property BOOL valence;
+@property BOOL valence; // 0-more-desc, 1-less-asc
 
 @property (retain, nonatomic) NSDictionary *rankData;
 @property (retain, nonatomic) IBOutlet UITableView *rankView;
@@ -59,7 +59,7 @@
 	[_rankView setDelegate:self];
 	[_rankView setDataSource:self];
 	
-	[[PKInteractionData data] getRankedPeople:YES];
+	[[PKInteractionData data] getRankedPeople];
 	
 }
 
@@ -127,7 +127,7 @@
 		_valence = (BOOL)row;
 	}
 	NSLog(@"order %d", _valence);
-	_rankData = [[PKInteractionData data] getRankedPeople:_valence];
+	_rankData = [[PKInteractionData data] getRankedPeople];
 	[self updateView];
 }
 
@@ -163,8 +163,13 @@
     }
 	
 	if ([_rankData objectForKey:_emotion]) {
-		Person *p = [[_rankData objectForKey:_emotion] objectAtIndex:indexPath.row];
-		cell.textLabel.text = p.name;
+		// walk from bottom or top based on valence
+		int ind = (_valence) ? [[_rankData objectForKey:_emotion] count] - indexPath.row - 1 : indexPath.row;
+		Person *p = [[_rankData objectForKey:_emotion] objectAtIndex:ind];
+		
+		SEL sel = NSSelectorFromString([NSString stringWithFormat:@"%@", [_emotion lowercaseString]]);
+		NSNumber *val = [p performSelector:sel];
+		cell.textLabel.text = [NSString stringWithFormat:@"%@ ~ %@", p.name, val];
 	}
     else cell.textLabel.text = @"";
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -174,7 +179,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	
-	[[PKInteractionData data] setJumpToName:[[_rankData objectForKey:_emotion] objectAtIndex:indexPath.row]];
+	int ind = (_valence) ? [[_rankData objectForKey:_emotion] count] - indexPath.row - 1 : indexPath.row;
+	[[PKInteractionData data] setJumpToName:[[_rankData objectForKey:_emotion] objectAtIndex:ind]];
 	[self performSegueWithIdentifier:@"personSegue" sender:self];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }

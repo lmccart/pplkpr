@@ -30,7 +30,7 @@
 - (NSArray*)getAllReports;
 - (NSArray*)getAllPeople;
 - (void)calculateGlobalAverages;
-- (NSMutableDictionary *)getRankedPeople:(BOOL)order;
+- (NSMutableDictionary *)getRankedPeople;
 
 @end
 

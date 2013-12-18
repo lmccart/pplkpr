@@ -259,7 +259,7 @@
 }
 
 
-- (NSMutableDictionary *)getRankedPeople:(BOOL)order { //0-more-desc, 1-less-asc
+- (NSMutableDictionary *)getRankedPeople {
 	
 	NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
 	
@@ -272,8 +272,8 @@
 		NSPredicate *predicate = [NSPredicate predicateWithFormat:predString];
 		[request setPredicate:predicate];
 		
-	//	NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:[NSString stringWithFormat:@"%@", [emotion lowercaseString]] ascending:YES]; // pend add in order, crashing right now
-	//	[request setSortDescriptors:[NSArray arrayWithObject:descriptor]];
+		NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:[NSString stringWithFormat:@"%@", [e lowercaseString]] ascending:NO]; // default to most first
+		[request setSortDescriptors:[NSArray arrayWithObject:descriptor]];
 		
 		NSArray *results = [self.managedObjectContext executeFetchRequest:request error:nil];
 		[dict setObject:results forKey:e];
