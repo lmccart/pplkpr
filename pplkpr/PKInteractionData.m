@@ -259,22 +259,28 @@
 }
 
 
-- (NSArray *)getRankedPeople:(NSString *)emotion withOrder:(BOOL)order { //0-more-desc, 1-less-asc
+- (NSMutableDictionary *)getRankedPeople:(BOOL)order { //0-more-desc, 1-less-asc
 	
-	NSFetchRequest *request = [[NSFetchRequest alloc] init];
-	[request setEntity:[NSEntityDescription entityForName:@"Person" inManagedObjectContext:self.managedObjectContext]];
+	NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
 	
+	for (id e in _emotionsArray) {
+		
+		NSFetchRequest *request = [[NSFetchRequest alloc] init];
+		[request setEntity:[NSEntityDescription entityForName:@"Person" inManagedObjectContext:self.managedObjectContext]];
+		
+		NSString *predString = [NSString stringWithFormat:@"%@N > %@", [e lowercaseString], [NSNumber numberWithInteger:0]];
+		NSPredicate *predicate = [NSPredicate predicateWithFormat:predString];
+		[request setPredicate:predicate];
+		
+	//	NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:[NSString stringWithFormat:@"%@", [emotion lowercaseString]] ascending:YES]; // pend add in order, crashing right now
+	//	[request setSortDescriptors:[NSArray arrayWithObject:descriptor]];
+		
+		NSArray *results = [self.managedObjectContext executeFetchRequest:request error:nil];
+		[dict setObject:results forKey:e];
+		[request release];
+	}
 	
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%@ > %@", [NSString stringWithFormat:@"%@N", [emotion lowercaseString]], [NSNumber numberWithInteger:0]];
-	[request setPredicate:predicate];
-	
-//	NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:[NSString stringWithFormat:@"%@", [emotion lowercaseString]] ascending:YES]; // pend add in order, crashing right now
-//	[request setSortDescriptors:[NSArray arrayWithObject:descriptor]];
-	
-	NSArray *results = [self.managedObjectContext executeFetchRequest:request error:nil];
-	[request release];
-	
-	return results;
+	return dict;
 }
 
 - (void)dealloc {
