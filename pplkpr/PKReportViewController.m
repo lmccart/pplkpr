@@ -11,8 +11,11 @@
 
 @interface PKReportViewController ()
 
+@property (strong, nonatomic) IBOutlet UIView *whoView;
 @property (strong, nonatomic) IBOutlet UITextField *whoTextField;
 @property (strong, nonatomic) FBFriendPickerViewController *friendPickerController;
+
+@property (strong, nonatomic) IBOutlet UIView *formView;
 
 - (void)fillTextBoxAndDismiss:(NSString *)text;
 
@@ -51,19 +54,32 @@
 
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-	NSLog(@"return\n");
     [textField resignFirstResponder];
+	[self toggleFormView];
     return YES;
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 	[_whoTextField resignFirstResponder];
+	[self toggleFormView];
 	[super touchesBegan:touches withEvent:event];
 }
 
-
+- (void)toggleFormView {
+	if ([_whoTextField.text length] == 0) {
+		[_formView setHidden:true];
+		NSLog(@"hide form view");
+	} else {
+		NSLog(@"show form view");
+		[_formView setHidden:false];
+	}
+}
 
 #pragma mark UI handlers
+
+- (IBAction)pickAction:(id)sender {
+	[_whoView setHidden:false];
+}
 
 - (IBAction)pickFriendsButtonTouch:(id)sender {
 	NSLog(@"fb fp pick\n");
@@ -105,12 +121,13 @@
 }
 
 - (void)facebookViewControllerCancelWasPressed:(id)sender {
+	[self toggleFormView];
     [self dismissViewControllerAnimated:NO completion:nil];
 }
 
 - (void)fillTextBoxAndDismiss:(NSString *)text {
     _whoTextField.text = text;
-    
+	[self toggleFormView];
     [self dismissViewControllerAnimated:NO completion:nil];
 }
 

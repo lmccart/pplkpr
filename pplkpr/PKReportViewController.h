@@ -13,6 +13,8 @@
 @interface PKReportViewController : UIViewController <UITextFieldDelegate, FBFriendPickerDelegate>
 
 
+- (IBAction)pickAction:(id)sender;
+
 - (IBAction)pickFriendsButtonTouch:(id)sender;
 
 @end
