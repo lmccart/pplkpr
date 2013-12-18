@@ -14,14 +14,19 @@
 	NSMutableData *receivedData;
 }
 
+@property int mode;
 
 @property (strong, nonatomic) IBOutlet UIView *whoView;
 @property (strong, nonatomic) IBOutlet UITextField *whoTextField;
 @property (strong, nonatomic) FBFriendPickerViewController *friendPickerController;
 
 @property (strong, nonatomic) IBOutlet UIView *formView;
+@property (strong, nonatomic) IBOutlet UILabel *emotionLabel;
 @property (retain, nonatomic) IBOutlet UIPickerView *emotionPicker;
 @property (retain) NSString *emotion;
+
+@property (strong, nonatomic) IBOutlet UILabel *timeLabel;
+
 @property (retain, nonatomic) IBOutlet UISlider *intensitySlider;
 
 
@@ -40,6 +45,7 @@
         // Custom initialization
 		NSLog(@"init\n");
     }
+	_mode = -1;
     return self;
 }
 
@@ -57,7 +63,6 @@
 	
 	[_whoTextField setDelegate:self];
     [_whoTextField setClearButtonMode:UITextFieldViewModeWhileEditing];
-	
 	
     [_emotionPicker setDelegate:self];
     [_emotionPicker setDataSource:self];
@@ -83,12 +88,8 @@
 }
 
 - (void)toggleFormView {
-	if ([_whoTextField.text length] == 0) {
-		[_formView setHidden:true];
-		NSLog(@"hide form view");
-	} else {
-		NSLog(@"show form view");
-		[_formView setHidden:false];
+	if (_mode != -1) {
+		[_formView setHidden:[_whoTextField.text length] == 0];
 	}
 }
 
@@ -131,13 +132,20 @@
 #pragma mark UI handlers
 
 - (IBAction)pickAction:(id)sender {
+	_mode = ((UIButton*)sender).tag;
+	if (_mode) { // 1-left
+		[_emotionLabel setText:@"I was feeling"];
+		[_timeLabel setText:@"from"];
+	} else { // 0-meet
+		[_emotionLabel setText:@"I am feeling"];
+		[_timeLabel setText:@"for"];
+	}
 	[_whoView setHidden:false];
 }
 
 - (IBAction)pickFriendsButtonTouch:(id)sender {
 	NSLog(@"fb fp pick\n");
 	
-    // FBSample logic
     // if the session is open, then load the data for our view controller
     if (!FBSession.activeSession.isOpen) {
         // if the session is closed, then we open it here, and establish a handler for state changes
@@ -161,8 +169,6 @@
 - (void)facebookViewControllerDoneWasPressed:(id)sender {
     NSMutableString *text = [[NSMutableString alloc] init];
     
-    // we pick up the users from the selection, and create a string that we use to update the text view
-    // at the bottom of the display; note that self.selection is a property inherited from our base class
     for (id<FBGraphUser> user in _friendPickerController.selection) {
         if ([text length]) {
             [text appendString:@", "];
@@ -187,8 +193,9 @@
 
 - (IBAction)submit:(id)sender {
 	
-	[[PKInteractionData data] addReport:@"JOHN" withEmotion:_emotion withRating:[NSNumber numberWithFloat:[_intensitySlider value]]];
+	[[PKInteractionData data] addReport:_whoTextField.text withEmotion:_emotion withRating:[NSNumber numberWithFloat:[_intensitySlider value]]];
 	// go to person view
+	[[PKInteractionData data] setJumpToName:_whoTextField.text];
 	[self.tabBarController setSelectedIndex:1];
 }
 
