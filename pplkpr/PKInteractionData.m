@@ -88,7 +88,7 @@
 	
 	NSLog(@"ADDING REPORT %@ %@ %@", name, rating, emotion);
 	
-	
+	// create new report
 	Report * newReport = [NSEntityDescription insertNewObjectForEntityForName:@"Report"
 													   inManagedObjectContext:self.managedObjectContext];
 	newReport.name = name;
@@ -97,13 +97,33 @@
 	newReport.timestamp = [NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]];
 	
 	
-	Person * newPerson = [NSEntityDescription insertNewObjectForEntityForName:@"Person"
-													   inManagedObjectContext:self.managedObjectContext];
-	newPerson.name = name;
-	newPerson.reports = [NSSet setWithObjects:newReport, nil];
+	NSFetchRequest *request = [[NSFetchRequest alloc] init];
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@", name];
+	[request setEntity:[NSEntityDescription entityForName:@"Person" inManagedObjectContext:self.managedObjectContext]];
+	[request setPredicate:predicate];
 	
+	NSError *error = nil;
+	NSArray *result = [self.managedObjectContext executeFetchRequest:request error:&error];
 	
-	NSError *error;
+	if (result == nil) {
+		NSLog(@"fetch result = nil");
+        // Handle the error here
+	} else {
+		if([result count] > 0) {
+			NSLog(@"fetch saved person");
+			Person *person = (Person *)[result objectAtIndex:0];
+			newReport.person = person;
+
+		} else {
+			NSLog(@"create new person");
+			Person * newPerson = [NSEntityDescription insertNewObjectForEntityForName:@"Person"
+															   inManagedObjectContext:self.managedObjectContext];
+			newPerson.name = name;
+			newPerson.reports = [NSSet setWithObjects:newReport, nil];
+		}
+		
+	}
+
 	if (![self.managedObjectContext save:&error]) {
 		NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
 	}
