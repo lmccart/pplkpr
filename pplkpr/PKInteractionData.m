@@ -157,14 +157,14 @@
 	}
 	
 	// divide
-	NSLog(@"averaging %@", person.name);
+	//NSLog(@"averaging %@", person.name);
 	for (id e in _emotionsArray) {
 		NSNumber *val = [valsDict objectForKey:e];
 		NSNumber *tot = [totalsDict objectForKey:e];
 		if ([tot intValue] > 0) {
 			SEL sel = NSSelectorFromString([NSString stringWithFormat:@"set%@:", e]);
 			[person performSelector:sel withObject:[NSNumber numberWithFloat:[val floatValue]/[tot floatValue]]];
-			NSLog(@"%@ %@", e, [NSNumber numberWithFloat:[val floatValue]/[tot floatValue]]);
+			//NSLog(@"%@ %@", e, [NSNumber numberWithFloat:[val floatValue]/[tot floatValue]]);
 		}
 	}
 	// save context
@@ -184,8 +184,41 @@
 	NSError* error;
 	NSArray *people = [self.managedObjectContext executeFetchRequest:request error:&error];
 	
+	// init dicts
+	NSMutableDictionary *valsDict = [[NSMutableDictionary alloc] init];
+	NSMutableDictionary *totalsDict = [[NSMutableDictionary alloc] init];
+	for (id e in _emotionsArray) {
+		[valsDict setObject:[NSNumber numberWithFloat:0] forKey:e];
+		[totalsDict setObject:[NSNumber numberWithFloat:0] forKey:e];
+	}
+	
+	// add up ppl vals
 	for (Person *p in people) {
 		[self averagePerson:p];
+		for (id e in _emotionsArray) {
+			SEL sel = NSSelectorFromString([NSString stringWithFormat:@"%@", [e lowercaseString]]);
+			NSNumber *pVal = [p performSelector:sel];
+			if ([pVal floatValue] > 0) {
+				NSNumber *val = [valsDict objectForKey:e];
+				val = [NSNumber numberWithFloat:[val floatValue] + [pVal floatValue]];
+				[valsDict setObject:val forKey:e];
+				
+				NSNumber *tot = [totalsDict objectForKey:e];
+				tot = [NSNumber numberWithInteger:[tot intValue] + 1];
+				[totalsDict setObject:tot forKey:e];
+			}
+		}
+	}
+	
+	// obtain global avgs
+	for (id e in _emotionsArray) {
+		NSNumber *val = [valsDict objectForKey:e];
+		NSNumber *tot = [totalsDict objectForKey:e];
+		if ([tot intValue] > 0) {
+			val = [NSNumber numberWithFloat:[val floatValue] / [tot floatValue]];
+			[valsDict setObject:val forKey:e];
+			NSLog(@"global avg %@ %@", e, val);
+		}
 	}
 }
 
