@@ -30,6 +30,7 @@
 - (NSArray*)getAllReports;
 - (NSArray*)getAllPeople;
 - (void)calculateGlobalAverages;
+- (NSArray *)getRankedPeople:(NSString *)emotion withOrder:(BOOL)order;
 
 @end
 

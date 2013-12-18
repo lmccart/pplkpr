@@ -259,6 +259,23 @@
 }
 
 
+- (NSArray *)getRankedPeople:(NSString *)emotion withOrder:(BOOL)order { //0-more-desc, 1-less-asc
+	
+	NSFetchRequest *request = [[NSFetchRequest alloc] init];
+	[request setEntity:[NSEntityDescription entityForName:@"Person" inManagedObjectContext:self.managedObjectContext]];
+	
+	
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%@ > %@", [NSString stringWithFormat:@"%@N", [emotion lowercaseString]], [NSNumber numberWithInteger:0]];
+	[request setPredicate:predicate];
+	
+//	NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:[NSString stringWithFormat:@"%@", [emotion lowercaseString]] ascending:YES]; // pend add in order, crashing right now
+//	[request setSortDescriptors:[NSArray arrayWithObject:descriptor]];
+	
+	NSArray *results = [self.managedObjectContext executeFetchRequest:request error:nil];
+	[request release];
+	
+	return results;
+}
 
 - (void)dealloc {
 	[_locationsArray release];

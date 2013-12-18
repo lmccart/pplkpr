@@ -19,7 +19,7 @@
 
 @property (nonatomic, strong) NSArray *valenceArray;
 @property (retain, nonatomic) IBOutlet UIPickerView *valencePicker;
-@property (retain) NSString *valence;
+@property BOOL valence;
 
 @property (retain, nonatomic) NSDictionary *rankData;
 @property (retain, nonatomic) IBOutlet UITableView *rankView;
@@ -52,7 +52,7 @@
 	[_valencePicker setDelegate:self];
 	[_valencePicker setDataSource:self];
 	_valenceArray = [[NSArray alloc] initWithObjects:@"more",@"less", nil];
-	[_valence initWithString: [_valenceArray objectAtIndex:0]];
+	_valence = NO;
 	
 	_rankData = [[NSDictionary alloc] init];
 	[_rankView setDelegate:self];
@@ -123,8 +123,11 @@
 		_emotion = [[[PKInteractionData data] emotionsArray] objectAtIndex:row];
 	} else {
 		NSLog(@"Chosen item: %@", [_valenceArray objectAtIndex:row]);
-		_valence = [_valenceArray objectAtIndex:row];
+		_valence = (BOOL)row;
 	}
+	NSLog(@"order %d", _valence);
+	NSArray *results = [[PKInteractionData data] getRankedPeople:_emotion withOrder:_valence];
+	NSLog(@"%@", results);
 	[self updateView];
 }
 
