@@ -113,7 +113,14 @@
 			NSLog(@"fetch saved person");
 			Person *person = (Person *)[result objectAtIndex:0];
 			newReport.person = person;
-
+			
+			SEL getSel = NSSelectorFromString([NSString stringWithFormat:@"%@N", [newReport.emotion lowercaseString]]);
+			NSNumber *tot = [person performSelector:getSel];
+			tot = [NSNumber numberWithInteger:[tot intValue] + 1];
+			
+			SEL setSel = NSSelectorFromString([NSString stringWithFormat:@"set%@N:", newReport.emotion]);
+			[person performSelector:setSel withObject:tot];
+			NSLog(@"reports n for %@ %@ now at %@", person.name, newReport.emotion, tot);
 		} else {
 			NSLog(@"create new person");
 			Person * newPerson = [NSEntityDescription insertNewObjectForEntityForName:@"Person"
@@ -122,6 +129,8 @@
 			for (id e in _emotionsArray) {
 				SEL sel = NSSelectorFromString([NSString stringWithFormat:@"set%@:", e]);
 				[newPerson performSelector:sel withObject:[NSNumber numberWithFloat:0]];
+				SEL selN = NSSelectorFromString([NSString stringWithFormat:@"set%@N:", e]);
+				[newPerson performSelector:selN withObject:[NSNumber numberWithInt:e == newReport.emotion]];
 			}
 			newPerson.reports = [NSSet setWithObjects:newReport, nil];
 		}
@@ -139,10 +148,8 @@
 	
 	// init dicts
 	NSMutableDictionary *valsDict = [[NSMutableDictionary alloc] init];
-	NSMutableDictionary *totalsDict = [[NSMutableDictionary alloc] init];
 	for (id e in _emotionsArray) {
 		[valsDict setObject:[NSNumber numberWithFloat:0] forKey:e];
-		[totalsDict setObject:[NSNumber numberWithFloat:0] forKey:e];
 	}
 	
 	// add up vals and tots
@@ -150,21 +157,19 @@
 		NSNumber *val = [valsDict objectForKey:r.emotion];
 		val = [NSNumber numberWithFloat:[val floatValue] + [r.rating floatValue]];
 		[valsDict setObject:val forKey:r.emotion];
-		
-		NSNumber *tot = [totalsDict objectForKey:r.emotion];
-		tot = [NSNumber numberWithInteger:[tot intValue] + 1];
-		[totalsDict setObject:tot forKey:r.emotion];
 	}
 	
 	// divide
 	//NSLog(@"averaging %@", person.name);
 	for (id e in _emotionsArray) {
 		NSNumber *val = [valsDict objectForKey:e];
-		NSNumber *tot = [totalsDict objectForKey:e];
+		
+		SEL selN = NSSelectorFromString([NSString stringWithFormat:@"%@N", [e lowercaseString]]);
+		NSNumber *tot = [person performSelector:selN];
 		if ([tot intValue] > 0) {
 			SEL sel = NSSelectorFromString([NSString stringWithFormat:@"set%@:", e]);
 			[person performSelector:sel withObject:[NSNumber numberWithFloat:[val floatValue]/[tot floatValue]]];
-			//NSLog(@"%@ %@", e, [NSNumber numberWithFloat:[val floatValue]/[tot floatValue]]);
+			NSLog(@"%@ %@", e, [NSNumber numberWithFloat:[val floatValue]/[tot floatValue]]);
 		}
 	}
 	// save context
@@ -237,7 +242,13 @@
 		NSNumber *globalVal = [globalVals valueForKey:e];
 		
 		if ([pVal floatValue] > 0) {
-			NSNumber *avgVal = [NSNumber numberWithFloat:([pVal floatValue] + [globalVal floatValue]) / 2.0 ];
+			SEL selN = NSSelectorFromString([NSString stringWithFormat:@"%@N", [e lowercaseString]]);
+			NSNumber *tot = [person performSelector:selN];
+			
+			float factor = 1.0; // determines how much the weight shifts with new reports
+			
+			NSNumber *avgVal = [NSNumber numberWithFloat:([pVal floatValue] * [tot floatValue] * factor + [globalVal floatValue]) / ([tot floatValue] * factor + 1 ) ];
+			
 			
 			// for now just 50/50 avg with global
 			SEL setSel = NSSelectorFromString([NSString stringWithFormat:@"set%@:", e]);

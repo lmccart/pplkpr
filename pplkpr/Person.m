@@ -20,6 +20,13 @@
 @dynamic scared;
 @dynamic anxious;
 @dynamic bored;
+@dynamic angryN;
+@dynamic anxiousN;
+@dynamic excitedN;
+@dynamic boredN;
+@dynamic calmN;
+@dynamic arousedN;
+@dynamic scaredN;
 @dynamic reports;
-	
+
 @end
