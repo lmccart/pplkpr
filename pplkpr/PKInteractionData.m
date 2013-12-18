@@ -220,13 +220,31 @@
 			NSLog(@"global avg %@ %@", e, val);
 		}
 	}
+	
+	// revalue people
+	for (Person *p in people) {
+		[self revaluePerson:p withGlobalVals:valsDict];
+	}
 }
 
-// determine "true val" of category by mixing their avg vals
+// determine "true val" of category by mixing person avg vals
 // with global avgs. more reports make the mix biased toward
-// their own avg.
-- (void)revaluePerson {
-	
+// person's own avg.
+- (void)revaluePerson:(Person *)person withGlobalVals:(NSMutableDictionary *)globalVals {
+	for (id e in _emotionsArray) {
+		SEL getSel = NSSelectorFromString([NSString stringWithFormat:@"%@", [e lowercaseString]]);
+		NSNumber *pVal = [person performSelector:getSel];
+		NSNumber *globalVal = [globalVals valueForKey:e];
+		
+		if ([pVal floatValue] > 0) {
+			NSNumber *avgVal = [NSNumber numberWithFloat:([pVal floatValue] + [globalVal floatValue]) / 2.0 ];
+			
+			// for now just 50/50 avg with global
+			SEL setSel = NSSelectorFromString([NSString stringWithFormat:@"set%@:", e]);
+			[person performSelector:setSel withObject:avgVal];
+			NSLog(@"revalued avg %@ %@", e, avgVal);
+		}
+	}
 }
 
 
