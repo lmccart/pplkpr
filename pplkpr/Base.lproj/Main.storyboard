@@ -44,7 +44,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1460" y="-1344"/>
+            <point key="canvasLocation" x="1064" y="-1326"/>
         </scene>
         <!--Navigation Controller - Item-->
         <scene sceneID="hxX-xT-nyu">
@@ -60,7 +60,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j6A-Lg-6Qv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1064" y="339"/>
+            <point key="canvasLocation" x="1064" y="79"/>
         </scene>
         <!--Report View Controller-->
         <scene sceneID="uPa-Vg-XkI">
@@ -105,7 +105,7 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b4L-Cb-ubT">
+                            <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b4L-Cb-ubT">
                                 <rect key="frame" x="20" y="221" width="280" height="218"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -203,7 +203,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OJY-Y0-3hj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1460" y="339"/>
+            <point key="canvasLocation" x="1460" y="79"/>
         </scene>
         <!--Person Summary View Controller-->
         <scene sceneID="OVx-eK-rSN">

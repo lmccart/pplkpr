@@ -194,12 +194,23 @@
 - (IBAction)submit:(id)sender {
 	
 	[[PKInteractionData data] addReport:_whoTextField.text withEmotion:_emotion withRating:[NSNumber numberWithFloat:[_intensitySlider value]]];
+	[self resetForm];
 	// go to person view
 	[[PKInteractionData data] setJumpToName:_whoTextField.text];
 	[self.tabBarController setSelectedIndex:1];
 }
 
 
+- (void)resetForm {
+	_mode = -1;
+	_whoTextField.text = @"";
+	[_whoView setHidden:true];
+	_emotion = @"";
+	[_emotionPicker reloadAllComponents];
+	[_emotionPicker selectRow:0 inComponent:0 animated:NO];
+	[_intensitySlider setValue:0.5];
+	[_formView setHidden:true];
+}
 
 - (void)didReceiveMemoryWarning
 {
