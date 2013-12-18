@@ -13,6 +13,13 @@
 @implementation Person
 
 @dynamic name;
+@dynamic calm;
+@dynamic excited;
+@dynamic aroused;
+@dynamic angry;
+@dynamic scared;
+@dynamic anxious;
+@dynamic bored;
 @dynamic reports;
-
+	
 @end

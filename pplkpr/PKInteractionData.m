@@ -119,6 +119,10 @@
 			Person * newPerson = [NSEntityDescription insertNewObjectForEntityForName:@"Person"
 															   inManagedObjectContext:self.managedObjectContext];
 			newPerson.name = name;
+			for (id e in _emotionsArray) {
+				SEL sel = NSSelectorFromString([NSString stringWithFormat:@"set%@:", e]);
+				[newPerson performSelector:sel withObject:[NSNumber numberWithFloat:0]];
+			}
 			newPerson.reports = [NSSet setWithObjects:newReport, nil];
 		}
 		
@@ -127,6 +131,68 @@
 	if (![self.managedObjectContext save:&error]) {
 		NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
 	}
+}
+
+
+// calc average reports for each category for one person
+- (void)averagePerson:(Person *)person {
+	
+	// init dicts
+	NSMutableDictionary *valsDict = [[NSMutableDictionary alloc] init];
+	NSMutableDictionary *totalsDict = [[NSMutableDictionary alloc] init];
+	for (id e in _emotionsArray) {
+		[valsDict setObject:[NSNumber numberWithFloat:0] forKey:e];
+		[totalsDict setObject:[NSNumber numberWithFloat:0] forKey:e];
+	}
+	
+	// add up vals and tots
+	for (Report *r in person.reports) {
+		NSNumber *val = [valsDict objectForKey:r.emotion];
+		val = [NSNumber numberWithFloat:[val floatValue] + [r.rating floatValue]];
+		[valsDict setObject:val forKey:r.emotion];
+		
+		NSNumber *tot = [totalsDict objectForKey:r.emotion];
+		tot = [NSNumber numberWithInteger:[tot intValue] + 1];
+		[totalsDict setObject:tot forKey:r.emotion];
+	}
+	
+	// divide
+	NSLog(@"averaging %@", person.name);
+	for (id e in _emotionsArray) {
+		NSNumber *val = [valsDict objectForKey:e];
+		NSNumber *tot = [totalsDict objectForKey:e];
+		if ([tot intValue] > 0) {
+			SEL sel = NSSelectorFromString([NSString stringWithFormat:@"set%@:", e]);
+			[person performSelector:sel withObject:[NSNumber numberWithFloat:[val floatValue]/[tot floatValue]]];
+			NSLog(@"%@ %@", e, [NSNumber numberWithFloat:[val floatValue]/[tot floatValue]]);
+		}
+	}
+	// save context
+	NSError* error;
+	if (![self.managedObjectContext save:&error]) {
+		NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+	}
+}
+
+// calc average category values across all people
+- (void)calculateGlobalAverages {
+	
+	NSFetchRequest *request = [[NSFetchRequest alloc] init];
+	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Person"
+											  inManagedObjectContext:self.managedObjectContext];
+	[request setEntity:entity];
+	NSError* error;
+	NSArray *people = [self.managedObjectContext executeFetchRequest:request error:&error];
+	
+	for (Person *p in people) {
+		[self averagePerson:p];
+	}
+}
+
+// determine "true val" of category by mixing their avg vals
+// with global avgs. more reports make the mix biased toward
+// their own avg.
+- (void)revaluePerson {
 	
 }
 

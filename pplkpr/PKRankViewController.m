@@ -67,6 +67,7 @@
 	if ([[PKInteractionData data] jumpToName]) {
 		[self performSegueWithIdentifier:@"personSegue" sender:self];
 	}
+	[[PKInteractionData data] calculateGlobalAverages];
 }
 
 
