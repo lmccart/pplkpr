@@ -9,13 +9,22 @@
 #import "PKReportViewController.h"
 #import "PKInteractionData.h"
 
-@interface PKReportViewController ()
+@interface PKReportViewController () <UIPickerViewDataSource, UIPickerViewDelegate> {
+	
+	NSMutableData *receivedData;
+}
+
 
 @property (strong, nonatomic) IBOutlet UIView *whoView;
 @property (strong, nonatomic) IBOutlet UITextField *whoTextField;
 @property (strong, nonatomic) FBFriendPickerViewController *friendPickerController;
 
 @property (strong, nonatomic) IBOutlet UIView *formView;
+@property (retain, nonatomic) IBOutlet UIPickerView *emotionPicker;
+@property (retain) NSString *emotion;
+@property (retain, nonatomic) IBOutlet UISlider *intensitySlider;
+
+
 
 - (void)fillTextBoxAndDismiss:(NSString *)text;
 
@@ -46,10 +55,18 @@
 		_friendPickerController.allowsMultipleSelection = NO;
     }
 	
-	
 	[_whoTextField setDelegate:self];
     [_whoTextField setClearButtonMode:UITextFieldViewModeWhileEditing];
 	
+	
+    [_emotionPicker setDelegate:self];
+    [_emotionPicker setDataSource:self];
+	_emotion = [[NSString alloc] init];
+	
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+	_emotion = [[[PKInteractionData data] emotionsArray] objectAtIndex:0];
 }
 
 
@@ -74,6 +91,42 @@
 		[_formView setHidden:false];
 	}
 }
+
+
+
+#pragma mark - UIPickerView DataSource
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return [[[PKInteractionData data] emotionsArray] count];
+}
+
+
+#pragma mark - UIPickerView Delegate
+- (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
+{
+    return 30.0;
+}
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    return [[[PKInteractionData data] emotionsArray] objectAtIndex:row];
+}
+
+//If the user chooses from the pickerview, it calls this function;
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    //Let's print in the console what the user had chosen;
+    NSLog(@"Chosen item: %@", [[[PKInteractionData data] emotionsArray] objectAtIndex:row]);
+	_emotion = [[[PKInteractionData data] emotionsArray] objectAtIndex:row];
+}
+
+
+
 
 #pragma mark UI handlers
 
@@ -132,17 +185,12 @@
 }
 
 
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-	//[[PKInteractionData data] setPersonName:_whoTextField.text];
+- (IBAction)submit:(id)sender {
+	
+	[[PKInteractionData data] addReport:@"JOHN" withEmotion:_emotion withRating:[NSNumber numberWithFloat:[_intensitySlider value]]];
+	// go to person view
+	[self.tabBarController setSelectedIndex:1];
 }
-
-- (void)pushOverallViewController
-{
-	[self performSegueWithIdentifier:@"overallSegue" sender:self];
-}
-
 
 
 

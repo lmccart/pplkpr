@@ -14,8 +14,8 @@
 
 
 - (IBAction)pickAction:(id)sender;
-
 - (IBAction)pickFriendsButtonTouch:(id)sender;
+- (IBAction)submit:(id)sender;
 
 @end
 
