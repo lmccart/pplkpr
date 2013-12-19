@@ -59,7 +59,6 @@
 	[_rankView setDelegate:self];
 	[_rankView setDataSource:self];
 	
-	[[PKInteractionData data] getRankedPeople];
 	
 }
 
@@ -68,7 +67,7 @@
 	if ([[PKInteractionData data] jumpToName]) {
 		[self performSegueWithIdentifier:@"personSegue" sender:self];
 	}
-	[[PKInteractionData data] calculateGlobalAverages];
+	_rankData = [[PKInteractionData data] getRankedPeople];
 }
 
 
@@ -127,7 +126,6 @@
 		_valence = (BOOL)row;
 	}
 	NSLog(@"order %d", _valence);
-	_rankData = [[PKInteractionData data] getRankedPeople];
 	[self updateView];
 }
 

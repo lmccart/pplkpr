@@ -261,6 +261,7 @@
 
 - (NSMutableDictionary *)getRankedPeople {
 	
+	[self calculateGlobalAverages];
 	NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
 	
 	for (id e in _emotionsArray) {
