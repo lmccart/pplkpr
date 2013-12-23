@@ -9,9 +9,13 @@
 /* Begin PBXBuildFile section */
 		653F8F76185FA9760009F785 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 653F8F75185FA9760009F785 /* CoreData.framework */; };
 		653F8F79185FA9A50009F785 /* pplkpr.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 653F8F77185FA9A50009F785 /* pplkpr.xcdatamodeld */; };
-		653F8F8218608BA50009F785 /* Report.m in Sources */ = {isa = PBXBuildFile; fileRef = 653F8F8118608BA50009F785 /* Report.m */; };
 		656B880117C4126500FE4ABE /* PKInteractionData.m in Sources */ = {isa = PBXBuildFile; fileRef = 656B880017C4126500FE4ABE /* PKInteractionData.m */; };
 		656E72C4183F86E600F59652 /* PKRankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 656E72C3183F86E600F59652 /* PKRankViewController.m */; };
+		6596CB7018689B480045D6E2 /* rect.png in Resources */ = {isa = PBXBuildFile; fileRef = 6596CB6F18689B480045D6E2 /* rect.png */; };
+		6596CB721868A3E80045D6E2 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6596CB711868A3E80045D6E2 /* MessageUI.framework */; };
+		6596CB741868AAE40045D6E2 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6596CB731868AAE40045D6E2 /* AddressBook.framework */; };
+		65B851191861EDAC00DE02E8 /* Report.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B851171861EDAC00DE02E8 /* Report.m */; };
+		65B8511F1862122800DE02E8 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B8511E1862122800DE02E8 /* Person.m */; };
 		65E0AFAC17A1C1D300E0FD0C /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65E0AFAB17A1C1D300E0FD0C /* FacebookSDK.framework */; };
 		65E398F6184972FB00E3B2B4 /* pplkpr_sel.png in Resources */ = {isa = PBXBuildFile; fileRef = 65E398F0184972FB00E3B2B4 /* pplkpr_sel.png */; };
 		65E398F7184972FB00E3B2B4 /* pplkpr.png in Resources */ = {isa = PBXBuildFile; fileRef = 65E398F1184972FB00E3B2B4 /* pplkpr.png */; };
@@ -31,20 +35,23 @@
 		65FC7C6417A1A37F0045BFF2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65FC7C6217A1A37F0045BFF2 /* Main.storyboard */; };
 		65FC7C6717A1A37F0045BFF2 /* PKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65FC7C6617A1A37F0045BFF2 /* PKViewController.m */; };
 		65FC7C6917A1A37F0045BFF2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65FC7C6817A1A37F0045BFF2 /* Images.xcassets */; };
-		65FC7C8A17A1A6C40045BFF2 /* PKMeetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65FC7C8617A1A69A0045BFF2 /* PKMeetViewController.m */; };
-		65FC7C8D17A1A6DA0045BFF2 /* PKLeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65FC7C8C17A1A6DA0045BFF2 /* PKLeftViewController.m */; };
-		65FC7C9217A1A7030045BFF2 /* PKPersonSummaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65FC7C9117A1A7030045BFF2 /* PKPersonSummaryViewController.m */; };
+		65FC7C9217A1A7030045BFF2 /* PKPersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65FC7C9117A1A7030045BFF2 /* PKPersonViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		653F8F75185FA9760009F785 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		653F8F78185FA9A50009F785 /* pplkpr.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = pplkpr.xcdatamodel; sourceTree = "<group>"; };
-		653F8F8018608BA50009F785 /* Report.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Report.h; sourceTree = "<group>"; };
-		653F8F8118608BA50009F785 /* Report.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Report.m; sourceTree = "<group>"; };
 		656B87FF17C4126500FE4ABE /* PKInteractionData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKInteractionData.h; sourceTree = "<group>"; };
 		656B880017C4126500FE4ABE /* PKInteractionData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKInteractionData.m; sourceTree = "<group>"; };
 		656E72C2183F86E600F59652 /* PKRankViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKRankViewController.h; sourceTree = "<group>"; };
 		656E72C3183F86E600F59652 /* PKRankViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKRankViewController.m; sourceTree = "<group>"; };
+		6596CB6F18689B480045D6E2 /* rect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rect.png; sourceTree = "<group>"; };
+		6596CB711868A3E80045D6E2 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		6596CB731868AAE40045D6E2 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		65B851161861EDAC00DE02E8 /* Report.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Report.h; sourceTree = "<group>"; };
+		65B851171861EDAC00DE02E8 /* Report.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Report.m; sourceTree = "<group>"; };
+		65B8511D1862122800DE02E8 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
+		65B8511E1862122800DE02E8 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
 		65E0AFAB17A1C1D300E0FD0C /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		65E398F0184972FB00E3B2B4 /* pplkpr_sel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pplkpr_sel.png; sourceTree = "<group>"; };
 		65E398F1184972FB00E3B2B4 /* pplkpr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pplkpr.png; sourceTree = "<group>"; };
@@ -71,12 +78,8 @@
 		65FC7C6617A1A37F0045BFF2 /* PKViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PKViewController.m; sourceTree = "<group>"; };
 		65FC7C6817A1A37F0045BFF2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		65FC7C6F17A1A37F0045BFF2 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		65FC7C8517A1A69A0045BFF2 /* PKMeetViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PKMeetViewController.h; sourceTree = "<group>"; };
-		65FC7C8617A1A69A0045BFF2 /* PKMeetViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PKMeetViewController.m; sourceTree = "<group>"; };
-		65FC7C8B17A1A6DA0045BFF2 /* PKLeftViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKLeftViewController.h; sourceTree = "<group>"; };
-		65FC7C8C17A1A6DA0045BFF2 /* PKLeftViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKLeftViewController.m; sourceTree = "<group>"; };
-		65FC7C9017A1A7030045BFF2 /* PKPersonSummaryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKPersonSummaryViewController.h; sourceTree = "<group>"; };
-		65FC7C9117A1A7030045BFF2 /* PKPersonSummaryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKPersonSummaryViewController.m; sourceTree = "<group>"; };
+		65FC7C9017A1A7030045BFF2 /* PKPersonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKPersonViewController.h; sourceTree = "<group>"; };
+		65FC7C9117A1A7030045BFF2 /* PKPersonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKPersonViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +87,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6596CB741868AAE40045D6E2 /* AddressBook.framework in Frameworks */,
+				6596CB721868A3E80045D6E2 /* MessageUI.framework in Frameworks */,
 				653F8F76185FA9760009F785 /* CoreData.framework in Frameworks */,
 				65FC7C5317A1A37F0045BFF2 /* CoreGraphics.framework in Frameworks */,
 				65E0AFAC17A1C1D300E0FD0C /* FacebookSDK.framework in Frameworks */,
@@ -100,14 +105,10 @@
 			children = (
 				65FC7C6517A1A37F0045BFF2 /* PKViewController.h */,
 				65FC7C6617A1A37F0045BFF2 /* PKViewController.m */,
-				65FC7C8517A1A69A0045BFF2 /* PKMeetViewController.h */,
-				65FC7C8617A1A69A0045BFF2 /* PKMeetViewController.m */,
 				65E398FC184976FF00E3B2B4 /* PKReportViewController.h */,
 				65E398FD184976FF00E3B2B4 /* PKReportViewController.m */,
-				65FC7C8B17A1A6DA0045BFF2 /* PKLeftViewController.h */,
-				65FC7C8C17A1A6DA0045BFF2 /* PKLeftViewController.m */,
-				65FC7C9017A1A7030045BFF2 /* PKPersonSummaryViewController.h */,
-				65FC7C9117A1A7030045BFF2 /* PKPersonSummaryViewController.m */,
+				65FC7C9017A1A7030045BFF2 /* PKPersonViewController.h */,
+				65FC7C9117A1A7030045BFF2 /* PKPersonViewController.m */,
 				656E72C2183F86E600F59652 /* PKRankViewController.h */,
 				656E72C3183F86E600F59652 /* PKRankViewController.m */,
 			);
@@ -117,10 +118,12 @@
 		27ED09CC1860E6B100ABCC76 /* Data Structures */ = {
 			isa = PBXGroup;
 			children = (
+				65B8511D1862122800DE02E8 /* Person.h */,
+				65B8511E1862122800DE02E8 /* Person.m */,
+				65B851161861EDAC00DE02E8 /* Report.h */,
+				65B851171861EDAC00DE02E8 /* Report.m */,
 				656B87FF17C4126500FE4ABE /* PKInteractionData.h */,
 				656B880017C4126500FE4ABE /* PKInteractionData.m */,
-				653F8F8018608BA50009F785 /* Report.h */,
-				653F8F8118608BA50009F785 /* Report.m */,
 			);
 			name = "Data Structures";
 			sourceTree = "<group>";
@@ -128,6 +131,7 @@
 		65E398D81849619300E3B2B4 /* assets */ = {
 			isa = PBXGroup;
 			children = (
+				6596CB6F18689B480045D6E2 /* rect.png */,
 				653F8F77185FA9A50009F785 /* pplkpr.xcdatamodeld */,
 				65E398FF184A3E6500E3B2B4 /* left.png */,
 				65E39900184A3E6500E3B2B4 /* meet.png */,
@@ -161,6 +165,8 @@
 		65FC7C4F17A1A37F0045BFF2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6596CB731868AAE40045D6E2 /* AddressBook.framework */,
+				6596CB711868A3E80045D6E2 /* MessageUI.framework */,
 				653F8F75185FA9760009F785 /* CoreData.framework */,
 				65E0AFAB17A1C1D300E0FD0C /* FacebookSDK.framework */,
 				65FC7C5017A1A37F0045BFF2 /* Foundation.framework */,
@@ -228,7 +234,7 @@
 				ORGANIZATIONNAME = "Lauren McCarthy";
 				TargetAttributes = {
 					65FC7C4C17A1A37F0045BFF2 = {
-						DevelopmentTeam = 6W492ETQGY;
+						DevelopmentTeam = U8S7N2677U;
 					};
 				};
 			};
@@ -263,6 +269,7 @@
 				65E398F6184972FB00E3B2B4 /* pplkpr_sel.png in Resources */,
 				65FC7C5B17A1A37F0045BFF2 /* InfoPlist.strings in Resources */,
 				65E39901184A3E6500E3B2B4 /* left.png in Resources */,
+				6596CB7018689B480045D6E2 /* rect.png in Resources */,
 				65E398F8184972FB00E3B2B4 /* rank_sel.png in Resources */,
 				65FC7C6417A1A37F0045BFF2 /* Main.storyboard in Resources */,
 				65E398F9184972FB00E3B2B4 /* rank.png in Resources */,
@@ -277,15 +284,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				653F8F79185FA9A50009F785 /* pplkpr.xcdatamodeld in Sources */,
-				65FC7C8D17A1A6DA0045BFF2 /* PKLeftViewController.m in Sources */,
 				65FC7C5D17A1A37F0045BFF2 /* main.m in Sources */,
+				65B8511F1862122800DE02E8 /* Person.m in Sources */,
 				65E398FE184976FF00E3B2B4 /* PKReportViewController.m in Sources */,
-				65FC7C8A17A1A6C40045BFF2 /* PKMeetViewController.m in Sources */,
+				65B851191861EDAC00DE02E8 /* Report.m in Sources */,
 				656B880117C4126500FE4ABE /* PKInteractionData.m in Sources */,
 				65FC7C6717A1A37F0045BFF2 /* PKViewController.m in Sources */,
 				65FC7C6117A1A37F0045BFF2 /* PKAppDelegate.m in Sources */,
-				653F8F8218608BA50009F785 /* Report.m in Sources */,
-				65FC7C9217A1A7030045BFF2 /* PKPersonSummaryViewController.m in Sources */,
+				65FC7C9217A1A7030045BFF2 /* PKPersonViewController.m in Sources */,
 				656E72C4183F86E600F59652 /* PKRankViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
