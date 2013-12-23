@@ -42,7 +42,9 @@
     }
 	
 	PKAppDelegate* appDelegate = (PKAppDelegate*)[UIApplication sharedApplication].delegate;
-	self.managedObjectContext = appDelegate.managedObjectContext;
+	_managedObjectContext = appDelegate.managedObjectContext;
+	
+	[self purgeOldRecords];
 	
     return self;
 }
@@ -52,10 +54,10 @@
 - (NSArray*)getRankedReports {
 	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
 	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Report"
-											  inManagedObjectContext:self.managedObjectContext];
+											  inManagedObjectContext:_managedObjectContext];
 	[fetchRequest setEntity:entity];
 	NSError* error;
-	NSArray *fetchedReports = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+	NSArray *fetchedReports = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
 	return fetchedReports;
 }
 
@@ -63,10 +65,10 @@
 	
 	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
 	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Person"
-											  inManagedObjectContext:self.managedObjectContext];
+											  inManagedObjectContext:_managedObjectContext];
 	[fetchRequest setEntity:entity];
 	NSError* error;
-	NSArray *fetchedPeople = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+	NSArray *fetchedPeople = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
 	return fetchedPeople;
 }
 
@@ -76,10 +78,10 @@
 	NSFetchRequest *request = [[NSFetchRequest alloc] init];
 	
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@", @"JOHN"];
-	[request setEntity:[NSEntityDescription entityForName:@"Report" inManagedObjectContext:self.managedObjectContext]];
+	[request setEntity:[NSEntityDescription entityForName:@"Report" inManagedObjectContext:_managedObjectContext]];
 	[request setPredicate:predicate];
 	NSError* error;
-	NSArray *fetchedReports = [self.managedObjectContext executeFetchRequest:request error:&error];
+	NSArray *fetchedReports = [_managedObjectContext executeFetchRequest:request error:&error];
 	return fetchedReports;
 }
 
@@ -90,7 +92,7 @@
 	
 	// create new report
 	Report * newReport = [NSEntityDescription insertNewObjectForEntityForName:@"Report"
-													   inManagedObjectContext:self.managedObjectContext];
+													   inManagedObjectContext:_managedObjectContext];
 	newReport.name = name;
 	newReport.emotion = emotion;
 	newReport.rating = rating;
@@ -99,11 +101,11 @@
 	
 	NSFetchRequest *request = [[NSFetchRequest alloc] init];
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@", name];
-	[request setEntity:[NSEntityDescription entityForName:@"Person" inManagedObjectContext:self.managedObjectContext]];
+	[request setEntity:[NSEntityDescription entityForName:@"Person" inManagedObjectContext:_managedObjectContext]];
 	[request setPredicate:predicate];
 	
 	NSError *error = nil;
-	NSArray *result = [self.managedObjectContext executeFetchRequest:request error:&error];
+	NSArray *result = [_managedObjectContext executeFetchRequest:request error:&error];
 	
 	if (result == nil) {
 		NSLog(@"fetch result = nil");
@@ -124,7 +126,7 @@
 		} else {
 			NSLog(@"create new person");
 			Person * newPerson = [NSEntityDescription insertNewObjectForEntityForName:@"Person"
-															   inManagedObjectContext:self.managedObjectContext];
+															   inManagedObjectContext:_managedObjectContext];
 			newPerson.name = name;
 			for (id e in _emotionsArray) {
 				SEL sel = NSSelectorFromString([NSString stringWithFormat:@"set%@:", e]);
@@ -137,7 +139,7 @@
 		
 	}
 
-	if (![self.managedObjectContext save:&error]) {
+	if (![_managedObjectContext save:&error]) {
 		NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
 	}
 }
@@ -174,7 +176,7 @@
 	}
 	// save context
 	NSError* error;
-	if (![self.managedObjectContext save:&error]) {
+	if (![_managedObjectContext save:&error]) {
 		NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
 	}
 }
@@ -184,10 +186,10 @@
 	
 	NSFetchRequest *request = [[NSFetchRequest alloc] init];
 	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Person"
-											  inManagedObjectContext:self.managedObjectContext];
+											  inManagedObjectContext:_managedObjectContext];
 	[request setEntity:entity];
 	NSError* error;
-	NSArray *people = [self.managedObjectContext executeFetchRequest:request error:&error];
+	NSArray *people = [_managedObjectContext executeFetchRequest:request error:&error];
 	
 	// init dicts
 	NSMutableDictionary *valsDict = [[NSMutableDictionary alloc] init];
@@ -267,7 +269,7 @@
 	for (id e in _emotionsArray) {
 		
 		NSFetchRequest *request = [[NSFetchRequest alloc] init];
-		[request setEntity:[NSEntityDescription entityForName:@"Person" inManagedObjectContext:self.managedObjectContext]];
+		[request setEntity:[NSEntityDescription entityForName:@"Person" inManagedObjectContext:_managedObjectContext]];
 		
 		NSString *predString = [NSString stringWithFormat:@"%@N > %@", [e lowercaseString], [NSNumber numberWithInteger:0]];
 		NSPredicate *predicate = [NSPredicate predicateWithFormat:predString];
@@ -276,12 +278,36 @@
 		NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:[NSString stringWithFormat:@"%@", [e lowercaseString]] ascending:NO]; // default to most first
 		[request setSortDescriptors:[NSArray arrayWithObject:descriptor]];
 		
-		NSArray *results = [self.managedObjectContext executeFetchRequest:request error:nil];
+		NSArray *results = [_managedObjectContext executeFetchRequest:request error:nil];
+
 		[dict setObject:results forKey:e];
 		[request release];
 	}
 	
 	return dict;
+}
+
+- (void) purgeOldRecords {
+	
+	NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:[NSEntityDescription entityForName:@"Report" inManagedObjectContext:_managedObjectContext]];
+	
+	NSNumber *pastDate = [NSNumber numberWithDouble:[[NSDate dateWithTimeIntervalSinceNow:-5184000] timeIntervalSince1970]]; // Negative 60 days, in seconds (-60*60*24*60)
+	NSString *predString = [NSString stringWithFormat:@"timestamp < %@", pastDate];
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:predString];
+	[request setPredicate:predicate];
+	
+	NSError *error;
+    NSArray *results = [_managedObjectContext executeFetchRequest:request error:nil];
+    [request release];
+	
+    for (NSManagedObject *managedObject in results) {
+    	[_managedObjectContext deleteObject:managedObject];
+    	//NSLog(@"report deleted");
+    }
+    if (![_managedObjectContext save:&error]) {
+    	NSLog(@"Error deleting - error:%@",error);
+    }
 }
 
 - (void)dealloc {
