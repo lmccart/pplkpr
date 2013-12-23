@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <FacebookSDK/FacebookSDK.h>
-#import "PKPersonSummaryViewController.h"
+#import "PKPersonViewController.h"
 
 @interface PKReportViewController : UIViewController <UITextFieldDelegate, FBFriendPickerDelegate>
 

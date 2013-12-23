@@ -26,6 +26,7 @@
 @property (retain) NSString *emotion;
 
 @property (strong, nonatomic) IBOutlet UILabel *timeLabel;
+@property (retain, nonatomic) IBOutlet UISlider *timeSlider;
 
 @property (retain, nonatomic) IBOutlet UISlider *intensitySlider;
 
@@ -52,6 +53,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	 
+	[_timeSlider setThumbImage:[UIImage imageNamed:@"rect.png"] forState:UIControlStateNormal];
 	
     if (_friendPickerController == nil) {
         // Create friend picker, and get data loaded into it.
