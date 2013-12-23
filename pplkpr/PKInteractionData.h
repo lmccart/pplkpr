@@ -20,7 +20,6 @@
 
 
 
-
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 
 +(id)data;
