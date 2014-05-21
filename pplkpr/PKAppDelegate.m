@@ -23,7 +23,11 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	[self startUpdatingLocation];
-	[self startUpdatingHeartRate];
+    
+    
+    #if !(TARGET_IPHONE_SIMULATOR)
+        [self startUpdatingHeartRate];
+    #endif
 	
 	// tab bar items
 	
