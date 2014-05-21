@@ -34,7 +34,7 @@
 	UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
 	UITabBar *tabBar = tabBarController.tabBar;
 	
-	NSArray *names = @[@"pplkpr", @"rank", @"report"];
+	NSArray *names = @[@"home", @"rank", @"report"];
 	
 	for (int i=0; i<3; i++) {
 		UITabBarItem *tabBarItem = [tabBar.items objectAtIndex:i];

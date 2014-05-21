@@ -19,6 +19,7 @@
 @property (strong, nonatomic) IBOutlet UIView *actionView;
 
 @property (strong, nonatomic) IBOutlet UIView *whoView;
+@property (strong, nonatomic) IBOutlet UILabel *whoLabel;
 @property (strong, nonatomic) IBOutlet UITextField *whoTextField;
 @property (strong, nonatomic) FBFriendPickerViewController *friendPickerController;
 
@@ -139,10 +140,12 @@
 - (IBAction)pickAction:(id)sender {
 	_mode = ((UIButton*)sender).tag;
 	if (_mode) { // 1-left
-		[_emotionLabel setText:@"I was feeling"];
+		[_whoLabel setText:@"Who were you just with?"];
+		[_emotionLabel setText:@"How were you feeling?"];
 		[_timeLabel setText:@"from"];
 	} else { // 0-meet
-		[_emotionLabel setText:@"I am feeling"];
+		[_whoLabel setText:@"Who are you about to see?"];
+		[_emotionLabel setText:@"How are you feeling?"];
 		[_timeLabel setText:@"for"];
 	}
 	[_actionView setHidden:true];
