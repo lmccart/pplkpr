@@ -16,6 +16,8 @@
 
 @property int mode;
 
+@property (strong, nonatomic) IBOutlet UIView *actionView;
+
 @property (strong, nonatomic) IBOutlet UIView *whoView;
 @property (strong, nonatomic) IBOutlet UITextField *whoTextField;
 @property (strong, nonatomic) FBFriendPickerViewController *friendPickerController;
@@ -143,6 +145,7 @@
 		[_emotionLabel setText:@"I am feeling"];
 		[_timeLabel setText:@"for"];
 	}
+	[_actionView setHidden:true];
 	[_whoView setHidden:false];
 }
 
@@ -205,9 +208,13 @@
 
 
 - (void)resetForm {
+    
+	[_actionView setHidden:false];
+    
 	_mode = -1;
 	_whoTextField.text = @"";
 	[_whoView setHidden:true];
+    
 	_emotion = @"";
 	[_emotionPicker reloadAllComponents];
 	[_emotionPicker selectRow:0 inComponent:0 animated:NO];
