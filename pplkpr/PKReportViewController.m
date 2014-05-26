@@ -16,7 +16,8 @@
 
 @property int mode;
 
-@property (strong, nonatomic) IBOutlet UIView *actionView;
+@property (strong, nonatomic) IBOutlet UIButton *meetButton;
+@property (strong, nonatomic) IBOutlet UIButton *leftButton;
 
 @property (strong, nonatomic) IBOutlet UIView *whoView;
 @property (strong, nonatomic) IBOutlet UILabel *whoLabel;
@@ -138,17 +139,24 @@
 #pragma mark UI handlers
 
 - (IBAction)pickAction:(id)sender {
+    
+	[self resetForm];
+    
 	_mode = ((UIButton*)sender).tag;
+    
 	if (_mode) { // 1-left
 		[_whoLabel setText:@"Who were you just with?"];
 		[_emotionLabel setText:@"How were you feeling?"];
 		[_timeLabel setText:@"from"];
+        [_leftButton setAlpha:1.0];
+        [_meetButton setAlpha:0.25];
 	} else { // 0-meet
 		[_whoLabel setText:@"Who are you about to see?"];
 		[_emotionLabel setText:@"How are you feeling?"];
 		[_timeLabel setText:@"for"];
+        [_leftButton setAlpha:0.25];
+        [_meetButton setAlpha:1.0];
 	}
-	[_actionView setHidden:true];
 	[_whoView setHidden:false];
 }
 
@@ -204,6 +212,7 @@
 	
 	[[PKInteractionData data] addReport:_whoTextField.text withEmotion:_emotion withRating:[NSNumber numberWithFloat:[_intensitySlider value]]];
 	[self resetForm];
+    
 	// go to person view
 	[[PKInteractionData data] setJumpToName:_whoTextField.text];
 	[self.tabBarController setSelectedIndex:1];
@@ -212,7 +221,8 @@
 
 - (void)resetForm {
     
-	[_actionView setHidden:false];
+    [_leftButton setAlpha:1.0];
+    [_meetButton setAlpha:1.0];
     
 	_mode = -1;
 	_whoTextField.text = @"";
