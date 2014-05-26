@@ -115,15 +115,17 @@
 
 
 #pragma mark - UIPickerView Delegate
-- (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
+
+-(UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
 {
-    return 30.0;
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, pickerView.frame.size.width, 30)];
+    label.backgroundColor = [UIColor whiteColor];
+    label.textColor = [UIColor blackColor];
+    label.font = [UIFont fontWithName:@"TeluguSangamMN" size:17];
+    label.text = [[[PKInteractionData data] emotionsArray] objectAtIndex:row];
+    return label;
 }
 
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
-{
-    return [[[PKInteractionData data] emotionsArray] objectAtIndex:row];
-}
 
 //If the user chooses from the pickerview, it calls this function;
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
@@ -132,6 +134,8 @@
     NSLog(@"Chosen item: %@", [[[PKInteractionData data] emotionsArray] objectAtIndex:row]);
 	_emotion = [[[PKInteractionData data] emotionsArray] objectAtIndex:row];
 }
+
+
 
 
 
@@ -145,15 +149,15 @@
 	_mode = ((UIButton*)sender).tag;
     
 	if (_mode) { // 1-left
-		[_whoLabel setText:@"Who were you just with?"];
-		[_emotionLabel setText:@"How were you feeling?"];
+		[_whoLabel setText:@"I was just with"];
 		[_timeLabel setText:@"from"];
+		[_emotionLabel setText:@"I was feeling?"];
         [_leftButton setAlpha:1.0];
         [_meetButton setAlpha:0.25];
 	} else { // 0-meet
-		[_whoLabel setText:@"Who are you about to see?"];
-		[_emotionLabel setText:@"How are you feeling?"];
+		[_whoLabel setText:@"I am about to meet"];
 		[_timeLabel setText:@"for"];
+		[_emotionLabel setText:@"I am feeling?"];
         [_leftButton setAlpha:0.25];
         [_meetButton setAlpha:1.0];
 	}

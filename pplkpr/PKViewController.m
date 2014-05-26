@@ -23,9 +23,6 @@
 @property (retain, nonatomic) NSArray *priorityData;
 @property (retain, nonatomic) IBOutlet UITableView *priorityView;
 
-@property (nonatomic,strong) NSArray* fetchedPeopleArray;
-@property (retain, nonatomic) IBOutlet UITableView *reportsView;
-
 @end
 
 
@@ -37,14 +34,12 @@
 	
 	devicesArray = [[NSMutableArray alloc] init];
 	
-	_priorityData = [[NSArray alloc] init];
+	_priorityData = [[PKInteractionData data] getAllReports];
 	[_priorityView setDelegate:self];
     [_priorityView setDataSource:self];
-	
-	_fetchedPeopleArray = [[PKInteractionData data] getAllPeople];
-	[_reportsView setDelegate:self];
-    [_reportsView setDataSource:self];
-	[_reportsView reloadData];
+    NSLog(@"%@", _priorityData);
+    [_priorityView reloadData];
+    
 	
 	[self requestData];
 }
@@ -58,8 +53,10 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-	_fetchedPeopleArray = [[PKInteractionData data] getAllPeople];
-	[_reportsView reloadData];
+    
+	_priorityData = [[PKInteractionData data] getPriorities];
+	[_priorityView reloadData];
+    
 }
 
 #pragma textfield handling
@@ -77,12 +74,10 @@
 #pragma table
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 	if (tableView == _priorityView) {
-		if (_priorityData) {
+		if (_priorityData && [_priorityData count] > 0) {
 			return 1;
 		}
 		else return 0;
-	} else if (tableView == _reportsView && [_fetchedPeopleArray count] > 0) {
-		return 1;
 	} else return 0;
 }
 
@@ -95,8 +90,6 @@
 		if (_priorityData) {
 			return [_priorityData count];
 		} else return 0;
-	} else if (tableView == _reportsView) {
-		return [_fetchedPeopleArray count];
 	} else return 0;
 }
 
@@ -110,14 +103,9 @@
     }
 	
 	if (tableView == _priorityView) {
-		cell.textLabel.text = [NSString stringWithFormat:@"%@ makes you most %@", [[_priorityData objectAtIndex:indexPath.row] objectAtIndex:0], [[_priorityData objectAtIndex:indexPath.row] objectAtIndex:1]];
-	} else if (tableView == _reportsView) {
-		Person *person = [self.fetchedPeopleArray objectAtIndex:indexPath.row];
-		cell.textLabel.text = [NSString stringWithFormat:@"%@, %d",person.name, [person.reports count]];
-		
-		Report *report = (Report*)[[person.reports allObjects] objectAtIndex:0];
-		cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, %@", report.emotion, report.rating];
-	}
+        Person *report = [_priorityData objectAtIndex:indexPath.row];
+		cell.textLabel.text = [NSString stringWithFormat:@"%@ makes you most %@", report.name, @"HI"];
+    }
 	
     cell.textLabel.numberOfLines = 0;
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -135,23 +123,25 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 	if (tableView == _priorityView) {
-		NSString *text = [NSString stringWithFormat:@"%@ makes you most %@", [[_priorityData objectAtIndex:indexPath.row] objectAtIndex:0], [[_priorityData objectAtIndex:indexPath.row] objectAtIndex:1]];
-
+        
+        Person *report = [_priorityData objectAtIndex:indexPath.row];
+		NSString *text = [NSString stringWithFormat:@"%@ makes you most %@", report.name, @"MAD"];
+        
 		NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:17.0f]}];
 		
 		CGRect rect = [attributedText boundingRectWithSize:(CGSize){260, CGFLOAT_MAX}
 												   options:NSStringDrawingUsesLineFragmentOrigin
 												   context:nil];
 		return rect.size.height+25;
-	} else if (tableView == _reportsView) {
-		NSString *text = [[_fetchedPeopleArray objectAtIndex:indexPath.row] name];
-		
-		NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:17.0f]}];
-		
-		CGRect rect = [attributedText boundingRectWithSize:(CGSize){260, CGFLOAT_MAX}
-												   options:NSStringDrawingUsesLineFragmentOrigin
-												   context:nil];
-		return rect.size.height+25;
+//	} else if (tableView == _reportsView) {
+//		NSString *text = [[_fetchedPeopleArray objectAtIndex:indexPath.row] name];
+//		
+//		NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:17.0f]}];
+//		
+//		CGRect rect = [attributedText boundingRectWithSize:(CGSize){260, CGFLOAT_MAX}
+//												   options:NSStringDrawingUsesLineFragmentOrigin
+//												   context:nil];
+//		return rect.size.height+25;
 	}
 	else return 0;
 }

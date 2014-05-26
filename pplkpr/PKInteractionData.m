@@ -86,6 +86,18 @@
 }
 
 
+
+- (NSArray*)getPriorities { //temp
+	
+	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Person"
+											  inManagedObjectContext:_managedObjectContext];
+	[fetchRequest setEntity:entity];
+	NSError* error;
+	NSArray *fetchedPeople = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+	return fetchedPeople;
+}
+
 - (void)addReport:(NSString *)name withEmotion:(NSString *)emotion withRating:(NSNumber *)rating {
 	
 	NSLog(@"ADDING REPORT %@ %@ %@", name, rating, emotion);
