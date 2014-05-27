@@ -20,7 +20,7 @@
 }
 
 
-@property (retain, nonatomic) NSArray *priorityData;
+@property (retain, nonatomic) NSMutableDictionary *priorityData;
 @property (retain, nonatomic) IBOutlet UITableView *priorityView;
 
 @end
@@ -34,14 +34,11 @@
 	
 	devicesArray = [[NSMutableArray alloc] init];
 	
-	_priorityData = [[PKInteractionData data] getAllReports];
+	_priorityData = [[PKInteractionData data] getRankedPeople];
 	[_priorityView setDelegate:self];
     [_priorityView setDataSource:self];
-    NSLog(@"%@", _priorityData);
     [_priorityView reloadData];
     
-	
-	[self requestData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -54,7 +51,7 @@
 {
     [super viewWillAppear:animated];
     
-	_priorityData = [[PKInteractionData data] getPriorities];
+	_priorityData = [[PKInteractionData data] getRankedPeople];
 	[_priorityView reloadData];
     
 }
@@ -88,7 +85,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	if (tableView == _priorityView) {
 		if (_priorityData) {
-			return [_priorityData count];
+			return [[_priorityData allKeys] count];
 		} else return 0;
 	} else return 0;
 }
@@ -103,8 +100,11 @@
     }
 	
 	if (tableView == _priorityView) {
-        Person *report = [_priorityData objectAtIndex:indexPath.row];
-		cell.textLabel.text = [NSString stringWithFormat:@"%@ makes you most %@", report.name, @"HI"];
+        
+        NSString *emotion = [[_priorityData allKeys] objectAtIndex:indexPath.row];
+        NSArray *emo_arr = (NSArray *)[_priorityData objectForKey:emotion];
+        Person *person = [emo_arr objectAtIndex:0];
+        cell.textLabel.text = [NSString stringWithFormat:@"%@ makes you most %@", person.name, emotion];
     }
 	
     cell.textLabel.numberOfLines = 0;
@@ -115,7 +115,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	
 	if (tableView == _priorityView) {
-		[self pushPersonViewController:[[_priorityData objectAtIndex:indexPath.row] objectAtIndex:0]];
+		//[self pushPersonViewController:[[_priorityData objectAtIndex:indexPath.row] objectAtIndex:0]];
 		[tableView deselectRowAtIndexPath:indexPath animated:YES];
 	}
 }
@@ -124,9 +124,9 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 	if (tableView == _priorityView) {
         
-        Person *report = [_priorityData objectAtIndex:indexPath.row];
-		NSString *text = [NSString stringWithFormat:@"%@ makes you most %@", report.name, @"MAD"];
-        
+//        Person *person = [_priorityData objectAtIndex:indexPath.row];
+//		NSString *text = [NSString stringWithFormat:@"%@ makes you most %@", person.name, @"MAD"];
+            NSString *text = @"temp";
 		NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:17.0f]}];
 		
 		CGRect rect = [attributedText boundingRectWithSize:(CGSize){260, CGFLOAT_MAX}
@@ -147,61 +147,6 @@
 }
 
 
-
-#pragma data / view handling
-
-- (void)requestData {
-	
-	NSArray *keys = [NSArray arrayWithObjects:@"func", @"user", nil];
-	NSArray *objects = [NSArray arrayWithObjects:@"priority", @"lauren", nil];
-	NSDictionary *dict = [NSDictionary dictionaryWithObjects:objects forKeys:keys];
-	
-	NSData * jsonData = [NSJSONSerialization dataWithJSONObject:dict options:0 error:nil];
-	
-	
-	NSURL *url = [NSURL URLWithString:@"http://lauren-mccarthy.com/pplkpr-server/submit.php"];
-	
-	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
-														   cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
-	
-	[request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-	[request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-	[request setValue:@"json" forHTTPHeaderField:@"Data-Type"];
-	[request setValue:[NSString stringWithFormat:@"%d", [jsonData length]] forHTTPHeaderField:@"Content-Length"];
-	[request setHTTPMethod:@"POST"];
-	[request setHTTPBody:jsonData];
-	
-	
-	receivedData = [[NSMutableData alloc] init];
-	
-	NSURLConnection *connection = [[NSURLConnection alloc]initWithRequest:request delegate:self];
-	if (!connection) {
-		receivedData = nil;
-		NSLog(@"connection failed");
-	}
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-	[receivedData setLength:0];
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-	[receivedData appendData:data];
-}
-
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-	NSLog(@"Succeeded! Received %d bytes of data", [receivedData length]);
-	
-	NSArray *jsonObject = [NSJSONSerialization JSONObjectWithData:receivedData options:0 error:nil];
-	_priorityData = [(NSArray *)jsonObject retain];
-	NSLog(@"%@ %d",_priorityData, [_priorityData count]);
-	
-	connection = nil;
-    receivedData = nil;
-	
-	[self updateView];
-	
-}
 
 - (void)updateView {
 	[_priorityView reloadData];
