@@ -39,6 +39,25 @@
     [_priorityView setDataSource:self];
     [_priorityView reloadData];
     
+    int i = 0;
+    for (UIView *v in self.view.subviews) {
+        if ([v class] == [UIView class]) {
+        
+            if (i < [[_priorityData allKeys] count]) {
+
+                NSString *emotion = [[_priorityData allKeys] objectAtIndex:i];
+                NSArray *emo_arr = (NSArray *)[_priorityData objectForKey:emotion];
+                Person *person = [emo_arr objectAtIndex:0];
+                NSLog(@"%d %@", i, person.name);
+
+                [(UIButton *)[v viewWithTag:0] setTitle:person.name forState:UIControlStateNormal];
+                [(UIButton *)[v viewWithTag:0] sizeToFit];
+                [(UIButton *)[v viewWithTag:1] setTitle:emotion forState:UIControlStateNormal];
+                i++;
+            }
+        }
+    }
+    [self.view layoutIfNeeded];
 }
 
 - (void)didReceiveMemoryWarning
