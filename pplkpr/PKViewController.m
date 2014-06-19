@@ -50,9 +50,30 @@
                 Person *person = [emo_arr objectAtIndex:0];
                 NSLog(@"%d %@", i, person.name);
 
-                [(UIButton *)[v viewWithTag:0] setTitle:person.name forState:UIControlStateNormal];
-                [(UIButton *)[v viewWithTag:0] sizeToFit];
-                [(UIButton *)[v viewWithTag:1] setTitle:emotion forState:UIControlStateNormal];
+//                UIButton *b0 = (UIButton *)[v viewWithTag:0];
+//                [b0 setTitle:person.name forState:UIControlStateNormal];
+//                [b0 sizeToFit];
+//                
+//                UIButton *b1 = (UIButton *)[v viewWithTag:1];
+//                [b1 setTitle:emotion forState:UIControlStateNormal];
+//                [b1 sizeToFit];
+//                i++;
+                
+                NSMutableAttributedString* attributedString = [[NSMutableAttributedString alloc] initWithString:@"a clickable word" attributes:@{ @"myCustomTag" : @(YES) }];
+                [attributedString addAttribute:@"myCustomTag" value:@(YES) range:NSMakeRange(0,5)];
+                [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0,5)];
+                [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor greenColor] range:NSMakeRange(5,6)];
+                [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor blueColor] range:NSMakeRange(11,5)];
+                
+                NSMutableAttributedString *s = [[NSMutableAttributedString alloc] initWithString:@"hi hi hi hi"];
+                [s appendAttributedString:attributedString];
+            
+                UITextView *tv = (UITextView *)[v viewWithTag:1];
+                [tv setAttributedText:attributedString];
+                
+                UITapGestureRecognizer *gr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(textTapped:)];
+                //[gr setNumberOfTapsRequired:1];
+                [tv addGestureRecognizer:gr];
                 i++;
             }
         }
@@ -178,7 +199,42 @@
 	[self.tabBarController setSelectedIndex:1];
 }
 
-
+- (void)textTapped:(UITapGestureRecognizer *)recognizer
+{
+    UITextView *textView = (UITextView *)recognizer.view;
+    
+    // Location of the tap in text-container coordinates
+    
+    NSLayoutManager *layoutManager = [textView layoutManager];
+    CGPoint location = [recognizer locationInView:textView];
+    location.x -= textView.textContainerInset.left;
+    location.y -= textView.textContainerInset.top;
+    
+    // Find the character that's been tapped on
+    
+    NSUInteger characterIndex;
+    characterIndex = [layoutManager characterIndexForPoint:location
+                                           inTextContainer:textView.textContainer
+                  fractionOfDistanceBetweenInsertionPoints:NULL];
+    
+    NSLog(@"%d, %f, %f", characterIndex, location.x, location.y);
+    if (characterIndex < textView.textStorage.length) {
+        
+        NSRange range;
+        id value = [textView.attributedText attribute:@"myCustomTag" atIndex:characterIndex effectiveRange:&range];
+        
+        // Handle as required...
+        
+        NSLog(@"%@, %d, %d", value, range.location, range.length);
+        
+        value = [textView.attributedText attribute:NSForegroundColorAttributeName atIndex:characterIndex effectiveRange:&range];
+        
+        // Handle as required...
+        
+        NSLog(@"%@, %d, %d", value, range.location, range.length);
+        
+    }
+}
 
 - (void)viewDidUnload {
 	[super viewDidUnload];

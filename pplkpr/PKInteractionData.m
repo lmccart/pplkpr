@@ -112,7 +112,7 @@
         // Handle the error here
 	} else {
 		if([result count] > 0) {
-			NSLog(@"fetch saved person");
+			//NSLog(@"fetch saved person");
 			Person *person = (Person *)[result objectAtIndex:0];
 			newReport.person = person;
 			
@@ -122,9 +122,9 @@
 			
 			SEL setSel = NSSelectorFromString([NSString stringWithFormat:@"set%@N:", newReport.emotion]);
 			[person performSelector:setSel withObject:tot];
-			NSLog(@"reports n for %@ %@ now at %@", person.name, newReport.emotion, tot);
+			//NSLog(@"reports n for %@ %@ now at %@", person.name, newReport.emotion, tot);
 		} else {
-			NSLog(@"create new person");
+			//NSLog(@"create new person");
 			Person * newPerson = [NSEntityDescription insertNewObjectForEntityForName:@"Person"
 															   inManagedObjectContext:_managedObjectContext];
 			newPerson.name = name;
@@ -171,7 +171,7 @@
 		if ([tot intValue] > 0) {
 			SEL sel = NSSelectorFromString([NSString stringWithFormat:@"set%@:", e]);
 			[person performSelector:sel withObject:[NSNumber numberWithFloat:[val floatValue]/[tot floatValue]]];
-			NSLog(@"%@ %@", e, [NSNumber numberWithFloat:[val floatValue]/[tot floatValue]]);
+			//NSLog(@"%@ %@", e, [NSNumber numberWithFloat:[val floatValue]/[tot floatValue]]);
 		}
 	}
 	// save context
@@ -224,7 +224,7 @@
 		if ([tot intValue] > 0) {
 			val = [NSNumber numberWithFloat:[val floatValue] / [tot floatValue]];
 			[valsDict setObject:val forKey:e];
-			NSLog(@"global avg %@ %@", e, val);
+			//NSLog(@"global avg %@ %@", e, val);
 		}
 	}
 	
@@ -255,7 +255,7 @@
 			// for now just 50/50 avg with global
 			SEL setSel = NSSelectorFromString([NSString stringWithFormat:@"set%@:", e]);
 			[person performSelector:setSel withObject:avgVal];
-			NSLog(@"revalued avg %@ %@", e, avgVal);
+			//NSLog(@"revalued avg %@ %@", e, avgVal);
 		}
 	}
 }
