@@ -39,44 +39,33 @@
     [_priorityView setDataSource:self];
     [_priorityView reloadData];
     
-    int i = 0;
-    for (UIView *v in self.view.subviews) {
-        if ([v class] == [UIView class]) {
+    
+    UIView *v = (UIView *)[self.view viewWithTag:7];
+    
+    for (int i=0; i < MIN(3, [[_priorityData allKeys] count]); i++) {
+        UITextView *tv = [[UITextView alloc] init];
+      //  [tv setDelegate:self];
+
+        NSString *emotion = [[_priorityData allKeys] objectAtIndex:i];
+        NSArray *emo_arr = (NSArray *)[_priorityData objectForKey:emotion];
+        Person *person = [emo_arr objectAtIndex:0];
+        NSLog(@"%d %@", i, person.name);
+
+
+        NSMutableAttributedString* attributedString = [[NSMutableAttributedString alloc] initWithString:@"a clickable word"];
+        [attributedString addAttribute:@"myCustomTag" value:@(YES) range:NSMakeRange(0,5)];
+        [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0,5)];
+
         
-            if (i < [[_priorityData allKeys] count]) {
-
-                NSString *emotion = [[_priorityData allKeys] objectAtIndex:i];
-                NSArray *emo_arr = (NSArray *)[_priorityData objectForKey:emotion];
-                Person *person = [emo_arr objectAtIndex:0];
-                NSLog(@"%d %@", i, person.name);
-
-//                UIButton *b0 = (UIButton *)[v viewWithTag:0];
-//                [b0 setTitle:person.name forState:UIControlStateNormal];
-//                [b0 sizeToFit];
-//                
-//                UIButton *b1 = (UIButton *)[v viewWithTag:1];
-//                [b1 setTitle:emotion forState:UIControlStateNormal];
-//                [b1 sizeToFit];
-//                i++;
-                
-                NSMutableAttributedString* attributedString = [[NSMutableAttributedString alloc] initWithString:@"a clickable word" attributes:@{ @"myCustomTag" : @(YES) }];
-                [attributedString addAttribute:@"myCustomTag" value:@(YES) range:NSMakeRange(0,5)];
-                [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0,5)];
-                [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor greenColor] range:NSMakeRange(5,6)];
-                [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor blueColor] range:NSMakeRange(11,5)];
-                
-                NSMutableAttributedString *s = [[NSMutableAttributedString alloc] initWithString:@"hi hi hi hi"];
-                [s appendAttributedString:attributedString];
-            
-                UITextView *tv = (UITextView *)[v viewWithTag:1];
-                [tv setAttributedText:attributedString];
-                
-                UITapGestureRecognizer *gr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(textTapped:)];
-                //[gr setNumberOfTapsRequired:1];
-                [tv addGestureRecognizer:gr];
-                i++;
-            }
-        }
+        // Handle as required...
+    
+        [tv setAttributedText:attributedString];
+        
+        UITapGestureRecognizer *gr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(textTapped:)];
+        [tv addGestureRecognizer:gr];
+        
+        [v addSubview:tv];
+        [tv sizeToFit];
     }
     [self.view layoutIfNeeded];
 }
@@ -217,21 +206,12 @@
                                            inTextContainer:textView.textContainer
                   fractionOfDistanceBetweenInsertionPoints:NULL];
     
-    NSLog(@"%d, %f, %f", characterIndex, location.x, location.y);
     if (characterIndex < textView.textStorage.length) {
         
         NSRange range;
         id value = [textView.attributedText attribute:@"myCustomTag" atIndex:characterIndex effectiveRange:&range];
-        
-        // Handle as required...
-        
         NSLog(@"%@, %d, %d", value, range.location, range.length);
         
-        value = [textView.attributedText attribute:NSForegroundColorAttributeName atIndex:characterIndex effectiveRange:&range];
-        
-        // Handle as required...
-        
-        NSLog(@"%@, %d, %d", value, range.location, range.length);
         
     }
 }
