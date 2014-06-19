@@ -14,14 +14,14 @@
 #import "Report.h"
 #import "Person.h"
 
-@interface PKViewController() <UITableViewDataSource, UITableViewDelegate> {
+@interface PKViewController() {
 	
 	NSMutableData *receivedData;
 }
 
 
 @property (retain, nonatomic) NSMutableDictionary *priorityData;
-@property (retain, nonatomic) IBOutlet UITableView *priorityView;
+@property (retain, nonatomic) IBOutlet UIView *priorityView;
 
 @end
 
@@ -33,41 +33,8 @@
 	[super viewDidLoad];
 	
 	devicesArray = [[NSMutableArray alloc] init];
-	
-	_priorityData = [[PKInteractionData data] getRankedPeople];
-	[_priorityView setDelegate:self];
-    [_priorityView setDataSource:self];
-    [_priorityView reloadData];
     
-    
-    UIView *v = (UIView *)[self.view viewWithTag:7];
-    
-    for (int i=0; i < MIN(3, [[_priorityData allKeys] count]); i++) {
-        UITextView *tv = [[UITextView alloc] init];
-      //  [tv setDelegate:self];
-
-        NSString *emotion = [[_priorityData allKeys] objectAtIndex:i];
-        NSArray *emo_arr = (NSArray *)[_priorityData objectForKey:emotion];
-        Person *person = [emo_arr objectAtIndex:0];
-        NSLog(@"%d %@", i, person.name);
-
-
-        NSMutableAttributedString* attributedString = [[NSMutableAttributedString alloc] initWithString:@"a clickable word"];
-        [attributedString addAttribute:@"myCustomTag" value:@(YES) range:NSMakeRange(0,5)];
-        [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0,5)];
-
-        
-        // Handle as required...
-    
-        [tv setAttributedText:attributedString];
-        
-        UITapGestureRecognizer *gr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(textTapped:)];
-        [tv addGestureRecognizer:gr];
-        
-        [v addSubview:tv];
-        [tv sizeToFit];
-    }
-    [self.view layoutIfNeeded];
+    [self updatePriority];
 }
 
 - (void)didReceiveMemoryWarning
@@ -80,9 +47,41 @@
 {
     [super viewWillAppear:animated];
     
-	_priorityData = [[PKInteractionData data] getRankedPeople];
-	[_priorityView reloadData];
+	[self updatePriority];
     
+}
+
+- (void)updatePriority
+{
+	_priorityData = [[PKInteractionData data] getRankedPeople];
+    for (int i=0; i < MIN(3, [[_priorityData allKeys] count]); i++) {
+        
+        NSString *emotion = [[_priorityData allKeys] objectAtIndex:i];
+        NSArray *emo_arr = (NSArray *)[_priorityData objectForKey:emotion];
+        Person *person = [emo_arr objectAtIndex:0];
+        NSLog(@"%d %@", i, person.name);
+        
+        
+        NSMutableAttributedString* attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ makes you most %@", person.name, emotion]];
+        
+        [attributedString addAttribute:@"personTag" value:person.name range:NSMakeRange(0,[person.name length])];
+        [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0,[person.name length])];
+        
+        [attributedString addAttribute:@"emotionTag" value:emotion range:NSMakeRange([attributedString length] - [emotion length]-1,[emotion length])];
+        [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange([attributedString length] - [emotion length],[emotion length])];
+        
+        
+        UITextView *tv = [[UITextView alloc] init];
+        tv.frame = CGRectMake(0, 50*i, 100, 100);
+        [tv setAttributedText:attributedString];
+        
+        UITapGestureRecognizer *gr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(textTapped:)];
+        [tv addGestureRecognizer:gr];
+        
+        [_priorityView addSubview:tv];
+        [tv sizeToFit];
+    }
+    [self.view layoutIfNeeded];
 }
 
 #pragma textfield handling
@@ -97,96 +96,22 @@
 }
 
 
-#pragma table
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-	if (tableView == _priorityView) {
-		if (_priorityData && [_priorityData count] > 0) {
-			return 1;
-		}
-		else return 0;
-	} else return 0;
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return @"NOTIFICATIONS";
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	if (tableView == _priorityView) {
-		if (_priorityData) {
-			return [[_priorityData allKeys] count];
-		} else return 0;
-	} else return 0;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	
-    static NSString *cellIdentifier = @"cell";
-	
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier] autorelease];
-    }
-	
-	if (tableView == _priorityView) {
-        
-        NSString *emotion = [[_priorityData allKeys] objectAtIndex:indexPath.row];
-        NSArray *emo_arr = (NSArray *)[_priorityData objectForKey:emotion];
-        Person *person = [emo_arr objectAtIndex:0];
-        cell.textLabel.text = [NSString stringWithFormat:@"%@ makes you most %@", person.name, emotion];
-    }
-	
-    cell.textLabel.numberOfLines = 0;
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    return cell;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	
-	if (tableView == _priorityView) {
-		//[self pushPersonViewController:[[_priorityData objectAtIndex:indexPath.row] objectAtIndex:0]];
-		[tableView deselectRowAtIndexPath:indexPath animated:YES];
-	}
-}
-
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	if (tableView == _priorityView) {
-        
-//        Person *person = [_priorityData objectAtIndex:indexPath.row];
-//		NSString *text = [NSString stringWithFormat:@"%@ makes you most %@", person.name, @"MAD"];
-            NSString *text = @"temp";
-		NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:17.0f]}];
-		
-		CGRect rect = [attributedText boundingRectWithSize:(CGSize){260, CGFLOAT_MAX}
-												   options:NSStringDrawingUsesLineFragmentOrigin
-												   context:nil];
-		return rect.size.height+25;
-//	} else if (tableView == _reportsView) {
-//		NSString *text = [[_fetchedPeopleArray objectAtIndex:indexPath.row] name];
-//		
-//		NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:17.0f]}];
-//		
-//		CGRect rect = [attributedText boundingRectWithSize:(CGSize){260, CGFLOAT_MAX}
-//												   options:NSStringDrawingUsesLineFragmentOrigin
-//												   context:nil];
-//		return rect.size.height+25;
-	}
-	else return 0;
-}
-
-
-
-- (void)updateView {
-	[_priorityView reloadData];
-}
-
 
 - (void)pushPersonViewController:(NSString *)name
 {
+    NSLog(@"jump to person %@", name);
 	[[PKInteractionData data] setJumpToName:name];
 	[self.tabBarController setSelectedIndex:1];
 }
+
+
+
+- (void)pushRankViewController:(NSString *)emotion
+{
+    NSLog(@"jump to rank %@", emotion);
+	[self.tabBarController setSelectedIndex:1];
+}
+
 
 - (void)textTapped:(UITapGestureRecognizer *)recognizer
 {
@@ -209,9 +134,19 @@
     if (characterIndex < textView.textStorage.length) {
         
         NSRange range;
-        id value = [textView.attributedText attribute:@"myCustomTag" atIndex:characterIndex effectiveRange:&range];
+        id value = [textView.attributedText attribute:@"personTag" atIndex:characterIndex effectiveRange:&range];
         NSLog(@"%@, %d, %d", value, range.location, range.length);
         
+        if (value) {
+            [self pushPersonViewController:value];
+        }
+        
+        value = [textView.attributedText attribute:@"emotionTag" atIndex:characterIndex effectiveRange:&range];
+        NSLog(@"%@, %d, %d", value, range.location, range.length);
+        
+        if (value) {
+            [self pushRankViewController:value];
+        }
         
     }
 }

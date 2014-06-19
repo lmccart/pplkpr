@@ -48,7 +48,7 @@
 	[_emotionPicker setDelegate:self];
 	[_emotionPicker setDataSource:self];
 	[_emotion initWithString: [[[PKInteractionData data] emotionsArray] objectAtIndex:0]];
-	NSLog(@"%@", _emotion);
+	NSLog(@"viewDidLoad emotion: %@", _emotion);
 	
 	[_valencePicker setDelegate:self];
 	[_valencePicker setDataSource:self];
@@ -66,7 +66,9 @@
 	
 	if ([[PKInteractionData data] jumpToName]) {
 		[self performSegueWithIdentifier:@"personSegue" sender:self];
-	}
+	} else {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
 	_rankData = [[PKInteractionData data] getRankedPeople];
 }
 

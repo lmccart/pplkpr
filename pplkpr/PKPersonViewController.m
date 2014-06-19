@@ -40,8 +40,14 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-	[_personLabel setText:[[PKInteractionData data] jumpToName]];
-	[[PKInteractionData data] setJumpToName:nil];
+    
+	if ([[PKInteractionData data] jumpToName]) {
+        [_personLabel setText:[[PKInteractionData data] jumpToName]];
+        [[PKInteractionData data] setJumpToName:nil];
+	} else {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+    
 }
 
 -(IBAction)sendInAppSMS:(id)sender {

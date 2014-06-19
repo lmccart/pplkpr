@@ -22,13 +22,8 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <tableView clipsSubviews="YES" tag="2" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="0xg-9L-k99">
-                                <rect key="frame" x="20" y="20" width="280" height="193"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </tableView>
                             <view tag="7" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bfV-Jb-09L">
-                                <rect key="frame" x="20" y="221" width="280" height="260"/>
+                                <rect key="frame" x="20" y="20" width="280" height="293"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
@@ -38,7 +33,7 @@
                     <tabBarItem key="tabBarItem" title="Item" id="YL6-6B-thV"/>
                     <navigationItem key="navigationItem" id="JuX-Ud-8hQ"/>
                     <connections>
-                        <outlet property="priorityView" destination="0xg-9L-k99" id="Cwo-D1-eHF"/>
+                        <outlet property="priorityView" destination="bfV-Jb-09L" id="WhC-uV-nTX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
