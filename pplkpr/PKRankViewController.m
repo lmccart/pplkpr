@@ -172,7 +172,7 @@
 	
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
 	
 	if ([_rankData objectForKey:_emotion]) {
@@ -181,8 +181,11 @@
 		Person *p = [[_rankData objectForKey:_emotion] objectAtIndex:ind];
 		
 		SEL sel = NSSelectorFromString([NSString stringWithFormat:@"%@", [_emotion lowercaseString]]);
-		NSNumber *val = [p performSelector:sel];
-		cell.textLabel.text = [NSString stringWithFormat:@"%@ ~ %@", p.name, val];
+        IMP imp = [p methodForSelector:sel];
+        NSNumber* (*func)(id, SEL) = (void *)imp;
+        NSNumber *val = func(p, sel);
+        
+		cell.textLabel.text = [NSString stringWithFormat:@"%@ ~ %@", [p valueForKey:@"name"], val];
 	}
     else cell.textLabel.text = @"";
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -193,7 +196,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	
 	int ind = (_valence) ? [[_rankData objectForKey:_emotion] count] - indexPath.row - 1 : indexPath.row;
-	[[PKInteractionData data] setJumpToName:[[_rankData objectForKey:_emotion] objectAtIndex:ind]];
+    NSLog(@"select ind %d", ind);
+    NSString *name = [[[_rankData objectForKey:_emotion] objectAtIndex:ind] valueForKey:@"name"];
+    NSLog(@"select name %@", name);
+	[[PKInteractionData data] setJumpToName:name];
 	[self performSegueWithIdentifier:@"personSegue" sender:self];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
@@ -217,10 +223,4 @@
 	_rankData = nil;
 }
 
-- (void)dealloc {
-	[_emotionPicker release];
-	[_emotion release];
-	[_rankData release];
-	[super dealloc];
-}
 @end

@@ -28,11 +28,10 @@
 - (id)init {
 	
     if (self = [super init]) {
-    }
-	
-	PKAppDelegate* appDelegate = (PKAppDelegate*)[UIApplication sharedApplication].delegate;
-	_managedObjectContext = appDelegate.managedObjectContext;
-	
+        PKAppDelegate* appDelegate = (PKAppDelegate*)[UIApplication sharedApplication].delegate;
+        _managedObjectContext = appDelegate.managedObjectContext;
+	}
+    
     return self;
 }
 

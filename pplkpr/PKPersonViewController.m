@@ -51,7 +51,7 @@
 }
 
 -(IBAction)sendInAppSMS:(id)sender {
-	MFMessageComposeViewController *controller = [[[MFMessageComposeViewController alloc] init] autorelease];
+	MFMessageComposeViewController *controller = [[MFMessageComposeViewController alloc] init];
 	if([MFMessageComposeViewController canSendText])
 	{
 		controller.body = @"Lauren is on her way to meet you and she is very excited.";
@@ -171,11 +171,6 @@
 - (void)viewDidUnload {
 	_personLabel = nil;
 	[super viewDidUnload];
-}
-
-- (void)dealloc {
-	[_personLabel release];
-	[super dealloc];
 }
 
 @end

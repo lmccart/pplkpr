@@ -50,8 +50,8 @@
     if (self) {
         // Custom initialization
 		NSLog(@"init\n");
+        _mode = -1;
     }
-	_mode = -1;
     return self;
 }
 
@@ -255,11 +255,5 @@
     _whoTextField = nil;
 	_friendPickerController = nil;
 	[super viewDidUnload];
-}
-
-- (void)dealloc {
-	[_whoTextField release];
-	[_friendPickerController release];
-	[super dealloc];
 }
 @end

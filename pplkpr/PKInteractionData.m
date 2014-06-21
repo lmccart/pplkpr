@@ -36,12 +36,14 @@
 		_summary = [[NSDictionary alloc] init];
 		
 		_jumpToName = nil;
+        
+        
+        PKAppDelegate* appDelegate = (PKAppDelegate*)[UIApplication sharedApplication].delegate;
+        _managedObjectContext = appDelegate.managedObjectContext;
+        
+        [self purgeOldRecords];
+        
     }
-	
-	PKAppDelegate* appDelegate = (PKAppDelegate*)[UIApplication sharedApplication].delegate;
-	_managedObjectContext = appDelegate.managedObjectContext;
-	
-	[self purgeOldRecords];
 	
     return self;
 }
@@ -113,12 +115,17 @@
 			Person *person = (Person *)[result objectAtIndex:0];
 			newReport.person = person;
 			
-			SEL getSel = NSSelectorFromString([NSString stringWithFormat:@"%@N", [newReport.emotion lowercaseString]]);
-			NSNumber *tot = [person performSelector:getSel];
+			SEL getSel = NSSelectorFromString([NSString stringWithFormat:@"%@N", [[newReport valueForKey:@"emotion"] lowercaseString]]);
+            IMP getImp = [person methodForSelector:getSel];
+            NSNumber* (*getFunc)(id, SEL) = (void *)getImp;
+            NSNumber *tot = getFunc(person, getSel);
+
 			tot = [NSNumber numberWithInteger:[tot intValue] + 1];
 			
 			SEL setSel = NSSelectorFromString([NSString stringWithFormat:@"set%@N:", newReport.emotion]);
-			[person performSelector:setSel withObject:tot];
+            IMP setImp = [person methodForSelector:setSel];
+            void (*setFunc)(id, SEL, NSNumber*) = (void *)setImp;
+            setFunc(person, setSel, tot);
 			//NSLog(@"reports n for %@ %@ now at %@", person.name, newReport.emotion, tot);
 		} else {
 			//NSLog(@"create new person");
@@ -127,9 +134,14 @@
 			newPerson.name = name;
 			for (id e in _emotionsArray) {
 				SEL sel = NSSelectorFromString([NSString stringWithFormat:@"set%@:", e]);
-				[newPerson performSelector:sel withObject:[NSNumber numberWithFloat:0]];
+                IMP imp = [newPerson methodForSelector:sel];
+                void (*func)(id, SEL, NSNumber*) = (void *)imp;
+                func(newPerson, sel, [NSNumber numberWithFloat:0]);
+                
 				SEL selN = NSSelectorFromString([NSString stringWithFormat:@"set%@N:", e]);
-				[newPerson performSelector:selN withObject:[NSNumber numberWithInt:e == newReport.emotion]];
+                IMP impN = [newPerson methodForSelector:selN];
+                void (*funcN)(id, SEL, NSNumber*) = (void *)impN;
+                funcN(newPerson, selN, [NSNumber numberWithInt:e == newReport.emotion]);
 			}
 			newPerson.reports = [NSSet setWithObjects:newReport, nil];
 		}
@@ -162,12 +174,17 @@
 	//NSLog(@"averaging %@", person.name);
 	for (id e in _emotionsArray) {
 		NSNumber *val = [valsDict objectForKey:e];
-		
+  
 		SEL selN = NSSelectorFromString([NSString stringWithFormat:@"%@N", [e lowercaseString]]);
-		NSNumber *tot = [person performSelector:selN];
+        IMP impN = [person methodForSelector:selN];
+        NSNumber* (*funcN)(id, SEL) = (void *)impN;
+        NSNumber *tot = funcN(person, selN);
+        
 		if ([tot intValue] > 0) {
 			SEL sel = NSSelectorFromString([NSString stringWithFormat:@"set%@:", e]);
-			[person performSelector:sel withObject:[NSNumber numberWithFloat:[val floatValue]/[tot floatValue]]];
+            IMP imp = [person methodForSelector:sel];
+            void (*func)(id, SEL, NSNumber*) = (void *)imp;
+            func(person, sel, [NSNumber numberWithFloat:[val floatValue]/[tot floatValue]]);
 			//NSLog(@"%@ %@", e, [NSNumber numberWithFloat:[val floatValue]/[tot floatValue]]);
 		}
 	}
@@ -201,7 +218,10 @@
 		[self averagePerson:p];
 		for (id e in _emotionsArray) {
 			SEL sel = NSSelectorFromString([NSString stringWithFormat:@"%@", [e lowercaseString]]);
-			NSNumber *pVal = [p performSelector:sel];
+			IMP imp = [p methodForSelector:sel];
+            NSNumber* (*func)(id, SEL) = (void *)imp;
+            NSNumber *pVal = func(p, sel);
+            
 			if ([pVal floatValue] > 0) {
 				NSNumber *val = [valsDict objectForKey:e];
 				val = [NSNumber numberWithFloat:[val floatValue] + [pVal floatValue]];
@@ -237,13 +257,18 @@
 - (void)revaluePerson:(Person *)person withGlobalVals:(NSMutableDictionary *)globalVals {
 	for (id e in _emotionsArray) {
 		SEL getSel = NSSelectorFromString([NSString stringWithFormat:@"%@", [e lowercaseString]]);
-		NSNumber *pVal = [person performSelector:getSel];
+        IMP getImp = [person methodForSelector:getSel];
+        NSNumber* (*getFunc)(id, SEL) = (void *)getImp;
+        NSNumber *pVal = getFunc(person, getSel);
+        
 		NSNumber *globalVal = [globalVals valueForKey:e];
 		
 		if ([pVal floatValue] > 0) {
 			SEL selN = NSSelectorFromString([NSString stringWithFormat:@"%@N", [e lowercaseString]]);
-			NSNumber *tot = [person performSelector:selN];
-			
+            IMP impN = [person methodForSelector:selN];
+            NSNumber* (*funcN)(id, SEL) = (void *)impN;
+            NSNumber *tot = funcN(person, selN);
+            
 			float factor = 1.0; // determines how much the weight shifts with new reports
 			
 			NSNumber *avgVal = [NSNumber numberWithFloat:([pVal floatValue] * [tot floatValue] * factor + [globalVal floatValue]) / ([tot floatValue] * factor + 1 ) ];
@@ -251,7 +276,9 @@
 			
 			// for now just 50/50 avg with global
 			SEL setSel = NSSelectorFromString([NSString stringWithFormat:@"set%@:", e]);
-			[person performSelector:setSel withObject:avgVal];
+            IMP setImp = [person methodForSelector:setSel];
+            void (*setFunc)(id, SEL, NSNumber*) = (void *)setImp;
+            setFunc(person, setSel, avgVal);
 			//NSLog(@"revalued avg %@ %@", e, avgVal);
 		}
 	}
@@ -280,7 +307,6 @@
             [dict setObject:results forKey:e];
         }
         
-		[request release];
 	}
 	
 	return dict;
@@ -299,8 +325,7 @@
 	
 	NSError *error;
     NSArray *results = [_managedObjectContext executeFetchRequest:request error:nil];
-    [request release];
-	
+
     for (NSManagedObject *managedObject in results) {
     	[_managedObjectContext deleteObject:managedObject];
     	//NSLog(@"report deleted");
@@ -308,14 +333,6 @@
     if (![_managedObjectContext save:&error]) {
     	NSLog(@"Error deleting - error:%@",error);
     }
-}
-
-- (void)dealloc {
-	[_locationsArray release];
-	[_emotionsArray release];
-	[_summary release];
-	[_jumpToName release];
-	[super dealloc];
 }
 
 @end

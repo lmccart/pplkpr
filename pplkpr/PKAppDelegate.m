@@ -77,13 +77,6 @@
     }
 }
 
-- (void)dealloc {
-	[locationManager release];
-	[peripheralManager release];
-	[selectedPeripheral release];
-	[super dealloc];
-}
-
 - (void)applicationWillResignActive:(UIApplication *)application
 {
 	// Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -229,7 +222,6 @@
 	} else {
 		UIAlertView *servicesDisabledAlert = [[UIAlertView alloc] initWithTitle:@"Location Services Disabled" message:@"You currently have all location services for this device disabled. Please enable them in Settings." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
 		[servicesDisabledAlert show];
-		[servicesDisabledAlert release];
 	}
 }
 
@@ -279,7 +271,7 @@
     NSLog(@"Discovered %@", peripheral.name);
 	
 	if (peripheral) {
-		selectedPeripheral = [peripheral retain];
+		selectedPeripheral = peripheral;
 		[peripheralManager connectPeripheral:selectedPeripheral options:nil];
 	}
 }
