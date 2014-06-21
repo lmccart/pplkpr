@@ -215,11 +215,13 @@
 - (IBAction)submit:(id)sender {
 	
 	[[PKInteractionData data] addReport:_whoTextField.text withEmotion:_emotion withRating:[NSNumber numberWithFloat:[_intensitySlider value]]];
-	[self resetForm];
     
 	// go to person view
 	[[PKInteractionData data] setJumpToName:_whoTextField.text];
 	[self.tabBarController setSelectedIndex:1];
+    
+    // reset form
+	[self resetForm];
 }
 
 
