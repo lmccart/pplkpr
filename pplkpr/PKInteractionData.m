@@ -18,9 +18,6 @@
 
 @implementation PKInteractionData
 
-
-@synthesize managedObjectContext = _managedObjectContext;
-
 + (id)data {
     static PKInteractionData *data = nil;
     static dispatch_once_t onceToken;
@@ -31,7 +28,7 @@
 }
 
 
--(id)init {
+- (id)init {
 	
     if (self = [super init]) {
 		_emotionsArray = [[NSArray alloc] initWithObjects:@"Excited",@"Aroused",@"Angry",@"Scared", @"Anxious", @"Bored", @"Calm", nil];

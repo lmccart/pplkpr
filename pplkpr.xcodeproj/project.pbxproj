@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		653F8F76185FA9760009F785 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 653F8F75185FA9760009F785 /* CoreData.framework */; };
 		653F8F79185FA9A50009F785 /* pplkpr.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 653F8F77185FA9A50009F785 /* pplkpr.xcdatamodeld */; };
+		6569C213192D55D900DD665E /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 6569C212192D55D900DD665E /* home.png */; };
 		656B880117C4126500FE4ABE /* PKInteractionData.m in Sources */ = {isa = PBXBuildFile; fileRef = 656B880017C4126500FE4ABE /* PKInteractionData.m */; };
 		656E72C4183F86E600F59652 /* PKRankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 656E72C3183F86E600F59652 /* PKRankViewController.m */; };
 		6596CB7018689B480045D6E2 /* rect.png in Resources */ = {isa = PBXBuildFile; fileRef = 6596CB6F18689B480045D6E2 /* rect.png */; };
@@ -26,6 +27,7 @@
 		65E398FE184976FF00E3B2B4 /* PKReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65E398FD184976FF00E3B2B4 /* PKReportViewController.m */; };
 		65E39901184A3E6500E3B2B4 /* left.png in Resources */ = {isa = PBXBuildFile; fileRef = 65E398FF184A3E6500E3B2B4 /* left.png */; };
 		65E39902184A3E6500E3B2B4 /* meet.png in Resources */ = {isa = PBXBuildFile; fileRef = 65E39900184A3E6500E3B2B4 /* meet.png */; };
+		65EB86081956229000301D13 /* PKTempHRV.m in Sources */ = {isa = PBXBuildFile; fileRef = 65EB86071956229000301D13 /* PKTempHRV.m */; };
 		65FC7C5117A1A37F0045BFF2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65FC7C5017A1A37F0045BFF2 /* Foundation.framework */; };
 		65FC7C5317A1A37F0045BFF2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65FC7C5217A1A37F0045BFF2 /* CoreGraphics.framework */; };
 		65FC7C5517A1A37F0045BFF2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65FC7C5417A1A37F0045BFF2 /* UIKit.framework */; };
@@ -41,6 +43,7 @@
 /* Begin PBXFileReference section */
 		653F8F75185FA9760009F785 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		653F8F78185FA9A50009F785 /* pplkpr.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = pplkpr.xcdatamodel; sourceTree = "<group>"; };
+		6569C212192D55D900DD665E /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home.png; sourceTree = "<group>"; };
 		656B87FF17C4126500FE4ABE /* PKInteractionData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKInteractionData.h; sourceTree = "<group>"; };
 		656B880017C4126500FE4ABE /* PKInteractionData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKInteractionData.m; sourceTree = "<group>"; };
 		656E72C2183F86E600F59652 /* PKRankViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKRankViewController.h; sourceTree = "<group>"; };
@@ -63,6 +66,8 @@
 		65E398FD184976FF00E3B2B4 /* PKReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKReportViewController.m; sourceTree = "<group>"; };
 		65E398FF184A3E6500E3B2B4 /* left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = left.png; sourceTree = "<group>"; };
 		65E39900184A3E6500E3B2B4 /* meet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = meet.png; sourceTree = "<group>"; };
+		65EB86061956229000301D13 /* PKTempHRV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKTempHRV.h; sourceTree = "<group>"; };
+		65EB86071956229000301D13 /* PKTempHRV.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PKTempHRV.m; sourceTree = "<group>"; };
 		65FC7C4D17A1A37F0045BFF2 /* pplkpr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pplkpr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65FC7C5017A1A37F0045BFF2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		65FC7C5217A1A37F0045BFF2 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -124,6 +129,8 @@
 				65B851171861EDAC00DE02E8 /* Report.m */,
 				656B87FF17C4126500FE4ABE /* PKInteractionData.h */,
 				656B880017C4126500FE4ABE /* PKInteractionData.m */,
+				65EB86061956229000301D13 /* PKTempHRV.h */,
+				65EB86071956229000301D13 /* PKTempHRV.m */,
 			);
 			name = "Data Structures";
 			sourceTree = "<group>";
@@ -131,6 +138,7 @@
 		65E398D81849619300E3B2B4 /* assets */ = {
 			isa = PBXGroup;
 			children = (
+				6569C212192D55D900DD665E /* home.png */,
 				6596CB6F18689B480045D6E2 /* rect.png */,
 				653F8F77185FA9A50009F785 /* pplkpr.xcdatamodeld */,
 				65E398FF184A3E6500E3B2B4 /* left.png */,
@@ -271,6 +279,7 @@
 				65E39901184A3E6500E3B2B4 /* left.png in Resources */,
 				6596CB7018689B480045D6E2 /* rect.png in Resources */,
 				65E398F8184972FB00E3B2B4 /* rank_sel.png in Resources */,
+				6569C213192D55D900DD665E /* home.png in Resources */,
 				65FC7C6417A1A37F0045BFF2 /* Main.storyboard in Resources */,
 				65E398F9184972FB00E3B2B4 /* rank.png in Resources */,
 			);
@@ -293,6 +302,7 @@
 				65FC7C6117A1A37F0045BFF2 /* PKAppDelegate.m in Sources */,
 				65FC7C9217A1A7030045BFF2 /* PKPersonViewController.m in Sources */,
 				656E72C4183F86E600F59652 /* PKRankViewController.m in Sources */,
+				65EB86081956229000301D13 /* PKTempHRV.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

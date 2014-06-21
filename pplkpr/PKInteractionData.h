@@ -20,12 +20,10 @@
 
 @property (nonatomic, strong) NSArray *emotionsArray;
 
-
-
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 
-+(id)data;
--(id)init;
++ (id)data;
+- (id)init;
 
 - (void)addReport:(NSString *)name withEmotion:(NSString *)emotion withRating:(NSNumber *)rating;
 - (NSArray*)getAllReports;

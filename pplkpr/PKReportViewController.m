@@ -8,6 +8,7 @@
 
 #import "PKReportViewController.h"
 #import "PKInteractionData.h"
+#import "PKTempHRV.h"
 
 @interface PKReportViewController () <UIPickerViewDataSource, UIPickerViewDelegate> {
 	
@@ -78,7 +79,9 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    NSMutableDictionary *event = [[PKTempHRV data] getHRVEvent];
 	_emotion = [[[PKInteractionData data] emotionsArray] objectAtIndex:0];
+    [_intensitySlider setValue:[[event objectForKey:@"intensity"] floatValue]];
 }
 
 
