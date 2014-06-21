@@ -47,8 +47,7 @@
 
 	[_emotionPicker setDelegate:self];
 	[_emotionPicker setDataSource:self];
-	[_emotion initWithString: [[[PKInteractionData data] emotionsArray] objectAtIndex:0]];
-	NSLog(@"viewDidLoad emotion: %@", _emotion);
+    _emotion = [[[PKInteractionData data] emotionsArray] objectAtIndex:0];
 	
 	[_valencePicker setDelegate:self];
 	[_valencePicker setDataSource:self];
@@ -58,6 +57,7 @@
 	_rankData = [[NSDictionary alloc] init];
 	[_rankView setDelegate:self];
 	[_rankView setDataSource:self];
+	[_rankView reloadData];
 	
 	
 }
@@ -68,8 +68,21 @@
 		[self performSegueWithIdentifier:@"personSegue" sender:self];
 	} else {
         [self.navigationController popToRootViewControllerAnimated:YES];
+        if ([[PKInteractionData data] jumpToEmotion]) {
+            _emotion = [[PKInteractionData data] jumpToEmotion];
+            int d = [[[PKInteractionData data] emotionsArray] indexOfObject:_emotion];
+            [_emotionPicker selectRow:d inComponent:0 animated:NO];
+            [[PKInteractionData data] setJumpToEmotion:nil];
+        }
+        if ([[PKInteractionData data] jumpToValence]) {
+            _valence = [[PKInteractionData data] jumpToValence];
+            [_valencePicker selectRow:_valence inComponent:0 animated:NO];
+            [[PKInteractionData data] setJumpToValence:0];
+        }
     }
 	_rankData = [[PKInteractionData data] getRankedPeople];
+    
+	[self updateView];
 }
 
 
@@ -127,7 +140,7 @@
 		NSLog(@"Chosen item: %@", [_valenceArray objectAtIndex:row]);
 		_valence = (BOOL)row;
 	}
-	NSLog(@"order %d", _valence);
+	NSLog(@"order %d emotion %@", _valence, _emotion);
 	[self updateView];
 }
 
@@ -187,12 +200,11 @@
 
 
 - (void)updateView {
-	NSLog(@"updating for key %@", _emotion);
+	NSLog(@"updating for key %@ order %d", _emotion, _valence);
 	
-	NSLog(@"%d", [[_rankData objectForKey:_emotion] count]);
-	//for(id key in _rankData) {
-		NSLog(@"%@", [_rankData objectForKey:_emotion]);
-	//}
+	//NSLog(@"%d", [[_rankData objectForKey:_emotion] count]);
+	//NSLog(@"%@", [_rankData objectForKey:_emotion]);
+	
 	[_rankView reloadData];
 }
 

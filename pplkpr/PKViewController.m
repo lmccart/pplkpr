@@ -109,6 +109,8 @@
 - (void)pushRankViewController:(NSString *)emotion
 {
     NSLog(@"jump to rank %@", emotion);
+	[[PKInteractionData data] setJumpToEmotion:emotion];
+	[[PKInteractionData data] setJumpToValence:1];
 	[self.tabBarController setSelectedIndex:1];
 }
 

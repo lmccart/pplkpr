@@ -15,6 +15,8 @@
 @property (retain) NSDictionary *summary;
 
 @property (retain) NSString *jumpToName;
+@property (retain) NSString *jumpToEmotion;
+@property BOOL jumpToValence;
 
 @property (nonatomic, strong) NSArray *emotionsArray;
 
