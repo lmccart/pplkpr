@@ -53,7 +53,9 @@
 
 - (void)updatePriority
 {
+    
 	_priorityData = [[PKInteractionData data] getRankedPeople];
+    
     for (int i=0; i < MIN(3, [[_priorityData allKeys] count]); i++) {
         
         NSString *emotion = [[_priorityData allKeys] objectAtIndex:i];

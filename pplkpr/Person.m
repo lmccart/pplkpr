@@ -29,4 +29,5 @@
 @dynamic scaredN;
 @dynamic reports;
 
+
 @end

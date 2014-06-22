@@ -92,10 +92,12 @@
 	// create new report
 	Report * newReport = [NSEntityDescription insertNewObjectForEntityForName:@"Report"
 													   inManagedObjectContext:_managedObjectContext];
-	newReport.name = name;
-	newReport.emotion = emotion;
-	newReport.rating = rating;
-	newReport.timestamp = [NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]];
+    
+    NSString *emotionKey = [emotion lowercaseString];
+    [newReport setValue:name forKey:@"name"];
+    [newReport setValue:emotion forKey:@"emotion"];
+    [newReport setValue:rating forKey:@"rating"];
+    [newReport setValue:[NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]] forKey:@"timestamp"];
 	
 	
 	NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -114,34 +116,26 @@
 			//NSLog(@"fetch saved person");
 			Person *person = (Person *)[result objectAtIndex:0];
 			newReport.person = person;
-			
-			SEL getSel = NSSelectorFromString([NSString stringWithFormat:@"%@N", [[newReport valueForKey:@"emotion"] lowercaseString]]);
-            IMP getImp = [person methodForSelector:getSel];
-            NSNumber* (*getFunc)(id, SEL) = (void *)getImp;
-            NSNumber *tot = getFunc(person, getSel);
-
+            
+            
+            NSNumber *tot = [person valueForKey:[NSString stringWithFormat:@"%@N", emotion]];
+            
 			tot = [NSNumber numberWithInteger:[tot intValue] + 1];
 			
-			SEL setSel = NSSelectorFromString([NSString stringWithFormat:@"set%@N:", newReport.emotion]);
-            IMP setImp = [person methodForSelector:setSel];
-            void (*setFunc)(id, SEL, NSNumber*) = (void *)setImp;
-            setFunc(person, setSel, tot);
-			//NSLog(@"reports n for %@ %@ now at %@", person.name, newReport.emotion, tot);
+            [person setValue:tot
+                      forKey:[NSString stringWithFormat:@"%@N", emotionKey]];
+			NSLog(@"reports n for %@ %@ now at %@", person.name, newReport.emotion, tot);
 		} else {
-			//NSLog(@"create new person");
-			Person * newPerson = [NSEntityDescription insertNewObjectForEntityForName:@"Person"
-															   inManagedObjectContext:_managedObjectContext];
-			newPerson.name = name;
+			NSLog(@"create new person");
+			Person *newPerson = [NSEntityDescription insertNewObjectForEntityForName:@"Person"
+                                                              inManagedObjectContext:_managedObjectContext];
+			[newPerson setValue:name forKey:@"name"];
 			for (id e in _emotionsArray) {
-				SEL sel = NSSelectorFromString([NSString stringWithFormat:@"set%@:", e]);
-                IMP imp = [newPerson methodForSelector:sel];
-                void (*func)(id, SEL, NSNumber*) = (void *)imp;
-                func(newPerson, sel, [NSNumber numberWithFloat:0]);
+                [newPerson setValue:[NSNumber numberWithFloat:0]
+                             forKey:e];
                 
-				SEL selN = NSSelectorFromString([NSString stringWithFormat:@"set%@N:", e]);
-                IMP impN = [newPerson methodForSelector:selN];
-                void (*funcN)(id, SEL, NSNumber*) = (void *)impN;
-                funcN(newPerson, selN, [NSNumber numberWithInt:e == newReport.emotion]);
+                [newPerson setValue:[NSNumber numberWithInt:e == [newReport valueForKey:@"emotion"]]
+                             forKey:[NSString stringWithFormat:@"%@N", emotionKey]];
 			}
 			newPerson.reports = [NSSet setWithObjects:newReport, nil];
 		}
@@ -175,17 +169,12 @@
 	for (id e in _emotionsArray) {
 		NSNumber *val = [valsDict objectForKey:e];
   
-		SEL selN = NSSelectorFromString([NSString stringWithFormat:@"%@N", [e lowercaseString]]);
-        IMP impN = [person methodForSelector:selN];
-        NSNumber* (*funcN)(id, SEL) = (void *)impN;
-        NSNumber *tot = funcN(person, selN);
+        NSNumber *tot = [person valueForKey:[NSString stringWithFormat:@"%@N", [e lowercaseString]]];
         
 		if ([tot intValue] > 0) {
-			SEL sel = NSSelectorFromString([NSString stringWithFormat:@"set%@:", e]);
-            IMP imp = [person methodForSelector:sel];
-            void (*func)(id, SEL, NSNumber*) = (void *)imp;
-            func(person, sel, [NSNumber numberWithFloat:[val floatValue]/[tot floatValue]]);
-			//NSLog(@"%@ %@", e, [NSNumber numberWithFloat:[val floatValue]/[tot floatValue]]);
+            
+            [person setValue:[NSNumber numberWithFloat:[val floatValue]/[tot floatValue]]
+                      forKey:[e lowercaseString]];
 		}
 	}
 	// save context
@@ -217,10 +206,7 @@
 	for (Person *p in people) {
 		[self averagePerson:p];
 		for (id e in _emotionsArray) {
-			SEL sel = NSSelectorFromString([NSString stringWithFormat:@"%@", [e lowercaseString]]);
-			IMP imp = [p methodForSelector:sel];
-            NSNumber* (*func)(id, SEL) = (void *)imp;
-            NSNumber *pVal = func(p, sel);
+            NSNumber *pVal = [p valueForKey:[e lowercaseString]];
             
 			if ([pVal floatValue] > 0) {
 				NSNumber *val = [valsDict objectForKey:e];
@@ -256,18 +242,12 @@
 // person's own avg.
 - (void)revaluePerson:(Person *)person withGlobalVals:(NSMutableDictionary *)globalVals {
 	for (id e in _emotionsArray) {
-		SEL getSel = NSSelectorFromString([NSString stringWithFormat:@"%@", [e lowercaseString]]);
-        IMP getImp = [person methodForSelector:getSel];
-        NSNumber* (*getFunc)(id, SEL) = (void *)getImp;
-        NSNumber *pVal = getFunc(person, getSel);
+        NSNumber *pVal = [person valueForKey:[e lowercaseString]];
         
 		NSNumber *globalVal = [globalVals valueForKey:e];
 		
 		if ([pVal floatValue] > 0) {
-			SEL selN = NSSelectorFromString([NSString stringWithFormat:@"%@N", [e lowercaseString]]);
-            IMP impN = [person methodForSelector:selN];
-            NSNumber* (*funcN)(id, SEL) = (void *)impN;
-            NSNumber *tot = funcN(person, selN);
+            NSNumber *tot = [person valueForKey:[NSString stringWithFormat:@"%@N", [e lowercaseString]]];
             
 			float factor = 1.0; // determines how much the weight shifts with new reports
 			
@@ -275,10 +255,7 @@
 			
 			
 			// for now just 50/50 avg with global
-			SEL setSel = NSSelectorFromString([NSString stringWithFormat:@"set%@:", e]);
-            IMP setImp = [person methodForSelector:setSel];
-            void (*setFunc)(id, SEL, NSNumber*) = (void *)setImp;
-            setFunc(person, setSel, avgVal);
+            [person setValue:avgVal forKey:[e lowercaseString]];
 			//NSLog(@"revalued avg %@ %@", e, avgVal);
 		}
 	}
