@@ -16,7 +16,7 @@
 
 @property (retain) NSString *jumpToName;
 @property (retain) NSString *jumpToEmotion;
-@property BOOL jumpToValence;
+@property BOOL jumpToOrder;
 
 @property (nonatomic, strong) NSArray *emotionsArray;
 
@@ -30,6 +30,7 @@
 - (NSArray*)getAllPeople;
 - (void)calculateGlobalAverages;
 - (NSMutableDictionary *)getRankedPeople;
+- (NSMutableArray *)getPriorities;
 
 @end
 

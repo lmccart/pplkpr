@@ -372,8 +372,8 @@
                     <navigationItem key="navigationItem" id="heO-sV-9P5"/>
                     <connections>
                         <outlet property="emotionPicker" destination="Ccx-oW-7m1" id="QfT-dL-OD7"/>
+                        <outlet property="orderPicker" destination="B3h-HN-IMe" id="iw1-h5-Ud5"/>
                         <outlet property="rankView" destination="TRZ-XU-p2V" id="nfd-dJ-Vbc"/>
-                        <outlet property="valencePicker" destination="B3h-HN-IMe" id="asB-RP-D6O"/>
                         <segue destination="aqQ-rz-qeF" kind="push" identifier="personSegue" id="sTc-4p-FzG"/>
                     </connections>
                 </viewController>

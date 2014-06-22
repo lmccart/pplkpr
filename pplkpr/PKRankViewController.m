@@ -18,9 +18,9 @@
 @property (retain, nonatomic) IBOutlet UIPickerView *emotionPicker;
 @property (retain) NSString *emotion;
 
-@property (nonatomic, strong) NSArray *valenceArray;
-@property (retain, nonatomic) IBOutlet UIPickerView *valencePicker;
-@property BOOL valence; // 0-more-desc, 1-less-asc
+@property (nonatomic, strong) NSArray *orderArray;
+@property (retain, nonatomic) IBOutlet UIPickerView *orderPicker;
+@property BOOL order; // 0-more-desc, 1-less-asc
 
 @property (retain, nonatomic) NSDictionary *rankData;
 @property (retain, nonatomic) IBOutlet UITableView *rankView;
@@ -49,10 +49,10 @@
 	[_emotionPicker setDataSource:self];
     _emotion = [[[PKInteractionData data] emotionsArray] objectAtIndex:0];
 	
-	[_valencePicker setDelegate:self];
-	[_valencePicker setDataSource:self];
-	_valenceArray = [[NSArray alloc] initWithObjects:@"more",@"less", nil];
-	_valence = NO;
+	[_orderPicker setDelegate:self];
+	[_orderPicker setDataSource:self];
+	_orderArray = [[NSArray alloc] initWithObjects:@"more",@"less", nil];
+	_order = NO;
 	
 	_rankData = [[NSDictionary alloc] init];
 	[_rankView setDelegate:self];
@@ -70,15 +70,15 @@
         [self.navigationController popToRootViewControllerAnimated:YES];
         if ([[PKInteractionData data] jumpToEmotion]) {
             _emotion = [[PKInteractionData data] jumpToEmotion];
+            NSLog(@"emotion in view will appear %@", _emotion);
             int d = [[[PKInteractionData data] emotionsArray] indexOfObject:_emotion];
             [_emotionPicker selectRow:d inComponent:0 animated:NO];
             [[PKInteractionData data] setJumpToEmotion:nil];
         }
-        if ([[PKInteractionData data] jumpToValence]) {
-            _valence = [[PKInteractionData data] jumpToValence];
-            [_valencePicker selectRow:_valence inComponent:0 animated:NO];
-            [[PKInteractionData data] setJumpToValence:0];
-        }
+        _order = [[PKInteractionData data] jumpToOrder];
+        [_orderPicker selectRow:_order inComponent:0 animated:NO];
+        [[PKInteractionData data] setJumpToOrder:NO];
+        
     }
 	_rankData = [[PKInteractionData data] getRankedPeople];
     
@@ -109,7 +109,7 @@
 	if (pickerView == _emotionPicker) {
 		return [[[PKInteractionData data] emotionsArray] count];
 	} else {
-		return [_valenceArray count];
+		return [_orderArray count];
 	}
 }
 
@@ -125,7 +125,7 @@
 	if (pickerView == _emotionPicker) {
 		return [[[PKInteractionData data] emotionsArray] objectAtIndex:row];
 	} else {
-		return [_valenceArray objectAtIndex:row];
+		return [_orderArray objectAtIndex:row];
 	}
 }
 
@@ -137,10 +137,10 @@
 		NSLog(@"Chosen item: %@", [[[PKInteractionData data] emotionsArray] objectAtIndex:row]);
 		_emotion = [[[PKInteractionData data] emotionsArray] objectAtIndex:row];
 	} else {
-		NSLog(@"Chosen item: %@", [_valenceArray objectAtIndex:row]);
-		_valence = (BOOL)row;
+		NSLog(@"Chosen item: %@", [_orderArray objectAtIndex:row]);
+		_order = (BOOL)row;
 	}
-	NSLog(@"order %d emotion %@", _valence, _emotion);
+	NSLog(@"order %d emotion %@", _order, _emotion);
 	[self updateView];
 }
 
@@ -176,8 +176,8 @@
     }
 	
 	if ([_rankData objectForKey:_emotion]) {
-		// walk from bottom or top based on valence
-		int ind = (_valence) ? [[_rankData objectForKey:_emotion] count] - indexPath.row - 1 : indexPath.row;
+		// walk from bottom or top based on order
+		int ind = (_order) ? [[_rankData objectForKey:_emotion] count] - indexPath.row - 1 : indexPath.row;
 		Person *p = [[_rankData objectForKey:_emotion] objectAtIndex:ind];
 		
 		SEL sel = NSSelectorFromString([NSString stringWithFormat:@"%@", [_emotion lowercaseString]]);
@@ -195,7 +195,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	
-	int ind = (_valence) ? [[_rankData objectForKey:_emotion] count] - indexPath.row - 1 : indexPath.row;
+	int ind = (_order) ? [[_rankData objectForKey:_emotion] count] - indexPath.row - 1 : indexPath.row;
     NSLog(@"select ind %d", ind);
     NSString *name = [[[_rankData objectForKey:_emotion] objectAtIndex:ind] valueForKey:@"name"];
     NSLog(@"select name %@", name);
@@ -206,7 +206,7 @@
 
 
 - (void)updateView {
-	NSLog(@"updating for key %@ order %d", _emotion, _valence);
+	NSLog(@"updating for key %@ order %d", _emotion, _order);
 	
 	//NSLog(@"%d", [[_rankData objectForKey:_emotion] count]);
 	//NSLog(@"%@", [_rankData objectForKey:_emotion]);

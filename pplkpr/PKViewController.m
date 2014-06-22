@@ -20,7 +20,7 @@
 }
 
 
-@property (retain, nonatomic) NSMutableDictionary *priorityData;
+@property (retain, nonatomic) NSMutableArray *priorityData;
 @property (retain, nonatomic) IBOutlet UIView *priorityView;
 
 @end
@@ -54,23 +54,37 @@
 - (void)updatePriority
 {
     
-	_priorityData = [[PKInteractionData data] getRankedPeople];
+	//_priorityData = [[PKInteractionData data] getRankedPeople];
+   // NSLog(@"%@", [[PKInteractionData data] getPriorities]);
     
-    for (int i=0; i < MIN(3, [[_priorityData allKeys] count]); i++) {
+    _priorityData = [[PKInteractionData data] getPriorities];
+    NSArray *sortedArray = [_priorityData sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        if ([[obj1 objectAtIndex:0] floatValue] > [[obj2 objectAtIndex:0] floatValue])
+            return NSOrderedDescending;
+        else if ([[obj1 objectAtIndex:0] floatValue] < [[obj2 objectAtIndex:0] floatValue])
+            return NSOrderedAscending;
+        return NSOrderedSame;
+    }];
+    
+    for (int i=0; i < MIN(3, [sortedArray count]); i++) {
         
-        NSString *emotion = [[_priorityData allKeys] objectAtIndex:i];
-        NSArray *emo_arr = (NSArray *)[_priorityData objectForKey:emotion];
-        Person *person = [emo_arr objectAtIndex:0];
-        NSLog(@"%d %@", i, person.name);
+        // abs value, name, asc, emotion
+        NSArray *entry = [sortedArray objectAtIndex:i];
+        
+        NSString *name = [entry objectAtIndex:1];
+        NSString *order = [[entry objectAtIndex:2] intValue] == 0 ? [NSString stringWithFormat:@"%@", @"most"] : [NSString stringWithFormat:@"%@", @"least"];
+        NSString *emotion = [entry objectAtIndex:3];
         
         
-        NSMutableAttributedString* attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ makes you most %@", person.name, emotion]];
+        NSMutableAttributedString* attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ makes you %@ %@", name, order, [emotion lowercaseString]]];
         
-        [attributedString addAttribute:@"personTag" value:person.name range:NSMakeRange(0,[person.name length])];
-        [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0,[person.name length])];
+        [attributedString addAttribute:@"personTag" value:name range:NSMakeRange(0,[name length])];
+        [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0,[name length])];
         
-        [attributedString addAttribute:@"emotionTag" value:emotion range:NSMakeRange([attributedString length] - [emotion length]-1,[emotion length])];
-        [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange([attributedString length] - [emotion length],[emotion length])];
+        int l = [emotion length] + [order length] + 1;
+        [attributedString addAttribute:@"emotionTag" value:emotion range:NSMakeRange([attributedString length]-l, l)];
+        [attributedString addAttribute:@"orderTag" value:[entry objectAtIndex:2] range:NSMakeRange([attributedString length]-l, l)];
+        [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange([attributedString length]-l, l)];
         
         
         UITextView *tv = [[UITextView alloc] init];
@@ -108,11 +122,11 @@
 
 
 
-- (void)pushRankViewController:(NSString *)emotion
+- (void)pushRankViewController:(NSString *)emotion withOrder:(BOOL)order
 {
-    NSLog(@"jump to rank %@", emotion);
+    NSLog(@"jump to rank %d %@", order, emotion);
 	[[PKInteractionData data] setJumpToEmotion:emotion];
-	[[PKInteractionData data] setJumpToValence:1];
+	[[PKInteractionData data] setJumpToOrder:order];
 	[self.tabBarController setSelectedIndex:1];
 }
 
@@ -146,10 +160,11 @@
         }
         
         value = [textView.attributedText attribute:@"emotionTag" atIndex:characterIndex effectiveRange:&range];
-        NSLog(@"%@, %d, %d", value, range.location, range.length);
+        id order = [textView.attributedText attribute:@"orderTag" atIndex:characterIndex effectiveRange:&range];
+        NSLog(@"%@, %d, %d, %d", value, [order boolValue], range.location, range.length);
         
         if (value) {
-            [self pushRankViewController:value];
+            [self pushRankViewController:value withOrder:[order boolValue]];
         }
         
     }

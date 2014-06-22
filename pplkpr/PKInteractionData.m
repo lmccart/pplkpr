@@ -261,7 +261,7 @@
 	}
 }
 
-
+// returns dictionary {emotion:array of people} sorted most to least
 - (NSMutableDictionary *)getRankedPeople {
 	
 	[self calculateGlobalAverages];
@@ -283,14 +283,45 @@
         if ([results count] > 0) {
             [dict setObject:results forKey:e];
         }
-        
 	}
-	
 	return dict;
 }
 
 
-- (void) purgeOldRecords {
+
+
+- (NSMutableArray *)getPriorities {
+	
+    NSMutableDictionary *ranked = [self getRankedPeople];
+	NSMutableArray *results = [[NSMutableArray alloc] init];
+    
+    for (int i=0; i < [[ranked allKeys] count]; i++) {
+        
+        NSString *e = [[ranked allKeys] objectAtIndex:i];
+        NSString *eKey = [e lowercaseString];
+        NSArray *people_arr = (NSArray *)[ranked objectForKey:e];
+        
+        if ([people_arr count] > 0) {
+            // add most person
+            Person *mostPerson = [people_arr objectAtIndex:0];
+            NSNumber *abs = [NSNumber numberWithFloat:1- [[mostPerson valueForKey:eKey] floatValue]];
+            NSArray *mostEntry = [[NSArray alloc] initWithObjects: abs, [mostPerson valueForKey:@"name"], [NSNumber numberWithInt:0], e, nil];
+            [results addObject:mostEntry];
+            
+            // add least person
+            Person *leastPerson = [people_arr objectAtIndex:[people_arr count]-1];
+            NSLog(@"%@ %@ %@", leastPerson, [leastPerson valueForKey:eKey], [leastPerson valueForKey:@"name"]);
+            NSArray *leastEntry = [[NSArray alloc] initWithObjects: [leastPerson valueForKey:eKey], [leastPerson valueForKey:@"name"], [NSNumber numberWithInt:1], e, nil];
+            [results addObject:leastEntry];
+        }
+    }
+    
+	return results;
+}
+
+
+
+- (void)purgeOldRecords {
 	
 	NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setEntity:[NSEntityDescription entityForName:@"Report" inManagedObjectContext:_managedObjectContext]];
