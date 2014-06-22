@@ -66,6 +66,7 @@
         return NSOrderedSame;
     }];
     
+    float y = 0;
     for (int i=0; i < MIN(3, [sortedArray count]); i++) {
         
         // abs value, name, asc, emotion
@@ -87,15 +88,21 @@
         [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange([attributedString length]-l, l)];
         
         
-        UITextView *tv = [[UITextView alloc] init];
-        tv.frame = CGRectMake(0, 50*i, 100, 100);
+        UITextView *tv = [[UITextView alloc] initWithFrame:CGRectMake(0, y, _priorityView.frame.size.width, 10)];
         [tv setAttributedText:attributedString];
+        [tv setFont: [UIFont fontWithName:@"Telugu Sangam MN" size:17.0]];
         
         UITapGestureRecognizer *gr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(textTapped:)];
         [tv addGestureRecognizer:gr];
         
         [_priorityView addSubview:tv];
+        [self.view layoutIfNeeded];
+        CGRect frame = tv.frame;
+        frame.size.height = tv.contentSize.height;
+        tv.frame = frame;
         [tv sizeToFit];
+        
+        y += frame.size.height + 20;
     }
     [self.view layoutIfNeeded];
 }
@@ -153,7 +160,7 @@
         
         NSRange range;
         id value = [textView.attributedText attribute:@"personTag" atIndex:characterIndex effectiveRange:&range];
-        NSLog(@"%@, %d, %d", value, range.location, range.length);
+        //NSLog(@"%@, %d, %d", value, range.location, range.length);
         
         if (value) {
             [self pushPersonViewController:value];
@@ -161,7 +168,7 @@
         
         value = [textView.attributedText attribute:@"emotionTag" atIndex:characterIndex effectiveRange:&range];
         id order = [textView.attributedText attribute:@"orderTag" atIndex:characterIndex effectiveRange:&range];
-        NSLog(@"%@, %d, %d, %d", value, [order boolValue], range.location, range.length);
+        //NSLog(@"%@, %d, %d, %d", value, [order boolValue], range.location, range.length);
         
         if (value) {
             [self pushRankViewController:value withOrder:[order boolValue]];

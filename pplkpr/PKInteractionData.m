@@ -310,7 +310,6 @@
             
             // add least person
             Person *leastPerson = [people_arr objectAtIndex:[people_arr count]-1];
-            NSLog(@"%@ %@ %@", leastPerson, [leastPerson valueForKey:eKey], [leastPerson valueForKey:@"name"]);
             NSArray *leastEntry = [[NSArray alloc] initWithObjects: [leastPerson valueForKey:eKey], [leastPerson valueForKey:@"name"], [NSNumber numberWithInt:1], e, nil];
             [results addObject:leastEntry];
         }
