@@ -179,11 +179,7 @@
 		// walk from bottom or top based on order
 		int ind = (_order) ? [[_rankData objectForKey:_emotion] count] - indexPath.row - 1 : indexPath.row;
 		Person *p = [[_rankData objectForKey:_emotion] objectAtIndex:ind];
-		
-		SEL sel = NSSelectorFromString([NSString stringWithFormat:@"%@", [_emotion lowercaseString]]);
-        IMP imp = [p methodForSelector:sel];
-        NSNumber* (*func)(id, SEL) = (void *)imp;
-        NSNumber *val = func(p, sel);
+        NSNumber *val = [p valueForKey:[_emotion lowercaseString]];
         
 		cell.textLabel.text = [NSString stringWithFormat:@"%@ ~ %@", [p valueForKey:@"name"], val];
 	}
