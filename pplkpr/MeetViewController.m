@@ -1,22 +1,22 @@
 //
-//  PKMeetViewController.m
+//  MeetViewController.m
 //  pplkpr
 //
 //  Created by Lauren McCarthy on 7/25/13.
 //  Copyright (c) 2013 Lauren McCarthy. All rights reserved.
 //
 
-#import "PKMeetViewController.h"
+#import "MeetViewController.h"
 
 
 
-@interface PKMeetViewController ()
+@interface MeetViewController ()
 
 @property (retain, nonatomic) IBOutlet UILabel *personLabel;
 
 @end
 
-@implementation PKMeetViewController
+@implementation MeetViewController
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {

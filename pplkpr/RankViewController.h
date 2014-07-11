@@ -1,5 +1,5 @@
 //
-//  PKRankViewController.h
+//  RankViewController.h
 //  pplkpr
 //
 //  Created by Lauren McCarthy on 11/22/13.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PKRankViewController : UIViewController <UITextFieldDelegate, UIScrollViewDelegate>
+@interface RankViewController : UIViewController <UITextFieldDelegate, UIScrollViewDelegate>
 
 
 @end

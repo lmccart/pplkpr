@@ -1,5 +1,5 @@
 //
-//  PKLeftViewController.h
+//  LeftViewController.h
 //  pplkpr
 //
 //  Created by Lauren McCarthy on 7/25/13.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PKLeftViewController : UIViewController <UITextFieldDelegate>
+@interface LeftViewController : UIViewController <UITextFieldDelegate>
 
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 

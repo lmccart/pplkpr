@@ -1,5 +1,5 @@
 //
-//  PKPersonViewController.h
+//  PersonViewController.h
 //  pplkpr
 //
 //  Created by Lauren McCarthy on 7/25/13.
@@ -9,9 +9,9 @@
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
 #import <AddressBook/ABAddressBook.h>
-#import "PKInteractionData.h"
+#import "InteractionData.h"
 
-@interface PKPersonViewController : UIViewController <MFMessageComposeViewControllerDelegate, UINavigationControllerDelegate>
+@interface PersonViewController : UIViewController <MFMessageComposeViewControllerDelegate, UINavigationControllerDelegate>
 
 -(IBAction) showMore:(id)sender;
 -(IBAction) sendInAppSMS:(id)sender;

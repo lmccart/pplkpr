@@ -1,5 +1,5 @@
 //
-//  PKReportViewController.h
+//  ReportViewController.h
 //  pplkpr
 //
 //  Created by Lauren McCarthy on 11/25/13.
@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <FacebookSDK/FacebookSDK.h>
-#import "PKPersonViewController.h"
+#import "PersonViewController.h"
 
-@interface PKReportViewController : UIViewController <UITextFieldDelegate, FBFriendPickerDelegate>
+@interface ReportViewController : UIViewController <UITextFieldDelegate, FBFriendPickerDelegate>
 
 
 - (IBAction)pickAction:(id)sender;

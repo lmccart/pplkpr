@@ -1,16 +1,16 @@
 //
-//  PKAppDelegate.m
+//  AppDelegate.m
 //  pplkpr
 //
 //  Created by Lauren McCarthy on 7/25/13.
 //  Copyright (c) 2013 Lauren McCarthy. All rights reserved.
 //
 
-#import "PKAppDelegate.h"
-#import "PKViewController.h"
-#import "PKInteractionData.h"
+#import "AppDelegate.h"
+#import "ViewController.h"
+#import "InteractionData.h"
 
-@implementation PKAppDelegate
+@implementation AppDelegate
 
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
@@ -171,7 +171,7 @@
 - (void)locationManager:(CLLocationManager *)manager
      didUpdateLocations:(NSArray *)locations {
 	
-	NSMutableArray* locationsArray = [[PKInteractionData data] locationsArray];
+	NSMutableArray* locationsArray = [[InteractionData data] locationsArray];
 	[locationsArray addObjectsFromArray:locations];
 	CLLocation* current = [locationsArray lastObject];
     

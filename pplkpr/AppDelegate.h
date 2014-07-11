@@ -1,5 +1,5 @@
 //
-//  PKAppDelegate.h
+//  AppDelegate.h
 //  pplkpr
 //
 //  Created by Lauren McCarthy on 7/25/13.
@@ -15,7 +15,7 @@
 #import <CoreBluetooth/CBCharacteristic.h>
 #import <CoreBluetooth/CBDescriptor.h>
 
-@interface PKAppDelegate : UIResponder <UIApplicationDelegate, CLLocationManagerDelegate, CBCentralManagerDelegate, CBPeripheralDelegate> {
+@interface AppDelegate : UIResponder <UIApplicationDelegate, CLLocationManagerDelegate, CBCentralManagerDelegate, CBPeripheralDelegate> {
 	CLLocationManager *locationManager;
 	CBCentralManager *peripheralManager;
     CBPeripheral *selectedPeripheral;

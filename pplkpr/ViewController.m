@@ -1,20 +1,20 @@
 //
-//  PKViewController.m
+//  ViewController.m
 //  pplkpr
 //
 //  Created by Lauren McCarthy on 7/25/13.
 //  Copyright (c) 2013 Lauren McCarthy. All rights reserved.
 //
 
-#import "PKViewController.h"
-#import "PKMeetViewController.h"
-#import "PKLeftViewController.h"
-#import "PKInteractionData.h"
-#import "PKAppDelegate.h"
+#import "ViewController.h"
+#import "MeetViewController.h"
+#import "LeftViewController.h"
+#import "InteractionData.h"
+#import "AppDelegate.h"
 #import "Report.h"
 #import "Person.h"
 
-@interface PKViewController() {
+@interface ViewController() {
 	
 	NSMutableData *receivedData;
 }
@@ -26,7 +26,7 @@
 @end
 
 
-@implementation PKViewController
+@implementation ViewController
 
 - (void)viewDidLoad
 {
@@ -54,10 +54,10 @@
 - (void)updatePriority
 {
     
-	//_priorityData = [[PKInteractionData data] getRankedPeople];
-   // NSLog(@"%@", [[PKInteractionData data] getPriorities]);
+	//_priorityData = [[InteractionData data] getRankedPeople];
+   // NSLog(@"%@", [[InteractionData data] getPriorities]);
     
-    _priorityData = [[PKInteractionData data] getPriorities];
+    _priorityData = [[InteractionData data] getPriorities];
     NSArray *sortedArray = [_priorityData sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         if ([[obj1 objectAtIndex:0] floatValue] > [[obj2 objectAtIndex:0] floatValue])
             return NSOrderedDescending;
@@ -123,7 +123,7 @@
 - (void)pushPersonViewController:(NSString *)name
 {
     NSLog(@"jump to person %@", name);
-	[[PKInteractionData data] setJumpToName:name];
+	[[InteractionData data] setJumpToName:name];
 	[self.tabBarController setSelectedIndex:1];
 }
 
@@ -132,8 +132,8 @@
 - (void)pushRankViewController:(NSString *)emotion withOrder:(BOOL)order
 {
     NSLog(@"jump to rank %d %@", order, emotion);
-	[[PKInteractionData data] setJumpToEmotion:emotion];
-	[[PKInteractionData data] setJumpToOrder:order];
+	[[InteractionData data] setJumpToEmotion:emotion];
+	[[InteractionData data] setJumpToOrder:order];
 	[self.tabBarController setSelectedIndex:1];
 }
 

@@ -1,5 +1,5 @@
 //
-//  PKTempHRV.h
+//  TempHRV.h
 //  pplkpr
 //
 //  Created by Lauren McCarthy on 6/21/14.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface PKTempHRV : NSObject
+@interface TempHRV : NSObject
 
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 

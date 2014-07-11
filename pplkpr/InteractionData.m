@@ -1,25 +1,25 @@
 //
-//  PKInteractionData.m
+//  InteractionData.m
 //  pplkpr
 //
 //  Created by Lauren McCarthy on 8/20/13.
 //  Copyright (c) 2013 Lauren McCarthy. All rights reserved.
 //
 
-#import "PKInteractionData.h"
+#import "InteractionData.h"
 #import "Report.h"
 #import "Person.h"
-#import "PKAppDelegate.h"
+#import "AppDelegate.h"
 
-@interface PKInteractionData()
+@interface InteractionData()
 
 
 @end
 
-@implementation PKInteractionData
+@implementation InteractionData
 
 + (id)data {
-    static PKInteractionData *data = nil;
+    static InteractionData *data = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         data = [[self alloc] init];
@@ -38,7 +38,7 @@
 		_jumpToName = nil;
         
         
-        PKAppDelegate* appDelegate = (PKAppDelegate*)[UIApplication sharedApplication].delegate;
+        AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
         _managedObjectContext = appDelegate.managedObjectContext;
         
         [self purgeOldRecords];
@@ -133,7 +133,6 @@
 			for (id e in _emotionsArray) {
                 [newPerson setValue:[NSNumber numberWithFloat:0]
                              forKey:e];
-                
                 [newPerson setValue:[NSNumber numberWithInt:e == [newReport valueForKey:@"emotion"]]
                              forKey:[NSString stringWithFormat:@"%@N", emotionKey]];
 			}

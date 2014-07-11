@@ -1,16 +1,16 @@
 //
-//  PKRankViewController.m
+//  RankViewController.m
 //  pplkpr
 //
 //  Created by Lauren McCarthy on 11/22/13.
 //  Copyright (c) 2013 Lauren McCarthy. All rights reserved.
 //
 
-#import "PKRankViewController.h"
-#import "PKInteractionData.h"
+#import "RankViewController.h"
+#import "InteractionData.h"
 #import "Person.h"
 
-@interface PKRankViewController () <UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDataSource, UITableViewDelegate> {
+@interface RankViewController () <UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDataSource, UITableViewDelegate> {
 	
 	NSMutableData *receivedData;
 }
@@ -27,7 +27,7 @@
 
 @end
 
-@implementation PKRankViewController
+@implementation RankViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -47,7 +47,7 @@
 
 	[_emotionPicker setDelegate:self];
 	[_emotionPicker setDataSource:self];
-    _emotion = [[[PKInteractionData data] emotionsArray] objectAtIndex:0];
+    _emotion = [[[InteractionData data] emotionsArray] objectAtIndex:0];
 	
 	[_orderPicker setDelegate:self];
 	[_orderPicker setDataSource:self];
@@ -64,23 +64,23 @@
 
 - (void) viewWillAppear:(BOOL)animated {
 	
-	if ([[PKInteractionData data] jumpToName]) {
+	if ([[InteractionData data] jumpToName]) {
 		[self performSegueWithIdentifier:@"personSegue" sender:self];
 	} else {
         [self.navigationController popToRootViewControllerAnimated:YES];
-        if ([[PKInteractionData data] jumpToEmotion]) {
-            _emotion = [[PKInteractionData data] jumpToEmotion];
+        if ([[InteractionData data] jumpToEmotion]) {
+            _emotion = [[InteractionData data] jumpToEmotion];
             NSLog(@"emotion in view will appear %@", _emotion);
-            int d = [[[PKInteractionData data] emotionsArray] indexOfObject:_emotion];
+            int d = [[[InteractionData data] emotionsArray] indexOfObject:_emotion];
             [_emotionPicker selectRow:d inComponent:0 animated:NO];
-            [[PKInteractionData data] setJumpToEmotion:nil];
+            [[InteractionData data] setJumpToEmotion:nil];
         }
-        _order = [[PKInteractionData data] jumpToOrder];
+        _order = [[InteractionData data] jumpToOrder];
         [_orderPicker selectRow:_order inComponent:0 animated:NO];
-        [[PKInteractionData data] setJumpToOrder:NO];
+        [[InteractionData data] setJumpToOrder:NO];
         
     }
-	_rankData = [[PKInteractionData data] getRankedPeople];
+	_rankData = [[InteractionData data] getRankedPeople];
     
 	[self updateView];
 }
@@ -107,7 +107,7 @@
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
 	if (pickerView == _emotionPicker) {
-		return [[[PKInteractionData data] emotionsArray] count];
+		return [[[InteractionData data] emotionsArray] count];
 	} else {
 		return [_orderArray count];
 	}
@@ -123,7 +123,7 @@
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
 	if (pickerView == _emotionPicker) {
-		return [[[PKInteractionData data] emotionsArray] objectAtIndex:row];
+		return [[[InteractionData data] emotionsArray] objectAtIndex:row];
 	} else {
 		return [_orderArray objectAtIndex:row];
 	}
@@ -134,8 +134,8 @@
 {
 	if (pickerView == _emotionPicker) {
 		//Let's print in the console what the user had chosen;
-		NSLog(@"Chosen item: %@", [[[PKInteractionData data] emotionsArray] objectAtIndex:row]);
-		_emotion = [[[PKInteractionData data] emotionsArray] objectAtIndex:row];
+		NSLog(@"Chosen item: %@", [[[InteractionData data] emotionsArray] objectAtIndex:row]);
+		_emotion = [[[InteractionData data] emotionsArray] objectAtIndex:row];
 	} else {
 		NSLog(@"Chosen item: %@", [_orderArray objectAtIndex:row]);
 		_order = (BOOL)row;
@@ -195,7 +195,7 @@
     NSLog(@"select ind %d", ind);
     NSString *name = [[[_rankData objectForKey:_emotion] objectAtIndex:ind] valueForKey:@"name"];
     NSLog(@"select name %@", name);
-	[[PKInteractionData data] setJumpToName:name];
+	[[InteractionData data] setJumpToName:name];
 	[self performSegueWithIdentifier:@"personSegue" sender:self];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }

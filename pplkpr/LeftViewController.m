@@ -1,15 +1,15 @@
 //
-//  PKLeftViewController.m
+//  LeftViewController.m
 //  pplkpr
 //
 //  Created by Lauren McCarthy on 7/25/13.
 //  Copyright (c) 2013 Lauren McCarthy. All rights reserved.
 //
 
-#import "PKLeftViewController.h"
-#import "PKInteractionData.h"
+#import "LeftViewController.h"
+#import "InteractionData.h"
 
-@interface PKLeftViewController () <UIPickerViewDataSource, UIPickerViewDelegate> {
+@interface LeftViewController () <UIPickerViewDataSource, UIPickerViewDelegate> {
 	
 	NSMutableData *receivedData;
 }
@@ -22,7 +22,7 @@
 
 @end
 
-@implementation PKLeftViewController
+@implementation LeftViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -45,8 +45,8 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-	//[_personLabel setText:[[PKInteractionData data] personName]];
-	_emotion = [[[PKInteractionData data] emotionsArray] objectAtIndex:0];
+	//[_personLabel setText:[[InteractionData data] personName]];
+	_emotion = [[[InteractionData data] emotionsArray] objectAtIndex:0];
 }
 
 
@@ -59,7 +59,7 @@
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    return [[[PKInteractionData data] emotionsArray] count];
+    return [[[InteractionData data] emotionsArray] count];
 }
 
 
@@ -71,15 +71,15 @@
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    return [[[PKInteractionData data] emotionsArray] objectAtIndex:row];
+    return [[[InteractionData data] emotionsArray] objectAtIndex:row];
 }
 
 //If the user chooses from the pickerview, it calls this function;
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     //Let's print in the console what the user had chosen;
-    NSLog(@"Chosen item: %@", [[[PKInteractionData data] emotionsArray] objectAtIndex:row]);
-	_emotion = [[[PKInteractionData data] emotionsArray] objectAtIndex:row];
+    NSLog(@"Chosen item: %@", [[[InteractionData data] emotionsArray] objectAtIndex:row]);
+	_emotion = [[[InteractionData data] emotionsArray] objectAtIndex:row];
 }
 
 
@@ -90,14 +90,14 @@
 
 - (void)pushPersonViewController
 {
-	//[[PKInteractionData data] setJumpToName:[[PKInteractionData data] personName]];
+	//[[InteractionData data] setJumpToName:[[InteractionData data] personName]];
 	[self.tabBarController setSelectedIndex:1];
 }
 
 
 - (IBAction)submit:(id)sender {
 	
-	[[PKInteractionData data] addReport:@"JOHN" withEmotion:_emotion withRating:[NSNumber numberWithFloat:[_intensitySlider value]]];
+	[[InteractionData data] addReport:@"JOHN" withEmotion:_emotion withRating:[NSNumber numberWithFloat:[_intensitySlider value]]];
 	
 	
 	NSArray *keys = [NSArray arrayWithObjects:@"func", @"user", @"name", @"emotion",@"intensity", nil];
@@ -148,7 +148,7 @@
 	NSDictionary *jsonDictionary = (NSDictionary *)jsonObject;
 	NSLog(@"%@",jsonDictionary);
 	
-	[[PKInteractionData data] setSummary:jsonDictionary];
+	[[InteractionData data] setSummary:jsonDictionary];
 	
 	connection = nil;
     receivedData = nil;

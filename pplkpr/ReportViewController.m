@@ -1,16 +1,16 @@
 //
-//  PKReportViewController.m
+//  ReportViewController.m
 //  pplkpr
 //
 //  Created by Lauren McCarthy on 11/25/13.
 //  Copyright (c) 2013 Lauren McCarthy. All rights reserved.
 //
 
-#import "PKReportViewController.h"
-#import "PKInteractionData.h"
-#import "PKTempHRV.h"
+#import "ReportViewController.h"
+#import "InteractionData.h"
+#import "TempHRV.h"
 
-@interface PKReportViewController () <UIPickerViewDataSource, UIPickerViewDelegate> {
+@interface ReportViewController () <UIPickerViewDataSource, UIPickerViewDelegate> {
 	
 	NSMutableData *receivedData;
 }
@@ -41,7 +41,7 @@
 
 @end
 
-@implementation PKReportViewController
+@implementation ReportViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -79,8 +79,8 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    NSMutableDictionary *event = [[PKTempHRV data] getHRVEvent];
-	_emotion = [[[PKInteractionData data] emotionsArray] objectAtIndex:0];
+    NSMutableDictionary *event = [[TempHRV data] getHRVEvent];
+	_emotion = [[[InteractionData data] emotionsArray] objectAtIndex:0];
     [_intensitySlider setValue:[[event objectForKey:@"intensity"] floatValue]];
 }
 
@@ -113,7 +113,7 @@
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    return [[[PKInteractionData data] emotionsArray] count];
+    return [[[InteractionData data] emotionsArray] count];
 }
 
 
@@ -125,7 +125,7 @@
     label.backgroundColor = [UIColor whiteColor];
     label.textColor = [UIColor blackColor];
     label.font = [UIFont fontWithName:@"TeluguSangamMN" size:17];
-    label.text = [[[PKInteractionData data] emotionsArray] objectAtIndex:row];
+    label.text = [[[InteractionData data] emotionsArray] objectAtIndex:row];
     return label;
 }
 
@@ -134,8 +134,8 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     //Let's print in the console what the user had chosen;
-    NSLog(@"Chosen item: %@", [[[PKInteractionData data] emotionsArray] objectAtIndex:row]);
-	_emotion = [[[PKInteractionData data] emotionsArray] objectAtIndex:row];
+    NSLog(@"Chosen item: %@", [[[InteractionData data] emotionsArray] objectAtIndex:row]);
+	_emotion = [[[InteractionData data] emotionsArray] objectAtIndex:row];
 }
 
 
@@ -217,10 +217,10 @@
 
 - (IBAction)submit:(id)sender {
 	
-	[[PKInteractionData data] addReport:_whoTextField.text withEmotion:_emotion withRating:[NSNumber numberWithFloat:[_intensitySlider value]]];
+	[[InteractionData data] addReport:_whoTextField.text withEmotion:_emotion withRating:[NSNumber numberWithFloat:[_intensitySlider value]]];
     
 	// go to person view
-	[[PKInteractionData data] setJumpToName:_whoTextField.text];
+	[[InteractionData data] setJumpToName:_whoTextField.text];
 	[self.tabBarController setSelectedIndex:1];
     
     // reset form
@@ -237,9 +237,9 @@
 	_whoTextField.text = @"";
 	[_whoView setHidden:true];
     
-	_emotion = @"";
 	[_emotionPicker reloadAllComponents];
 	[_emotionPicker selectRow:0 inComponent:0 animated:NO];
+	_emotion = [[[InteractionData data] emotionsArray] objectAtIndex:0];
 	[_intensitySlider setValue:0.5];
 	[_formView setHidden:true];
 }

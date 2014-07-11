@@ -1,5 +1,5 @@
 //
-//  PKInteractionData.h
+//  InteractionData.h
 //  pplkpr
 //
 //  Created by Lauren McCarthy on 8/20/13.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface PKInteractionData : NSObject
+@interface InteractionData : NSObject
 
 @property (retain) NSMutableArray *locationsArray;
 

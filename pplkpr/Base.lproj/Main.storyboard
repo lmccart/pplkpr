@@ -7,7 +7,7 @@
         <!--View Controller - Item-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="PKViewController" sceneMemberID="viewController">
+                <viewController id="vXZ-lx-hvc" customClass="ViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8kl-6a-Hy3"/>
                         <viewControllerLayoutGuide type="bottom" id="5TY-vJ-iTW"/>
@@ -59,7 +59,7 @@
         <!--Report View Controller-->
         <scene sceneID="uPa-Vg-XkI">
             <objects>
-                <viewController id="Z8x-sD-IGb" customClass="PKReportViewController" sceneMemberID="viewController">
+                <viewController id="Z8x-sD-IGb" customClass="ReportViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="12Z-Le-dxX"/>
                         <viewControllerLayoutGuide type="bottom" id="hZ5-dP-rSU"/>
@@ -238,7 +238,7 @@
         <!--Person View Controller-->
         <scene sceneID="OVx-eK-rSN">
             <objects>
-                <viewController id="aqQ-rz-qeF" customClass="PKPersonViewController" sceneMemberID="viewController">
+                <viewController id="aqQ-rz-qeF" customClass="PersonViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="9cI-WF-tnj"/>
                         <viewControllerLayoutGuide type="bottom" id="VxR-HX-TrZ"/>
@@ -343,7 +343,7 @@
         <!--Rank View Controller - Item-->
         <scene sceneID="n47-h6-4Cs">
             <objects>
-                <viewController id="VVW-aB-AVz" customClass="PKRankViewController" sceneMemberID="viewController">
+                <viewController id="VVW-aB-AVz" customClass="RankViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8dp-iN-2Az"/>
                         <viewControllerLayoutGuide type="bottom" id="0k8-fy-VOH"/>

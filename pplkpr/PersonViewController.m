@@ -1,14 +1,14 @@
 //
-//  PKPersonViewController.m
+//  PersonViewController.m
 //  pplkpr
 //
 //  Created by Lauren McCarthy on 7/25/13.
 //  Copyright (c) 2013 Lauren McCarthy. All rights reserved.
 //
 
-#import "PKPersonViewController.h"
+#import "PersonViewController.h"
 
-@interface PKPersonViewController () {
+@interface PersonViewController () {
 	
 	NSMutableData *receivedData;
 }
@@ -17,7 +17,7 @@
 
 @end
 
-@implementation PKPersonViewController
+@implementation PersonViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -32,8 +32,8 @@
 {
     [super viewDidLoad];
 	
-	for(id key in [[PKInteractionData data] summary]) {
-		id value = [[[PKInteractionData data] summary] objectForKey:key];
+	for(id key in [[InteractionData data] summary]) {
+		id value = [[[InteractionData data] summary] objectForKey:key];
 		NSLog(@"%@ %@", value, key);
 	}
 	
@@ -41,9 +41,9 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     
-	if ([[PKInteractionData data] jumpToName]) {
-        [_personLabel setText:[[PKInteractionData data] jumpToName]];
-        [[PKInteractionData data] setJumpToName:nil];
+	if ([[InteractionData data] jumpToName]) {
+        [_personLabel setText:[[InteractionData data] jumpToName]];
+        [[InteractionData data] setJumpToName:nil];
 	} else {
         [self.navigationController popToRootViewControllerAnimated:YES];
     }

@@ -1,23 +1,23 @@
 //
-//  PKTempHRV.m
+//  TempHRV.m
 //  pplkpr
 //
 //  Created by Lauren McCarthy on 6/21/14.
 //  Copyright (c) 2014 Lauren McCarthy. All rights reserved.
 //
 
-#import "PKTempHRV.h"
-#import "PKAppDelegate.h"
+#import "TempHRV.h"
+#import "AppDelegate.h"
 
-@interface PKTempHRV()
+@interface TempHRV()
 
 @end
 
 
-@implementation PKTempHRV
+@implementation TempHRV
 
 + (id)data {
-    static PKTempHRV *data = nil;
+    static TempHRV *data = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         data = [[self alloc] init];
@@ -28,7 +28,7 @@
 - (id)init {
 	
     if (self = [super init]) {
-        PKAppDelegate* appDelegate = (PKAppDelegate*)[UIApplication sharedApplication].delegate;
+        AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
         _managedObjectContext = appDelegate.managedObjectContext;
 	}
     

@@ -1,5 +1,5 @@
 //
-//  PKViewController.h
+//  ViewController.h
 //  pplkpr
 //
 //  Created by Lauren McCarthy on 7/25/13.
@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
-@interface PKViewController : UIViewController <UITextFieldDelegate> {
+@interface ViewController : UIViewController <UITextFieldDelegate> {
     NSMutableArray *devicesArray;
 }
 
