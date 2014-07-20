@@ -31,6 +31,7 @@
 - (id)init {
 	
     if (self = [super init]) {
+
 		_emotionsArray = [[NSArray alloc] initWithObjects:@"Excited",@"Aroused",@"Angry",@"Scared", @"Anxious", @"Bored", @"Calm", nil];
 		_locationsArray = [[NSMutableArray alloc] init];
 		_summary = [[NSDictionary alloc] init];

@@ -8,17 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
-#import <CoreBluetooth/CBCentralManager.h>
-#import <CoreBluetooth/CBPeripheral.h>
-#import <CoreBluetooth/CBService.h>
-#import <CoreBluetooth/CBUUID.h>
-#import <CoreBluetooth/CBCharacteristic.h>
-#import <CoreBluetooth/CBDescriptor.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, CLLocationManagerDelegate, CBCentralManagerDelegate, CBPeripheralDelegate> {
+@interface AppDelegate : UIResponder <UIApplicationDelegate, CLLocationManagerDelegate> {
 	CLLocationManager *locationManager;
-	CBCentralManager *peripheralManager;
-    CBPeripheral *selectedPeripheral;
 }
 
 @property (strong, nonatomic) UIWindow *window;
@@ -37,12 +29,5 @@
 - (void) startUpdatingLocation;
 - (void) stopUpdatingLocation;
 
-#pragma mark heart rate
-
-@property(nonatomic,retain) CBCentralManager *peripheralManager;
-@property(strong, retain) CBPeripheral *selectedPeripheral;
-
--(void) startUpdatingHeartRate;
--(void) stopUpdatingHeartRate;
 
 @end
