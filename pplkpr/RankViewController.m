@@ -62,7 +62,7 @@
 	
 }
 
-- (void) viewWillAppear:(BOOL)animated {
+- (void) viewDidAppear:(BOOL)animated {
 	
 	if ([[InteractionData data] jumpToName]) {
 		[self performSegueWithIdentifier:@"personSegue" sender:self];

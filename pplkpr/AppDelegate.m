@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import "ViewController.h"
 #import "InteractionData.h"
-#import "HRViewController.h"
+#import "HeartRateMonitor.h"
 
 @implementation AppDelegate
 
@@ -23,7 +23,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	[self startUpdatingLocation];
-    [HRViewController data];
+    [HeartRateMonitor data];
 	
 	// tab bar items
 	

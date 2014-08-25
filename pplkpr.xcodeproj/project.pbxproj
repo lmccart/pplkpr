@@ -14,7 +14,7 @@
 		6525186019708B1000AF6981 /* RankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6525185819708B1000AF6981 /* RankViewController.m */; };
 		6525186119708B1000AF6981 /* ReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6525185A19708B1000AF6981 /* ReportViewController.m */; };
 		6525186219708B1000AF6981 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6525185C19708B1000AF6981 /* ViewController.m */; };
-		6525186519708FDC00AF6981 /* HRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6525186419708FDC00AF6981 /* HRViewController.m */; };
+		65251868197B5B1100AF6981 /* HeartRateMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 65251867197B5B1100AF6981 /* HeartRateMonitor.m */; };
 		653F8F76185FA9760009F785 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 653F8F75185FA9760009F785 /* CoreData.framework */; };
 		653F8F79185FA9A50009F785 /* pplkpr.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 653F8F77185FA9A50009F785 /* pplkpr.xcdatamodeld */; };
 		6569C213192D55D900DD665E /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 6569C212192D55D900DD665E /* home.png */; };
@@ -56,8 +56,8 @@
 		6525185A19708B1000AF6981 /* ReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportViewController.m; sourceTree = "<group>"; };
 		6525185B19708B1000AF6981 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		6525185C19708B1000AF6981 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		6525186319708FDC00AF6981 /* HRViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HRViewController.h; sourceTree = "<group>"; };
-		6525186419708FDC00AF6981 /* HRViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HRViewController.m; sourceTree = "<group>"; };
+		65251866197B5B1100AF6981 /* HeartRateMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeartRateMonitor.h; sourceTree = "<group>"; };
+		65251867197B5B1100AF6981 /* HeartRateMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeartRateMonitor.m; sourceTree = "<group>"; };
 		653F8F75185FA9760009F785 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		653F8F78185FA9A50009F785 /* pplkpr.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = pplkpr.xcdatamodel; sourceTree = "<group>"; };
 		6569C212192D55D900DD665E /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home.png; sourceTree = "<group>"; };
@@ -126,8 +126,8 @@
 		27ED09CC1860E6B100ABCC76 /* Data Structures */ = {
 			isa = PBXGroup;
 			children = (
-				6525186319708FDC00AF6981 /* HRViewController.h */,
-				6525186419708FDC00AF6981 /* HRViewController.m */,
+				65251866197B5B1100AF6981 /* HeartRateMonitor.h */,
+				65251867197B5B1100AF6981 /* HeartRateMonitor.m */,
 				6525184819708ADF00AF6981 /* TempHRV.h */,
 				6525184919708ADF00AF6981 /* TempHRV.m */,
 				6525184B19708AE900AF6981 /* InteractionData.h */,
@@ -302,8 +302,8 @@
 				653F8F79185FA9A50009F785 /* pplkpr.xcdatamodeld in Sources */,
 				6525185F19708B1000AF6981 /* PersonViewController.m in Sources */,
 				6525186219708B1000AF6981 /* ViewController.m in Sources */,
+				65251868197B5B1100AF6981 /* HeartRateMonitor.m in Sources */,
 				65FC7C5D17A1A37F0045BFF2 /* main.m in Sources */,
-				6525186519708FDC00AF6981 /* HRViewController.m in Sources */,
 				6525186019708B1000AF6981 /* RankViewController.m in Sources */,
 				6525186119708B1000AF6981 /* ReportViewController.m in Sources */,
 				65B8511F1862122800DE02E8 /* Person.m in Sources */,

@@ -1,12 +1,12 @@
 //
-//  HRViewController.m
+//  HeartRateMonitor.m
 //  HRM
 //
-//  Created by Tim Burks on 4/17/12.
-//  Copyright (c) 2012 Radtastical Inc. All rights reserved.
+//  Created by Lauren McCarthy on 7/15/14.
+//  Copyright (c) 2014 Lauren McCarthy. All rights reserved.
 //
 
-#import "HRViewController.h"
+#import "HeartRateMonitor.h"
 #import "AppDelegate.h"
 #import <CoreBluetooth/CoreBluetooth.h>
 
@@ -20,17 +20,17 @@
  #import <CoreBluetooth/CBDescriptor.h>
  */
 
-@interface HRViewController () <CBCentralManagerDelegate, CBPeripheralDelegate>
+@interface HeartRateMonitor () <CBCentralManagerDelegate, CBPeripheralDelegate>
 @property (nonatomic, strong) CBCentralManager *manager;
 @property (nonatomic, strong) CBPeripheral *peripheral;
 @end
 
-@implementation HRViewController
+@implementation HeartRateMonitor
 @synthesize manager = _manager;
 @synthesize peripheral = _peripheral;
 
 + (id)data {
-    static HRViewController *data = nil;
+    static HeartRateMonitor *data = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         data = [[self alloc] init];
