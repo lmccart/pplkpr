@@ -27,6 +27,7 @@
 		65CA14A519ACD93200130EEB /* MLPAutoCompleteTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CA149F19ACD93200130EEB /* MLPAutoCompleteTextField.m */; };
 		65CA14A619ACD93200130EEB /* NSString+Levenshtein.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CA14A419ACD93200130EEB /* NSString+Levenshtein.m */; };
 		65CA14A919ACDD6600130EEB /* FriendsCompleteDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CA14A819ACDD6600130EEB /* FriendsCompleteDataSource.m */; };
+		65CA14AC19AD173100130EEB /* CustomAutoCompleteCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CA14AB19AD173100130EEB /* CustomAutoCompleteCell.m */; };
 		65E398F6184972FB00E3B2B4 /* pplkpr_sel.png in Resources */ = {isa = PBXBuildFile; fileRef = 65E398F0184972FB00E3B2B4 /* pplkpr_sel.png */; };
 		65E398F7184972FB00E3B2B4 /* pplkpr.png in Resources */ = {isa = PBXBuildFile; fileRef = 65E398F1184972FB00E3B2B4 /* pplkpr.png */; };
 		65E398F8184972FB00E3B2B4 /* rank_sel.png in Resources */ = {isa = PBXBuildFile; fileRef = 65E398F2184972FB00E3B2B4 /* rank_sel.png */; };
@@ -81,6 +82,8 @@
 		65CA14A419ACD93200130EEB /* NSString+Levenshtein.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Levenshtein.m"; sourceTree = "<group>"; };
 		65CA14A719ACDD6600130EEB /* FriendsCompleteDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsCompleteDataSource.h; sourceTree = "<group>"; };
 		65CA14A819ACDD6600130EEB /* FriendsCompleteDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsCompleteDataSource.m; sourceTree = "<group>"; };
+		65CA14AA19AD173100130EEB /* CustomAutoCompleteCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomAutoCompleteCell.h; sourceTree = "<group>"; };
+		65CA14AB19AD173100130EEB /* CustomAutoCompleteCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomAutoCompleteCell.m; sourceTree = "<group>"; };
 		65E398F0184972FB00E3B2B4 /* pplkpr_sel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pplkpr_sel.png; sourceTree = "<group>"; };
 		65E398F1184972FB00E3B2B4 /* pplkpr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pplkpr.png; sourceTree = "<group>"; };
 		65E398F2184972FB00E3B2B4 /* rank_sel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rank_sel.png; sourceTree = "<group>"; };
@@ -155,6 +158,8 @@
 			isa = PBXGroup;
 			children = (
 				65CA149E19ACD93200130EEB /* MLPAutoCompleteTextField.h */,
+				65CA14AA19AD173100130EEB /* CustomAutoCompleteCell.h */,
+				65CA14AB19AD173100130EEB /* CustomAutoCompleteCell.m */,
 				65CA14A719ACDD6600130EEB /* FriendsCompleteDataSource.h */,
 				65CA14A819ACDD6600130EEB /* FriendsCompleteDataSource.m */,
 				65CA149F19ACD93200130EEB /* MLPAutoCompleteTextField.m */,
@@ -334,6 +339,7 @@
 				6525186219708B1000AF6981 /* ViewController.m in Sources */,
 				65251868197B5B1100AF6981 /* HeartRateMonitor.m in Sources */,
 				65FC7C5D17A1A37F0045BFF2 /* main.m in Sources */,
+				65CA14AC19AD173100130EEB /* CustomAutoCompleteCell.m in Sources */,
 				6525186019708B1000AF6981 /* RankViewController.m in Sources */,
 				6525186119708B1000AF6981 /* ReportViewController.m in Sources */,
 				65CA14A519ACD93200130EEB /* MLPAutoCompleteTextField.m in Sources */,

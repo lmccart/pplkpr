@@ -60,8 +60,6 @@
             NSLog(@"sleeping fetch of completions for %f", seconds);
             sleep(seconds);
         }
-        
-        NSLog(@"%@", _friends);
         NSArray *completions = _friends;
         
         handler(completions);
