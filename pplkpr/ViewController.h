@@ -13,4 +13,7 @@
     NSMutableArray *devicesArray;
 }
 
+
+- (void)updateMonitorStatus:(NSString *)status;
+
 @end

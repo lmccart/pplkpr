@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import "ViewController.h"
 #import "InteractionData.h"
 #import "HeartRateMonitor.h"
 
@@ -23,7 +22,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	[self startUpdatingLocation];
-    [HeartRateMonitor data];
 	
 	// tab bar items
 	
@@ -34,13 +32,14 @@
 	
 	for (int i=0; i<3; i++) {
 		UITabBarItem *tabBarItem = [tabBar.items objectAtIndex:i];
-		tabBarItem.image= [[UIImage imageNamed:[NSString stringWithFormat:@"%@.png", names[i]]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+		tabBarItem.image = [[UIImage imageNamed:[NSString stringWithFormat:@"%@.png", names[i]]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 		tabBarItem.selectedImage = [[UIImage imageNamed:[NSString stringWithFormat:@"%@_sel.png", names[i]]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 		tabBarItem.imageInsets = UIEdgeInsetsMake(9, 0, -9, 0);
 		tabBarItem.title = @"";
 	}
 
-	
+    ViewController *vc = tabBarController.viewControllers[0];
+    [[HeartRateMonitor data] setViewController:vc];
 	/*
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
 	NSString *documentsDirectory = [paths objectAtIndex:0];

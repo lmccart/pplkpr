@@ -10,9 +10,8 @@
 #import "MeetViewController.h"
 #import "LeftViewController.h"
 #import "InteractionData.h"
+#import "HeartRateMonitor.h"
 #import "AppDelegate.h"
-#import "Report.h"
-#import "Person.h"
 
 @interface ViewController() {
 	
@@ -22,6 +21,7 @@
 
 @property (retain, nonatomic) NSMutableArray *priorityData;
 @property (retain, nonatomic) IBOutlet UIView *priorityView;
+@property (retain, nonatomic) IBOutlet UILabel *monitorStatusLabel;
 
 @end
 
@@ -174,6 +174,17 @@
             [self pushRankViewController:value withOrder:[order boolValue]];
         }
         
+    }
+}
+
+- (void)updateMonitorStatus:(NSString *)status {
+    [_monitorStatusLabel setText:status];
+    if ([status isEqual: @"connecting"]) {
+        [_monitorStatusLabel setTextColor:[UIColor orangeColor]];
+    } else if ([status isEqual:@"connected"]) {
+        [_monitorStatusLabel setTextColor:[UIColor greenColor]];
+    } else {
+        [_monitorStatusLabel setTextColor:[UIColor redColor]];
     }
 }
 

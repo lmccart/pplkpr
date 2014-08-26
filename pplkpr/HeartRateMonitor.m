@@ -23,11 +23,14 @@
 @interface HeartRateMonitor () <CBCentralManagerDelegate, CBPeripheralDelegate>
 @property (nonatomic, strong) CBCentralManager *manager;
 @property (nonatomic, strong) CBPeripheral *peripheral;
+@property BOOL sensorContact;
+
 @end
 
 @implementation HeartRateMonitor
 @synthesize manager = _manager;
 @synthesize peripheral = _peripheral;
+@synthesize viewController = _viewController;
 
 + (id)data {
     static HeartRateMonitor *data = nil;
@@ -48,6 +51,10 @@
 	}
     
     return self;
+}
+
+- (void)setViewController:(ViewController *)viewController {
+    _viewController = viewController;
 }
 
 
@@ -137,6 +144,7 @@
 - (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)aPeripheral {
     
     NSLog(@"Peripheral connected");
+    [_viewController updateMonitorStatus:@"connecting"];
     
 	[aPeripheral setDelegate:self];
 	// PEND: set reconnect [bleManager setReconnectOnDisconnect:YES];
@@ -229,8 +237,13 @@ didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic
         
 		if(SensorContactStatus == 2) {
 			NSLog(@"Sensor contact is not detected");
+            [_viewController updateMonitorStatus:@"no sensor contact"];
+            _sensorContact = false;
 		} else if(SensorContactStatus == 3) {
 			//			NSLog(@"Sensor contact is detected");
+            
+            [_viewController updateMonitorStatus:@"connected"];
+            _sensorContact = true;
             if(RRInterval) {
                 //			NSLog(@"One or more RR-Interval values are present.");
                 uint8_t entry = 0;
@@ -288,6 +301,8 @@ didDisconnectPeripheral:(CBPeripheral *)aPeripheral
                   error:(NSError *)error
 {
     NSLog(@"Disconnected peripheral %@", aPeripheral.name);
+    [_viewController updateMonitorStatus:@"disconnected"];
+    
     if (self.peripheral) {
         [self.peripheral setDelegate:nil];
         self.peripheral = nil;
