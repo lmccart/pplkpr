@@ -220,36 +220,35 @@ didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic
             //			NSLog(@"Heart rate is %hhu", HeartRateMeasurementValue);
 		}
         
+        if(EnergyExpendedStatus == 1) {
+            uint16_t EnergyExpended;
+            [data getBytes:&EnergyExpended range:NSMakeRange(readOffset, sizeof(EnergyExpended))];
+            readOffset += sizeof(EnergyExpended);
+            NSLog(@"Energy expended is %hu", EnergyExpended);
+        }
+        
 		if(SensorContactStatus == 2) {
 			NSLog(@"Sensor contact is not detected");
 		} else if(SensorContactStatus == 3) {
 			//			NSLog(@"Sensor contact is detected");
-		}
-        
-		if(EnergyExpendedStatus == 1) {
-			uint16_t EnergyExpended;
-			[data getBytes:&EnergyExpended range:NSMakeRange(readOffset, sizeof(EnergyExpended))];
-			readOffset += sizeof(EnergyExpended);
-			NSLog(@"Energy expended is %hu", EnergyExpended);
-		}
-        
-		if(RRInterval) {
-			//			NSLog(@"One or more RR-Interval values are present.");
-			uint8_t entry = 0;
-			while(readOffset < data.length) {
-				uint16_t rr;
-				[data getBytes:&rr range:NSMakeRange(readOffset, sizeof(rr))];
-                //				NSLog(@"RR-Interval %hhu: %hu", entry, rr);
-                
-				time_t unixTime = (time_t) [[NSDate date] timeIntervalSince1970];
-				NSString* cur = [NSString stringWithFormat:@"%ld\t%hu", unixTime, rr];
-                NSLog(@"%@", cur);
-				//[self writeToLogFile:cur];
-                
-				entry++;
-				readOffset += sizeof(rr);
-			}
-		}
+            if(RRInterval) {
+                //			NSLog(@"One or more RR-Interval values are present.");
+                uint8_t entry = 0;
+                while(readOffset < data.length) {
+                    uint16_t rr;
+                    [data getBytes:&rr range:NSMakeRange(readOffset, sizeof(rr))];
+                    //				NSLog(@"RR-Interval %hhu: %hu", entry, rr);
+                    
+                    time_t unixTime = (time_t) [[NSDate date] timeIntervalSince1970];
+                    NSString* cur = [NSString stringWithFormat:@"%ld\t%hu", unixTime, rr];
+                    NSLog(@"%@", cur);
+                    //[self writeToLogFile:cur];
+                    
+                    entry++;
+                    readOffset += sizeof(rr);
+                }
+            }
+        }
 	}
 }
 
