@@ -202,8 +202,7 @@
 
 
 - (void)updateView {
-	NSLog(@"updating for key %@ order %d", _emotion, _order);
-	
+	//NSLog(@"updating for key %@ order %d", _emotion, _order);
 	//NSLog(@"%d", [[_rankData objectForKey:_emotion] count]);
 	//NSLog(@"%@", [_rankData objectForKey:_emotion]);
 	

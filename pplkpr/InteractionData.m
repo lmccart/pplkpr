@@ -131,13 +131,10 @@
 			Person *newPerson = [NSEntityDescription insertNewObjectForEntityForName:@"Person"
                                                               inManagedObjectContext:_managedObjectContext];
 			[newPerson setValue:name forKey:@"name"];
-			for (id e in _emotionsArray) {
-                [newPerson setValue:[NSNumber numberWithFloat:0]
-                             forKey:e];
-                [newPerson setValue:[NSNumber numberWithInt:e == [newReport valueForKey:@"emotion"]]
-                             forKey:[NSString stringWithFormat:@"%@N", emotionKey]];
-			}
+            [newPerson setValue:[NSNumber numberWithInt:1]
+                         forKey:[NSString stringWithFormat:@"%@N", emotionKey]];
 			newPerson.reports = [NSSet setWithObjects:newReport, nil];
+            newReport.person = newPerson;
 		}
 		
 	}
