@@ -7,15 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <FacebookSDK/FacebookSDK.h>
+#import "MLPAutoCompleteTextFieldDelegate.h"
 #import "PersonViewController.h"
 
-@interface ReportViewController : UIViewController <UITextFieldDelegate, FBFriendPickerDelegate>
+@interface ReportViewController : UIViewController <UITextFieldDelegate, MLPAutoCompleteTextFieldDelegate>
 
 
 - (IBAction)pickAction:(id)sender;
 - (IBAction)pickFriendsButtonTouch:(id)sender;
 - (IBAction)submit:(id)sender;
+
+
 
 @end
 

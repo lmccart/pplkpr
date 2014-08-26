@@ -23,7 +23,10 @@
 		6596CB741868AAE40045D6E2 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6596CB731868AAE40045D6E2 /* AddressBook.framework */; };
 		65B851191861EDAC00DE02E8 /* Report.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B851171861EDAC00DE02E8 /* Report.m */; };
 		65B8511F1862122800DE02E8 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B8511E1862122800DE02E8 /* Person.m */; };
-		65E0AFAC17A1C1D300E0FD0C /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65E0AFAB17A1C1D300E0FD0C /* FacebookSDK.framework */; };
+		65CA149319ABF81600130EEB /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65CA149219ABF81600130EEB /* FacebookSDK.framework */; };
+		65CA14A519ACD93200130EEB /* MLPAutoCompleteTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CA149F19ACD93200130EEB /* MLPAutoCompleteTextField.m */; };
+		65CA14A619ACD93200130EEB /* NSString+Levenshtein.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CA14A419ACD93200130EEB /* NSString+Levenshtein.m */; };
+		65CA14A919ACDD6600130EEB /* FriendsCompleteDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CA14A819ACDD6600130EEB /* FriendsCompleteDataSource.m */; };
 		65E398F6184972FB00E3B2B4 /* pplkpr_sel.png in Resources */ = {isa = PBXBuildFile; fileRef = 65E398F0184972FB00E3B2B4 /* pplkpr_sel.png */; };
 		65E398F7184972FB00E3B2B4 /* pplkpr.png in Resources */ = {isa = PBXBuildFile; fileRef = 65E398F1184972FB00E3B2B4 /* pplkpr.png */; };
 		65E398F8184972FB00E3B2B4 /* rank_sel.png in Resources */ = {isa = PBXBuildFile; fileRef = 65E398F2184972FB00E3B2B4 /* rank_sel.png */; };
@@ -68,7 +71,16 @@
 		65B851171861EDAC00DE02E8 /* Report.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Report.m; sourceTree = "<group>"; };
 		65B8511D1862122800DE02E8 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
 		65B8511E1862122800DE02E8 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
-		65E0AFAB17A1C1D300E0FD0C /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
+		65CA149219ABF81600130EEB /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
+		65CA149E19ACD93200130EEB /* MLPAutoCompleteTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLPAutoCompleteTextField.h; sourceTree = "<group>"; };
+		65CA149F19ACD93200130EEB /* MLPAutoCompleteTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLPAutoCompleteTextField.m; sourceTree = "<group>"; };
+		65CA14A019ACD93200130EEB /* MLPAutoCompleteTextFieldDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLPAutoCompleteTextFieldDataSource.h; sourceTree = "<group>"; };
+		65CA14A119ACD93200130EEB /* MLPAutoCompleteTextFieldDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLPAutoCompleteTextFieldDelegate.h; sourceTree = "<group>"; };
+		65CA14A219ACD93200130EEB /* MLPAutoCompletionObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLPAutoCompletionObject.h; sourceTree = "<group>"; };
+		65CA14A319ACD93200130EEB /* NSString+Levenshtein.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Levenshtein.h"; sourceTree = "<group>"; };
+		65CA14A419ACD93200130EEB /* NSString+Levenshtein.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Levenshtein.m"; sourceTree = "<group>"; };
+		65CA14A719ACDD6600130EEB /* FriendsCompleteDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsCompleteDataSource.h; sourceTree = "<group>"; };
+		65CA14A819ACDD6600130EEB /* FriendsCompleteDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsCompleteDataSource.m; sourceTree = "<group>"; };
 		65E398F0184972FB00E3B2B4 /* pplkpr_sel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pplkpr_sel.png; sourceTree = "<group>"; };
 		65E398F1184972FB00E3B2B4 /* pplkpr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pplkpr.png; sourceTree = "<group>"; };
 		65E398F2184972FB00E3B2B4 /* rank_sel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rank_sel.png; sourceTree = "<group>"; };
@@ -87,7 +99,6 @@
 		65FC7C5E17A1A37F0045BFF2 /* pplkpr-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "pplkpr-Prefix.pch"; sourceTree = "<group>"; };
 		65FC7C6317A1A37F0045BFF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		65FC7C6817A1A37F0045BFF2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		65FC7C6F17A1A37F0045BFF2 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,9 +110,9 @@
 				6596CB721868A3E80045D6E2 /* MessageUI.framework in Frameworks */,
 				653F8F76185FA9760009F785 /* CoreData.framework in Frameworks */,
 				65FC7C5317A1A37F0045BFF2 /* CoreGraphics.framework in Frameworks */,
-				65E0AFAC17A1C1D300E0FD0C /* FacebookSDK.framework in Frameworks */,
 				65FC7C5517A1A37F0045BFF2 /* UIKit.framework in Frameworks */,
 				65FC7C5117A1A37F0045BFF2 /* Foundation.framework in Frameworks */,
+				65CA149319ABF81600130EEB /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,6 +149,22 @@
 				65B851171861EDAC00DE02E8 /* Report.m */,
 			);
 			name = "Data Structures";
+			sourceTree = "<group>";
+		};
+		65CA149419ACD8F300130EEB /* AutoComplete */ = {
+			isa = PBXGroup;
+			children = (
+				65CA149E19ACD93200130EEB /* MLPAutoCompleteTextField.h */,
+				65CA14A719ACDD6600130EEB /* FriendsCompleteDataSource.h */,
+				65CA14A819ACDD6600130EEB /* FriendsCompleteDataSource.m */,
+				65CA149F19ACD93200130EEB /* MLPAutoCompleteTextField.m */,
+				65CA14A019ACD93200130EEB /* MLPAutoCompleteTextFieldDataSource.h */,
+				65CA14A119ACD93200130EEB /* MLPAutoCompleteTextFieldDelegate.h */,
+				65CA14A219ACD93200130EEB /* MLPAutoCompletionObject.h */,
+				65CA14A319ACD93200130EEB /* NSString+Levenshtein.h */,
+				65CA14A419ACD93200130EEB /* NSString+Levenshtein.m */,
+			);
+			name = AutoComplete;
 			sourceTree = "<group>";
 		};
 		65E398D81849619300E3B2B4 /* assets */ = {
@@ -178,14 +205,13 @@
 		65FC7C4F17A1A37F0045BFF2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				65CA149219ABF81600130EEB /* FacebookSDK.framework */,
 				6596CB731868AAE40045D6E2 /* AddressBook.framework */,
 				6596CB711868A3E80045D6E2 /* MessageUI.framework */,
 				653F8F75185FA9760009F785 /* CoreData.framework */,
-				65E0AFAB17A1C1D300E0FD0C /* FacebookSDK.framework */,
 				65FC7C5017A1A37F0045BFF2 /* Foundation.framework */,
 				65FC7C5217A1A37F0045BFF2 /* CoreGraphics.framework */,
 				65FC7C5417A1A37F0045BFF2 /* UIKit.framework */,
-				65FC7C6F17A1A37F0045BFF2 /* XCTest.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -193,6 +219,7 @@
 		65FC7C5617A1A37F0045BFF2 /* pplkpr */ = {
 			isa = PBXGroup;
 			children = (
+				65CA149419ACD8F300130EEB /* AutoComplete */,
 				6525184E19708AF000AF6981 /* AppDelegate.h */,
 				6525184F19708AF000AF6981 /* AppDelegate.m */,
 				65FC7C6217A1A37F0045BFF2 /* Main.storyboard */,
@@ -258,6 +285,7 @@
 			knownRegions = (
 				en,
 				Base,
+				he,
 			);
 			mainGroup = 65FC7C4417A1A37F0045BFF2;
 			productRefGroup = 65FC7C4E17A1A37F0045BFF2 /* Products */;
@@ -300,12 +328,15 @@
 				6525185019708AF000AF6981 /* AppDelegate.m in Sources */,
 				6525184A19708ADF00AF6981 /* TempHRV.m in Sources */,
 				653F8F79185FA9A50009F785 /* pplkpr.xcdatamodeld in Sources */,
+				65CA14A619ACD93200130EEB /* NSString+Levenshtein.m in Sources */,
 				6525185F19708B1000AF6981 /* PersonViewController.m in Sources */,
+				65CA14A919ACDD6600130EEB /* FriendsCompleteDataSource.m in Sources */,
 				6525186219708B1000AF6981 /* ViewController.m in Sources */,
 				65251868197B5B1100AF6981 /* HeartRateMonitor.m in Sources */,
 				65FC7C5D17A1A37F0045BFF2 /* main.m in Sources */,
 				6525186019708B1000AF6981 /* RankViewController.m in Sources */,
 				6525186119708B1000AF6981 /* ReportViewController.m in Sources */,
+				65CA14A519ACD93200130EEB /* MLPAutoCompleteTextField.m in Sources */,
 				65B8511F1862122800DE02E8 /* Person.m in Sources */,
 				65B851191861EDAC00DE02E8 /* Report.m in Sources */,
 				6525184D19708AE900AF6981 /* InteractionData.m in Sources */,
@@ -412,6 +443,10 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../FacebookSDK",
+					/Users/lmccart/Documents/FacebookSDK,
+					/Users/lmccart/Documents/FacebookSDK/FBAudienceNetwork,
+					/Users/lmccart/Documents/pplkeeper/FacebookSDK,
+					/Users/lmccart/Documents/pplkeeper/FacebookSDK_old,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "pplkpr/pplkpr-Prefix.pch";
@@ -440,6 +475,10 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../FacebookSDK",
+					/Users/lmccart/Documents/FacebookSDK,
+					/Users/lmccart/Documents/FacebookSDK/FBAudienceNetwork,
+					/Users/lmccart/Documents/pplkeeper/FacebookSDK,
+					/Users/lmccart/Documents/pplkeeper/FacebookSDK_old,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "pplkpr/pplkpr-Prefix.pch";

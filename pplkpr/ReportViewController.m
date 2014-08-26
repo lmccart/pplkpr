@@ -9,6 +9,8 @@
 #import "ReportViewController.h"
 #import "InteractionData.h"
 #import "TempHRV.h"
+#import "MLPAutoCompleteTextField.h"
+#import "FriendsCompleteDataSource.h"
 
 @interface ReportViewController () <UIPickerViewDataSource, UIPickerViewDelegate> {
 	
@@ -22,8 +24,8 @@
 
 @property (strong, nonatomic) IBOutlet UIView *whoView;
 @property (strong, nonatomic) IBOutlet UILabel *whoLabel;
-@property (strong, nonatomic) IBOutlet UITextField *whoTextField;
-@property (strong, nonatomic) FBFriendPickerViewController *friendPickerController;
+@property (strong, nonatomic) IBOutlet FriendsCompleteDataSource *autocompleteDataSource;
+@property (weak) IBOutlet MLPAutoCompleteTextField *whoTextField;
 
 @property (strong, nonatomic) IBOutlet UIView *formView;
 @property (strong, nonatomic) IBOutlet UILabel *emotionLabel;
@@ -34,6 +36,7 @@
 @property (retain, nonatomic) IBOutlet UISlider *timeSlider;
 
 @property (retain, nonatomic) IBOutlet UISlider *intensitySlider;
+
 
 
 
@@ -61,21 +64,15 @@
 	 
 	[_timeSlider setThumbImage:[UIImage imageNamed:@"rect.png"] forState:UIControlStateNormal];
 	
-    if (_friendPickerController == nil) {
-        // Create friend picker, and get data loaded into it.
-		_friendPickerController = [[FBFriendPickerViewController alloc] init];
-        _friendPickerController.title = @"Pick Friend";
-        _friendPickerController.delegate = self;
-		_friendPickerController.allowsMultipleSelection = NO;
-    }
-	
 	[_whoTextField setDelegate:self];
     [_whoTextField setClearButtonMode:UITextFieldViewModeWhileEditing];
+    [(FriendsCompleteDataSource *) _whoTextField.autoCompleteDataSource updateFriends];
 	
     [_emotionPicker setDelegate:self];
     [_emotionPicker setDataSource:self];
 	_emotion = [[NSString alloc] init];
-	
+    
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -168,7 +165,6 @@
 }
 
 - (IBAction)pickFriendsButtonTouch:(id)sender {
-	NSLog(@"fb fp pick\n");
 	
     // if the session is open, then load the data for our view controller
     if (!FBSession.activeSession.isOpen) {
@@ -183,30 +179,53 @@
 		}];
         return;
     }
-	
-    [_friendPickerController loadData];
-    [_friendPickerController clearSelection];
-	
-    [self presentViewController:_friendPickerController animated:YES completion:nil];
-}
-
-- (void)facebookViewControllerDoneWasPressed:(id)sender {
-    NSMutableString *text = [[NSMutableString alloc] init];
     
-    for (id<FBGraphUser> user in _friendPickerController.selection) {
-        if ([text length]) {
-            [text appendString:@", "];
+//    if (_friendPickerController == nil) {
+//        // Create friend picker, and get data loaded into it.
+//        _friendPickerController = [[FBFriendPickerViewController alloc] init];
+//        _friendPickerController.title = @"Pick Friend";
+//        _friendPickerController.delegate = self;
+//        _friendPickerController.allowsMultipleSelection = NO;
+//    }
+//	
+//    [_friendPickerController loadData];
+//    [_friendPickerController clearSelection];
+//	
+//    
+    FBRequest* friendsRequest = [FBRequest requestForMyFriends];
+    [friendsRequest startWithCompletionHandler: ^(FBRequestConnection *connection,
+                                                  NSDictionary* result,
+                                                  NSError *error) {
+        NSArray* friends = [result objectForKey:@"data"];
+        NSLog(@"Found: %i friends", friends.count);
+        for (NSDictionary<FBGraphUser>* friend in friends) {
+            
+            
+            NSLog(@"I have a friend named %@ ", friend.name);
         }
-        [text appendString:user.name];
-    }
-    
-    [self fillTextBoxAndDismiss:text.length > 0 ? text : @""];
-}
+    }];
+//
+//    [self presentViewController:_friendPickerController animated:YES completion:nil];
 
-- (void)facebookViewControllerCancelWasPressed:(id)sender {
-	[self toggleFormView];
-    [self dismissViewControllerAnimated:NO completion:nil];
-}
+ }
+//
+//- (void)facebookViewControllerDoneWasPressed:(id)sender {
+//    NSMutableString *text = [[NSMutableString alloc] init];
+//    
+//    for (id<FBGraphUser> user in _friendPickerController.selection) {
+//        if ([text length]) {
+//            [text appendString:@", "];
+//        }
+//        [text appendString:user.name];
+//    }
+//    
+//    [self fillTextBoxAndDismiss:text.length > 0 ? text : @""];
+//}
+//
+//- (void)facebookViewControllerCancelWasPressed:(id)sender {
+//	[self toggleFormView];
+//    [self dismissViewControllerAnimated:NO completion:nil];
+//}
 
 - (void)fillTextBoxAndDismiss:(NSString *)text {
     _whoTextField.text = text;
@@ -253,7 +272,39 @@
 - (void)viewDidUnload {
 	
     _whoTextField = nil;
-	_friendPickerController = nil;
 	[super viewDidUnload];
 }
+
+
+#pragma mark - MLPAutoCompleteTextField Delegate
+
+
+- (BOOL)autoCompleteTextField:(MLPAutoCompleteTextField *)textField
+          shouldConfigureCell:(UITableViewCell *)cell
+       withAutoCompleteString:(NSString *)autocompleteString
+         withAttributedString:(NSAttributedString *)boldedString
+        forAutoCompleteObject:(id<MLPAutoCompletionObject>)autocompleteObject
+            forRowAtIndexPath:(NSIndexPath *)indexPath;
+{
+    //This is your chance to customize an autocomplete tableview cell before it appears in the autocomplete tableview
+    NSString *filename = [autocompleteString stringByAppendingString:@".png"];
+    filename = [filename stringByReplacingOccurrencesOfString:@" " withString:@"-"];
+    filename = [filename stringByReplacingOccurrencesOfString:@"&" withString:@"and"];
+    [cell.imageView setImage:[UIImage imageNamed:filename]];
+    
+    return YES;
+}
+
+- (void)autoCompleteTextField:(MLPAutoCompleteTextField *)textField
+  didSelectAutoCompleteString:(NSString *)selectedString
+       withAutoCompleteObject:(id<MLPAutoCompletionObject>)selectedObject
+            forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(selectedObject){
+        NSLog(@"selected object from autocomplete menu %@ with string %@", selectedObject, [selectedObject autocompleteString]);
+    } else {
+        NSLog(@"selected string '%@' from autocomplete menu", selectedString);
+    }
+}
+
 @end
