@@ -307,6 +307,8 @@ didDisconnectPeripheral:(CBPeripheral *)aPeripheral
         [self.peripheral setDelegate:nil];
         self.peripheral = nil;
     }
+    
+    [self startScan];
 }
 
 // Invoked when the central manager fails to create a connection with the peripheral.
