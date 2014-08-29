@@ -95,9 +95,10 @@
 													   inManagedObjectContext:_managedObjectContext];
     
     NSString *emotionKey = [emotion lowercaseString];
+    NSNumber *ts = [NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]];
     [newReport setValue:emotion forKey:@"emotion"];
     [newReport setValue:rating forKey:@"rating"];
-    [newReport setValue:[NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]] forKey:@"timestamp"];
+    [newReport setValue:ts forKey:@"timestamp"];
 	
 	
 	NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -138,7 +139,8 @@
 			person.reports = [NSSet setWithObjects:newReport, nil];
             newReport.person = person;
 		}
-		
+        
+        [person setTimestamp:ts]; // update for recency
 	}
 
 	if (![_managedObjectContext save:&error]) {
@@ -286,6 +288,19 @@
         }
 	}
 	return dict;
+}
+
+- (NSArray *)getRecentPeople {
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:[NSEntityDescription entityForName:@"Person" inManagedObjectContext:_managedObjectContext]];
+    
+    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"timestamp" ascending:NO]; // default to newest first
+    [request setSortDescriptors:[NSArray arrayWithObject:descriptor]];
+    
+    NSArray *results = [_managedObjectContext executeFetchRequest:request error:nil];
+    
+    return results;
 }
 
 

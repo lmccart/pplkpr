@@ -13,6 +13,7 @@
 #import "CustomAutoCompleteCell.h"
 #import "FriendsCompleteDataSource.h"
 #import "FriendsCustomAutoCompleteObject.h"
+#import "SDWebImage/UIImageView+WebCache.h"
 
 @interface ReportViewController () <UIPickerViewDataSource, UIPickerViewDelegate> {
 	
@@ -30,6 +31,13 @@
 @property (weak) IBOutlet MLPAutoCompleteTextField *whoTextField;
 @property (strong) NSString *whoName;
 @property (strong) NSString *whoFbid;
+
+@property (strong, nonatomic) IBOutlet UIView *whoRecentView;
+@property (strong, nonatomic) IBOutlet UIImageView *who0;
+@property (strong, nonatomic) IBOutlet UIImageView *who1;
+@property (strong, nonatomic) IBOutlet UIImageView *who2;
+@property (strong, nonatomic) IBOutlet UIImageView *who3;
+@property (strong, nonatomic) IBOutlet UIImageView *who4;
 
 @property (strong, nonatomic) IBOutlet UIView *formView;
 @property (strong, nonatomic) IBOutlet UILabel *emotionLabel;
@@ -79,7 +87,28 @@
     [self.emotionPicker setDataSource:self];
 	self.emotion = [[NSString alloc] init];
     
-
+    NSArray *recents = [[InteractionData data] getRecentPeople];
+    
+    for (Person *p in recents) {
+        
+        NSString *reqString = [NSString stringWithFormat:@"%@/?fields=picture", p.fbid];
+        NSLog(@"%@", reqString);
+        FBRequest* profileRequest = [FBRequest requestForGraphPath:reqString];
+        [profileRequest startWithCompletionHandler: ^(FBRequestConnection *connection,
+                                                      NSDictionary* result,
+                                                      NSError *error) {
+            if (error) {
+                NSLog(@"error: %@", error);
+            }
+            else {
+                NSDictionary *pic = [result objectForKey:@"picture"];
+                NSDictionary *data = [pic objectForKey:@"data"];
+                NSString *url = [data objectForKey:@"url"];
+                
+                [self.who0 sd_setImageWithURL:[NSURL URLWithString:url]];
+            }
+        }];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -169,10 +198,12 @@
         [self.meetButton setAlpha:1.0];
 	}
 	[self.whoView setHidden:false];
+	[self.whoRecentView setHidden:false];
 }
 
 - (void)fillTextBoxAndDismiss:(NSString *)text {
     self.whoTextField.text = text;
+	[self.whoRecentView setHidden:[self.whoTextField.text length] != 0];
 	[self toggleFormView];
     [self dismissViewControllerAnimated:NO completion:nil];
 }
@@ -199,6 +230,7 @@
     [self setMode:-1];
     [self.whoTextField setText:@""];
 	[self.whoView setHidden:true];
+	[self.whoRecentView setHidden:true];
     [self setWhoName:@""];
     [self setWhoFbid:@""];
     

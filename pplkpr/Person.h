@@ -15,6 +15,7 @@
 
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * fbid;
+@property (nonatomic, retain) NSNumber * timestamp;
 
 @property (nonatomic, retain) NSNumber * calm;
 @property (nonatomic, retain) NSNumber * excited;

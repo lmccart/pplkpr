@@ -66,11 +66,10 @@
         [profileRequest startWithCompletionHandler: ^(FBRequestConnection *connection,
                                                       NSDictionary* result,
                                                       NSError *error) {
-            if (error){
+            if (error) {
                 NSLog(@"error: %@", error);
             }
-            else{
-                NSLog(@"link: %@", result);
+            else {
                 NSDictionary *pic = [result objectForKey:@"picture"];
                 NSDictionary *data = [pic objectForKey:@"data"];
                 NSString *url = [data objectForKey:@"url"];
