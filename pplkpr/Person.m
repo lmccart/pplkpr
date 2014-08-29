@@ -13,6 +13,8 @@
 @implementation Person
 
 @dynamic name;
+@dynamic fbid;
+
 @dynamic calm;
 @dynamic excited;
 @dynamic aroused;
@@ -20,6 +22,7 @@
 @dynamic scared;
 @dynamic anxious;
 @dynamic bored;
+
 @dynamic angryN;
 @dynamic anxiousN;
 @dynamic excitedN;

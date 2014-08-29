@@ -25,7 +25,7 @@
 + (id)data;
 - (id)init;
 
-- (void)addReport:(NSString *)name withEmotion:(NSString *)emotion withRating:(NSNumber *)rating;
+- (void)addReport:(NSString *)name withFbid:(NSString *)fbid withEmotion:(NSString *)emotion withRating:(NSNumber *)rating;
 - (NSArray*)getAllReports;
 - (NSArray*)getAllPeople;
 - (void)calculateGlobalAverages;

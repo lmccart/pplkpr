@@ -12,6 +12,7 @@
 #import "MLPAutoCompleteTextField.h"
 #import "CustomAutoCompleteCell.h"
 #import "FriendsCompleteDataSource.h"
+#import "FriendsCustomAutoCompleteObject.h"
 
 @interface ReportViewController () <UIPickerViewDataSource, UIPickerViewDelegate> {
 	
@@ -27,11 +28,13 @@
 @property (strong, nonatomic) IBOutlet UILabel *whoLabel;
 @property (strong, nonatomic) IBOutlet FriendsCompleteDataSource *autocompleteDataSource;
 @property (weak) IBOutlet MLPAutoCompleteTextField *whoTextField;
+@property (strong) NSString *whoName;
+@property (strong) NSString *whoFbid;
 
 @property (strong, nonatomic) IBOutlet UIView *formView;
 @property (strong, nonatomic) IBOutlet UILabel *emotionLabel;
 @property (retain, nonatomic) IBOutlet UIPickerView *emotionPicker;
-@property (retain) NSString *emotion;
+@property (strong) NSString *emotion;
 
 @property (strong, nonatomic) IBOutlet UILabel *timeLabel;
 @property (retain, nonatomic) IBOutlet UISlider *timeSlider;
@@ -54,7 +57,7 @@
     if (self) {
         // Custom initialization
 		NSLog(@"init\n");
-        _mode = -1;
+        self.mode = -1;
     }
     return self;
 }
@@ -63,26 +66,26 @@
 {
     [super viewDidLoad];
 	 
-	[_timeSlider setThumbImage:[UIImage imageNamed:@"rect.png"] forState:UIControlStateNormal];
+	[self.timeSlider setThumbImage:[UIImage imageNamed:@"rect.png"] forState:UIControlStateNormal];
 	
-	[_whoTextField setDelegate:self];
-    [_whoTextField setClearButtonMode:UITextFieldViewModeWhileEditing];
-    [(FriendsCompleteDataSource *) _whoTextField.autoCompleteDataSource updateFriends];
+	[self.whoTextField setDelegate:self];
+    [self.whoTextField setClearButtonMode:UITextFieldViewModeWhileEditing];
+    [(FriendsCompleteDataSource *) self.whoTextField.autoCompleteDataSource updateFriends];
     
-    [_whoTextField registerAutoCompleteCellClass:[CustomAutoCompleteCell class]
+    [self.whoTextField registerAutoCompleteCellClass:[CustomAutoCompleteCell class]
                                        forCellReuseIdentifier:@"CustomCellId"];
 	
-    [_emotionPicker setDelegate:self];
-    [_emotionPicker setDataSource:self];
-	_emotion = [[NSString alloc] init];
+    [self.emotionPicker setDelegate:self];
+    [self.emotionPicker setDataSource:self];
+	self.emotion = [[NSString alloc] init];
     
 
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     NSMutableDictionary *event = [[TempHRV data] getHRVEvent];
-	_emotion = [[[InteractionData data] emotionsArray] objectAtIndex:0];
-    [_intensitySlider setValue:[[event objectForKey:@"intensity"] floatValue]];
+	self.emotion = [[[InteractionData data] emotionsArray] objectAtIndex:0];
+    [self.intensitySlider setValue:[[event objectForKey:@"intensity"] floatValue]];
 }
 
 
@@ -93,14 +96,14 @@
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-	[_whoTextField resignFirstResponder];
+	[self.whoTextField resignFirstResponder];
 	[self toggleFormView];
 	[super touchesBegan:touches withEvent:event];
 }
 
 - (void)toggleFormView {
-	if (_mode != -1) {
-		[_formView setHidden:[_whoTextField.text length] == 0];
+	if (self.mode != -1) {
+		[self.formView setHidden:[self.whoTextField.text length] == 0];
 	}
 }
 
@@ -136,7 +139,7 @@
 {
     //Let's print in the console what the user had chosen;
     NSLog(@"Chosen item: %@", [[[InteractionData data] emotionsArray] objectAtIndex:row]);
-	_emotion = [[[InteractionData data] emotionsArray] objectAtIndex:row];
+	self.emotion = [[[InteractionData data] emotionsArray] objectAtIndex:row];
 }
 
 
@@ -150,26 +153,26 @@
     
 	[self resetForm];
     
-	_mode = ((UIButton*)sender).tag;
+	self.mode = ((UIButton*)sender).tag;
     
-	if (_mode) { // 1-left
-		[_whoLabel setText:@"I was just with"];
-		[_timeLabel setText:@"from"];
-		[_emotionLabel setText:@"I was feeling?"];
-        [_leftButton setAlpha:1.0];
-        [_meetButton setAlpha:0.25];
+	if (self.mode) { // 1-left
+		[self.whoLabel setText:@"I was just with"];
+		[self.timeLabel setText:@"from"];
+		[self.emotionLabel setText:@"I was feeling?"];
+        [self.leftButton setAlpha:1.0];
+        [self.meetButton setAlpha:0.25];
 	} else { // 0-meet
-		[_whoLabel setText:@"I am about to meet"];
-		[_timeLabel setText:@"for"];
-		[_emotionLabel setText:@"I am feeling?"];
-        [_leftButton setAlpha:0.25];
-        [_meetButton setAlpha:1.0];
+		[self.whoLabel setText:@"I am about to meet"];
+		[self.timeLabel setText:@"for"];
+		[self.emotionLabel setText:@"I am feeling?"];
+        [self.leftButton setAlpha:0.25];
+        [self.meetButton setAlpha:1.0];
 	}
-	[_whoView setHidden:false];
+	[self.whoView setHidden:false];
 }
 
 - (void)fillTextBoxAndDismiss:(NSString *)text {
-    _whoTextField.text = text;
+    self.whoTextField.text = text;
 	[self toggleFormView];
     [self dismissViewControllerAnimated:NO completion:nil];
 }
@@ -177,10 +180,10 @@
 
 - (IBAction)submit:(id)sender {
 	
-	[[InteractionData data] addReport:_whoTextField.text withEmotion:_emotion withRating:[NSNumber numberWithFloat:[_intensitySlider value]]];
+	[[InteractionData data] addReport:self.whoName withFbid:self.whoFbid withEmotion:self.emotion withRating:[NSNumber numberWithFloat:[self.intensitySlider value]]];
     
 	// go to person view
-	[[InteractionData data] setJumpToName:_whoTextField.text];
+	[[InteractionData data] setJumpToName:self.whoTextField.text];
 	[self.tabBarController setSelectedIndex:1];
     
     // reset form
@@ -190,18 +193,20 @@
 
 - (void)resetForm {
     
-    [_leftButton setAlpha:1.0];
-    [_meetButton setAlpha:1.0];
+    [self.leftButton setAlpha:1.0];
+    [self.meetButton setAlpha:1.0];
     
-	_mode = -1;
-	_whoTextField.text = @"";
-	[_whoView setHidden:true];
+    [self setMode:-1];
+    [self.whoTextField setText:@""];
+	[self.whoView setHidden:true];
+    [self setWhoName:@""];
+    [self setWhoFbid:@""];
     
-	[_emotionPicker reloadAllComponents];
-	[_emotionPicker selectRow:0 inComponent:0 animated:NO];
-	_emotion = [[[InteractionData data] emotionsArray] objectAtIndex:0];
-	[_intensitySlider setValue:0.5];
-	[_formView setHidden:true];
+	[self.emotionPicker reloadAllComponents];
+	[self.emotionPicker selectRow:0 inComponent:0 animated:NO];
+    [self setEmotion: [[[InteractionData data] emotionsArray] objectAtIndex:0]];
+	[self.intensitySlider setValue:0.5];
+	[self.formView setHidden:true];
 }
 
 - (void)didReceiveMemoryWarning
@@ -212,7 +217,7 @@
 
 - (void)viewDidUnload {
 	
-    _whoTextField = nil;
+    self.whoTextField = nil;
 	[super viewDidUnload];
 }
 
@@ -222,7 +227,14 @@
 - (void)autoCompleteTextField:(MLPAutoCompleteTextField *)textField
   didSelectAutoCompleteString:(NSString *)selectedString
        withAutoCompleteObject:(id<MLPAutoCompletionObject>)selectedObject
-            forRowAtIndexPath:(NSIndexPath *)indexPath {
+            forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (selectedObject) {
+        FriendsCustomAutoCompleteObject *fObj = (FriendsCustomAutoCompleteObject *)selectedObject;
+        [self setWhoName:fObj.name];
+        [self setWhoFbid:fObj.fbid];
+        
+    }
     [self toggleFormView];
 }
 

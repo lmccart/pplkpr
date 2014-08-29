@@ -86,23 +86,22 @@
 }
 
 
-- (void)addReport:(NSString *)name withEmotion:(NSString *)emotion withRating:(NSNumber *)rating {
+- (void)addReport:(NSString *)name withFbid:(NSString *)fbid withEmotion:(NSString *)emotion withRating:(NSNumber *)rating {
 	
-	NSLog(@"ADDING REPORT %@ %@ %@", name, rating, emotion);
+	NSLog(@"ADDING REPORT %@ %@ %@ %@", name, fbid, rating, emotion);
 	
 	// create new report
 	Report * newReport = [NSEntityDescription insertNewObjectForEntityForName:@"Report"
 													   inManagedObjectContext:_managedObjectContext];
     
     NSString *emotionKey = [emotion lowercaseString];
-    [newReport setValue:name forKey:@"name"];
     [newReport setValue:emotion forKey:@"emotion"];
     [newReport setValue:rating forKey:@"rating"];
     [newReport setValue:[NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]] forKey:@"timestamp"];
 	
 	
 	NSFetchRequest *request = [[NSFetchRequest alloc] init];
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@", name];
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"fbid == %@", fbid];
 	[request setEntity:[NSEntityDescription entityForName:@"Person" inManagedObjectContext:_managedObjectContext]];
 	[request setPredicate:predicate];
 	
@@ -125,12 +124,13 @@
 			
             [person setValue:tot
                       forKey:[NSString stringWithFormat:@"%@N", emotionKey]];
-			NSLog(@"reports n for %@ %@ now at %@", person.name, newReport.emotion, tot);
+			NSLog(@"reports n for %@ %@ %@ now at %@", person.name, person.fbid, newReport.emotion, tot);
 		} else {
 			NSLog(@"create new person");
 			Person *newPerson = [NSEntityDescription insertNewObjectForEntityForName:@"Person"
                                                               inManagedObjectContext:_managedObjectContext];
 			[newPerson setValue:name forKey:@"name"];
+            [newPerson setValue:fbid forKey:@"fbid"];
             [newPerson setValue:[NSNumber numberWithInt:1]
                          forKey:[NSString stringWithFormat:@"%@N", emotionKey]];
 			newPerson.reports = [NSSet setWithObjects:newReport, nil];

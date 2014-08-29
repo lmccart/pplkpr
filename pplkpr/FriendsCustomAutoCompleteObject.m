@@ -9,25 +9,23 @@
 #import "FriendsCustomAutoCompleteObject.h"
 
 @interface FriendsCustomAutoCompleteObject ()
-@property (strong) NSString *name;
 @end
 
 @implementation FriendsCustomAutoCompleteObject
 
 
-- (id)initWithName:(NSString *)name
-{
+- (id)initWithName:(NSString *)name withFbid:(NSString *)fbid {
     self = [super init];
     if (self) {
         [self setName:name];
+        [self setFbid:fbid];
     }
     return self;
 }
 
 #pragma mark - MLPAutoCompletionObject Protocl
 
-- (NSString *)autocompleteString
-{
+- (NSString *)autocompleteString {
     return self.name;
 }
 

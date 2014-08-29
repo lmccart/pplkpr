@@ -14,7 +14,6 @@
 @interface Report : NSManagedObject
 
 @property (nonatomic, retain) NSString * emotion;
-@property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSNumber * rating;
 @property (nonatomic, retain) NSNumber * timestamp;
 @property (nonatomic, retain) Person *person;

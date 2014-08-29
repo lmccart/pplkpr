@@ -40,7 +40,7 @@
                                                   NSError *error) {
         NSArray *f = [result objectForKey:@"data"];
         for (NSDictionary<FBGraphUser>* friend in f) {
-            FriendsCustomAutoCompleteObject *friendObj = [[FriendsCustomAutoCompleteObject alloc] initWithName:friend.name];
+            FriendsCustomAutoCompleteObject *friendObj = [[FriendsCustomAutoCompleteObject alloc] initWithName:friend.name withFbid:friend.id];
             [mutableFriends addObject:friendObj];
         }
         
@@ -69,30 +69,6 @@
         handler(completions);
     });
 }
-
-/*
- - (NSArray *)autoCompleteTextField:(MLPAutoCompleteTextField *)textField
- possibleCompletionsForString:(NSString *)string
- {
- 
- if(self.simulateLatency){
- CGFloat seconds = arc4random_uniform(4)+arc4random_uniform(4); //normal distribution
- NSLog(@"sleeping fetch of completions for %f", seconds);
- sleep(seconds);
- }
- 
- NSArray *completions;
- if(self.testWithAutoCompleteObjectsInsteadOfStrings){
- completions = [self allCountryObjects];
- } else {
- completions = [self allCountries];
- }
- 
- return completions;
- }
- */
-
-
 
 
 @end

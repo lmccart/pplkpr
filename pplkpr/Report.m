@@ -13,7 +13,6 @@
 @implementation Report
 
 @dynamic emotion;
-@dynamic name;
 @dynamic rating;
 @dynamic timestamp;
 @dynamic person;

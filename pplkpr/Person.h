@@ -14,6 +14,8 @@
 @interface Person : NSManagedObject
 
 @property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) NSString * fbid;
+
 @property (nonatomic, retain) NSNumber * calm;
 @property (nonatomic, retain) NSNumber * excited;
 @property (nonatomic, retain) NSNumber * aroused;
