@@ -7,10 +7,11 @@
 //
 
 #import "FriendsCompleteDataSource.h"
+#import "FriendsCustomAutoCompleteObject.h"
 
 @interface FriendsCompleteDataSource()
 
-@property (strong, nonatomic) NSMutableArray *friends;
+@property (strong, nonatomic) NSArray *friendObjects;
 
 @end
 
@@ -20,10 +21,8 @@
 
 - (void) updateFriends {
     
-    if (!_friends) {
-       _friends = [[NSMutableArray alloc] init];
-    }
-    
+    NSMutableArray *mutableFriends = [NSMutableArray new];
+
     // if the session is open, then load the data for our view controller
     if (!FBSession.activeSession.isOpen) {
         // if the session is closed, then we open it here, and establish a handler for state changes
@@ -34,15 +33,20 @@
             }
         }];
     }
+    
     FBRequest* friendsRequest = [FBRequest requestForMyFriends];
     [friendsRequest startWithCompletionHandler: ^(FBRequestConnection *connection,
                                                   NSDictionary* result,
                                                   NSError *error) {
         NSArray *f = [result objectForKey:@"data"];
         for (NSDictionary<FBGraphUser>* friend in f) {
-            [_friends addObject:friend.name];
+            FriendsCustomAutoCompleteObject *friendObj = [[FriendsCustomAutoCompleteObject alloc] initWithName:friend.name];
+            [mutableFriends addObject:friendObj];
         }
+        
+        [self setFriendObjects:[NSArray arrayWithArray:mutableFriends]];
     }];
+    
 }
 
 #pragma mark - MLPAutoCompleteTextField DataSource
@@ -60,7 +64,7 @@
             NSLog(@"sleeping fetch of completions for %f", seconds);
             sleep(seconds);
         }
-        NSArray *completions = _friends;
+        NSArray *completions = _friendObjects;
         
         handler(completions);
     });

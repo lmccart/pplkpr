@@ -10,6 +10,7 @@
 #import <MessageUI/MessageUI.h>
 #import <AddressBook/ABAddressBook.h>
 #import "InteractionData.h"
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface PersonViewController : UIViewController <MFMessageComposeViewControllerDelegate, UINavigationControllerDelegate>
 

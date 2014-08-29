@@ -7,6 +7,8 @@
 //
 
 #import "PersonViewController.h"
+#import "SDWebImage/UIImageView+WebCache.h"
+
 
 @interface PersonViewController () {
 	
@@ -24,6 +26,16 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        
+        if (!FBSession.activeSession.isOpen) {
+            // if the session is closed, then we open it here, and establish a handler for state changes
+            [FBSession openActiveSessionWithReadPermissions:nil allowLoginUI:YES completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {
+                if (error) {
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:error.localizedDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                    [alertView show];
+                }
+            }];
+        }
     }
     return self;
 }
@@ -44,6 +56,18 @@
 	if ([[InteractionData data] jumpToName]) {
         [_personLabel setText:[[InteractionData data] jumpToName]];
         [[InteractionData data] setJumpToName:nil];
+        
+        
+//        FBRequest* profileRequest = [FBRequest requestForMyFriends];
+//        [friendsRequest startWithCompletionHandler: ^(FBRequestConnection *connection,
+//                                                      NSDictionary* result,
+//                                                      NSError *error) {
+//            NSArray *f = [result objectForKey:@"data"];
+//            for (NSDictionary<FBGraphUser>* friend in f) {
+//                [_friends addObject:friend.name];
+//            }
+//        }];
+        
 	} else {
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
