@@ -126,13 +126,21 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 	[self.whoTextField resignFirstResponder];
+    if ([self.whoTextField.text length] == 0) {
+        [self setWhoName:@""];
+        [self setWhoFbid:@""];
+    } else {
+        [self.whoTextField setText:self.whoName];
+    }
 	[self toggleFormView];
 	[super touchesBegan:touches withEvent:event];
 }
 
 - (void)toggleFormView {
+    NSLog(@"%d", [self.whoName length] == 0);
 	if (self.mode != -1) {
-		[self.formView setHidden:[self.whoTextField.text length] == 0];
+        [self.whoRecentView setHidden:[self.whoName length] != 0];
+		[self.formView setHidden:[self.whoName length] == 0];
 	}
 }
 
@@ -201,12 +209,11 @@
 	[self.whoRecentView setHidden:false];
 }
 
-- (void)fillTextBoxAndDismiss:(NSString *)text {
-    self.whoTextField.text = text;
-	[self.whoRecentView setHidden:[self.whoTextField.text length] != 0];
-	[self toggleFormView];
-    [self dismissViewControllerAnimated:NO completion:nil];
-}
+//- (void)fillTextBoxAndDismiss:(NSString *)text {
+//    //self.whoTextField.text = text;
+//	[self toggleFormView];
+//    [self dismissViewControllerAnimated:NO completion:nil];
+//}
 
 
 - (IBAction)submit:(id)sender {
