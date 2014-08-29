@@ -31,13 +31,7 @@
 @property (weak) IBOutlet MLPAutoCompleteTextField *whoTextField;
 @property (strong) NSString *whoName;
 @property (strong) NSString *whoFbid;
-
 @property (strong, nonatomic) IBOutlet UIView *whoRecentView;
-@property (strong, nonatomic) IBOutlet UIImageView *who0;
-@property (strong, nonatomic) IBOutlet UIImageView *who1;
-@property (strong, nonatomic) IBOutlet UIImageView *who2;
-@property (strong, nonatomic) IBOutlet UIImageView *who3;
-@property (strong, nonatomic) IBOutlet UIImageView *who4;
 
 @property (strong, nonatomic) IBOutlet UIView *formView;
 @property (strong, nonatomic) IBOutlet UILabel *emotionLabel;
@@ -88,26 +82,33 @@
 	self.emotion = [[NSString alloc] init];
     
     NSArray *recents = [[InteractionData data] getRecentPeople];
+    NSArray *subviews = [self.whoRecentView subviews];
     
+    int i=0;
     for (Person *p in recents) {
+        NSLog(@"%@", p.name);
         
-        NSString *reqString = [NSString stringWithFormat:@"%@/?fields=picture", p.fbid];
-        NSLog(@"%@", reqString);
-        FBRequest* profileRequest = [FBRequest requestForGraphPath:reqString];
-        [profileRequest startWithCompletionHandler: ^(FBRequestConnection *connection,
-                                                      NSDictionary* result,
-                                                      NSError *error) {
-            if (error) {
-                NSLog(@"error: %@", error);
-            }
-            else {
-                NSDictionary *pic = [result objectForKey:@"picture"];
-                NSDictionary *data = [pic objectForKey:@"data"];
-                NSString *url = [data objectForKey:@"url"];
-                
-                [self.who0 sd_setImageWithURL:[NSURL URLWithString:url]];
-            }
-        }];
+        if (i<5) {
+        
+            NSString *reqString = [NSString stringWithFormat:@"%@/?fields=picture", p.fbid];
+            NSLog(@"%@", reqString);
+            FBRequest* profileRequest = [FBRequest requestForGraphPath:reqString];
+            [profileRequest startWithCompletionHandler: ^(FBRequestConnection *connection,
+                                                          NSDictionary* result,
+                                                          NSError *error) {
+                if (error) {
+                    NSLog(@"error: %@", error);
+                }
+                else {
+                    NSDictionary *pic = [result objectForKey:@"picture"];
+                    NSDictionary *data = [pic objectForKey:@"data"];
+                    NSString *url = [data objectForKey:@"url"];
+                    
+                    [subviews[i] sd_setImageWithURL:[NSURL URLWithString:url]];
+                }
+            }];
+            i++;
+        }
     }
 }
 
