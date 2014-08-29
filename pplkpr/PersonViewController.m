@@ -16,6 +16,8 @@
 }
 
 @property (retain, nonatomic) IBOutlet UILabel *personLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *personPhoto;
+
 
 @end
 
@@ -54,19 +56,29 @@
 - (void)viewWillAppear:(BOOL)animated {
     
 	if ([[InteractionData data] jumpToPerson]) {
-        [_personLabel setText:[[[InteractionData data] jumpToPerson] name]];
+        Person *p = [[InteractionData data] jumpToPerson];
+        [_personLabel setText:p.name];
         [[InteractionData data] setJumpToPerson:nil];
         
+        NSString *reqString = [NSString stringWithFormat:@"%@/?fields=picture", p.fbid];
+        NSLog(@"%@", reqString);
+        FBRequest* profileRequest = [FBRequest requestForGraphPath:reqString];
+        [profileRequest startWithCompletionHandler: ^(FBRequestConnection *connection,
+                                                      NSDictionary* result,
+                                                      NSError *error) {
+            if (error){
+                NSLog(@"error: %@", error);
+            }
+            else{
+                NSLog(@"link: %@", result);
+                NSDictionary *pic = [result objectForKey:@"picture"];
+                NSDictionary *data = [pic objectForKey:@"data"];
+                NSString *url = [data objectForKey:@"url"];
+                
+                [self.personPhoto sd_setImageWithURL:[NSURL URLWithString:url]];
+            }
+        }];
         
-//        FBRequest* profileRequest = [FBRequest requestForMyFriends];
-//        [friendsRequest startWithCompletionHandler: ^(FBRequestConnection *connection,
-//                                                      NSDictionary* result,
-//                                                      NSError *error) {
-//            NSArray *f = [result objectForKey:@"data"];
-//            for (NSDictionary<FBGraphUser>* friend in f) {
-//                [_friends addObject:friend.name];
-//            }
-//        }];
         
 	} else {
         [self.navigationController popToRootViewControllerAnimated:YES];
