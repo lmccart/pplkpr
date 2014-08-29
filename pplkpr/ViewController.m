@@ -72,15 +72,15 @@
         // abs value, name, asc, emotion
         NSArray *entry = [sortedArray objectAtIndex:i];
         
-        NSString *name = [entry objectAtIndex:1];
+        Person *p = [entry objectAtIndex:1];
         NSString *order = [[entry objectAtIndex:2] intValue] == 0 ? [NSString stringWithFormat:@"%@", @"most"] : [NSString stringWithFormat:@"%@", @"least"];
         NSString *emotion = [entry objectAtIndex:3];
         
         
-        NSMutableAttributedString* attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ makes you %@ %@", name, order, [emotion lowercaseString]]];
+        NSMutableAttributedString* attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ makes you %@ %@", p.name, order, [emotion lowercaseString]]];
         
-        [attributedString addAttribute:@"personTag" value:name range:NSMakeRange(0,[name length])];
-        [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0,[name length])];
+        [attributedString addAttribute:@"personTag" value:p range:NSMakeRange(0,[p.name length])];
+        [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0,[p.name length])];
         
         int l = [emotion length] + [order length] + 1;
         [attributedString addAttribute:@"emotionTag" value:emotion range:NSMakeRange([attributedString length]-l, l)];
@@ -120,10 +120,10 @@
 
 
 
-- (void)pushPersonViewController:(NSString *)name
+- (void)pushPersonViewController:(Person *)p
 {
-    NSLog(@"jump to person %@", name);
-	[[InteractionData data] setJumpToPerson:name];
+    NSLog(@"jump to person %@", p.name);
+	[[InteractionData data] setJumpToPerson:p];
 	[self.tabBarController setSelectedIndex:1];
 }
 
@@ -163,7 +163,7 @@
         //NSLog(@"%@, %d, %d", value, range.location, range.length);
         
         if (value) {
-            //[self pushPersonViewController:value];  //PEND
+            [self pushPersonViewController:value];
         }
         
         value = [textView.attributedText attribute:@"emotionTag" atIndex:characterIndex effectiveRange:&range];

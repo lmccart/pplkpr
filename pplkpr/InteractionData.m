@@ -306,12 +306,12 @@
             // add most person
             Person *mostPerson = [people_arr objectAtIndex:0];
             NSNumber *abs = [NSNumber numberWithFloat:1- [[mostPerson valueForKey:eKey] floatValue]];
-            NSArray *mostEntry = [[NSArray alloc] initWithObjects: abs, [mostPerson valueForKey:@"name"], [NSNumber numberWithInt:0], e, nil];
+            NSArray *mostEntry = [[NSArray alloc] initWithObjects: abs, mostPerson, [NSNumber numberWithInt:0], e, nil];
             [results addObject:mostEntry];
             
             // add least person
             Person *leastPerson = [people_arr objectAtIndex:[people_arr count]-1];
-            NSArray *leastEntry = [[NSArray alloc] initWithObjects: [leastPerson valueForKey:eKey], [leastPerson valueForKey:@"name"], [NSNumber numberWithInt:1], e, nil];
+            NSArray *leastEntry = [[NSArray alloc] initWithObjects: [leastPerson valueForKey:eKey], leastPerson, [NSNumber numberWithInt:1], e, nil];
             [results addObject:leastEntry];
         }
     }
