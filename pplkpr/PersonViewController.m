@@ -53,9 +53,9 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     
-	if ([[InteractionData data] jumpToName]) {
-        [_personLabel setText:[[InteractionData data] jumpToName]];
-        [[InteractionData data] setJumpToName:nil];
+	if ([[InteractionData data] jumpToPerson]) {
+        [_personLabel setText:[[[InteractionData data] jumpToPerson] name]];
+        [[InteractionData data] setJumpToPerson:nil];
         
         
 //        FBRequest* profileRequest = [FBRequest requestForMyFriends];

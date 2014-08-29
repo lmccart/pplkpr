@@ -180,10 +180,10 @@
 
 - (IBAction)submit:(id)sender {
 	
-	[[InteractionData data] addReport:self.whoName withFbid:self.whoFbid withEmotion:self.emotion withRating:[NSNumber numberWithFloat:[self.intensitySlider value]]];
+	Person *p = [[InteractionData data] addReport:self.whoName withFbid:self.whoFbid withEmotion:self.emotion withRating:[NSNumber numberWithFloat:[self.intensitySlider value]]];
     
 	// go to person view
-	[[InteractionData data] setJumpToName:self.whoTextField.text];
+	[[InteractionData data] setJumpToPerson:p];
 	[self.tabBarController setSelectedIndex:1];
     
     // reset form

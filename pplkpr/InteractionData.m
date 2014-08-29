@@ -36,7 +36,7 @@
 		_locationsArray = [[NSMutableArray alloc] init];
 		_summary = [[NSDictionary alloc] init];
 		
-		_jumpToName = nil;
+		_jumpToPerson = nil;
         
         
         AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
@@ -86,7 +86,7 @@
 }
 
 
-- (void)addReport:(NSString *)name withFbid:(NSString *)fbid withEmotion:(NSString *)emotion withRating:(NSNumber *)rating {
+- (Person *)addReport:(NSString *)name withFbid:(NSString *)fbid withEmotion:(NSString *)emotion withRating:(NSNumber *)rating {
 	
 	NSLog(@"ADDING REPORT %@ %@ %@ %@", name, fbid, rating, emotion);
 	
@@ -108,13 +108,15 @@
 	NSError *error = nil;
 	NSArray *result = [_managedObjectContext executeFetchRequest:request error:&error];
 	
+    Person *person;
+    
 	if (result == nil) {
 		NSLog(@"fetch result = nil");
         // Handle the error here
 	} else {
 		if([result count] > 0) {
 			//NSLog(@"fetch saved person");
-			Person *person = (Person *)[result objectAtIndex:0];
+			person = (Person *)[result objectAtIndex:0];
 			newReport.person = person;
             
             
@@ -127,14 +129,14 @@
 			NSLog(@"reports n for %@ %@ %@ now at %@", person.name, person.fbid, newReport.emotion, tot);
 		} else {
 			NSLog(@"create new person");
-			Person *newPerson = [NSEntityDescription insertNewObjectForEntityForName:@"Person"
+			person = [NSEntityDescription insertNewObjectForEntityForName:@"Person"
                                                               inManagedObjectContext:_managedObjectContext];
-			[newPerson setValue:name forKey:@"name"];
-            [newPerson setValue:fbid forKey:@"fbid"];
-            [newPerson setValue:[NSNumber numberWithInt:1]
+			[person setValue:name forKey:@"name"];
+            [person setValue:fbid forKey:@"fbid"];
+            [person setValue:[NSNumber numberWithInt:1]
                          forKey:[NSString stringWithFormat:@"%@N", emotionKey]];
-			newPerson.reports = [NSSet setWithObjects:newReport, nil];
-            newReport.person = newPerson;
+			person.reports = [NSSet setWithObjects:newReport, nil];
+            newReport.person = person;
 		}
 		
 	}
@@ -142,6 +144,8 @@
 	if (![_managedObjectContext save:&error]) {
 		NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
 	}
+    
+    return person;
 }
 
 

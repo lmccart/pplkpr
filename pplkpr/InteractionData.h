@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Person.h"
 
 @interface InteractionData : NSObject
 
@@ -14,7 +15,7 @@
 
 @property (retain) NSDictionary *summary;
 
-@property (retain) NSString *jumpToName;
+@property (retain) Person *jumpToPerson;
 @property (retain) NSString *jumpToEmotion;
 @property BOOL jumpToOrder;
 
@@ -25,7 +26,7 @@
 + (id)data;
 - (id)init;
 
-- (void)addReport:(NSString *)name withFbid:(NSString *)fbid withEmotion:(NSString *)emotion withRating:(NSNumber *)rating;
+- (Person *)addReport:(NSString *)name withFbid:(NSString *)fbid withEmotion:(NSString *)emotion withRating:(NSNumber *)rating;
 - (NSArray*)getAllReports;
 - (NSArray*)getAllPeople;
 - (void)calculateGlobalAverages;

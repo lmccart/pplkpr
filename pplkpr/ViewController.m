@@ -123,7 +123,7 @@
 - (void)pushPersonViewController:(NSString *)name
 {
     NSLog(@"jump to person %@", name);
-	[[InteractionData data] setJumpToName:name];
+	[[InteractionData data] setJumpToPerson:name];
 	[self.tabBarController setSelectedIndex:1];
 }
 
@@ -163,7 +163,7 @@
         //NSLog(@"%@, %d, %d", value, range.location, range.length);
         
         if (value) {
-            [self pushPersonViewController:value];
+            //[self pushPersonViewController:value];  //PEND
         }
         
         value = [textView.attributedText attribute:@"emotionTag" atIndex:characterIndex effectiveRange:&range];

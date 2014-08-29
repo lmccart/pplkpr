@@ -64,7 +64,7 @@
 
 - (void) viewDidAppear:(BOOL)animated {
 	
-	if ([[InteractionData data] jumpToName]) {
+	if ([[InteractionData data] jumpToPerson]) {
 		[self performSegueWithIdentifier:@"personSegue" sender:self];
 	} else {
         [self.navigationController popToRootViewControllerAnimated:YES];
@@ -193,9 +193,9 @@
 	
 	int ind = (_order) ? [[_rankData objectForKey:_emotion] count] - indexPath.row - 1 : indexPath.row;
     NSLog(@"select ind %d", ind);
-    NSString *name = [[[_rankData objectForKey:_emotion] objectAtIndex:ind] valueForKey:@"name"];
-    NSLog(@"select name %@", name);
-	[[InteractionData data] setJumpToName:name];
+    Person *p = [[_rankData objectForKey:_emotion] objectAtIndex:ind];
+    NSLog(@"select name %@", p.name);
+	[[InteractionData data] setJumpToPerson:p];
 	[self performSegueWithIdentifier:@"personSegue" sender:self];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
