@@ -15,5 +15,6 @@
 
 
 - (void)updateMonitorStatus:(NSString *)status;
+- (IBAction)testRequest:(id)sender;
 
 @end

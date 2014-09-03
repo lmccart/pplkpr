@@ -10,11 +10,10 @@
 #import <MessageUI/MessageUI.h>
 #import <AddressBook/ABAddressBook.h>
 #import "InteractionData.h"
-#import <FacebookSDK/FacebookSDK.h>
 
 @interface PersonViewController : UIViewController <MFMessageComposeViewControllerDelegate, UINavigationControllerDelegate>
 
--(IBAction) showMore:(id)sender;
--(IBAction) sendInAppSMS:(id)sender;
+- (IBAction) showMore:(id)sender;
+- (IBAction) sendInAppSMS:(id)sender;
 
 @end

@@ -8,6 +8,7 @@
 
 #import "FriendsCompleteDataSource.h"
 #import "FriendsCustomAutoCompleteObject.h"
+#import "FBHandler.h"
 
 @interface FriendsCompleteDataSource()
 
@@ -23,28 +24,12 @@
     
     NSMutableArray *mutableFriends = [NSMutableArray new];
 
-    // if the session is open, then load the data for our view controller
-    if (!FBSession.activeSession.isOpen) {
-        // if the session is closed, then we open it here, and establish a handler for state changes
-        [FBSession openActiveSessionWithReadPermissions:nil allowLoginUI:YES completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {
-            if (error) {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:error.localizedDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                [alertView show];
-            }
-        }];
-    }
-    
-    FBRequest* friendsRequest = [FBRequest requestForMyFriends];
-    [friendsRequest startWithCompletionHandler: ^(FBRequestConnection *connection,
-                                                  NSDictionary* result,
-                                                  NSError *error) {
-        NSArray *f = [result objectForKey:@"data"];
-        for (NSDictionary<FBGraphUser>* friend in f) {
+    [[FBHandler data] requestFriendsWithCompletion:^(NSArray *result) {
+        for (NSDictionary<FBGraphUser>* friend in result) {
             FriendsCustomAutoCompleteObject *friendObj = [[FriendsCustomAutoCompleteObject alloc] initWithName:friend.name withFbid:friend.id];
             [mutableFriends addObject:friendObj];
         }
-        
-        [self setFriendObjects:[NSArray arrayWithArray:mutableFriends]];
+        [self setFriendObjects: [NSArray arrayWithArray:mutableFriends]];
     }];
     
 }

@@ -9,6 +9,7 @@
 #import "ReportViewController.h"
 #import "InteractionData.h"
 #import "TempHRV.h"
+#import "FBHandler.h"
 #import "MLPAutoCompleteTextField.h"
 #import "CustomAutoCompleteCell.h"
 #import "FriendsCompleteDataSource.h"
@@ -43,10 +44,6 @@
 
 @property (retain, nonatomic) IBOutlet UISlider *intensitySlider;
 
-
-
-
-- (void)fillTextBoxAndDismiss:(NSString *)text;
 
 @end
 
@@ -86,26 +83,14 @@
     
     int i=0;
     for (Person *p in recents) {
-        NSLog(@"%@", p.name);
-        
         if (i<5) {
-        
-            NSString *reqString = [NSString stringWithFormat:@"%@/?fields=picture", p.fbid];
-            NSLog(@"%@", reqString);
-            FBRequest* profileRequest = [FBRequest requestForGraphPath:reqString];
-            [profileRequest startWithCompletionHandler: ^(FBRequestConnection *connection,
-                                                          NSDictionary* result,
-                                                          NSError *error) {
-                if (error) {
-                    NSLog(@"error: %@", error);
-                }
-                else {
-                    NSDictionary *pic = [result objectForKey:@"picture"];
-                    NSDictionary *data = [pic objectForKey:@"data"];
-                    NSString *url = [data objectForKey:@"url"];
-                    
-                    [subviews[i] sd_setImageWithURL:[NSURL URLWithString:url]];
-                }
+            
+            [[FBHandler data] requestProfile:p.fbid completion:^(NSDictionary * result){
+                NSDictionary *pic = [result objectForKey:@"picture"];
+                NSDictionary *data = [pic objectForKey:@"data"];
+                NSString *url = [data objectForKey:@"url"];
+                
+                [subviews[i] sd_setImageWithURL:[NSURL URLWithString:url]];
             }];
             i++;
         }

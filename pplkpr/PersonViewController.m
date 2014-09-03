@@ -8,7 +8,7 @@
 
 #import "PersonViewController.h"
 #import "SDWebImage/UIImageView+WebCache.h"
-
+#import "FBHandler.h"
 
 @interface PersonViewController () {
 	
@@ -28,16 +28,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        
-        if (!FBSession.activeSession.isOpen) {
-            // if the session is closed, then we open it here, and establish a handler for state changes
-            [FBSession openActiveSessionWithReadPermissions:nil allowLoginUI:YES completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {
-                if (error) {
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:error.localizedDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                    [alertView show];
-                }
-            }];
-        }
     }
     return self;
 }
@@ -60,30 +50,19 @@
         [_personLabel setText:p.name];
         [[InteractionData data] setJumpToPerson:nil];
         
-        NSString *reqString = [NSString stringWithFormat:@"%@/?fields=picture", p.fbid];
-        NSLog(@"%@", reqString);
-        FBRequest* profileRequest = [FBRequest requestForGraphPath:reqString];
-        [profileRequest startWithCompletionHandler: ^(FBRequestConnection *connection,
-                                                      NSDictionary* result,
-                                                      NSError *error) {
-            if (error) {
-                NSLog(@"error: %@", error);
-            }
-            else {
-                NSDictionary *pic = [result objectForKey:@"picture"];
-                NSDictionary *data = [pic objectForKey:@"data"];
-                NSString *url = [data objectForKey:@"url"];
-                
-                [self.personPhoto sd_setImageWithURL:[NSURL URLWithString:url]];
-            }
+        [[FBHandler data] requestProfile:p.fbid completion:^(NSDictionary * result){
+            NSDictionary *pic = [result objectForKey:@"picture"];
+            NSDictionary *data = [pic objectForKey:@"data"];
+            NSString *url = [data objectForKey:@"url"];
+            
+            [self.personPhoto sd_setImageWithURL:[NSURL URLWithString:url]];
         }];
-        
         
 	} else {
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
-    
 }
+
 
 -(IBAction)sendInAppSMS:(id)sender {
 	MFMessageComposeViewController *controller = [[MFMessageComposeViewController alloc] init];

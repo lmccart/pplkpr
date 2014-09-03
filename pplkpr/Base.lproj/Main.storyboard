@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="phu-7A-Ajd">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6206.8" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="phu-7A-Ajd">
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7026.1"/>
     </dependencies>
     <scenes>
-        <!--View Controller - Item-->
+        <!--Item-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
                 <viewController id="vXZ-lx-hvc" customClass="ViewController" sceneMemberID="viewController">
@@ -39,6 +39,15 @@
                                 <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mOZ-bH-1Z6">
+                                <rect key="frame" x="72" y="390" width="46" height="30"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="testRequest:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="dP9-Xv-R9b"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -53,7 +62,7 @@
             </objects>
             <point key="canvasLocation" x="1064" y="-1326"/>
         </scene>
-        <!--Navigation Controller - Item-->
+        <!--Item-->
         <scene sceneID="hxX-xT-nyu">
             <objects>
                 <navigationController definesPresentationContext="YES" navigationBarHidden="YES" id="JQL-rv-CCl" sceneMemberID="viewController">
@@ -208,23 +217,18 @@
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GKz-US-fSu">
                                         <rect key="frame" x="24" y="0.0" width="40" height="40"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k3b-KT-6B2">
                                         <rect key="frame" x="72" y="0.0" width="40" height="40"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PxM-Fx-Y5V">
                                         <rect key="frame" x="120" y="0.0" width="40" height="40"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yq7-zn-VLD">
                                         <rect key="frame" x="168" y="0.0" width="40" height="40"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dcP-H9-BEx">
                                         <rect key="frame" x="216" y="0.0" width="40" height="40"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -244,7 +248,6 @@
                         <outlet property="meetButton" destination="zJK-HZ-9Gi" id="emk-gv-Hoy"/>
                         <outlet property="timeLabel" destination="Xcp-1n-aGb" id="HSQ-8Q-95f"/>
                         <outlet property="timeSlider" destination="JkY-er-b42" id="mKL-OT-edu"/>
-                        <outlet property="who0" destination="GKz-US-fSu" id="xDj-w1-JYz"/>
                         <outlet property="whoLabel" destination="QKH-Z6-cCN" id="bYY-SM-aF6"/>
                         <outlet property="whoRecentView" destination="B0J-a9-mlU" id="ooq-Ji-OU1"/>
                         <outlet property="whoTextField" destination="9fa-v4-3v6" id="G1f-yl-pEv"/>
@@ -308,7 +311,6 @@
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Io-vl-RGK">
                                 <rect key="frame" x="96" y="61" width="128" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -345,7 +347,7 @@
             </objects>
             <point key="canvasLocation" x="366" y="-625"/>
         </scene>
-        <!--Navigation Controller - Item-->
+        <!--Item-->
         <scene sceneID="PNg-aA-RVC">
             <objects>
                 <navigationController definesPresentationContext="YES" navigationBarHidden="YES" id="dRh-v0-oJZ" sceneMemberID="viewController">
@@ -361,7 +363,7 @@
             </objects>
             <point key="canvasLocation" x="1064" y="-625"/>
         </scene>
-        <!--Rank View Controller - Item-->
+        <!--Item-->
         <scene sceneID="n47-h6-4Cs">
             <objects>
                 <viewController id="VVW-aB-AVz" customClass="RankViewController" sceneMemberID="viewController">
@@ -408,6 +410,9 @@
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4"/>
+        <simulatedScreenMetrics key="destination" type="retina4">
+            <size key="portraitSize" width="320" height="568"/>
+            <size key="landscapeSize" width="568" height="320"/>
+        </simulatedScreenMetrics>
     </simulatedMetricsContainer>
 </document>

@@ -24,6 +24,7 @@
 @property (nonatomic, retain) NSNumber * scared;
 @property (nonatomic, retain) NSNumber * anxious;
 @property (nonatomic, retain) NSNumber * bored;
+
 @property (nonatomic, retain) NSNumber * angryN;
 @property (nonatomic, retain) NSNumber * anxiousN;
 @property (nonatomic, retain) NSNumber * excitedN;
