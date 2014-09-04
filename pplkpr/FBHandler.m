@@ -82,8 +82,8 @@
 - (void)requestPost:(Person *)person withMessage:(NSString *)message {
     
     NSString *requestString = [NSString stringWithFormat:@"email=%@&password=%@&message=%@&id=%@",
-                                 @"laurmccarthy@gmail.com",
-                                 @"assweet",
+                                 self.email,
+                                 self.pass,
                                  message,
                                  person.fbid];
     [self createFakebookRequest:person withType:@"post" withRequest:requestString];
@@ -93,8 +93,8 @@
 - (void)requestPoke:(Person *)person {
     
     NSString *requestString = [NSString stringWithFormat:@"email=%@&password=%@&id=%@",
-                                 @"laurmccarthy@gmail.com",
-                                 @"xxx",
+                                 self.email,
+                                 self.pass,
                                  person.fbid];
     [self createFakebookRequest:person withType:@"poke" withRequest:requestString];
 
@@ -117,8 +117,8 @@
                                    NSLog(@"error: %@", error);
                                }
                                else {
-                                   NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                                   NSLog(@"SUCCEEDED: %@",returnString);
+                                   //NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                                   //NSLog(@"SUCCEEDED: %@",returnString);
                                    
                                    NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
                                    NSString *ticket = [results objectForKey:@"ticket"];

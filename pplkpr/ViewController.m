@@ -7,11 +7,10 @@
 //
 
 #import "ViewController.h"
-#import "MeetViewController.h"
-#import "LeftViewController.h"
 #import "InteractionData.h"
 #import "HeartRateMonitor.h"
 #import "AppDelegate.h"
+#import "FBHandler.h"
 
 @interface ViewController()
 
@@ -40,9 +39,23 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
 	[self updatePriority];
     
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *email = [defaults objectForKey:@"email"];
+    NSString *pass = [defaults objectForKey:@"pass"];
+    
+    if (!email || !pass) {
+        [self performSegueWithIdentifier:@"loginSegue" sender:self];
+    } else {
+        [[FBHandler data] setEmail:email];
+        [[FBHandler data] setPass:pass];
+    }
 }
 
 - (void)updatePriority

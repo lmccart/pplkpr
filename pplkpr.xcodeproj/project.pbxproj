@@ -53,6 +53,7 @@
 		65F2960F19B7C367007C1C06 /* home_sel.png in Resources */ = {isa = PBXBuildFile; fileRef = 65F2960D19B7C367007C1C06 /* home_sel.png */; };
 		65F2961019B7C367007C1C06 /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 65F2960E19B7C367007C1C06 /* home.png */; };
 		65F2961319B7D14B007C1C06 /* FBHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F2961219B7D14B007C1C06 /* FBHandler.m */; };
+		65F2961619B8DE5F007C1C06 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F2961519B8DE5F007C1C06 /* LoginViewController.m */; };
 		65FC7C5117A1A37F0045BFF2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65FC7C5017A1A37F0045BFF2 /* Foundation.framework */; };
 		65FC7C5317A1A37F0045BFF2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65FC7C5217A1A37F0045BFF2 /* CoreGraphics.framework */; };
 		65FC7C5517A1A37F0045BFF2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65FC7C5417A1A37F0045BFF2 /* UIKit.framework */; };
@@ -145,6 +146,8 @@
 		65F2960E19B7C367007C1C06 /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home.png; sourceTree = "<group>"; };
 		65F2961119B7D14B007C1C06 /* FBHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBHandler.h; sourceTree = "<group>"; };
 		65F2961219B7D14B007C1C06 /* FBHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBHandler.m; sourceTree = "<group>"; };
+		65F2961419B8DE5F007C1C06 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		65F2961519B8DE5F007C1C06 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		65FC7C4D17A1A37F0045BFF2 /* pplkpr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pplkpr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65FC7C5017A1A37F0045BFF2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		65FC7C5217A1A37F0045BFF2 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -178,6 +181,8 @@
 		27ED09CB1860E5C000ABCC76 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				65F2961419B8DE5F007C1C06 /* LoginViewController.h */,
+				65F2961519B8DE5F007C1C06 /* LoginViewController.m */,
 				6525185519708B1000AF6981 /* PersonViewController.h */,
 				6525185619708B1000AF6981 /* PersonViewController.m */,
 				6525185719708B1000AF6981 /* RankViewController.h */,
@@ -430,6 +435,7 @@
 				6525185019708AF000AF6981 /* AppDelegate.m in Sources */,
 				6525184A19708ADF00AF6981 /* TempHRV.m in Sources */,
 				653F8F79185FA9A50009F785 /* pplkpr.xcdatamodeld in Sources */,
+				65F2961619B8DE5F007C1C06 /* LoginViewController.m in Sources */,
 				65CA14A619ACD93200130EEB /* NSString+Levenshtein.m in Sources */,
 				658308C719B104C100C385EB /* UIImage+WebP.m in Sources */,
 				65F2961319B7D14B007C1C06 /* FBHandler.m in Sources */,

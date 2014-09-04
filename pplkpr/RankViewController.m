@@ -63,7 +63,8 @@
 }
 
 - (void) viewDidAppear:(BOOL)animated {
-	
+    
+    [super viewDidAppear:animated];
 	if ([[InteractionData data] jumpToPerson]) {
 		[self performSegueWithIdentifier:@"personSegue" sender:self];
 	} else {

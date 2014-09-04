@@ -13,6 +13,8 @@
 @interface FBHandler : NSObject
 
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, retain) NSString *email;
+@property (nonatomic, retain) NSString *pass;
 
 
 +(id)data;
@@ -20,7 +22,7 @@
 
 - (void)requestFriendsWithCompletion:(void (^)(NSArray *result))completionBlock;
 
-- (void)requestProfile:(Person *)person withCompletion:(void (^)(NSDictionary *result))completionBlock;
+- (void)requestProfile:(NSString *)fbid withCompletion:(void (^)(NSDictionary *result))completionBlock;
 
 - (void)requestPoke:(Person *)person;
 - (void)requestPost:(Person *)person withMessage:(NSString *)message;
