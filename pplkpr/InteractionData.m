@@ -91,7 +91,7 @@
 	NSLog(@"ADDING REPORT %@ %@ %@ %@", name, fbid, rating, emotion);
 	
 	// create new report
-	Report * newReport = [NSEntityDescription insertNewObjectForEntityForName:@"Report"
+	Report *newReport = [NSEntityDescription insertNewObjectForEntityForName:@"Report"
 													   inManagedObjectContext:_managedObjectContext];
     
     NSString *emotionKey = [emotion lowercaseString];
@@ -136,6 +136,11 @@
             [person setValue:fbid forKey:@"fbid"];
             [person setValue:[NSNumber numberWithInt:1]
                          forKey:[NSString stringWithFormat:@"%@N", emotionKey]];
+            
+            NSMutableArray *arr = [[NSMutableArray alloc] init];
+            [arr addObject:@"5aab4905-0fe9-4352-a0e6-0d93d7d0f760"]; // pend temp
+            [person setValue:arr forKey:@"fb_tickets"];
+            
 			person.reports = [NSSet setWithObjects:newReport, nil];
             newReport.person = person;
 		}

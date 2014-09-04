@@ -10,11 +10,9 @@
 #import <Foundation/Foundation.h>
 
 @interface ViewController : UIViewController <UITextFieldDelegate> {
-    NSMutableArray *devicesArray;
 }
 
 
 - (void)updateMonitorStatus:(NSString *)status;
-- (IBAction)testRequest:(id)sender;
 
 @end

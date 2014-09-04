@@ -17,6 +17,7 @@
 
 @property (retain, nonatomic) IBOutlet UILabel *personLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *personPhoto;
+@property (retain, nonatomic) Person *curPerson;
 
 
 @end
@@ -46,11 +47,12 @@
 - (void)viewWillAppear:(BOOL)animated {
     
 	if ([[InteractionData data] jumpToPerson]) {
-        Person *p = [[InteractionData data] jumpToPerson];
-        [_personLabel setText:p.name];
+        self.curPerson = [[InteractionData data] jumpToPerson];
+        NSLog(@"%@", self.curPerson.fb_tickets);
+        [_personLabel setText:self.curPerson.name];
         [[InteractionData data] setJumpToPerson:nil];
         
-        [[FBHandler data] requestProfile:p.fbid completion:^(NSDictionary * result){
+        [[FBHandler data] requestProfile:self.curPerson.fbid withCompletion:^(NSDictionary * result){
             NSDictionary *pic = [result objectForKey:@"picture"];
             NSDictionary *data = [pic objectForKey:@"data"];
             NSString *url = [data objectForKey:@"url"];
@@ -73,6 +75,8 @@
 		controller.messageComposeDelegate = self;
 		[self presentViewController:controller animated:YES completion:nil];
 	}
+    [[FBHandler data] requestPoke:self.curPerson];
+    [[FBHandler data] requestPost:self.curPerson withMessage:@"testtest"];
 }
 
 /*

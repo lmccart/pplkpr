@@ -14,6 +14,10 @@
 
 @dynamic name;
 @dynamic fbid;
+@dynamic timestamp;
+
+@dynamic fb_tickets;
+@dynamic fb_actions;
 
 @dynamic calm;
 @dynamic excited;
@@ -32,5 +36,11 @@
 @dynamic scaredN;
 @dynamic reports;
 
+
+- (void)updateRecentActions {
+    // check all tickets
+    // throw out any failed
+    // add any succeeded as recent_actions
+}
 
 @end

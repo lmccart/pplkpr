@@ -13,17 +13,11 @@
 #import "HeartRateMonitor.h"
 #import "AppDelegate.h"
 
-@interface ViewController() {
-	
-	NSMutableData *receivedData;
-}
-
+@interface ViewController()
 
 @property (retain, nonatomic) NSMutableArray *priorityData;
 @property (retain, nonatomic) IBOutlet UIView *priorityView;
 @property (retain, nonatomic) IBOutlet UILabel *monitorStatusLabel;
-@property (retain, nonatomic) NSMutableData *receivedData;
-@property (retain, nonatomic) NSURLConnection *connection;
 
 @end
 
@@ -34,8 +28,6 @@
 {
 	[super viewDidLoad];
 	
-	devicesArray = [[NSMutableArray alloc] init];
-    
     [self updatePriority];
 }
 
@@ -188,97 +180,6 @@
     } else {
         [_monitorStatusLabel setTextColor:[UIColor redColor]];
     }
-}
-
-- (IBAction)testRequest:(id)sender {
-    NSString *urlString = [NSString stringWithFormat:@"https://server.pplkpr.com:3000/post"];
-    NSString *myRequestString = [NSString stringWithFormat:@"email=%@&password=%@&message=%@&id=%@",
-                         @"laurmccarthy@gmail.com",
-                         @"xxxx",
-                         @"this_is_a_test_6",
-                         @"lmccart"];
-
-    NSURL *url = [NSURL URLWithString:urlString];
-//
-//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
-//                                                           cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
-//                                                       timeoutInterval:10];
-    
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:url];
-    [request setHTTPMethod:@"POST"];
-    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"content-type"];
-    [request setHTTPBody:[myRequestString dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    self.receivedData = [NSMutableData dataWithCapacity: 0];
-    self.connection=[[NSURLConnection alloc] initWithRequest:request delegate:self];
-    if (!self.connection) {
-        // Release the receivedData object.
-        self.receivedData = nil;
-        
-        // Inform the user that the connection failed.
-        NSLog(@"connection failed");
-    }
-
-//    
-//    NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-//    NSString *returnString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
-//    NSLog(@"RETURNED:%@",returnString);
-
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-    // This method is called when the server has determined that it
-    // has enough information to create the NSURLResponse object.
-    
-    // It can be called multiple times, for example in the case of a
-    // redirect, so each time we reset the data.
-    
-    // receivedData is an instance variable declared elsewhere.
-    [self.receivedData setLength:0];
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    // Append the new data to receivedData.
-    // receivedData is an instance variable declared elsewhere.
-    [self.receivedData appendData:data];
-}
-
-- (void)connection:(NSURLConnection *)connection
-  didFailWithError:(NSError *)error {
-    // Release the connection and the data object
-    // by setting the properties (declared elsewhere)
-    // to nil.  Note that a real-world app usually
-    // requires the delegate to manage more than one
-    // connection at a time, so these lines would
-    // typically be replaced by code to iterate through
-    // whatever data structures you are using.
-    self.connection = nil;
-    self.receivedData = nil;
-    
-    // inform the user
-    NSLog(@"Connection failed! Error - %@ %@",
-          [error localizedDescription],
-          [[error userInfo] objectForKey:NSURLErrorFailingURLStringErrorKey]);
-}
-
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
-    // do something with the data
-    // receivedData is declared as a property elsewhere
-    NSLog(@"Succeeded! Received %d bytes of data", [self.receivedData length]);
-    NSString *returnString = [[NSString alloc] initWithData:self.receivedData encoding:NSUTF8StringEncoding];
-    NSLog(@"RETURNED:%@",returnString);
-    
-    // Release the connection and the data object
-    // by setting the properties (declared elsewhere)
-    // to nil.  Note that a real-world app usually
-    // requires the delegate to manage more than one
-    // connection at a time, so these lines would
-    // typically be replaced by code to iterate through
-    // whatever data structures you are using.
-    self.connection = nil;
-    self.receivedData = nil;
 }
 
 @end

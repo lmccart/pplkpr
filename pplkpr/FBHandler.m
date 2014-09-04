@@ -46,8 +46,22 @@
 
 
 
+- (void) requestFriendsWithCompletion:(void (^)(NSArray *))completionBlock {
+    FBRequest* friendsRequest = [FBRequest requestForMyFriends];
+    [friendsRequest startWithCompletionHandler: ^(FBRequestConnection *connection,
+                                                  NSDictionary* result,
+                                                  NSError *error) {
+        if (error) {
+            NSLog(@"error: %@", error);
+        } else {
+            completionBlock([result objectForKey:@"data"]);
+        }
+    }];
+}
+
+
 - (void)requestProfile:(NSString *)fbid
-            completion:(void (^)(NSDictionary *result))completionBlock {
+            withCompletion:(void (^)(NSDictionary *result))completionBlock {
 	
     NSString *reqString = [NSString stringWithFormat:@"%@/?fields=picture", fbid];
     NSLog(@"%@", reqString);
@@ -64,17 +78,59 @@
     }];
 }
 
-- (void) requestFriendsWithCompletion:(void (^)(NSArray *))completionBlock {
-    FBRequest* friendsRequest = [FBRequest requestForMyFriends];
-    [friendsRequest startWithCompletionHandler: ^(FBRequestConnection *connection,
-                                                  NSDictionary* result,
-                                                  NSError *error) {
-        if (error) {
-            NSLog(@"error: %@", error);
-        } else {
-            completionBlock([result objectForKey:@"data"]);
-        }
-    }];
+
+- (void)requestPost:(Person *)person withMessage:(NSString *)message {
+    
+    NSString *requestString = [NSString stringWithFormat:@"email=%@&password=%@&message=%@&id=%@",
+                                 @"laurmccarthy@gmail.com",
+                                 @"assweet",
+                                 message,
+                                 person.fbid];
+    [self createFakebookRequest:person withType:@"post" withRequest:requestString];
+    
+}
+
+- (void)requestPoke:(Person *)person {
+    
+    NSString *requestString = [NSString stringWithFormat:@"email=%@&password=%@&id=%@",
+                                 @"laurmccarthy@gmail.com",
+                                 @"xxx",
+                                 person.fbid];
+    [self createFakebookRequest:person withType:@"poke" withRequest:requestString];
+
+}
+
+- (void)createFakebookRequest:(Person *)person withType:(NSString *)type withRequest:(NSString *)requestString {
+    NSString *urlString = [NSString stringWithFormat:@"https://server.pplkpr.com:3000/%@", type];
+    NSURL *url = [NSURL URLWithString:urlString];
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:url];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"content-type"];
+    [request setHTTPBody:[requestString dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    [NSURLConnection sendAsynchronousRequest:request
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                               if (error) {
+                                   NSLog(@"error: %@", error);
+                               }
+                               else {
+                                   NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                                   NSLog(@"SUCCEEDED: %@",returnString);
+                                   
+                                   NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+                                   NSString *ticket = [results objectForKey:@"ticket"];
+                                   [person.fb_tickets addObject:ticket];
+                                   
+                                   // save context
+                                   NSError* error;
+                                   if (![_managedObjectContext save:&error]) {
+                                       NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+                                   }
+                               }
+                           }];
 }
 
 @end

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <FacebookSDK/FacebookSDK.h>
+#import "Person.h"
 
 @interface FBHandler : NSObject
 
@@ -17,8 +18,12 @@
 +(id)data;
 -(id)init;
 
-- (void)requestProfile:(NSString *)fbid completion:(void (^)(NSDictionary *result))completionBlock;
-- (void) requestFriendsWithCompletion:(void (^)(NSArray *result))completionBlock;
+- (void)requestFriendsWithCompletion:(void (^)(NSArray *result))completionBlock;
+
+- (void)requestProfile:(Person *)person withCompletion:(void (^)(NSDictionary *result))completionBlock;
+
+- (void)requestPoke:(Person *)person;
+- (void)requestPost:(Person *)person withMessage:(NSString *)message;
 
 @end
 

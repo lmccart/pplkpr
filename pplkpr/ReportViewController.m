@@ -85,7 +85,7 @@
     for (Person *p in recents) {
         if (i<5) {
             
-            [[FBHandler data] requestProfile:p.fbid completion:^(NSDictionary * result){
+            [[FBHandler data] requestProfile:p.fbid withCompletion:^(NSDictionary * result){
                 NSDictionary *pic = [result objectForKey:@"picture"];
                 NSDictionary *data = [pic objectForKey:@"data"];
                 NSString *url = [data objectForKey:@"url"];
