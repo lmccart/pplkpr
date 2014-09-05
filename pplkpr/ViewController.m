@@ -160,8 +160,7 @@
 }
 
 
-- (void)textTapped:(UITapGestureRecognizer *)recognizer
-{
+- (void)textTapped:(UITapGestureRecognizer *)recognizer {
     UITextView *textView = (UITextView *)recognizer.view;
     
     // Location of the tap in text-container coordinates

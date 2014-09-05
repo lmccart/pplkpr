@@ -62,6 +62,7 @@ float imgSize = 50.0;
 	self.rankData = [[NSDictionary alloc] init];
 	[self.rankView setDelegate:self];
 	[self.rankView setDataSource:self];
+    [self.rankView setSeparatorColor:[UIColor clearColor]];
 	
     [self updateView];
 	
@@ -119,15 +120,6 @@ float imgSize = 50.0;
     return imgSize;
 }
 
-//- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
-//{
-//	if (pickerView == _emotionPicker) {
-//		return [[[InteractionData data] emotionsArray] objectAtIndex:row];
-//	} else {
-//		return [_orderArray objectAtIndex:row];
-//	}
-//}
-
 -(UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
     
     NSString *text = [[[InteractionData data] emotionsArray] objectAtIndex:row];
@@ -144,8 +136,7 @@ float imgSize = 50.0;
 }
 
 //If the user chooses from the pickerview, it calls this function;
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
-{
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     //Let's print in the console what the user had chosen;
     NSLog(@"Chosen item: %@", [[[InteractionData data] emotionsArray] objectAtIndex:row]);
     _emotion = [[[InteractionData data] emotionsArray] objectAtIndex:row];
@@ -154,29 +145,29 @@ float imgSize = 50.0;
 }
 
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 	if ([_rankData objectForKey:_emotion]) {
 		return 1;
 	}
     else return 0;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    return @"ppl";
+- (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 0.0;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return @"";
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if ([_rankData objectForKey:_emotion]) {
 		return [[_rankData objectForKey:_emotion] count];
 	}
     else return 0;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"rankCell";
 	
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -190,12 +181,19 @@ float imgSize = 50.0;
 		Person *p = [[_rankData objectForKey:_emotion] objectAtIndex:ind];
         NSNumber *val = [p valueForKey:[_emotion lowercaseString]];
         
-		cell.textLabel.text = [NSString stringWithFormat:@"%@ ~ %@", [p valueForKey:@"name"], val];
+		cell.textLabel.text = [NSString stringWithFormat:@"%@", [p valueForKey:@"name"]];
+        
+        UIImageView *imgView = (UIImageView*)[cell viewWithTag:1];
+        [imgView setFrame:CGRectMake(0, 11, [val floatValue]*tableView.frame.size.width, 23)];
 	}
     else cell.textLabel.text = @"";
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cell.accessoryType = UITableViewCellAccessoryNone;
 	
     return cell;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 45.0;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -225,11 +223,11 @@ float imgSize = 50.0;
     NSString *chosen = self.order ? @"less" : @"more";
     
     NSMutableAttributedString* attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@", chosen, [self.emotion lowercaseString]] attributes:attrsDictionary];
-    
-    [attributedString addAttribute:@"orderTag" value:@"" range:NSMakeRange(0,[chosen length])];
     [attributedString addAttribute:NSFontAttributeName value:[GlobalMethods globalBoldFont] range:NSMakeRange(0,[chosen length])];
     
     [self.descriptorView setAttributedText:attributedString];
+    [self.descriptorView setTextAlignment:NSTextAlignmentRight];
+    [self.descriptorView.textContainer setLineFragmentPadding:0];
 }
 
 
@@ -254,16 +252,10 @@ float imgSize = 50.0;
                   fractionOfDistanceBetweenInsertionPoints:NULL];
     
     if (characterIndex < textView.textStorage.length) {
-        
-        NSRange range;
-        id value = [textView.attributedText attribute:@"orderTag" atIndex:characterIndex effectiveRange:&range];
-        //NSLog(@"%@, %d, %d", value, range.location, range.length);
-        
-        if (value) {
+        if (characterIndex < 4) { // hack because you can't store attributedString with IB
             [self setOrder:!self.order];
             [self updateView];
         }
-        
     }
 }
 

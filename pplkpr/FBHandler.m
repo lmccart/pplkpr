@@ -103,7 +103,11 @@
     [request setHTTPMethod:@"POST"];
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"content-type"];
     [request setHTTPBody:[requestString dataUsingEncoding:NSUTF8StringEncoding]];
-    
+//    NSString *authStr = [NSString stringWithFormat:@"%@:%@", [self username], [self password]];
+//    NSData *authData = [authStr dataUsingEncoding:NSASCIIStringEncoding];
+//    NSString *authValue = [NSString stringWithFormat:@"Basic %@", [authData base64EncodingWithLineLength:80]];
+//    [theRequest setValue:authValue forHTTPHeaderField:@"Authorization"];
+
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {

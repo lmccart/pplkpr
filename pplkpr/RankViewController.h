@@ -10,6 +10,7 @@
 
 @interface RankViewController : UIViewController <UITextFieldDelegate, UIScrollViewDelegate>
 
+@property (nonatomic, strong) NSMutableArray *people;
 
 @end
 
