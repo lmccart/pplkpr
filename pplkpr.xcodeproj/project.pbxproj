@@ -12,7 +12,7 @@
 		6525185019708AF000AF6981 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6525184F19708AF000AF6981 /* AppDelegate.m */; };
 		6525185F19708B1000AF6981 /* PersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6525185619708B1000AF6981 /* PersonViewController.m */; };
 		6525186019708B1000AF6981 /* RankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6525185819708B1000AF6981 /* RankViewController.m */; };
-		6525186119708B1000AF6981 /* ReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6525185A19708B1000AF6981 /* ReportViewController.m */; };
+		6525186119708B1000AF6981 /* MeetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6525185A19708B1000AF6981 /* MeetViewController.m */; };
 		6525186219708B1000AF6981 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6525185C19708B1000AF6981 /* ViewController.m */; };
 		65251868197B5B1100AF6981 /* HeartRateMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 65251867197B5B1100AF6981 /* HeartRateMonitor.m */; };
 		653F8F76185FA9760009F785 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 653F8F75185FA9760009F785 /* CoreData.framework */; };
@@ -62,6 +62,8 @@
 		65F2963719B93734007C1C06 /* report_sel.png in Resources */ = {isa = PBXBuildFile; fileRef = 65F2962719B93734007C1C06 /* report_sel.png */; };
 		65F2963819B93734007C1C06 /* report.png in Resources */ = {isa = PBXBuildFile; fileRef = 65F2962819B93734007C1C06 /* report.png */; };
 		65F2963919B93734007C1C06 /* scared.png in Resources */ = {isa = PBXBuildFile; fileRef = 65F2962919B93734007C1C06 /* scared.png */; };
+		65F2963F19BA545A007C1C06 /* ReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F2963E19BA545A007C1C06 /* ReportViewController.m */; };
+		65F2964219BA5B9A007C1C06 /* LeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F2964119BA5B9A007C1C06 /* LeftViewController.m */; };
 		65FC7C5117A1A37F0045BFF2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65FC7C5017A1A37F0045BFF2 /* Foundation.framework */; };
 		65FC7C5317A1A37F0045BFF2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65FC7C5217A1A37F0045BFF2 /* CoreGraphics.framework */; };
 		65FC7C5517A1A37F0045BFF2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65FC7C5417A1A37F0045BFF2 /* UIKit.framework */; };
@@ -82,8 +84,8 @@
 		6525185619708B1000AF6981 /* PersonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonViewController.m; sourceTree = "<group>"; };
 		6525185719708B1000AF6981 /* RankViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RankViewController.h; sourceTree = "<group>"; };
 		6525185819708B1000AF6981 /* RankViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RankViewController.m; sourceTree = "<group>"; };
-		6525185919708B1000AF6981 /* ReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportViewController.h; sourceTree = "<group>"; };
-		6525185A19708B1000AF6981 /* ReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportViewController.m; sourceTree = "<group>"; };
+		6525185919708B1000AF6981 /* MeetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeetViewController.h; sourceTree = "<group>"; };
+		6525185A19708B1000AF6981 /* MeetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeetViewController.m; sourceTree = "<group>"; };
 		6525185B19708B1000AF6981 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		6525185C19708B1000AF6981 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		65251866197B5B1100AF6981 /* HeartRateMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeartRateMonitor.h; sourceTree = "<group>"; };
@@ -165,6 +167,10 @@
 		65F2962719B93734007C1C06 /* report_sel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = report_sel.png; path = assets/report_sel.png; sourceTree = "<group>"; };
 		65F2962819B93734007C1C06 /* report.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = report.png; path = assets/report.png; sourceTree = "<group>"; };
 		65F2962919B93734007C1C06 /* scared.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = scared.png; path = assets/scared.png; sourceTree = "<group>"; };
+		65F2963D19BA545A007C1C06 /* ReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReportViewController.h; sourceTree = "<group>"; };
+		65F2963E19BA545A007C1C06 /* ReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportViewController.m; sourceTree = "<group>"; };
+		65F2964019BA5B9A007C1C06 /* LeftViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftViewController.h; sourceTree = "<group>"; };
+		65F2964119BA5B9A007C1C06 /* LeftViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftViewController.m; sourceTree = "<group>"; };
 		65FC7C4D17A1A37F0045BFF2 /* pplkpr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pplkpr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65FC7C5017A1A37F0045BFF2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		65FC7C5217A1A37F0045BFF2 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -200,14 +206,18 @@
 			children = (
 				65F2961419B8DE5F007C1C06 /* LoginViewController.h */,
 				65F2961519B8DE5F007C1C06 /* LoginViewController.m */,
-				6525185519708B1000AF6981 /* PersonViewController.h */,
-				6525185619708B1000AF6981 /* PersonViewController.m */,
-				6525185719708B1000AF6981 /* RankViewController.h */,
-				6525185819708B1000AF6981 /* RankViewController.m */,
-				6525185919708B1000AF6981 /* ReportViewController.h */,
-				6525185A19708B1000AF6981 /* ReportViewController.m */,
 				6525185B19708B1000AF6981 /* ViewController.h */,
 				6525185C19708B1000AF6981 /* ViewController.m */,
+				6525185719708B1000AF6981 /* RankViewController.h */,
+				6525185819708B1000AF6981 /* RankViewController.m */,
+				6525185519708B1000AF6981 /* PersonViewController.h */,
+				6525185619708B1000AF6981 /* PersonViewController.m */,
+				65F2963D19BA545A007C1C06 /* ReportViewController.h */,
+				65F2963E19BA545A007C1C06 /* ReportViewController.m */,
+				6525185919708B1000AF6981 /* MeetViewController.h */,
+				6525185A19708B1000AF6981 /* MeetViewController.m */,
+				65F2964019BA5B9A007C1C06 /* LeftViewController.h */,
+				65F2964119BA5B9A007C1C06 /* LeftViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -484,19 +494,21 @@
 				65FC7C5D17A1A37F0045BFF2 /* main.m in Sources */,
 				65CA14AC19AD173100130EEB /* CustomAutoCompleteCell.m in Sources */,
 				6525186019708B1000AF6981 /* RankViewController.m in Sources */,
-				6525186119708B1000AF6981 /* ReportViewController.m in Sources */,
+				6525186119708B1000AF6981 /* MeetViewController.m in Sources */,
 				658308C819B104C100C385EB /* UIImageView+HighlightedWebCache.m in Sources */,
 				658308C019B104C100C385EB /* SDWebImageDownloader.m in Sources */,
 				658308C319B104C100C385EB /* SDWebImagePrefetcher.m in Sources */,
 				65CA14A519ACD93200130EEB /* MLPAutoCompleteTextField.m in Sources */,
 				658308BD19B104C100C385EB /* SDImageCache.m in Sources */,
 				658308C119B104C100C385EB /* SDWebImageDownloaderOperation.m in Sources */,
+				65F2964219BA5B9A007C1C06 /* LeftViewController.m in Sources */,
 				65B8511F1862122800DE02E8 /* Person.m in Sources */,
 				658308CD19B1075900C385EB /* FriendsCustomAutoCompleteObject.m in Sources */,
 				658308BB19B104C100C385EB /* MKAnnotationView+WebCache.m in Sources */,
 				658308C619B104C100C385EB /* UIImage+MultiFormat.m in Sources */,
 				658308CA19B104C100C385EB /* UIView+WebCacheOperation.m in Sources */,
 				658308BE19B104C100C385EB /* SDWebImageCompat.m in Sources */,
+				65F2963F19BA545A007C1C06 /* ReportViewController.m in Sources */,
 				65B851191861EDAC00DE02E8 /* Report.m in Sources */,
 				6525184D19708AE900AF6981 /* InteractionData.m in Sources */,
 				65F2961919B8FF7F007C1C06 /* Constants.m in Sources */,

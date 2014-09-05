@@ -2,19 +2,16 @@
 //  ReportViewController.h
 //  pplkpr
 //
-//  Created by Lauren McCarthy on 11/25/13.
-//  Copyright (c) 2013 Lauren McCarthy. All rights reserved.
+//  Created by Lauren McCarthy on 9/5/14.
+//  Copyright (c) 2014 Lauren McCarthy. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-#import "MLPAutoCompleteTextFieldDelegate.h"
-#import "PersonViewController.h"
 
-@interface ReportViewController : UIViewController <UITextFieldDelegate, MLPAutoCompleteTextFieldDelegate>
+@interface ReportViewController : UIViewController
 
-
-- (IBAction)pickAction:(id)sender;
-- (IBAction)submit:(id)sender;
+- (IBAction)reportMeet:(id)sender;
+- (IBAction)reportLeft:(id)sender;
 
 
 
