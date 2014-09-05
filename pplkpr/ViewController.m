@@ -7,9 +7,10 @@
 //
 
 #import "ViewController.h"
+#import "AppDelegate.h"
+#import "Constants.h"
 #import "InteractionData.h"
 #import "HeartRateMonitor.h"
-#import "AppDelegate.h"
 #import "FBHandler.h"
 
 @interface ViewController()
@@ -58,14 +59,24 @@
     }
 }
 
-- (void)updatePriority
-{
+- (void)clearPriority {
+    NSArray *viewsToRemove = [self.priorityView subviews];
+    for (UIView *v in viewsToRemove) {
+        [v removeFromSuperview];
+    }
+}
+
+- (void)updatePriority {
+    
+    [self clearPriority];
+    
+    float margin = 10.0;
     
 	//_priorityData = [[InteractionData data] getRankedPeople];
    // NSLog(@"%@", [[InteractionData data] getPriorities]);
     
-    _priorityData = [[InteractionData data] getPriorities];
-    NSArray *sortedArray = [_priorityData sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+    self.priorityData = [[InteractionData data] getPriorities];
+    NSArray *sortedArray = [self.priorityData sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         if ([[obj1 objectAtIndex:0] floatValue] > [[obj2 objectAtIndex:0] floatValue])
             return NSOrderedDescending;
         else if ([[obj1 objectAtIndex:0] floatValue] < [[obj2 objectAtIndex:0] floatValue])
@@ -73,7 +84,7 @@
         return NSOrderedSame;
     }];
     
-    float y = 0;
+    float y = margin;
     for (int i=0; i < MIN(3, [sortedArray count]); i++) {
         
         // abs value, name, asc, emotion
@@ -83,33 +94,37 @@
         NSString *order = [[entry objectAtIndex:2] intValue] == 0 ? [NSString stringWithFormat:@"%@", @"most"] : [NSString stringWithFormat:@"%@", @"least"];
         NSString *emotion = [entry objectAtIndex:3];
         
+        NSDictionary *attrsDictionary = [NSDictionary dictionaryWithObject:[GlobalMethods globalFont]
+                                                                    forKey:NSFontAttributeName];
         
-        NSMutableAttributedString* attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ makes you %@ %@", p.name, order, [emotion lowercaseString]]];
+        NSMutableAttributedString* attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ makes you %@ %@.", p.name, order, [emotion lowercaseString]] attributes:attrsDictionary];
         
         [attributedString addAttribute:@"personTag" value:p range:NSMakeRange(0,[p.name length])];
-        [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0,[p.name length])];
+        [attributedString addAttribute:NSFontAttributeName value:[GlobalMethods globalBoldFont] range:NSMakeRange(0,[p.name length])];
         
-        int l = [emotion length] + [order length] + 1;
-        [attributedString addAttribute:@"emotionTag" value:emotion range:NSMakeRange([attributedString length]-l, l)];
-        [attributedString addAttribute:@"orderTag" value:[entry objectAtIndex:2] range:NSMakeRange([attributedString length]-l, l)];
-        [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange([attributedString length]-l, l)];
+        int l = [emotion length] + [order length] + 2;
+        [attributedString addAttribute:@"emotionTag" value:emotion range:NSMakeRange([attributedString length]-l, l-1)];
+        [attributedString addAttribute:@"orderTag" value:[entry objectAtIndex:2] range:NSMakeRange([attributedString length]-l, l-1)];
+        [attributedString addAttribute:NSFontAttributeName value:[GlobalMethods globalBoldFont] range:NSMakeRange([attributedString length]-l, l)];
         
         
-        UITextView *tv = [[UITextView alloc] initWithFrame:CGRectMake(0, y, _priorityView.frame.size.width, 10)];
+        UITextView *tv = [[UITextView alloc] initWithFrame:CGRectMake(0, y, self.priorityView.frame.size.width, 50)];
         [tv setAttributedText:attributedString];
-        [tv setFont: [UIFont fontWithName:@"Telugu Sangam MN" size:17.0]];
+        [tv setBackgroundColor:[GlobalMethods globalYellowColor]];
         
         UITapGestureRecognizer *gr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(textTapped:)];
         [tv addGestureRecognizer:gr];
         
-        [_priorityView addSubview:tv];
+        [self.priorityView addSubview:tv];
         [self.view layoutIfNeeded];
         CGRect frame = tv.frame;
         frame.size.height = tv.contentSize.height;
+        frame.size.width = tv.contentSize.width;
         tv.frame = frame;
+        tv.textContainerInset = UIEdgeInsetsMake(10,10,8,10);
         [tv sizeToFit];
         
-        y += frame.size.height + 20;
+        y += tv.frame.size.height + margin;
     }
     [self.view layoutIfNeeded];
 }
@@ -187,11 +202,11 @@
 - (void)updateMonitorStatus:(NSString *)status {
     [_monitorStatusLabel setText:status];
     if ([status isEqual: @"connecting"]) {
-        [_monitorStatusLabel setTextColor:[UIColor orangeColor]];
+        [_monitorStatusLabel setFont:[GlobalMethods globalFont]];
     } else if ([status isEqual:@"connected"]) {
-        [_monitorStatusLabel setTextColor:[UIColor greenColor]];
+        [_monitorStatusLabel setFont:[GlobalMethods globalFont]];
     } else {
-        [_monitorStatusLabel setTextColor:[UIColor redColor]];
+        [_monitorStatusLabel setFont:[GlobalMethods globalBoldFont]];
     }
 }
 

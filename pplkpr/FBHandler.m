@@ -80,27 +80,21 @@
 
 
 - (void)requestPost:(Person *)person withMessage:(NSString *)message {
-    
-    NSString *requestString = [NSString stringWithFormat:@"email=%@&password=%@&message=%@&id=%@",
-                                 self.email,
-                                 self.pass,
-                                 message,
-                                 person.fbid];
-    [self createFakebookRequest:person withType:@"post" withRequest:requestString];
+    [self createFakebookRequest:person withType:@"post" withMessage:message];
     
 }
 
 - (void)requestPoke:(Person *)person {
-    
-    NSString *requestString = [NSString stringWithFormat:@"email=%@&password=%@&id=%@",
-                                 self.email,
-                                 self.pass,
-                                 person.fbid];
-    [self createFakebookRequest:person withType:@"poke" withRequest:requestString];
-
+    [self createFakebookRequest:person withType:@"post" withMessage:@""];
 }
 
-- (void)createFakebookRequest:(Person *)person withType:(NSString *)type withRequest:(NSString *)requestString {
+- (void)createFakebookRequest:(Person *)person withType:(NSString *)type withMessage:(NSString *)message {
+    NSString *requestString = [NSString stringWithFormat:@"email=%@&password=%@&message=%@&id=%@",
+                               self.email,
+                               self.pass,
+                               message,
+                               person.fbid];
+    
     NSString *urlString = [NSString stringWithFormat:@"https://server.pplkpr.com:3000/%@", type];
     NSURL *url = [NSURL URLWithString:urlString];
     

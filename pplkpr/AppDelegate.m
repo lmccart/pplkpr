@@ -18,7 +18,6 @@
 
 @synthesize locationManager;
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	[self startUpdatingLocation];
@@ -47,7 +46,7 @@
 	NSString *logFilePath = [documentsDirectory stringByAppendingPathComponent:fileName];
 	freopen([logFilePath cStringUsingEncoding:NSASCIIStringEncoding],"a+",stderr);
 	 */
-	
+    
 	return YES;
 }
 
