@@ -15,6 +15,7 @@
 #import "FriendsCompleteDataSource.h"
 #import "FriendsCustomAutoCompleteObject.h"
 #import "SDWebImage/UIImageView+WebCache.h"
+#import "Constants.h"
 
 @interface LeftViewController () <UIPickerViewDataSource, UIPickerViewDelegate> {
 	
@@ -38,11 +39,14 @@
 @property (retain, nonatomic) IBOutlet UISlider *timeSlider;
 
 @property (retain, nonatomic) IBOutlet UISlider *intensitySlider;
-
+@property float imgSize;
 
 @end
 
 @implementation LeftViewController
+
+
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -51,7 +55,6 @@
     if (self) {
         // Custom initialization
 		NSLog(@"init\n");
-        self.mode = -1;
     }
     return self;
 }
@@ -59,6 +62,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.imgSize = 50.0;
 	 
 	[self.timeSlider setThumbImage:[UIImage imageNamed:@"rect.png"] forState:UIControlStateNormal];
 	
@@ -71,7 +76,13 @@
 	
     [self.emotionPicker setDelegate:self];
     [self.emotionPicker setDataSource:self];
-	self.emotion = [[NSString alloc] init];
+    [self.view bringSubviewToFront:self.emotionPicker];
+    self.emotion = [[NSString alloc] init];
+    
+    CALayer* mask = [[CALayer alloc] init];
+    [mask setBackgroundColor: [UIColor blackColor].CGColor];
+    [mask setFrame: CGRectMake(0, self.imgSize*1.1, self.emotionPicker.bounds.size.width, self.imgSize*1.04)];
+    [self.emotionPicker.layer setMask: mask];
     
     NSArray *recents = [[InteractionData data] getRecentPeople];
     NSArray *subviews = [self.whoRecentView subviews];
@@ -90,6 +101,43 @@
             i++;
         }
     }
+    
+    // Build a triangular path
+    float w = self.intensitySlider.frame.size.width;
+    UIBezierPath *path = [UIBezierPath new];
+    [path moveToPoint:(CGPoint){0.25*w, 43}];
+    [path addLineToPoint:(CGPoint){0.75*w, 43}];
+    [path addLineToPoint:(CGPoint){0.75*w, 7}];
+    [path addLineToPoint:(CGPoint){0.25*w, 43}];
+    
+    // Create a CAShapeLayer with this triangular path
+    // Same size as the original imageView
+    CAShapeLayer *sliderMask = [CAShapeLayer new];
+    sliderMask.frame = self.intensitySlider.bounds;
+    sliderMask.path = path.CGPath;
+    
+    // Mask the imageView's layer with this shape
+    [self.intensitySlider.layer setMask:sliderMask];
+    [self.intensitySlider setThumbImage:[[UIImage alloc] init] forState:UIControlStateNormal];
+    [self.intensitySlider setMinimumTrackTintColor:[GlobalMethods globalYellowColor]];
+    [self.intensitySlider setMaximumTrackTintColor:[UIColor clearColor]];
+    [self.intensitySlider setFrame:CGRectMake(self.intensitySlider.frame.origin.x, self.intensitySlider.frame.origin.y, w, 50)];
+    
+    float h = self.intensitySlider.frame.size.height;
+    float x = self.intensitySlider.frame.origin.x;
+    float y = self.intensitySlider.frame.origin.y;
+    
+    UIBezierPath *sliderPath = [UIBezierPath bezierPath];
+    [sliderPath moveToPoint:CGPointMake(x+0.25*w, y+h-7)];
+    [sliderPath addLineToPoint:CGPointMake(x+0.75*w, y+h-7)];
+    [sliderPath addLineToPoint:CGPointMake(x+0.75*w, y+h-43)];
+    [sliderPath addLineToPoint:CGPointMake(x+0.25*w, y+h-7)];
+    CAShapeLayer *shapeLayer = [CAShapeLayer layer];
+    shapeLayer.path = [sliderPath CGPath];
+    shapeLayer.strokeColor = [[UIColor blackColor] CGColor];
+    shapeLayer.lineWidth = 1.0;
+    shapeLayer.fillColor = [[UIColor clearColor] CGColor];
+    [self.view.layer addSublayer:shapeLayer];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -137,17 +185,25 @@
 
 
 #pragma mark - UIPickerView Delegate
-
--(UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
+- (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
 {
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, pickerView.frame.size.width, 30)];
-    label.backgroundColor = [UIColor whiteColor];
-    label.textColor = [UIColor blackColor];
-    label.font = [UIFont fontWithName:@"TeluguSangamMN" size:17];
-    label.text = [[[InteractionData data] emotionsArray] objectAtIndex:row];
-    return label;
+    return self.imgSize;
 }
 
+-(UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
+    
+    NSString *text = [[[InteractionData data] emotionsArray] objectAtIndex:row];
+    
+    UIView *newView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.imgSize, self.imgSize)];
+    
+    UIImage *img = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", [text lowercaseString]]];
+    UIImageView *imgView = [[UIImageView alloc] initWithImage:img];
+    imgView.frame = CGRectMake(0, 0, self.imgSize, self.imgSize);
+    //imgView.center = imgView.superview.center;
+    [newView addSubview:imgView];
+    
+    return newView;
+}
 
 //If the user chooses from the pickerview, it calls this function;
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
@@ -195,7 +251,9 @@
 	[self.emotionPicker selectRow:0 inComponent:0 animated:NO];
     [self setEmotion: [[[InteractionData data] emotionsArray] objectAtIndex:0]];
 	[self.intensitySlider setValue:0.5];
+
 }
+
 
 - (void)didReceiveMemoryWarning
 {
@@ -221,6 +279,16 @@
         [self setWhoName:fObj.name];
         [self setWhoFbid:fObj.fbid];
         
+    }
+}
+
+#pragma mark - Slider Delegate
+
+- (IBAction)sliderValueChanged:(UISlider *)sender {
+    if (sender.value < 0.25) {
+        [sender setValue:0.25];
+    } else if (sender.value > 0.75) {
+        [sender setValue:0.75];
     }
 }
 

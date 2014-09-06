@@ -18,6 +18,7 @@
 
 @property (retain, nonatomic) IBOutlet UIPickerView *emotionPicker;
 @property (retain) NSString *emotion;
+@property float imgSize;
 
 @property (retain, nonatomic) IBOutlet UITextView *descriptorView;
 @property BOOL order; // 0-more-desc, 1-less-asc
@@ -25,11 +26,10 @@
 @property (retain, nonatomic) NSDictionary *rankData;
 @property (retain, nonatomic) IBOutlet UITableView *rankView;
 
+
 @end
 
 @implementation RankViewController
-
-float imgSize = 50.0;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -47,13 +47,14 @@ float imgSize = 50.0;
 	
     [super viewDidLoad];
 
+    [self setImgSize:50.0];
 	[self.emotionPicker setDelegate:self];
 	[self.emotionPicker setDataSource:self];
     self.emotion = [[[InteractionData data] emotionsArray] objectAtIndex:0];
     
     CALayer* mask = [[CALayer alloc] init];
     [mask setBackgroundColor: [UIColor blackColor].CGColor];
-    [mask setFrame: CGRectMake(0, imgSize*1.1, self.emotionPicker.bounds.size.width, imgSize*1.04)];
+    [mask setFrame: CGRectMake(0, self.imgSize*1.1, self.emotionPicker.bounds.size.width, self.imgSize*1.04)];
     [self.emotionPicker.layer setMask: mask];
     
     UITapGestureRecognizer *gr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(textTapped:)];
@@ -117,18 +118,18 @@ float imgSize = 50.0;
 #pragma mark - UIPickerView Delegate
 - (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
 {
-    return imgSize;
+    return self.imgSize;
 }
 
 -(UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
     
     NSString *text = [[[InteractionData data] emotionsArray] objectAtIndex:row];
     
-    UIView *newView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, imgSize, imgSize)];
+    UIView *newView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.imgSize, self.imgSize)];
     
     UIImage *img = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", [text lowercaseString]]];
     UIImageView *imgView = [[UIImageView alloc] initWithImage:img];
-    imgView.frame = CGRectMake(0, 0, imgSize, imgSize);
+    imgView.frame = CGRectMake(0, 0, self.imgSize, self.imgSize);
     //imgView.center = imgView.superview.center;
     [newView addSubview:imgView];
     

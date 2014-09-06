@@ -15,8 +15,7 @@
 
 @property int mode;
 - (IBAction)submit:(id)sender;
-
-
+- (IBAction)sliderValueChanged:(UISlider *)sender;
 
 @end
 
