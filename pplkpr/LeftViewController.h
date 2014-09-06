@@ -12,9 +12,8 @@
 
 @interface LeftViewController : UIViewController <UITextFieldDelegate, MLPAutoCompleteTextFieldDelegate>
 
-
-@property int mode;
 - (IBAction)submit:(id)sender;
+- (IBAction)back:(id)sender;
 - (IBAction)sliderValueChanged:(UISlider *)sender;
 
 @end

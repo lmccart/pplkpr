@@ -44,6 +44,9 @@
 		65CA14A919ACDD6600130EEB /* FriendsCompleteDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CA14A819ACDD6600130EEB /* FriendsCompleteDataSource.m */; };
 		65CA14AC19AD173100130EEB /* CustomAutoCompleteCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CA14AB19AD173100130EEB /* CustomAutoCompleteCell.m */; };
 		65E88A4D19BB8E6A00379268 /* IntensitySlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 65E88A4C19BB8E6A00379268 /* IntensitySlider.m */; };
+		65E88A5019BBAEFA00379268 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 65E88A4E19BBAEFA00379268 /* back.png */; };
+		65E88A5119BBAEFA00379268 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 65E88A4F19BBAEFA00379268 /* plus.png */; };
+		65E88A5319BBB01600379268 /* ticker.png in Resources */ = {isa = PBXBuildFile; fileRef = 65E88A5219BBB01600379268 /* ticker.png */; };
 		65F2961319B7D14B007C1C06 /* FBHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F2961219B7D14B007C1C06 /* FBHandler.m */; };
 		65F2961619B8DE5F007C1C06 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F2961519B8DE5F007C1C06 /* LoginViewController.m */; };
 		65F2961919B8FF7F007C1C06 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F2961819B8FF7F007C1C06 /* Constants.m */; };
@@ -148,6 +151,9 @@
 		65CA14AB19AD173100130EEB /* CustomAutoCompleteCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomAutoCompleteCell.m; sourceTree = "<group>"; };
 		65E88A4B19BB8E6A00379268 /* IntensitySlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IntensitySlider.h; sourceTree = "<group>"; };
 		65E88A4C19BB8E6A00379268 /* IntensitySlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IntensitySlider.m; sourceTree = "<group>"; };
+		65E88A4E19BBAEFA00379268 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = back.png; path = assets/back.png; sourceTree = "<group>"; };
+		65E88A4F19BBAEFA00379268 /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = plus.png; path = assets/plus.png; sourceTree = "<group>"; };
+		65E88A5219BBB01600379268 /* ticker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ticker.png; path = assets/ticker.png; sourceTree = "<group>"; };
 		65F2961119B7D14B007C1C06 /* FBHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBHandler.h; sourceTree = "<group>"; };
 		65F2961219B7D14B007C1C06 /* FBHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBHandler.m; sourceTree = "<group>"; };
 		65F2961419B8DE5F007C1C06 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -309,6 +315,9 @@
 		65E398D81849619300E3B2B4 /* assets */ = {
 			isa = PBXGroup;
 			children = (
+				65E88A5219BBB01600379268 /* ticker.png */,
+				65E88A4E19BBAEFA00379268 /* back.png */,
+				65E88A4F19BBAEFA00379268 /* plus.png */,
 				65F2961A19B93734007C1C06 /* angry.png */,
 				65F2961B19B93734007C1C06 /* anxious.png */,
 				65F2961C19B93734007C1C06 /* aroused.png */,
@@ -455,9 +464,11 @@
 				65F2963219B93734007C1C06 /* left.png in Resources */,
 				65F2963319B93734007C1C06 /* meet.png in Resources */,
 				65F2963119B93734007C1C06 /* home.png in Resources */,
+				65E88A5119BBAEFA00379268 /* plus.png in Resources */,
 				65FC7C6917A1A37F0045BFF2 /* Images.xcassets in Resources */,
 				65F2963019B93734007C1C06 /* home_sel.png in Resources */,
 				65F2962C19B93734007C1C06 /* aroused.png in Resources */,
+				65E88A5319BBB01600379268 /* ticker.png in Resources */,
 				65F2963719B93734007C1C06 /* report_sel.png in Resources */,
 				65F2962D19B93734007C1C06 /* bored.png in Resources */,
 				65F2963619B93734007C1C06 /* rect.png in Resources */,
@@ -466,6 +477,7 @@
 				65F2962A19B93734007C1C06 /* angry.png in Resources */,
 				65F2963519B93734007C1C06 /* rank.png in Resources */,
 				65FC7C5B17A1A37F0045BFF2 /* InfoPlist.strings in Resources */,
+				65E88A5019BBAEFA00379268 /* back.png in Resources */,
 				65F2963419B93734007C1C06 /* rank_sel.png in Resources */,
 				65FC7C6417A1A37F0045BFF2 /* Main.storyboard in Resources */,
 				65F2963919B93734007C1C06 /* scared.png in Resources */,

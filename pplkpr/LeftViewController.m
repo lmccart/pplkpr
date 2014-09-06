@@ -17,25 +17,18 @@
 #import "SDWebImage/UIImageView+WebCache.h"
 #import "Constants.h"
 
-@interface LeftViewController () <UIPickerViewDataSource, UIPickerViewDelegate> {
-	
-	NSMutableData *receivedData;
-}
+@interface LeftViewController () <UIPickerViewDataSource, UIPickerViewDelegate>
 
-
-@property (strong, nonatomic) IBOutlet UILabel *amFeelingLabel;
-@property (strong, nonatomic) IBOutlet UILabel *makesMeFeelLabel;
 @property (strong, nonatomic) IBOutlet FriendsCompleteDataSource *autocompleteDataSource;
 @property (weak) IBOutlet MLPAutoCompleteTextField *whoTextField;
 @property (strong) NSString *whoName;
 @property (strong) NSString *whoFbid;
 @property (strong, nonatomic) IBOutlet UIView *whoRecentView;
 
-@property (strong, nonatomic) IBOutlet UILabel *emotionLabel;
+@property (strong, nonatomic) IBOutlet UITextView *emotionTextView;
 @property (retain, nonatomic) IBOutlet UIPickerView *emotionPicker;
 @property (strong) NSString *emotion;
 
-@property (strong, nonatomic) IBOutlet UILabel *timeLabel;
 @property (retain, nonatomic) IBOutlet UISlider *timeSlider;
 
 @property (retain, nonatomic) IBOutlet UISlider *intensitySlider;
@@ -63,9 +56,11 @@
 {
     [super viewDidLoad];
     
-    self.imgSize = 50.0;
+    self.imgSize = 70.0;
 	 
-	[self.timeSlider setThumbImage:[UIImage imageNamed:@"rect.png"] forState:UIControlStateNormal];
+    [self.timeSlider setThumbImage:[UIImage imageNamed:@"ticker.png"] forState:UIControlStateNormal];
+    [self.timeSlider setMinimumTrackTintColor:[UIColor lightGrayColor]];
+    [self.timeSlider setMaximumTrackTintColor:[UIColor blackColor]];
 	
 	[self.whoTextField setDelegate:self];
     [self.whoTextField setClearButtonMode:UITextFieldViewModeWhileEditing];
@@ -78,6 +73,8 @@
     [self.emotionPicker setDataSource:self];
     [self.view bringSubviewToFront:self.emotionPicker];
     self.emotion = [[NSString alloc] init];
+    [self.emotionTextView setTextAlignment:NSTextAlignmentRight];
+    [self.emotionTextView.textContainer setLineFragmentPadding:0];
     
     CALayer* mask = [[CALayer alloc] init];
     [mask setBackgroundColor: [UIColor blackColor].CGColor];
@@ -141,34 +138,35 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [self resetForm];
     NSMutableDictionary *event = [[TempHRV data] getHRVEvent];
 	self.emotion = [[[InteractionData data] emotionsArray] objectAtIndex:0];
     [self.intensitySlider setValue:[[event objectForKey:@"intensity"] floatValue]];
-    
-    if (self.mode == 0) { // meet
-        [self.amFeelingLabel setHidden:false];
-        [self.makesMeFeelLabel setHidden:true];
-    } else { // left
-        [self.amFeelingLabel setHidden:true];
-        [self.makesMeFeelLabel setHidden:false];
-    }
+
 }
 
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
+    [self updateWho];
     return YES;
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-	[self.whoTextField resignFirstResponder];
+	[super touchesBegan:touches withEvent:event];
+    [self updateWho];
+}
+
+- (void)updateWho {
+    [self.whoTextField resignFirstResponder];
     if ([self.whoTextField.text length] == 0) {
         [self setWhoName:@""];
         [self setWhoFbid:@""];
+        [self.whoRecentView setHidden:false];
     } else {
         [self.whoTextField setText:self.whoName];
+        [self.whoRecentView setHidden:true];
     }
-	[super touchesBegan:touches withEvent:event];
 }
 
 
@@ -211,6 +209,15 @@
     //Let's print in the console what the user had chosen;
     NSLog(@"Chosen item: %@", [[[InteractionData data] emotionsArray] objectAtIndex:row]);
 	self.emotion = [[[InteractionData data] emotionsArray] objectAtIndex:row];
+    
+    
+    NSDictionary *attrsDictionary = [NSDictionary dictionaryWithObject:[GlobalMethods globalFont]
+                                                                forKey:NSFontAttributeName];
+    NSMutableAttributedString* attributedString = [[NSMutableAttributedString alloc] initWithString:[self.emotion lowercaseString] attributes:attrsDictionary];
+    
+    [self.emotionTextView setAttributedText:attributedString];
+    [self.emotionTextView setTextAlignment:NSTextAlignmentRight];
+    [self.emotionTextView.textContainer setLineFragmentPadding:0];
 }
 
 
@@ -229,16 +236,30 @@
 
 - (IBAction)submit:(id)sender {
 	
-	Person *p = [[InteractionData data] addReport:self.whoName withFbid:self.whoFbid withEmotion:self.emotion withRating:[NSNumber numberWithFloat:[self.intensitySlider value]]];
-    
-	// go to person view
-	[[InteractionData data] setJumpToPerson:p];
-	[self.tabBarController setSelectedIndex:1];
-    
-    // reset form
-	[self resetForm];
+    if ([self.whoName isEqualToString:@""]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sorry!"
+                                                        message:@"Please enter a name in the yellow box."
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    } else {
+        float val = [self.intensitySlider value];
+        val = ((val-0.25)/0.5); // to account for hiding of edges of slider
+        Person *p = [[InteractionData data] addReport:self.whoName withFbid:self.whoFbid withEmotion:self.emotion withRating:[NSNumber numberWithFloat:val]];
+        
+        // go to person view
+        [[InteractionData data] setJumpToPerson:p];
+        [self.tabBarController setSelectedIndex:1];
+        
+        // reset form
+        [self resetForm];
+    }
 }
 
+- (IBAction)back:(id)sender {
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
 
 - (void)resetForm {
     
@@ -278,6 +299,7 @@
         FriendsCustomAutoCompleteObject *fObj = (FriendsCustomAutoCompleteObject *)selectedObject;
         [self setWhoName:fObj.name];
         [self setWhoFbid:fObj.fbid];
+        [self.whoRecentView setHidden:true];
         
     }
 }
