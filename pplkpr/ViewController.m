@@ -15,7 +15,7 @@
 
 @interface ViewController()
 
-@property (retain, nonatomic) NSMutableArray *priorityData;
+@property (retain, nonatomic) NSArray *priorityData;
 @property (retain, nonatomic) IBOutlet UIView *priorityView;
 @property (retain, nonatomic) IBOutlet UILabel *monitorStatusLabel;
 
@@ -29,6 +29,7 @@
 	[super viewDidLoad];
 	
     [self updatePriority];
+    [[InteractionData data] takeAction];
 }
 
 - (void)didReceiveMemoryWarning
@@ -75,23 +76,17 @@
 	//_priorityData = [[InteractionData data] getRankedPeople];
    // NSLog(@"%@", [[InteractionData data] getPriorities]);
     
-    self.priorityData = [[InteractionData data] getPriorities];
-    NSArray *sortedArray = [self.priorityData sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        if ([[obj1 objectAtIndex:0] floatValue] > [[obj2 objectAtIndex:0] floatValue])
-            return NSOrderedDescending;
-        else if ([[obj1 objectAtIndex:0] floatValue] < [[obj2 objectAtIndex:0] floatValue])
-            return NSOrderedAscending;
-        return NSOrderedSame;
-    }];
+    self.priorityData = [[InteractionData data] getSortedPriorities];
+
     
     float y = margin;
-    for (int i=0; i < MIN(3, [sortedArray count]); i++) {
+    for (int i=0; i < MIN(3, [self.priorityData count]); i++) {
         
         // abs value, name, asc, emotion
-        NSArray *entry = [sortedArray objectAtIndex:i];
+        NSArray *entry = [self.priorityData objectAtIndex:i];
         
         Person *p = [entry objectAtIndex:1];
-        NSString *order = [[entry objectAtIndex:2] intValue] == 0 ? [NSString stringWithFormat:@"%@", @"most"] : [NSString stringWithFormat:@"%@", @"least"];
+        NSString *order = [[entry objectAtIndex:2] intValue] == 0 ? @"most" : @"least";
         NSString *emotion = [entry objectAtIndex:3];
         
         NSDictionary *attrsDictionary = [NSDictionary dictionaryWithObject:[GlobalMethods globalFont]

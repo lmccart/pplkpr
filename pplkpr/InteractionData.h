@@ -32,7 +32,9 @@
 - (void)calculateGlobalAverages;
 - (NSMutableDictionary *)getRankedPeople;
 - (NSMutableArray *)getPriorities;
+- (NSArray *)getSortedPriorities;
 - (NSArray *)getRecentPeople;
+- (void)takeAction;
 
 @end
 

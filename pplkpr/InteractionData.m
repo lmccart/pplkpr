@@ -339,6 +339,69 @@
 	return results;
 }
 
+- (NSArray *)getSortedPriorities {
+    NSArray *sortedArray = [[self getPriorities] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        if ([[obj1 objectAtIndex:0] floatValue] > [[obj2 objectAtIndex:0] floatValue])
+            return NSOrderedDescending;
+        else if ([[obj1 objectAtIndex:0] floatValue] < [[obj2 objectAtIndex:0] floatValue])
+            return NSOrderedAscending;
+        return NSOrderedSame;
+    }];
+//    NSLog(@"sorted priorities");
+//    for (id k in sortedArray) {
+//        NSLog(@"%@", [[k objectAtIndex:1] name]);
+//    }
+    return sortedArray;
+}
+
+- (void)takeAction {
+    NSArray *priorities = [self getSortedPriorities];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSArray *lastPeople = [defaults objectForKey:@"lastPeople"];
+    NSMutableArray *mutableLastPeople;
+    if (!lastPeople) {
+        mutableLastPeople = [[NSMutableArray alloc] init];
+    } else {
+        mutableLastPeople = [lastPeople mutableCopy];
+    }
+    //NSLog(@"%@", lastPeople);
+    
+    NSString *name = @"";
+    NSString *emotion = @"";
+    int order = -1;
+    Person *person;
+    NSArray *entry;
+    int i=0;
+    while (order != 0 || [lastPeople containsObject:name]) {
+        entry = [priorities objectAtIndex:i];
+        person = [entry objectAtIndex:1];
+        name = person.name;
+        order = [[entry objectAtIndex:2] integerValue];
+        emotion = [entry objectAtIndex:3];
+        i++;
+        if (i >= [priorities count]) break;
+    }
+    
+    if ([mutableLastPeople count] == 2) {
+        [mutableLastPeople removeObjectAtIndex:0];
+    }
+    
+    if (entry && order == 0) {
+        //NSLog(@"%@ %@ %d", name, emotion, order);
+        [self actOn:person forEmotion:emotion];
+        [mutableLastPeople addObject:name];
+    }
+    
+    //NSLog(@"%@", mutableLastPeople);
+    [defaults setObject:[mutableLastPeople copy] forKey:@"lastPeople"];
+    [defaults synchronize];
+    
+}
+
+- (void)actOn:(Person *)person forEmotion:(NSString *)emotion {
+    // logic for different consequences here
+}
 
 
 - (void)purgeOldRecords {
