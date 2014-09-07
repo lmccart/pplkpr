@@ -17,6 +17,8 @@
 
 @property (retain, nonatomic) IBOutlet UILabel *personLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *personPhoto;
+@property (strong, nonatomic) IBOutlet UITextView *personTickets;
+
 @property (retain, nonatomic) Person *curPerson;
 
 
@@ -59,6 +61,10 @@
             
             [self.personPhoto sd_setImageWithURL:[NSURL URLWithString:url]];
         }];
+        
+        for (id tick in self.curPerson.fb_tickets) {
+            
+        }
         
 	} else {
         [self.navigationController popToRootViewControllerAnimated:YES];

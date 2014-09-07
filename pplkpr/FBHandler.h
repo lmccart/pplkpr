@@ -10,7 +10,7 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import "Person.h"
 
-@interface FBHandler : NSObject
+@interface FBHandler : NSObject <NSURLConnectionDelegate>
 
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, retain) NSString *email;
@@ -26,6 +26,8 @@
 
 - (void)requestPoke:(Person *)person;
 - (void)requestPost:(Person *)person withMessage:(NSString *)message;
+
+//- (void)checkTicket:(NSString *)ticket
 
 @end
 

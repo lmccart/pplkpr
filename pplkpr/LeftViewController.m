@@ -78,7 +78,7 @@
     
     CALayer* mask = [[CALayer alloc] init];
     [mask setBackgroundColor: [UIColor blackColor].CGColor];
-    [mask setFrame: CGRectMake(0, self.imgSize*1.1, self.emotionPicker.bounds.size.width, self.imgSize*1.04)];
+    [mask setFrame: CGRectMake(0, 0.65*self.imgSize, self.emotionPicker.bounds.size.width, self.imgSize*0.85)];
     [self.emotionPicker.layer setMask: mask];
     
     NSArray *recents = [[InteractionData data] getRecentPeople];
