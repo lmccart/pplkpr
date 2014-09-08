@@ -19,6 +19,9 @@
 *.xcodeproj/xcuserdata/*.xcuserdatad
 *.xcodeproj/project.xcworkspace/xcuserdata/*.xcuserdatad
 
+#private
+pplkpr/assets/credentials.txt
+
 #emacs fragments
 *~
 

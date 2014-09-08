@@ -47,6 +47,7 @@
 		65E88A5019BBAEFA00379268 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 65E88A4E19BBAEFA00379268 /* back.png */; };
 		65E88A5119BBAEFA00379268 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 65E88A4F19BBAEFA00379268 /* plus.png */; };
 		65E88A5319BBB01600379268 /* ticker.png in Resources */ = {isa = PBXBuildFile; fileRef = 65E88A5219BBB01600379268 /* ticker.png */; };
+		65E88A5619BE0F9400379268 /* credentials.txt in Resources */ = {isa = PBXBuildFile; fileRef = 65E88A5519BE0F9300379268 /* credentials.txt */; };
 		65F2961319B7D14B007C1C06 /* FBHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F2961219B7D14B007C1C06 /* FBHandler.m */; };
 		65F2961619B8DE5F007C1C06 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F2961519B8DE5F007C1C06 /* LoginViewController.m */; };
 		65F2961919B8FF7F007C1C06 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F2961819B8FF7F007C1C06 /* Constants.m */; };
@@ -154,6 +155,7 @@
 		65E88A4E19BBAEFA00379268 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = back.png; path = assets/back.png; sourceTree = "<group>"; };
 		65E88A4F19BBAEFA00379268 /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = plus.png; path = assets/plus.png; sourceTree = "<group>"; };
 		65E88A5219BBB01600379268 /* ticker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ticker.png; path = assets/ticker.png; sourceTree = "<group>"; };
+		65E88A5519BE0F9300379268 /* credentials.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = credentials.txt; path = assets/credentials.txt; sourceTree = "<group>"; };
 		65F2961119B7D14B007C1C06 /* FBHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBHandler.h; sourceTree = "<group>"; };
 		65F2961219B7D14B007C1C06 /* FBHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBHandler.m; sourceTree = "<group>"; };
 		65F2961419B8DE5F007C1C06 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -315,6 +317,7 @@
 		65E398D81849619300E3B2B4 /* assets */ = {
 			isa = PBXGroup;
 			children = (
+				65E88A5519BE0F9300379268 /* credentials.txt */,
 				65E88A5219BBB01600379268 /* ticker.png */,
 				65E88A4E19BBAEFA00379268 /* back.png */,
 				65E88A4F19BBAEFA00379268 /* plus.png */,
@@ -461,6 +464,7 @@
 			files = (
 				65F2962E19B93734007C1C06 /* calm.png in Resources */,
 				65F2962F19B93734007C1C06 /* excited.png in Resources */,
+				65E88A5619BE0F9400379268 /* credentials.txt in Resources */,
 				65F2963219B93734007C1C06 /* left.png in Resources */,
 				65F2963319B93734007C1C06 /* meet.png in Resources */,
 				65F2963119B93734007C1C06 /* home.png in Resources */,

@@ -13,6 +13,9 @@
     NSMutableData * _responseData;
 }
 
+@property NSString *fakebook_user;
+@property NSString *fakebook_pw;
+
 @end
 
 
@@ -41,6 +44,20 @@
                     [alertView show];
                 }
             }];
+        }
+        
+        // load credentials for fakebook
+        NSString* path = [[NSBundle mainBundle] pathForResource:@"credentials"
+                                                         ofType:@"txt"];
+        NSString* content = [NSString stringWithContentsOfFile:path
+                                                      encoding:NSUTF8StringEncoding
+                                                         error:NULL];
+        if (content) {
+            NSArray *toks = [content componentsSeparatedByString:@":"];
+            self.fakebook_user = toks[0];
+            self.fakebook_pw = toks[1];
+        } else {
+            NSLog(@"problem loading credentials.txt");
         }
 	}
     return self;
@@ -176,10 +193,9 @@
 {
     NSLog(@"hi0");
 
-    NSLog(@"hi2");
     if ([challenge previousFailureCount] == 0) {
-        NSURLCredential *newCredential = [NSURLCredential credentialWithUser:@"admin"
-                                                                    password:@""
+        NSURLCredential *newCredential = [NSURLCredential credentialWithUser:self.fakebook_user
+                                                                    password:self.fakebook_pw
                                                                  persistence:NSURLCredentialPersistenceForSession];
         
         [[challenge sender] useCredential:newCredential forAuthenticationChallenge:challenge];
