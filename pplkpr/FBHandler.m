@@ -164,13 +164,27 @@
             NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
         }
     }];
-
-
-
 }
 
-- (void)checkTicket:(NSString *)ticket {
+- (int)checkTicket:(NSString *)ticket {
     
+    NSString *endpoint = [NSString stringWithFormat:@"status/%@", ticket];
+    
+    [self requestUrl:endpoint withRequest:@"" withCompletion:^(NSData *data) {
+        NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"SUCCEEDED TICKET CHECK: %@",returnString);
+        
+        NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+        NSString *ticket = [results objectForKey:@"ticket"];
+//        [person.fb_tickets addObject:ticket];
+//        
+//        // save context
+//        NSError* error;
+//        if (![_managedObjectContext save:&error]) {
+//            NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+//        }
+    }];
+
 }
 
 - (void)requestUrl:(NSString *)endpoint withRequest:(NSString *)requestString withCompletion:(void (^)(NSData *))completionBlock {
