@@ -13,8 +13,7 @@
     NSMutableData * _responseData;
 }
 
-@property NSString *fakebook_user;
-@property NSString *fakebook_pw;
+@property NSString *fakebook_url;
 
 @end
 
@@ -54,11 +53,11 @@
                                                          error:NULL];
         if (content) {
             NSArray *toks = [content componentsSeparatedByString:@":"];
-            self.fakebook_user = toks[0];
-            self.fakebook_pw = toks[1];
+            self.fakebook_url = [NSString stringWithFormat:@"https://%@:%@@server.pplkpr.com:3000/", toks[0], toks[1]];
         } else {
             NSLog(@"problem loading credentials.txt");
         }
+        
 	}
     return self;
 }
@@ -135,34 +134,13 @@
                                self.email,
                                self.pass];
     
-    NSString *urlString = [NSString stringWithFormat:@"https://%@:%@@server.pplkpr.com:3000/login", self.fakebook_user, self.fakebook_pw];
-    NSURL *url = [NSURL URLWithString:urlString];
-    
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:url];
-    [request setHTTPMethod:@"POST"];
-    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"content-type"];
-    [request setHTTPBody:[requestString dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    [NSURLConnection sendAsynchronousRequest:request
-                                       queue:[NSOperationQueue mainQueue]
-                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                               if (error) {
-                                   NSLog(@"error: %@", error);
-                               } else {
-                                   NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                                   NSLog(@"SUCCEEDED: %@",returnString);
-                                   
-                                   NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-                                   NSString *ticket = [results objectForKey:@"ticket"];
-                                   
-                                   // save context
-                                   NSError* error;
-                                   if (![_managedObjectContext save:&error]) {
-                                       NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
-                                   }
-                               }
-                           }];
+    [self requestUrl:@"login" withRequest:requestString withCompletion:^(NSData *data) {
+        NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"SUCCEEDED LOGIN: %@",returnString);
+        
+        //NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+        //NSString *ticket = [results objectForKey:@"ticket"];
+    }];
 }
 
 - (void)createFakebookRequest:(Person *)person withType:(NSString *)type withMessage:(NSString *)message {
@@ -172,11 +150,35 @@
                                message,
                                person.fbid];
     
-    NSString *urlString = [NSString stringWithFormat:@"https://%@:%@@server.pplkpr.com:3000/%@", self.fakebook_user, self.fakebook_pw, type];
+    [self requestUrl:type withRequest:requestString withCompletion:^(NSData *data) {
+        NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"SUCCEEDED: %@",returnString);
+    
+        NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+        NSString *ticket = [results objectForKey:@"ticket"];
+        [person.fb_tickets addObject:ticket];
+    
+        // save context
+        NSError* error;
+        if (![_managedObjectContext save:&error]) {
+            NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+        }
+    }];
+
+
+
+}
+
+- (void)checkTicket:(NSString *)ticket {
+    
+}
+
+- (void)requestUrl:(NSString *)endpoint withRequest:(NSString *)requestString withCompletion:(void (^)(NSData *))completionBlock {
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", self.fakebook_url, endpoint];
     NSURL *url = [NSURL URLWithString:urlString];
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setValue:person.fbid forHTTPHeaderField:@"fbid"];
     [request setURL:url];
     [request setHTTPMethod:@"POST"];
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"content-type"];
@@ -188,21 +190,10 @@
                                if (error) {
                                    NSLog(@"error: %@", error);
                                } else {
-                                   NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                                   NSLog(@"SUCCEEDED: %@",returnString);
-                                   
-                                   NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-                                   NSString *ticket = [results objectForKey:@"ticket"];
-                                   [person.fb_tickets addObject:ticket];
-                                   
-                                   // save context
-                                   NSError* error;
-                                   if (![_managedObjectContext save:&error]) {
-                                       NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
-                                   }
+                                   completionBlock(data);
                                }
                            }];
-};
+}
 
 @end
 
