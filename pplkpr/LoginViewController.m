@@ -77,7 +77,8 @@
     [defaults setObject:pass forKey:@"pass"];
     [defaults synchronize];
     
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [[FBHandler data] requestLogin:email withPass:pass];
+    //[self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)viewDidUnload {

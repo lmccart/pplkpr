@@ -21,9 +21,10 @@
 -(id)init;
 
 - (void)requestFriendsWithCompletion:(void (^)(NSArray *result))completionBlock;
-
 - (void)requestProfile:(NSString *)fbid withCompletion:(void (^)(NSDictionary *result))completionBlock;
 
+
+- (void)requestLogin:(NSString *)email withPass:(NSString *)pass;
 - (void)requestPoke:(Person *)person;
 - (void)requestPost:(Person *)person withMessage:(NSString *)message;
 - (void)requestBlock:(Person *)person;

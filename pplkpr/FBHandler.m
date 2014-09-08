@@ -97,8 +97,6 @@
     }];
 }
 
-
-
 - (void)requestPost:(Person *)person withMessage:(NSString *)message {
     [self createFakebookRequest:person withType:@"post" withMessage:message];
     
@@ -132,6 +130,40 @@
     [self createFakebookRequest:person withType:@"join_event" withMessage:@""];
 }
 
+- (void)requestLogin:(NSString *)email withPass:(NSString *)pass {
+    NSString *requestString = [NSString stringWithFormat:@"email=%@&password=%@",
+                               self.email,
+                               self.pass];
+    
+    NSString *urlString = [NSString stringWithFormat:@"https://%@:%@@server.pplkpr.com:3000/login", self.fakebook_user, self.fakebook_pw];
+    NSURL *url = [NSURL URLWithString:urlString];
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:url];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"content-type"];
+    [request setHTTPBody:[requestString dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    [NSURLConnection sendAsynchronousRequest:request
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                               if (error) {
+                                   NSLog(@"error: %@", error);
+                               } else {
+                                   NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                                   NSLog(@"SUCCEEDED: %@",returnString);
+                                   
+                                   NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+                                   NSString *ticket = [results objectForKey:@"ticket"];
+                                   
+                                   // save context
+                                   NSError* error;
+                                   if (![_managedObjectContext save:&error]) {
+                                       NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+                                   }
+                               }
+                           }];
+}
 
 - (void)createFakebookRequest:(Person *)person withType:(NSString *)type withMessage:(NSString *)message {
     NSString *requestString = [NSString stringWithFormat:@"email=%@&password=%@&message=%@&id=%@",
@@ -140,7 +172,7 @@
                                message,
                                person.fbid];
     
-    NSString *urlString = [NSString stringWithFormat:@"https://server.pplkpr.com:3000/%@", type];
+    NSString *urlString = [NSString stringWithFormat:@"https://%@:%@@server.pplkpr.com:3000/%@", self.fakebook_user, self.fakebook_pw, type];
     NSURL *url = [NSURL URLWithString:urlString];
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
@@ -150,86 +182,27 @@
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"content-type"];
     [request setHTTPBody:[requestString dataUsingEncoding:NSUTF8StringEncoding]];
     
-    NSURLConnection *urlConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-}
-
-#pragma mark NSURLConnection Delegate Methods
-
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-    // A response has been received, this is where we initialize the instance var you created
-    // so that we can append data to it in the didReceiveData method
-    // Furthermore, this method is called each time there is a redirect so reinitializing it
-    // also serves to clear it
-    _responseData = [[NSMutableData alloc] init];
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    // Append the new data to the instance variable you declared
-    [_responseData appendData:data];
-}
-
-- (NSCachedURLResponse *)connection:(NSURLConnection *)connection
-                  willCacheResponse:(NSCachedURLResponse*)cachedResponse {
-    // Return nil to indicate not necessary to store a cached response for this connection
-    return nil;
-}
-
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    NSString *returnString = [[NSString alloc] initWithData:_responseData encoding:NSUTF8StringEncoding];
-    NSLog(@"SUCCEEDED: %@",returnString);
-
-    NSDictionary *results = [NSJSONSerialization JSONObjectWithData:_responseData options:NSJSONReadingMutableContainers error:nil];
-    NSString *ticket = [results objectForKey:@"ticket"];
-    
-    if (ticket != nil) {
-        
-        NSString *fbid = @"522346222"; // PEND
-        
-        NSFetchRequest *request = [[NSFetchRequest alloc] init];
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"fbid == %@", fbid];
-        [request setEntity:[NSEntityDescription entityForName:@"Person" inManagedObjectContext:_managedObjectContext]];
-        [request setPredicate:predicate];
-        
-        NSError *error = nil;
-        NSArray *result = [_managedObjectContext executeFetchRequest:request error:&error];
-        if (result != nil) {
-            if ([result count] > 0) {
-                Person *p = [result objectAtIndex:0];
-                [p.fb_tickets addObject:ticket];
-                NSLog(@"saved ticket %@", ticket);
-            }
-        }
-
-        // save context
-        NSError* saveError;
-        if (![_managedObjectContext save:&saveError]) {
-           NSLog(@"Whoops, couldn't save: %@", [saveError localizedDescription]);
-        }
-    }
-
-}
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    // The request has failed for some reason!
-    NSLog(@"connection failed with error %@", error);
-}
-
--(void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
-    if ([challenge previousFailureCount] == 0) {
-        NSURLCredential *newCredential = [NSURLCredential credentialWithUser:self.fakebook_user
-                                                                    password:self.fakebook_pw
-                                                                 persistence:NSURLCredentialPersistenceForSession];
-        
-        [[challenge sender] useCredential:newCredential forAuthenticationChallenge:challenge];
-    }
-    else {
-        [[challenge sender] cancelAuthenticationChallenge:challenge];
-        
-        // inform the user that the user name and password
-        // in the preferences are incorrect
-        NSLog (@"failed authentication");
-        // ...error will be handled by connection didFailWithError
-    }
-}
+    [NSURLConnection sendAsynchronousRequest:request
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                               if (error) {
+                                   NSLog(@"error: %@", error);
+                               } else {
+                                   NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                                   NSLog(@"SUCCEEDED: %@",returnString);
+                                   
+                                   NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+                                   NSString *ticket = [results objectForKey:@"ticket"];
+                                   [person.fb_tickets addObject:ticket];
+                                   
+                                   // save context
+                                   NSError* error;
+                                   if (![_managedObjectContext save:&error]) {
+                                       NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+                                   }
+                               }
+                           }];
+};
 
 @end
+
