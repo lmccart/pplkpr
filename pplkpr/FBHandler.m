@@ -129,7 +129,7 @@
 
 // pend
 - (void)requestInviteToEvent:(Person *)person {
-    [self createFakebookRequest:person withType:@"invite" withMessage:@""];
+    [self createFakebookRequest:person withType:@"join_event" withMessage:@""];
 }
 
 
