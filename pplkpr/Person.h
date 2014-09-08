@@ -19,7 +19,7 @@
 
 // tracking FB actions
 @property (nonatomic, retain) NSMutableArray *fb_tickets;
-@property (nonatomic, retain) NSMutableArray *fb_actions;
+@property (nonatomic, retain) NSMutableDictionary *fb_actions;
 
 @property (nonatomic, retain) NSNumber *calm;
 @property (nonatomic, retain) NSNumber *excited;

@@ -13,6 +13,7 @@
         <attribute name="calmN" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="excited" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="excitedN" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="fb_actions" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="fb_tickets" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="fbid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -28,7 +29,7 @@
         <relationship name="person" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Person" inverseName="reports" inverseEntity="Person" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Person" positionX="0" positionY="0" width="128" height="330"/>
+        <element name="Person" positionX="0" positionY="0" width="128" height="345"/>
         <element name="Report" positionX="0" positionY="0" width="128" height="103"/>
     </elements>
 </model>

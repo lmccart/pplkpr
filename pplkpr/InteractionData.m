@@ -10,9 +10,9 @@
 #import "Report.h"
 #import "Person.h"
 #import "AppDelegate.h"
+#import "FBHandler.h"
 
 @interface InteractionData()
-
 
 @end
 
@@ -32,15 +32,15 @@
 	
     if (self = [super init]) {
 
-		_emotionsArray = [[NSArray alloc] initWithObjects:@"Excited",@"Aroused",@"Angry",@"Scared", @"Anxious", @"Bored", @"Calm", nil];
-		_locationsArray = [[NSMutableArray alloc] init];
-		_summary = [[NSDictionary alloc] init];
+		self.emotionsArray = [[NSArray alloc] initWithObjects:@"Excited",@"Aroused",@"Angry",@"Scared", @"Anxious", @"Bored", @"Calm", nil];
+		self.locationsArray = [[NSMutableArray alloc] init];
+		self.summary = [[NSDictionary alloc] init];
 		
-		_jumpToPerson = nil;
+		self.jumpToPerson = nil;
         
         
         AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
-        _managedObjectContext = appDelegate.managedObjectContext;
+        self.managedObjectContext = appDelegate.managedObjectContext;
         
         [self purgeOldRecords];
         
@@ -270,7 +270,7 @@
 }
 
 // returns dictionary {emotion:array of people} sorted most to least
-- (NSMutableDictionary *)getRankedPeople {
+- (NSMutableDictionary *)getdRankedPeople {
 	
 	[self calculateGlobalAverages];
 	NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
@@ -356,53 +356,142 @@
 
 - (void)takeAction {
     NSArray *priorities = [self getSortedPriorities];
+    if ([priorities count] > 0) {
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSArray *lastPeople = [defaults objectForKey:@"lastPeople"];
-    NSMutableArray *mutableLastPeople;
-    if (!lastPeople) {
-        mutableLastPeople = [[NSMutableArray alloc] init];
-    } else {
-        mutableLastPeople = [lastPeople mutableCopy];
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSArray *lastPeople = [defaults objectForKey:@"lastPeople"];
+        NSMutableArray *mutableLastPeople;
+        if (!lastPeople) {
+            mutableLastPeople = [[NSMutableArray alloc] init];
+        } else {
+            mutableLastPeople = [lastPeople mutableCopy];
+        }
+        //NSLog(@"%@", lastPeople);
+        
+        NSString *name = @"";
+        NSString *emotion = @"";
+        int order = -1;
+        Person *person;
+        NSArray *entry;
+        int i=0;
+        while (order != 0 || [lastPeople containsObject:name]) {
+            entry = [priorities objectAtIndex:i];
+            person = [entry objectAtIndex:1];
+            name = person.name;
+            order = [[entry objectAtIndex:2] integerValue];
+            emotion = [entry objectAtIndex:3];
+            i++;
+            if (i >= [priorities count]) break;
+        }
+        
+        if ([mutableLastPeople count] == 2) {
+            [mutableLastPeople removeObjectAtIndex:0];
+        }
+        
+        if (entry && order == 0) {
+            //NSLog(@"%@ %@ %d", name, emotion, order);
+            [self actOn:person forEmotion:emotion];
+            [mutableLastPeople addObject:name];
+        }
+        
+        //NSLog(@"%@", mutableLastPeople);
+        [defaults setObject:[mutableLastPeople copy] forKey:@"lastPeople"];
+        [defaults synchronize];
     }
-    //NSLog(@"%@", lastPeople);
-    
-    NSString *name = @"";
-    NSString *emotion = @"";
-    int order = -1;
-    Person *person;
-    NSArray *entry;
-    int i=0;
-    while (order != 0 || [lastPeople containsObject:name]) {
-        entry = [priorities objectAtIndex:i];
-        person = [entry objectAtIndex:1];
-        name = person.name;
-        order = [[entry objectAtIndex:2] integerValue];
-        emotion = [entry objectAtIndex:3];
-        i++;
-        if (i >= [priorities count]) break;
-    }
-    
-    if ([mutableLastPeople count] == 2) {
-        [mutableLastPeople removeObjectAtIndex:0];
-    }
-    
-    if (entry && order == 0) {
-        //NSLog(@"%@ %@ %d", name, emotion, order);
-        [self actOn:person forEmotion:emotion];
-        [mutableLastPeople addObject:name];
-    }
-    
-    //NSLog(@"%@", mutableLastPeople);
-    [defaults setObject:[mutableLastPeople copy] forKey:@"lastPeople"];
-    [defaults synchronize];
-    
 }
 
 - (void)actOn:(Person *)person forEmotion:(NSString *)emotion {
+    
+    NSLog(@"acting on %@ for %@", person.name, emotion);
+    
+    if (!person.fb_actions) {
+        [person setFb_actions:[[NSMutableDictionary alloc] init]];
+        for (id e in self.emotionsArray) {
+            [person.fb_actions setObject:[[NSMutableArray alloc] init] forKey:e];
+        }
+    }
     // logic for different consequences here
+    NSString* a;
+    NSMutableArray *actions_arr = [person.fb_actions valueForKey:emotion];
+    
+    if ([emotion isEqualToString:@"Excited"]) {
+        [[FBHandler data] requestPost:person withMessage:@"oooh you excite me!"]; // pend
+        a = @"post";
+    } else if ([emotion isEqualToString:@"Aroused"]) {
+        if (![actions_arr containsObject:@"poke"]) {
+            [[FBHandler data] requestPoke:person];
+            a = @"poke";
+        } else {
+            [[FBHandler data] requestInviteToEvent:person];
+            a = @"invite";
+            [actions_arr removeObject:@"poke"];
+        }
+    } else if ([emotion isEqualToString:@"Calm"]) {
+        [[FBHandler data] requestInviteToEvent:person];
+        a = @"invite";
+    } else if ([emotion isEqualToString:@"Angry"]) {
+        if (![actions_arr containsObject:@"post"]) {
+            [[FBHandler data] requestPost:person withMessage:@"you make me seethe with anger"]; // pend
+            a = @"post";
+        } else if (![actions_arr containsObject:@"block"]) {
+            [[FBHandler data] requestBlock:person];
+            a = @"block";
+        } else if (![actions_arr containsObject:@"unfriend"]) {
+            [[FBHandler data] requestUnfriend:person];
+            a = @"unfriend";
+        }
+    } else if ([emotion isEqualToString:@"Scared"]) {
+        if (![actions_arr containsObject:@"post"]) {
+            [[FBHandler data] requestPost:person withMessage:@"you scare me, please stay away!"]; // pend
+            a = @"post";
+        } else if (![actions_arr containsObject:@"block"]) {
+            [[FBHandler data] requestBlock:person];
+            a = @"block";
+        }
+    } else if ([emotion isEqualToString:@"Anxious"]) {
+        if (![actions_arr containsObject:@"post"]) {
+            [[FBHandler data] requestPost:person withMessage:@"you make me feel anxious"]; // pend
+            a = @"post";
+        } else if (![actions_arr containsObject:@"block"]) {
+            [[FBHandler data] requestBlock:person];
+            a = @"block";
+        }
+    } else if ([emotion isEqualToString:@"Bored"]) {
+        // do nothing
+    }
+    
+    if (a) [actions_arr addObject:a];
+    
+    NSError *error;
+    if (![_managedObjectContext save:&error]) {
+        NSLog(@"Error deleting - error:%@",error);
+    }
 }
 
+// returns dictionary {emotion:array of people} sorted most to least
+- (NSMutableDictionary *)getRankedPeople {
+    [self calculateGlobalAverages];
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+    
+    for (id e in _emotionsArray) {
+        
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        [request setEntity:[NSEntityDescription entityForName:@"Person" inManagedObjectContext:_managedObjectContext]];
+        
+        NSString *predString = [NSString stringWithFormat:@"%@N > %@", [e lowercaseString], [NSNumber numberWithInteger:0]];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:predString];
+        [request setPredicate:predicate];
+        
+        NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:[NSString stringWithFormat:@"%@", [e lowercaseString]] ascending:NO]; // default to most first
+        [request setSortDescriptors:[NSArray arrayWithObject:descriptor]];
+        
+        NSArray *results = [_managedObjectContext executeFetchRequest:request error:nil];
+        if ([results count] > 0) {
+            [dict setObject:results forKey:e];
+        }
+    }
+    return dict;
+}
 
 - (void)purgeOldRecords {
 	

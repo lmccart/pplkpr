@@ -108,6 +108,31 @@
     [self createFakebookRequest:person withType:@"post" withMessage:@""];
 }
 
+
+- (void)requestBlock:(Person *)person {
+    [self createFakebookRequest:person withType:@"block" withMessage:@""];
+}
+
+- (void)requestUnblock:(Person *)person {
+    [self createFakebookRequest:person withType:@"unblock" withMessage:@""];
+}
+
+
+- (void)requestFriend:(Person *)person {
+    [self createFakebookRequest:person withType:@"friend" withMessage:@""];
+}
+
+
+- (void)requestUnfriend:(Person *)person {
+    [self createFakebookRequest:person withType:@"unfriend" withMessage:@""];
+}
+
+// pend
+- (void)requestInviteToEvent:(Person *)person {
+    [self createFakebookRequest:person withType:@"invite" withMessage:@""];
+}
+
+
 - (void)createFakebookRequest:(Person *)person withType:(NSString *)type withMessage:(NSString *)message {
     NSString *requestString = [NSString stringWithFormat:@"email=%@&password=%@&message=%@&id=%@",
                                self.email,
@@ -189,10 +214,7 @@
     NSLog(@"connection failed with error %@", error);
 }
 
--(void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge
-{
-    NSLog(@"hi0");
-
+-(void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
     if ([challenge previousFailureCount] == 0) {
         NSURLCredential *newCredential = [NSURLCredential credentialWithUser:self.fakebook_user
                                                                     password:self.fakebook_pw
@@ -205,9 +227,7 @@
         
         // inform the user that the user name and password
         // in the preferences are incorrect
-        
         NSLog (@"failed authentication");
-        
         // ...error will be handled by connection didFailWithError
     }
 }

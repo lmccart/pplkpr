@@ -26,6 +26,11 @@
 
 - (void)requestPoke:(Person *)person;
 - (void)requestPost:(Person *)person withMessage:(NSString *)message;
+- (void)requestBlock:(Person *)person;
+- (void)requestUnblock:(Person *)person;
+- (void)requestFriend:(Person *)person;
+- (void)requestUnfriend:(Person *)person;
+- (void)requestInviteToEvent:(Person *)person;
 
 //- (void)checkTicket:(NSString *)ticket
 
