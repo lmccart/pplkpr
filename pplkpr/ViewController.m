@@ -29,7 +29,7 @@
 	[super viewDidLoad];
 	
     [self updatePriority];
-    [[InteractionData data] takeAction];
+    //[[InteractionData data] takeAction];
 }
 
 - (void)didReceiveMemoryWarning

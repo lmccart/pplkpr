@@ -134,7 +134,7 @@
                                self.email,
                                self.pass];
     
-    [self requestUrl:@"login" withRequest:requestString withCompletion:^(NSData *data) {
+    [self requestUrl:@"login" withRequest:requestString withType:@"POST" withCompletion:^(NSData *data) {
         NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSLog(@"SUCCEEDED LOGIN: %@",returnString);
         
@@ -150,7 +150,7 @@
                                message,
                                person.fbid];
     
-    [self requestUrl:type withRequest:requestString withCompletion:^(NSData *data) {
+    [self requestUrl:type withRequest:requestString withType:@"POST" withCompletion:^(NSData *data) {
         NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSLog(@"SUCCEEDED: %@",returnString);
     
@@ -171,27 +171,24 @@
     NSString *endpoint = [NSString stringWithFormat:@"status/%@", ticket];
     NSLog(@"endpoint %@", endpoint);
     
-    [self requestUrl:endpoint withRequest:@"" withCompletion:^(NSData *data) {
+    [self requestUrl:endpoint withRequest:@"" withType:@"GET" withCompletion:^(NSData *data) {
         //NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         //NSLog(@"SUCCEEDED TICKET CHECK: %@",returnString);
         
         NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
         int status = [[results objectForKey:@"status"] integerValue];
-        NSString *email = [results objectForKey:@"status"];
-        NSLog(@"%@", email);
         completionBlock(status);
     }];
 }
 
-- (void)requestUrl:(NSString *)endpoint withRequest:(NSString *)requestString withCompletion:(void (^)(NSData *))completionBlock {
+- (void)requestUrl:(NSString *)endpoint withRequest:(NSString *)requestString withType:(NSString *)type withCompletion:(void (^)(NSData *))completionBlock {
     
     NSString *urlString = [NSString stringWithFormat:@"%@%@", self.fakebook_url, endpoint];
-    NSLog(@"urlstring %@", urlString);
     NSURL *url = [NSURL URLWithString:urlString];
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     [request setURL:url];
-    [request setHTTPMethod:@"POST"];
+    [request setHTTPMethod:type];
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"content-type"];
     [request setHTTPBody:[requestString dataUsingEncoding:NSUTF8StringEncoding]];
     
