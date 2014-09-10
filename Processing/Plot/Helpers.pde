@@ -58,7 +58,8 @@ float range(List<Float> list) {
 
 float standardDeviation(List<Float> list) {
   float mean = mean(list);
-  return sqrt(sum(sq(differences(list, mean))) / mean);
+  float count = list.size();
+  return sqrt(sum(sq(differences(list, mean))) / count);
 }
 
 ArrayList<Float> differences(List<Float> list, float subtrahend) {
