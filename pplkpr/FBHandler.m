@@ -166,30 +166,27 @@
     }];
 }
 
-- (int)checkTicket:(NSString *)ticket {
+- (void)checkTicket:(NSString *)ticket withCompletion:(void (^)(int status))completionBlock {
     
     NSString *endpoint = [NSString stringWithFormat:@"status/%@", ticket];
+    NSLog(@"endpoint %@", endpoint);
     
     [self requestUrl:endpoint withRequest:@"" withCompletion:^(NSData *data) {
-        NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"SUCCEEDED TICKET CHECK: %@",returnString);
+        //NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        //NSLog(@"SUCCEEDED TICKET CHECK: %@",returnString);
         
         NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-        NSString *ticket = [results objectForKey:@"ticket"];
-//        [person.fb_tickets addObject:ticket];
-//        
-//        // save context
-//        NSError* error;
-//        if (![_managedObjectContext save:&error]) {
-//            NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
-//        }
+        int status = [[results objectForKey:@"status"] integerValue];
+        NSString *email = [results objectForKey:@"status"];
+        NSLog(@"%@", email);
+        completionBlock(status);
     }];
-
 }
 
 - (void)requestUrl:(NSString *)endpoint withRequest:(NSString *)requestString withCompletion:(void (^)(NSData *))completionBlock {
     
     NSString *urlString = [NSString stringWithFormat:@"%@%@", self.fakebook_url, endpoint];
+    NSLog(@"urlstring %@", urlString);
     NSURL *url = [NSURL URLWithString:urlString];
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];

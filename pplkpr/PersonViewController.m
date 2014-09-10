@@ -62,8 +62,11 @@
             [self.personPhoto sd_setImageWithURL:[NSURL URLWithString:url]];
         }];
         
-        for (id tick in self.curPerson.fb_tickets) {
-            
+        for (NSString *tick in self.curPerson.fb_tickets) {
+            NSLog(@"tick %@", tick);
+            [[FBHandler data] checkTicket:tick withCompletion:^(int status){
+                NSLog(@"status %d", status);
+            }];
         }
         
 	} else {

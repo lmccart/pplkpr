@@ -33,7 +33,7 @@
 - (void)requestUnfriend:(Person *)person;
 - (void)requestInviteToEvent:(Person *)person;
 
-- (int)checkTicket:(NSString *)ticket;
+- (void)checkTicket:(NSString *)ticket  withCompletion:(void (^)(int status))completionBlock;
 
 @end
 

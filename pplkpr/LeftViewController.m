@@ -19,7 +19,7 @@
 
 @interface LeftViewController () <UIPickerViewDataSource, UIPickerViewDelegate>
 
-@property (strong, nonatomic) IBOutlet FriendsCompleteDataSource *autocompleteDataSource;
+@property (strong, nonatomic) IBOutlet FriendsCompleteDataSource *autoCompleteDataSource;
 @property (weak) IBOutlet MLPAutoCompleteTextField *whoTextField;
 @property (strong) NSString *whoName;
 @property (strong) NSString *whoFbid;
