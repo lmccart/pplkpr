@@ -402,7 +402,7 @@
         <!--Login View Controller-->
         <scene sceneID="VUt-CO-DiR">
             <objects>
-                <viewController id="SHJ-Mw-UT6" customClass="LoginViewController" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="SHJ-Mw-UT6" customClass="LoginViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="FmY-So-27e">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

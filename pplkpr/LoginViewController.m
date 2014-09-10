@@ -77,8 +77,24 @@
     [defaults setObject:pass forKey:@"pass"];
     [defaults synchronize];
     
-    [[FBHandler data] requestLogin:email withPass:pass];
-    //[self.navigationController popToRootViewControllerAnimated:YES];
+    [[FBHandler data] requestLogin:email withPass:pass withCompletion:^(NSDictionary *results) {
+        NSString *ticket = [results objectForKey:@"ticket"];
+        [self checkLoginStatus:ticket];
+    }];
+}
+
+- (void)checkLoginStatus:(NSString *)ticket {
+    [[FBHandler data] checkTicket:ticket withCompletion:^(int status) {
+        if (status == 1) {
+            NSLog(@"login successful");
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        } else if (status == 0) {
+            NSLog(@"login processing");
+            [self checkLoginStatus:ticket];
+        } else if (status == -1) {
+            NSLog(@"login failed, try again");
+        }
+    }];
 }
 
 - (void)viewDidUnload {

@@ -129,7 +129,7 @@
     [self createFakebookRequest:person withType:@"join_event" withMessage:@""];
 }
 
-- (void)requestLogin:(NSString *)email withPass:(NSString *)pass {
+- (void)requestLogin:(NSString *)email withPass:(NSString *)pass withCompletion:(void (^)(NSDictionary *results))completionBlock {
     NSString *requestString = [NSString stringWithFormat:@"email=%@&password=%@",
                                self.email,
                                self.pass];
@@ -138,8 +138,8 @@
         NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSLog(@"SUCCEEDED LOGIN: %@",returnString);
         
-        //NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-        //NSString *ticket = [results objectForKey:@"ticket"];
+        NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+        completionBlock(results);
     }];
 }
 
@@ -172,8 +172,8 @@
     NSLog(@"endpoint %@", endpoint);
     
     [self requestUrl:endpoint withRequest:@"" withType:@"GET" withCompletion:^(NSData *data) {
-        //NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        //NSLog(@"SUCCEEDED TICKET CHECK: %@",returnString);
+        NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"SUCCEEDED TICKET CHECK: %@",returnString);
         
         NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
         int status = [[results objectForKey:@"status"] integerValue];
