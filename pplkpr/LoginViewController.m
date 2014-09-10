@@ -53,8 +53,17 @@
 //        [self.navigationController popToRootViewControllerAnimated:YES];
 //    }
 }
+
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [textField resignFirstResponder];
+    if (textField == self.emailField) {
+        [self.passField becomeFirstResponder];
+    } else if (textField == self.passField) {
+        [textField resignFirstResponder];
+        if (![self.passField.text isEqualToString:@""] && ![self.passField.text isEqualToString:@""]) {
+            [self login:nil];
+        }
+    }
     return YES;
 }
 
@@ -65,6 +74,17 @@
 }
 
 - (IBAction)login:(id)sender {
+    
+    if ([self.passField.text isEqualToString:@""] || [self.passField.text isEqualToString:@""]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sorry!"
+                                                        message:@"Please enter a username and password."
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+    
     [self.emailField resignFirstResponder];
     [self.passField resignFirstResponder];
     
@@ -84,17 +104,20 @@
 }
 
 - (void)checkLoginStatus:(NSString *)ticket {
-    [[FBHandler data] checkTicket:ticket withCompletion:^(int status) {
-        if (status == 1) {
-            NSLog(@"login successful");
-            [self.navigationController popToRootViewControllerAnimated:YES];
-        } else if (status == 0) {
-            NSLog(@"login processing");
-            [self checkLoginStatus:ticket];
-        } else if (status == -1) {
-            NSLog(@"login failed, try again");
-        }
-    }];
+//    [[FBHandler data] checkTicket:ticket withCompletion:^(int status) {
+//        if (status == 1) {
+//            NSLog(@"login successful");
+//            [self.navigationController popToRootViewControllerAnimated:YES];
+//        } else if (status == 0) {
+//            NSLog(@"login processing");
+//            [self checkLoginStatus:ticket];
+//        } else if (status == -1) {
+//            NSLog(@"login failed, try again");
+//        }
+//    }];
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
+
 }
 
 - (void)viewDidUnload {
