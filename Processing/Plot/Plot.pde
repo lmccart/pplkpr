@@ -36,7 +36,7 @@ void setup() {
   ArrayList<Float> rawDiff = successiveDifferences(hrv);
   for(int i = 0; i < rawDiff.size(); i++) {
     diffs.add((float) rawDiff.get(i));
-    println(rawDiff.get(i) + " " + diffs.minValue + " " + diffs.maxValue);
+//    println(rawDiff.get(i) + " " + diffs.minValue + " " + diffs.maxValue);
   }
   
   println("SDNN: " + SDNN(hrv));
