@@ -105,19 +105,23 @@
 }
 
 - (void)checkLoginStatus:(NSString *)ticket {
-//    [[FBHandler data] checkTicket:ticket withCompletion:^(int status) {
-//        if (status == 1) {
-//            NSLog(@"login successful");
-//            [self.navigationController popToRootViewControllerAnimated:YES];
-//        } else if (status == 0) {
-//            NSLog(@"login processing");
-//            [self checkLoginStatus:ticket];
-//        } else if (status == -1) {
-//            NSLog(@"login failed, try again");
-//        }
-//    }];
-    
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [[FBHandler data] checkTicket:ticket withCompletion:^(int status) {
+        if (status == 1) {
+            NSLog(@"login successful");
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        } else if (status == 0) {
+            NSLog(@"login processing");
+            [self checkLoginStatus:ticket];
+        } else if (status == -1) {
+            NSLog(@"login failed, try again");
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sorry!"
+                                                            message:@"Incorrect username or password."
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+        }
+    }];
 
 }
 
