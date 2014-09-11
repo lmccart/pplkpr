@@ -188,8 +188,9 @@
 
 - (void)requestLogin:(NSString *)email withPass:(NSString *)pass withCompletion:(void (^)(NSDictionary *results))completionBlock {
     NSString *requestString = [NSString stringWithFormat:@"email=%@&password=%@",
-                               self.email,
-                               self.pass];
+                               email,
+                               pass];
+    NSLog(@"request string %@", requestString);
     
     [self requestUrl:@"login" withRequest:requestString withType:@"POST" withCompletion:^(NSData *data) {
         NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
