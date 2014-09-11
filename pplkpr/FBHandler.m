@@ -13,7 +13,9 @@
     NSMutableData * _responseData;
 }
 
-@property NSString *fakebook_url;
+@property NSString *fakebookURL;
+@property int gender;
+@property NSString *firstName;
 
 @end
 
@@ -41,6 +43,25 @@
                 if (error) {
                     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:error.localizedDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                     [alertView show];
+                } else {
+                    NSLog(@"facebook session opened");
+                    [self requestOwnProfile:^(NSDictionary *result) {
+                        NSLog(@"%@", result);
+                        
+                        NSString *gender = [result objectForKey:@"gender"];
+                        if (gender) {
+                            if ([gender isEqualToString:@"female"]) {
+                                [self setGender:1];
+                            } else {
+                                [self setGender:-1];
+                            }
+                        } else {
+                            [self setGender:0];
+                        }
+                        
+                        NSString *name = [result objectForKey:@"first_name"];
+                        [self setFirstName:name];
+                    }];
                 }
             }];
         }
@@ -53,7 +74,7 @@
                                                          error:NULL];
         if (content) {
             NSArray *toks = [content componentsSeparatedByString:@":"];
-            self.fakebook_url = [NSString stringWithFormat:@"https://%@:%@@server.pplkpr.com:3000/", toks[0], toks[1]];
+            self.fakebookURL = [NSString stringWithFormat:@"https://%@:%@@server.pplkpr.com:3000/", toks[0], toks[1]];
         } else {
             NSLog(@"problem loading credentials.txt");
         }
@@ -89,8 +110,22 @@
     }];
 }
 
+- (void)requestOwnProfile:(void (^)(NSDictionary *result))completionBlock {
+    
+    FBRequest* profileRequest = [FBRequest requestForGraphPath:@"me"];
+    [profileRequest startWithCompletionHandler: ^(FBRequestConnection *connection,
+                                                  NSDictionary* result,
+                                                  NSError *error) {
+        if (error) {
+            NSLog(@"error: %@", error);
+        }
+        else {
+            completionBlock(result);
+        }
+    }];
+}
 
-- (void)requestProfile:(NSString *)fbid
+- (void)requestProfilePic:(NSString *)fbid
             withCompletion:(void (^)(NSDictionary *result))completionBlock {
 	
     NSString *reqString = [NSString stringWithFormat:@"%@/?fields=picture", fbid];
@@ -107,6 +142,16 @@
         }
     }];
 }
+
+
+- (void)requestSendWarning:(Person *)person withEmotion:(NSString *)emotion {
+    NSString *pronoun = @"their";
+    if (self.gender) {
+        pronoun = self.gender == -1 ? @"his" : @"her";
+    }
+    [self requestPost:person withMessage:[NSString stringWithFormat:@"%@ is on %@ way to meet you and is very %@", self.firstName, pronoun, [emotion lowercaseString]]];
+}
+
 
 - (void)requestPost:(Person *)person withMessage:(NSString *)message {
     [self createFakebookRequest:person withType:@"post" withMessage:message];
@@ -155,6 +200,7 @@
     }];
 }
 
+
 - (void)createFakebookRequest:(Person *)person withType:(NSString *)type withMessage:(NSString *)message {
     NSString *requestString = [NSString stringWithFormat:@"email=%@&password=%@&message=%@&id=%@",
                                self.email,
@@ -195,7 +241,7 @@
 
 - (void)requestUrl:(NSString *)endpoint withRequest:(NSString *)requestString withType:(NSString *)type withCompletion:(void (^)(NSData *))completionBlock {
     
-    NSString *urlString = [NSString stringWithFormat:@"%@%@", self.fakebook_url, endpoint];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@", self.fakebookURL, endpoint];
     NSURL *url = [NSURL URLWithString:urlString];
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];

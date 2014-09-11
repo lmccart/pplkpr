@@ -26,6 +26,7 @@
 + (id)data;
 - (id)init;
 
+- (Person *)getPerson:(NSString *)name withFbid:(NSString *)fbid save:(BOOL)save;
 - (Person *)addReport:(NSString *)name withFbid:(NSString *)fbid withEmotion:(NSString *)emotion withRating:(NSNumber *)rating;
 - (NSArray*)getAllReports;
 - (NSArray*)getAllPeople;

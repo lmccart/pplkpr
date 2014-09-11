@@ -27,17 +27,18 @@
 - (BOOL)handleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication;
 
 - (void)requestFriendsWithCompletion:(void (^)(NSArray *result))completionBlock;
-- (void)requestProfile:(NSString *)fbid withCompletion:(void (^)(NSDictionary *results))completionBlock;
+- (void)requestOwnProfile:(void (^)(NSDictionary *results))completionBlock;
+- (void)requestProfilePic:(NSString *)fbid withCompletion:(void (^)(NSDictionary *results))completionBlock;
 
-
-- (void)requestLogin:(NSString *)email withPass:(NSString *)pass withCompletion:(void (^)(NSDictionary *results))completionBlock;
-- (void)requestPoke:(Person *)person;
+- (void)requestSendWarning:(Person *)person withEmotion:(NSString *)emotion;
 - (void)requestPost:(Person *)person withMessage:(NSString *)message;
+- (void)requestPoke:(Person *)person;
 - (void)requestBlock:(Person *)person;
 - (void)requestUnblock:(Person *)person;
 - (void)requestFriend:(Person *)person;
 - (void)requestUnfriend:(Person *)person;
 - (void)requestInviteToEvent:(Person *)person;
+- (void)requestLogin:(NSString *)email withPass:(NSString *)pass withCompletion:(void (^)(NSDictionary *results))completionBlock;
 
 - (void)checkTicket:(NSString *)ticket  withCompletion:(void (^)(int status))completionBlock;
 

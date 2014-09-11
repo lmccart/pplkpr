@@ -86,6 +86,48 @@
 }
 
 
+// returns existing person or makes new one
+- (Person *)getPerson:(NSString *)name withFbid:(NSString *)fbid save:(BOOL)save {
+    NSLog(@"GETTING PERSON %@", fbid);
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"fbid == %@", fbid];
+    [request setEntity:[NSEntityDescription entityForName:@"Person" inManagedObjectContext:_managedObjectContext]];
+    [request setPredicate:predicate];
+    
+    NSError *error = nil;
+    NSArray *result = [_managedObjectContext executeFetchRequest:request error:&error];
+    
+    Person *person;
+    
+    
+    if (result == nil) {
+        NSLog(@"fetch result = nil");
+    } else {
+        if([result count] > 0) {
+            person = (Person *)[result objectAtIndex:0];
+        } else {
+            
+            person = [NSEntityDescription insertNewObjectForEntityForName:@"Person"
+                                                   inManagedObjectContext:_managedObjectContext];
+            [person setValue:name forKey:@"name"];
+            [person setValue:fbid forKey:@"fbid"];
+            
+            NSMutableArray *arr = [[NSMutableArray alloc] init];
+            [person setValue:arr forKey:@"fb_tickets"];
+            
+            if (save) {
+                NSError *error;
+                if (![_managedObjectContext save:&error]) {
+                    NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+                }
+            }
+        }
+    }
+    
+    return person;
+}
+
 - (Person *)addReport:(NSString *)name withFbid:(NSString *)fbid withEmotion:(NSString *)emotion withRating:(NSNumber *)rating {
 	
 	NSLog(@"ADDING REPORT %@ %@ %@ %@", name, fbid, rating, emotion);
@@ -99,55 +141,21 @@
     [newReport setValue:emotion forKey:@"emotion"];
     [newReport setValue:rating forKey:@"rating"];
     [newReport setValue:ts forKey:@"timestamp"];
-	
-	
-	NSFetchRequest *request = [[NSFetchRequest alloc] init];
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"fbid == %@", fbid];
-	[request setEntity:[NSEntityDescription entityForName:@"Person" inManagedObjectContext:_managedObjectContext]];
-	[request setPredicate:predicate];
-	
-	NSError *error = nil;
-	NSArray *result = [_managedObjectContext executeFetchRequest:request error:&error];
-	
-    Person *person;
     
-	if (result == nil) {
-		NSLog(@"fetch result = nil");
-        // Handle the error here
-	} else {
-		if([result count] > 0) {
-			//NSLog(@"fetch saved person");
-			person = (Person *)[result objectAtIndex:0];
-			newReport.person = person;
-            
-            
-            NSNumber *tot = [person valueForKey:[NSString stringWithFormat:@"%@N", emotion]];
-            
-			tot = [NSNumber numberWithInteger:[tot intValue] + 1];
-			
-            [person setValue:tot
-                      forKey:[NSString stringWithFormat:@"%@N", emotionKey]];
-			NSLog(@"reports n for %@ %@ %@ now at %@", person.name, person.fbid, newReport.emotion, tot);
-		} else {
-			NSLog(@"create new person");
-			person = [NSEntityDescription insertNewObjectForEntityForName:@"Person"
-                                                              inManagedObjectContext:_managedObjectContext];
-			[person setValue:name forKey:@"name"];
-            [person setValue:fbid forKey:@"fbid"];
-            [person setValue:[NSNumber numberWithInt:1]
-                         forKey:[NSString stringWithFormat:@"%@N", emotionKey]];
-            
-            NSMutableArray *arr = [[NSMutableArray alloc] init];
-            [arr addObject:@"5aab4905-0fe9-4352-a0e6-0d93d7d0f760"]; // pend temp
-            [person setValue:arr forKey:@"fb_tickets"];
-            
-			person.reports = [NSSet setWithObjects:newReport, nil];
-            newReport.person = person;
-		}
-        
-        [person setTimestamp:ts]; // update for recency
-	}
+    // add report to person
+    Person *person = [self getPerson:name withFbid:fbid save:false];
+    newReport.person = person;
+    
+    // update totals
+    NSNumber *tot = [person valueForKey:[NSString stringWithFormat:@"%@N", emotion]];
+    tot = [NSNumber numberWithInteger:[tot intValue] + 1];
+	[person setValue:tot
+              forKey:[NSString stringWithFormat:@"%@N", emotionKey]];
+    NSLog(@"reports n for %@ %@ %@ now at %@", person.name, person.fbid, newReport.emotion, tot);
+    [person setTimestamp:ts]; // update for recency
 
+
+    NSError *error;
 	if (![_managedObjectContext save:&error]) {
 		NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
 	}

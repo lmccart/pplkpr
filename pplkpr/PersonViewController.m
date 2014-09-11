@@ -54,7 +54,7 @@
         [_personLabel setText:self.curPerson.name];
         [[InteractionData data] setJumpToPerson:nil];
         
-        [[FBHandler data] requestProfile:self.curPerson.fbid withCompletion:^(NSDictionary * result){
+        [[FBHandler data] requestProfilePic:self.curPerson.fbid withCompletion:^(NSDictionary * result){
             NSDictionary *pic = [result objectForKey:@"picture"];
             NSDictionary *data = [pic objectForKey:@"data"];
             NSString *url = [data objectForKey:@"url"];

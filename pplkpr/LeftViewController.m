@@ -34,6 +34,8 @@
 @property (retain, nonatomic) IBOutlet UISlider *intensitySlider;
 @property float imgSize;
 
+@property BOOL needsReset;
+
 @end
 
 @implementation LeftViewController
@@ -47,7 +49,8 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-		NSLog(@"init\n");
+        NSLog(@"init\n");
+        self.needsReset = false;
     }
     return self;
 }
@@ -88,7 +91,7 @@
     for (Person *p in recents) {
         if (i<5) {
             
-            [[FBHandler data] requestProfile:p.fbid withCompletion:^(NSDictionary * result){
+            [[FBHandler data] requestProfilePic:p.fbid withCompletion:^(NSDictionary * result){
                 NSDictionary *pic = [result objectForKey:@"picture"];
                 NSDictionary *data = [pic objectForKey:@"data"];
                 NSString *url = [data objectForKey:@"url"];
@@ -138,7 +141,12 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [self resetForm];
+    if (self.needsReset) {
+        [self resetForm];
+        self.needsReset = false;
+        // previous report filed should return to reportview screen
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
     NSMutableDictionary *event = [[TempHRV data] getHRVEvent];
 	self.emotion = [[[InteractionData data] emotionsArray] objectAtIndex:0];
     [self.intensitySlider setValue:[[event objectForKey:@"intensity"] floatValue]];
@@ -248,12 +256,12 @@
         val = ((val-0.25)/0.5); // to account for hiding of edges of slider
         Person *p = [[InteractionData data] addReport:self.whoName withFbid:self.whoFbid withEmotion:self.emotion withRating:[NSNumber numberWithFloat:val]];
         
+        // reset form
+        [self setNeedsReset:true];
+        
         // go to person view
         [[InteractionData data] setJumpToPerson:p];
         [self.tabBarController setSelectedIndex:1];
-        
-        // reset form
-        [self resetForm];
     }
 }
 

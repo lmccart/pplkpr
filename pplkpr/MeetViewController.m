@@ -32,6 +32,8 @@
 @property (retain, nonatomic) IBOutlet UISlider *intensitySlider;
 @property float imgSize;
 
+@property BOOL needsReset;
+
 @end
 
 @implementation MeetViewController
@@ -46,6 +48,7 @@
     if (self) {
         // Custom initialization
         NSLog(@"init\n");
+        self.needsReset = false;
     }
     return self;
 }
@@ -82,7 +85,7 @@
     for (Person *p in recents) {
         if (i<5) {
             
-            [[FBHandler data] requestProfile:p.fbid withCompletion:^(NSDictionary * result){
+            [[FBHandler data] requestProfilePic:p.fbid withCompletion:^(NSDictionary * result){
                 NSDictionary *pic = [result objectForKey:@"picture"];
                 NSDictionary *data = [pic objectForKey:@"data"];
                 NSString *url = [data objectForKey:@"url"];
@@ -132,7 +135,13 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [self resetForm];
+    
+    if (self.needsReset) {
+        [self resetForm];
+        self.needsReset = false;
+        // previous report filed should return to reportview screen
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
     NSMutableDictionary *event = [[TempHRV data] getHRVEvent];
     self.emotion = [[[InteractionData data] emotionsArray] objectAtIndex:0];
     [self.intensitySlider setValue:[[event objectForKey:@"intensity"] floatValue]];
@@ -214,19 +223,7 @@
     [self.emotionTextView.textContainer setLineFragmentPadding:0];
 }
 
-
-
-
-
-
 #pragma mark UI handlers
-
-//- (void)fillTextBoxAndDismiss:(NSString *)text {
-//    //self.whoTextField.text = text;
-//	[self toggleFormView];
-//    [self dismissViewControllerAnimated:NO completion:nil];
-//}
-
 
 - (IBAction)submit:(id)sender {
     
@@ -238,14 +235,15 @@
                                               otherButtonTitles:nil];
         [alert show];
     } else {
-        Person *p = [[InteractionData data] addReport:self.whoName withFbid:self.whoFbid withEmotion:self.emotion withRating:[NSNumber numberWithFloat:[self.intensitySlider value]]];
-        
-        // go to person view
-        [[InteractionData data] setJumpToPerson:p];
-        [self.tabBarController setSelectedIndex:1];
+        Person *p = [[InteractionData data] getPerson:self.whoName withFbid:self.whoFbid save:true];
+        [[FBHandler data] requestSendWarning:p withEmotion:self.emotion];
         
         // reset form
-        [self resetForm];
+        [self setNeedsReset:true];
+        
+        // go to home view
+        [self.tabBarController setSelectedIndex:0];
+        
     }
 }
 
@@ -268,25 +266,12 @@
 }
 
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (void)viewDidUnload {
-    
-    [super viewDidUnload];
-}
-
-
 #pragma mark - MLPAutoCompleteTextField Delegate
 
 - (void)autoCompleteTextField:(MLPAutoCompleteTextField *)textField
   didSelectAutoCompleteString:(NSString *)selectedString
        withAutoCompleteObject:(id<MLPAutoCompletionObject>)selectedObject
-            forRowAtIndexPath:(NSIndexPath *)indexPath
-{
+            forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (selectedObject) {
         FriendsCustomAutoCompleteObject *fObj = (FriendsCustomAutoCompleteObject *)selectedObject;
         [self setWhoName:fObj.name];
