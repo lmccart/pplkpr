@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "InteractionData.h"
 #import "HeartRateMonitor.h"
+#import "FBHandler.h"
 
 @implementation AppDelegate
 
@@ -91,12 +92,22 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
 	// Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    [[FBHandler data] handleActivate];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-	// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    [[FBHandler data] closeSession];
 }
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+    return [[FBHandler data] handleOpenURL:url sourceApplication:sourceApplication];
+}
+
 
 #pragma mark data
 

@@ -62,6 +62,18 @@
     return self;
 }
 
+- (BOOL)handleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication {
+    return [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
+}
+
+- (void) handleActivate {
+    [FBAppEvents activateApp];
+    [FBAppCall handleDidBecomeActive];
+}
+
+- (void) closeSession {
+    [FBSession.activeSession close];
+}
 
 
 - (void) requestFriendsWithCompletion:(void (^)(NSArray *))completionBlock {

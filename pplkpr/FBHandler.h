@@ -16,9 +16,15 @@
 @property (nonatomic, retain) NSString *email;
 @property (nonatomic, retain) NSString *pass;
 
+@property (strong, nonatomic) FBSession *session;
+
 
 +(id)data;
 -(id)init;
+
+- (void)closeSession;
+- (void)handleActivate;
+- (BOOL)handleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication;
 
 - (void)requestFriendsWithCompletion:(void (^)(NSArray *result))completionBlock;
 - (void)requestProfile:(NSString *)fbid withCompletion:(void (^)(NSDictionary *results))completionBlock;
