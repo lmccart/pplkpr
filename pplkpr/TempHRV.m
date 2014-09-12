@@ -38,7 +38,6 @@
 }
 
 
-
 - (NSMutableDictionary *)getHRVEvent {
 	
 	NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
@@ -48,6 +47,8 @@
 }
 
 - (NSString *)getSensorData {
+    // stick together stored sensor data since last call to this method
+    // clear out stored sensor data
     return @"this is a test string of data @todo";
 }
 
