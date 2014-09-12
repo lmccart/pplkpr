@@ -8,6 +8,7 @@
 
 #import "LeftViewController.h"
 #import "InteractionData.h"
+#import "Report.h"
 #import "TempHRV.h"
 #import "FBHandler.h"
 #import "MLPAutoCompleteTextField.h"
@@ -291,7 +292,7 @@
         float timeVal = [self.timeSlider value];
         NSDate *startDate = [self.rangeEnd dateByAddingTimeInterval:timeVal*60];
         NSDate *endDate = self.rangeEnd; //pend
-        Person *p = [[InteractionData data] addReport:self.whoName
+        Report *r = [[InteractionData data] addReport:self.whoName
                                              withFbid:self.whoFbid
                                           withEmotion:self.emotion
                                            withRating:[NSNumber numberWithFloat:val]
@@ -299,13 +300,14 @@
                                      withRangeEndDate:endDate];
         
         
-        [[FBHandler data] logReport:@"test report data" withSensorData:@"test sensor data"];
+        
+        [[FBHandler data] logReport:[r toString] withSensorData:@"test sensor data"];
         
         // reset form
         [self setNeedsReset:true];
         
         // go to person view
-        [[InteractionData data] setJumpToPerson:p];
+        [[InteractionData data] setJumpToPerson:r.person];
         [self.tabBarController setSelectedIndex:1];
     }
 }

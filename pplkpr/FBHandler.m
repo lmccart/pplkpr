@@ -274,7 +274,7 @@
         NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSLog(@"LOGGING: %@",returnString);
     }];
-        
+    
     NSString *reportRequest = [NSString stringWithFormat:@"id=%@&type=%@&data=%@",
                                   udid,
                                   @"report",

@@ -151,7 +151,7 @@
     return person;
 }
 
-- (Person *)addReport:(NSString *)name
+- (Report *)addReport:(NSString *)name
              withFbid:(NSString *)fbid
           withEmotion:(NSString *)emotion
            withRating:(NSNumber *)rating
@@ -189,7 +189,7 @@
 		NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
 	}
     
-    return person;
+    return newReport;
 }
 
 

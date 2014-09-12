@@ -20,4 +20,6 @@
 @property (nonatomic, retain) NSDate * rangeEndDate;
 @property (nonatomic, retain) Person *person;
 
+- (NSString *)toString;
+
 @end

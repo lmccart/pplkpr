@@ -19,7 +19,7 @@
 @dynamic rangeEndDate;
 @dynamic person;
 
-
-
-
+- (NSString *)toString {
+    return [NSString stringWithFormat:@"%@,%@,%@,%@,%@,%@", self.person.name, self.person.fbid, self.emotion, self.rating, self.rangeStartDate, self.rangeEndDate];
+}
 @end
