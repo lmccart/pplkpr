@@ -208,9 +208,9 @@
                         <outlet property="emotionPicker" destination="p1q-e4-vKi" id="Hqq-WR-Mql"/>
                         <outlet property="emotionTextView" destination="Xyc-Py-f9G" id="Wbz-G0-ccM"/>
                         <outlet property="intensitySlider" destination="0db-y5-gVG" id="fLv-qq-N25"/>
-                        <outlet property="timeEnd" destination="ORG-qe-BAv" id="HYF-Iq-6QG"/>
+                        <outlet property="rangeEndLabel" destination="ORG-qe-BAv" id="NeD-CQ-xys"/>
+                        <outlet property="rangeStartLabel" destination="HGK-1y-3i2" id="iKR-mD-Jkl"/>
                         <outlet property="timeSlider" destination="JkY-er-b42" id="cwb-5z-GeN"/>
-                        <outlet property="timeStart" destination="HGK-1y-3i2" id="uDI-hh-etd"/>
                         <outlet property="whoRecentView" destination="YP2-NX-mY8" id="RDS-Mq-mzl"/>
                         <outlet property="whoTextField" destination="9fa-v4-3v6" id="G1f-yl-pEv"/>
                     </connections>
