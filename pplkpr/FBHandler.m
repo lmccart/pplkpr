@@ -193,8 +193,8 @@
     NSLog(@"request string %@", requestString);
     
     [self requestUrl:@"login" withRequest:requestString withType:@"POST" withCompletion:^(NSData *data) {
-        NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"SUCCEEDED LOGIN: %@",returnString);
+        //NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        //NSLog(@"SUCCEEDED LOGIN: %@",returnString);
         
         NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
         completionBlock(results);
@@ -210,12 +210,12 @@
                                person.fbid];
     
     [self requestUrl:type withRequest:requestString withType:@"POST" withCompletion:^(NSData *data) {
-        NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"SUCCEEDED: %@",returnString);
+        //NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        //NSLog(@"SUCCEEDED: %@",returnString);
     
         NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
         NSString *ticket = [results objectForKey:@"ticket"];
-        [person.fb_tickets addObject:ticket];
+        [person.fb_tickets setObject:type forKey:ticket];
     
         // save context
         NSError* error;
@@ -228,11 +228,10 @@
 - (void)checkTicket:(NSString *)ticket withCompletion:(void (^)(int status))completionBlock {
     
     NSString *endpoint = [NSString stringWithFormat:@"status/%@", ticket];
-    NSLog(@"endpoint %@", endpoint);
     
     [self requestUrl:endpoint withRequest:@"" withType:@"GET" withCompletion:^(NSData *data) {
-        NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"SUCCEEDED TICKET CHECK: %@",returnString);
+        //NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        //NSLog(@"SUCCEEDED TICKET CHECK: %@",returnString);
         
         NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
         int status = [[results objectForKey:@"status"] integerValue];

@@ -113,8 +113,11 @@
             [person setValue:name forKey:@"name"];
             [person setValue:fbid forKey:@"fbid"];
             
-            NSMutableArray *arr = [[NSMutableArray alloc] init];
-            [person setValue:arr forKey:@"fb_tickets"];
+            NSMutableDictionary *tickets_arr = [[NSMutableDictionary alloc] init];
+            [person setValue:tickets_arr forKey:@"fb_tickets"];
+            
+            NSMutableArray *actions_arr = [[NSMutableArray alloc] init];
+            [person setValue:actions_arr forKey:@"fb_completed_actions"];
             
             if (save) {
                 NSError *error;

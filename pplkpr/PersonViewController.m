@@ -62,15 +62,31 @@
             [self.personPhoto sd_setImageWithURL:[NSURL URLWithString:url]];
         }];
         
-        for (NSString *tick in self.curPerson.fb_tickets) {
-            NSLog(@"tick %@", tick);
-            [[FBHandler data] checkTicket:tick withCompletion:^(int status){
-                NSLog(@"status %d", status);
-            }];
-        }
+        [self checkTickets];
         
 	} else {
         [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+}
+
+- (void)checkTickets {
+    Person *p = self.curPerson;
+    for (NSString *tick in self.curPerson.fb_tickets) {
+        [[FBHandler data] checkTicket:tick withCompletion:^(int status) {
+            NSString *action = [p.fb_tickets objectForKey:tick];
+            if (status == 1) {
+                NSLog(@"ticket successful %@ %@", tick, action);
+                [p.fb_tickets removeObjectForKey:tick];
+                [p.fb_completed_actions addObject:action];
+                NSLog(@"%@", p.fb_completed_actions);
+            } else if (status == 0) {
+                NSLog(@"ticket processing %@", tick);
+            } else if (status == -1) {
+                NSLog(@"ticket failed %@", tick);
+                [p.fb_tickets removeObjectForKey:tick];
+            }
+        }];
+            
     }
 }
 
@@ -84,8 +100,8 @@
 		controller.messageComposeDelegate = self;
 		[self presentViewController:controller animated:YES completion:nil];
 	}
-    [[FBHandler data] requestPoke:self.curPerson];
-    [[FBHandler data] requestPost:self.curPerson withMessage:@"testtest"];
+    //[[FBHandler data] requestPoke:self.curPerson];
+    [[FBHandler data] requestPost:self.curPerson withMessage:@"hi kyle from fakebook"];
 }
 
 /*

@@ -18,7 +18,8 @@
 @property (nonatomic, retain) NSNumber *timestamp;
 
 // tracking FB actions
-@property (nonatomic, retain) NSMutableArray *fb_tickets;
+@property (nonatomic, retain) NSMutableDictionary *fb_tickets;
+@property (nonatomic, retain) NSMutableArray *fb_completed_actions;
 @property (nonatomic, retain) NSMutableDictionary *fb_actions;
 
 @property (nonatomic, retain) NSNumber *calm;
