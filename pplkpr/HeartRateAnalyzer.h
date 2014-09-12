@@ -1,5 +1,5 @@
 //
-//  TempHRV.h
+//  HeartRateAnalyzer.h
 //  pplkpr
 //
 //  Created by Lauren McCarthy on 6/21/14.
@@ -8,13 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
-@interface TempHRV : NSObject
+@interface HeartRateAnalyzer : NSObject
 
 +(id)data;
 -(id)init;
 
 - (NSMutableDictionary *)getHRVEvent;
 - (NSString *)getSensorData;
+
+- (void)addRR:(NSInteger)rr withTime:(NSDate *)time;
 
 @end
 

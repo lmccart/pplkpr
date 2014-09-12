@@ -7,6 +7,7 @@
 //
 
 #import "HeartRateMonitor.h"
+#import "HeartRateAnalyzer.h"
 #import "AppDelegate.h"
 #import <CoreBluetooth/CoreBluetooth.h>
 
@@ -257,9 +258,10 @@ didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic
                     [data getBytes:&rr range:NSMakeRange(readOffset, sizeof(rr))];
                     //				NSLog(@"RR-Interval %hhu: %hu", entry, rr);
                     
-                    time_t unixTime = (time_t) [[NSDate date] timeIntervalSince1970];
-                    NSString* cur = [NSString stringWithFormat:@"%ld\t%hu", unixTime, rr];
-                    NSLog(@"%@", cur);
+                    // time_t unixTime = (time_t) [[NSDate date] timeIntervalSince1970];
+                    // NSString* cur = [NSString stringWithFormat:@"%ld\t%hu", unixTime, rr];
+                    // NSLog(@"%@", cur);
+                    [[HeartRateAnalyzer data] addRR:[[NSNumber numberWithUnsignedShort:rr] integerValue] withTime:[NSDate date]];
                     //[self writeToLogFile:cur];
                     
                     entry++;

@@ -9,7 +9,7 @@
 #import "LeftViewController.h"
 #import "InteractionData.h"
 #import "Report.h"
-#import "TempHRV.h"
+#import "HeartRateAnalyzer.h"
 #import "FBHandler.h"
 #import "MLPAutoCompleteTextField.h"
 #import "CustomAutoCompleteCell.h"
@@ -153,7 +153,7 @@
         // previous report filed should return to reportview screen
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
-    NSMutableDictionary *event = [[TempHRV data] getHRVEvent];
+    NSMutableDictionary *event = [[HeartRateAnalyzer data] getHRVEvent];
 	self.emotion = [[[InteractionData data] emotionsArray] objectAtIndex:0];
     [self.intensitySlider setValue:[[event objectForKey:@"intensity"] floatValue]];
     
@@ -301,7 +301,7 @@
         
         
         
-        [[FBHandler data] logReport:[r toString] withSensorData:[[TempHRV data] getSensorData]];
+        [[FBHandler data] logReport:[r toString] withSensorData:[[HeartRateAnalyzer data] getSensorData]];
         
         // reset form
         [self setNeedsReset:true];

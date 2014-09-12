@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6525184A19708ADF00AF6981 /* TempHRV.m in Sources */ = {isa = PBXBuildFile; fileRef = 6525184919708ADF00AF6981 /* TempHRV.m */; };
+		651EFCED19C3909F0089BA51 /* DayLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 651EFCEA19C3909F0089BA51 /* DayLog.m */; };
+		6525184A19708ADF00AF6981 /* HeartRateAnalyzer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6525184919708ADF00AF6981 /* HeartRateAnalyzer.m */; };
 		6525184D19708AE900AF6981 /* InteractionData.m in Sources */ = {isa = PBXBuildFile; fileRef = 6525184C19708AE900AF6981 /* InteractionData.m */; };
 		6525185019708AF000AF6981 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6525184F19708AF000AF6981 /* AppDelegate.m */; };
 		6525185F19708B1000AF6981 /* PersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6525185619708B1000AF6981 /* PersonViewController.m */; };
@@ -79,8 +80,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		6525184819708ADF00AF6981 /* TempHRV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TempHRV.h; sourceTree = "<group>"; };
-		6525184919708ADF00AF6981 /* TempHRV.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TempHRV.m; sourceTree = "<group>"; };
+		651EFCE919C3909F0089BA51 /* DayLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DayLog.h; sourceTree = "<group>"; };
+		651EFCEA19C3909F0089BA51 /* DayLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DayLog.m; sourceTree = "<group>"; };
+		6525184819708ADF00AF6981 /* HeartRateAnalyzer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeartRateAnalyzer.h; sourceTree = "<group>"; };
+		6525184919708ADF00AF6981 /* HeartRateAnalyzer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeartRateAnalyzer.m; sourceTree = "<group>"; };
 		6525184B19708AE900AF6981 /* InteractionData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteractionData.h; sourceTree = "<group>"; };
 		6525184C19708AE900AF6981 /* InteractionData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InteractionData.m; sourceTree = "<group>"; };
 		6525184E19708AF000AF6981 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -236,12 +239,14 @@
 		27ED09CC1860E6B100ABCC76 /* Data Structures */ = {
 			isa = PBXGroup;
 			children = (
+				651EFCE919C3909F0089BA51 /* DayLog.h */,
+				651EFCEA19C3909F0089BA51 /* DayLog.m */,
 				65F2961119B7D14B007C1C06 /* FBHandler.h */,
 				65F2961219B7D14B007C1C06 /* FBHandler.m */,
 				65251866197B5B1100AF6981 /* HeartRateMonitor.h */,
 				65251867197B5B1100AF6981 /* HeartRateMonitor.m */,
-				6525184819708ADF00AF6981 /* TempHRV.h */,
-				6525184919708ADF00AF6981 /* TempHRV.m */,
+				6525184819708ADF00AF6981 /* HeartRateAnalyzer.h */,
+				6525184919708ADF00AF6981 /* HeartRateAnalyzer.m */,
 				6525184B19708AE900AF6981 /* InteractionData.h */,
 				6525184C19708AE900AF6981 /* InteractionData.m */,
 				65B8511D1862122800DE02E8 /* Person.h */,
@@ -497,7 +502,7 @@
 			files = (
 				658308C519B104C100C385EB /* UIImage+GIF.m in Sources */,
 				6525185019708AF000AF6981 /* AppDelegate.m in Sources */,
-				6525184A19708ADF00AF6981 /* TempHRV.m in Sources */,
+				6525184A19708ADF00AF6981 /* HeartRateAnalyzer.m in Sources */,
 				653F8F79185FA9A50009F785 /* pplkpr.xcdatamodeld in Sources */,
 				65E88A4D19BB8E6A00379268 /* IntensitySlider.m in Sources */,
 				65F2961619B8DE5F007C1C06 /* LoginViewController.m in Sources */,
@@ -523,6 +528,7 @@
 				65CA14A519ACD93200130EEB /* MLPAutoCompleteTextField.m in Sources */,
 				658308BD19B104C100C385EB /* SDImageCache.m in Sources */,
 				658308C119B104C100C385EB /* SDWebImageDownloaderOperation.m in Sources */,
+				651EFCED19C3909F0089BA51 /* DayLog.m in Sources */,
 				65F2964219BA5B9A007C1C06 /* LeftViewController.m in Sources */,
 				65B8511F1862122800DE02E8 /* Person.m in Sources */,
 				658308CD19B1075900C385EB /* FriendsCustomAutoCompleteObject.m in Sources */,
