@@ -301,7 +301,7 @@
         
         
         
-        [[FBHandler data] logReport:[r toString] withSensorData:@"test sensor data"];
+        [[FBHandler data] logReport:[r toString] withSensorData:[[TempHRV data] getSensorData]];
         
         // reset form
         [self setNeedsReset:true];

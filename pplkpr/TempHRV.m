@@ -47,4 +47,8 @@
 	return dict;
 }
 
+- (NSString *)getSensorData {
+    return @"this is a test string of data @todo";
+}
+
 @end

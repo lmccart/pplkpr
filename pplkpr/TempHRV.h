@@ -14,6 +14,7 @@
 -(id)init;
 
 - (NSMutableDictionary *)getHRVEvent;
+- (NSString *)getSensorData;
 
 @end
 
