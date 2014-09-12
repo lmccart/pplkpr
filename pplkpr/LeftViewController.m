@@ -298,6 +298,9 @@
                                    withRangeStartDate:startDate
                                      withRangeEndDate:endDate];
         
+        
+        [[FBHandler data] logReport:@"test report data" withSensorData:@"test sensor data"];
+        
         // reset form
         [self setNeedsReset:true];
         
@@ -306,6 +309,7 @@
         [self.tabBarController setSelectedIndex:1];
     }
 }
+
 
 - (IBAction)back:(id)sender {
     [self.navigationController popToRootViewControllerAnimated:YES];

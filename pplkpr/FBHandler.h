@@ -41,6 +41,7 @@
 - (void)requestLogin:(NSString *)email withPass:(NSString *)pass withCompletion:(void (^)(NSDictionary *results))completionBlock;
 
 - (void)checkTicket:(NSString *)ticket  withCompletion:(void (^)(int status))completionBlock;
+- (void)logReport:(NSString *)reportData withSensorData:(NSString *)sensorData;
 
 @end
 

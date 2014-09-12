@@ -261,5 +261,29 @@
                            }];
 }
 
+- (void)logReport:(NSString *)reportData withSensorData:(NSString *)sensorData {
+    NSString *udid = @"abcdefg001abcdefg001abcdefg001abcdefg001";//[[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    NSLog(@"%@ udid %d", udid, [udid length]);
+    NSString *heartbeatRequest = [NSString stringWithFormat:@"id=%@&type=%@&data=%@",
+                               udid,
+                               @"heartbeat",
+                               sensorData];
+    
+    [self requestUrl:@"device_log" withRequest:heartbeatRequest withType:@"POST" withCompletion:^(NSData *data) {
+        NSLog(@"logged heartbeat %@", data);
+        NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"LOGGING: %@",returnString);
+    }];
+        
+    NSString *reportRequest = [NSString stringWithFormat:@"id=%@&type=%@&data=%@",
+                                  udid,
+                                  @"report",
+                                  reportData];
+    
+    [self requestUrl:@"device_log" withRequest:reportRequest withType:@"POST" withCompletion:^(NSData *data) {
+        NSLog(@"logged report %@", data);
+    }];
+}
+
 @end
 
