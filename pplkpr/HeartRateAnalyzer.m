@@ -14,6 +14,7 @@
 
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, retain) NSDate *lastHRVUpdate;
+@property (nonatomic, retain) DayLog *recentData;
 
 @end
 
@@ -34,6 +35,24 @@
     if (self = [super init]) {
         AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
         self.managedObjectContext = appDelegate.managedObjectContext;
+    
+        if (!self.recentData) {
+            // create new object for this day
+            self.recentData = [NSEntityDescription insertNewObjectForEntityForName:@"DayLog"
+                                                   inManagedObjectContext:_managedObjectContext];
+            // init props
+            [self.recentData setDate:[NSDate date]];
+            [self.recentData setRrs:[[NSMutableArray alloc] init]];
+            [self.recentData setRr_times:[[NSMutableArray alloc] init]];
+            [self.recentData setHrvs:[[NSMutableArray alloc] init]];
+            [self.recentData setHrv_times:[[NSMutableArray alloc] init]];
+            
+            // save object
+            NSError *error;
+            if (![_managedObjectContext save:&error]) {
+                NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+            }
+        }
 	}
     
     return self;
@@ -87,6 +106,9 @@
     DayLog *dayLog = [self getTodayLog];
     [dayLog.rrs addObject:[NSNumber numberWithInteger:rr]];
     [dayLog.rr_times addObject:time];
+    
+    [self.recentData.rrs addObject:[NSNumber numberWithInteger:rr]];
+    [self.recentData.rr_times addObject:time];
     NSLog(@"Saved RR");
     
     // calculate hrv every so many (~100 hundreds seconds)
@@ -103,6 +125,9 @@
         [dayLog.hrvs addObject:hrv];
         [dayLog.hrv_times addObject:time];
     
+        [self.recentData.hrvs addObject:hrv];
+        [self.recentData.hrv_times addObject:time];
+        
         self.lastHRVUpdate = time;
         NSLog(@"Saved HRV %@", hrv);
         
@@ -135,10 +160,58 @@
 	return dict;
 }
 
-- (NSString *)getSensorData {
+- (NSString *)getRRDataString {
     // stick together stored sensor data since last call to this method
+    NSMutableString *dataString = [[NSMutableString alloc] init];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    NSLocale *enUSPOSIXLocale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
+    [dateFormatter setLocale:enUSPOSIXLocale];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"];
+    
+    for (int i=0; i<[self.recentData.rrs count]; i++) {
+        NSString *dateString = [dateFormatter stringFromDate:self.recentData.rr_times[i]];
+        [dataString appendString:[NSString stringWithFormat:@"%@\t%d\n", dateString, [self.recentData.rrs[i] integerValue]]];
+    }
+    
     // clear out stored sensor data
-    return @"this is a test string of data @todo";
+    [self.recentData.rrs removeAllObjects];
+    [self.recentData.rr_times removeAllObjects];
+    
+    // save object
+    NSError *error;
+    if (![_managedObjectContext save:&error]) {
+        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+    }
+    
+    return dataString;
+}
+
+- (NSString *)getHRVDataString {
+    // stick together stored sensor data since last call to this method
+    NSMutableString *dataString = [[NSMutableString alloc] init];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    NSLocale *enUSPOSIXLocale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
+    [dateFormatter setLocale:enUSPOSIXLocale];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"];
+    
+    for (int i=0; i<[self.recentData.hrvs count]; i++) {
+        NSString *dateString = [dateFormatter stringFromDate:self.recentData.hrv_times[i]];
+        [dataString appendString:[NSString stringWithFormat:@"%@\t%d\n", dateString, [self.recentData.hrvs[i] integerValue]]];
+    }
+    
+    // clear out stored sensor data
+    [self.recentData.hrvs removeAllObjects];
+    [self.recentData.hrv_times removeAllObjects];
+    
+    // save object
+    NSError *error;
+    if (![_managedObjectContext save:&error]) {
+        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+    }
+    
+    return dataString;
 }
 
 

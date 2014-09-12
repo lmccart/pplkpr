@@ -20,6 +20,16 @@
 @dynamic person;
 
 - (NSString *)toString {
-    return [NSString stringWithFormat:@"%@,%@,%@,%@,%@,%@", self.person.name, self.person.fbid, self.emotion, self.rating, self.rangeStartDate, self.rangeEndDate];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    NSLocale *enUSPOSIXLocale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
+    [dateFormatter setLocale:enUSPOSIXLocale];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"];
+    
+    NSString *date = [dateFormatter stringFromDate:self.date];
+    NSString *rsDate = [dateFormatter stringFromDate:self.rangeStartDate];
+    NSString *reDate = [dateFormatter stringFromDate:self.rangeEndDate];
+    
+    return [NSString stringWithFormat:@"%@\t%@\t%@\t%@\t%@\t%@\t%@\n", date, self.person.name, self.person.fbid, self.emotion, self.rating, rsDate, reDate];
 }
 @end

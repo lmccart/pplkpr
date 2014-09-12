@@ -300,8 +300,7 @@
                                      withRangeEndDate:endDate];
         
         
-        
-        [[FBHandler data] logReport:[r toString] withSensorData:[[HeartRateAnalyzer data] getSensorData]];
+        [[FBHandler data] logReport:[r toString] withRRData:[[HeartRateAnalyzer data] getRRDataString] withHRVData:[[HeartRateAnalyzer data] getHRVDataString]];
         
         // reset form
         [self setNeedsReset:true];

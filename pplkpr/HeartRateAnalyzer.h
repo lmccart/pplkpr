@@ -18,6 +18,9 @@
 
 - (void)addRR:(NSInteger)rr withTime:(NSDate *)time;
 
+- (NSString *)getRRDataString;
+- (NSString *)getHRVDataString;
+
 @end
 
 
