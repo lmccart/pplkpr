@@ -240,12 +240,15 @@ didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic
 		if(SensorContactStatus == 2) {
 			NSLog(@"Sensor contact is not detected");
             [_viewController updateMonitorStatus:@"no sensor contact"];
-            _sensorContact = false;
-		} else if(SensorContactStatus == 3) {
-			//			NSLog(@"Sensor contact is detected");
-            
+        } else {
             [_viewController updateMonitorStatus:@"connected"];
-            _sensorContact = true;
+            
+            if(SensorContactStatus == 3) {
+                NSLog(@"Sensor contact is detected");
+            } else {
+                NSLog(@"Sensor contact is not supported");
+            }
+            
             if(RRInterval) {
                 //			NSLog(@"One or more RR-Interval values are present.");
                 uint8_t entry = 0;
