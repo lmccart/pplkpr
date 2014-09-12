@@ -14,10 +14,11 @@
 
 @dynamic name;
 @dynamic fbid;
-@dynamic timestamp;
+@dynamic date;
 
-@dynamic fb_tickets;
-@dynamic fb_actions;
+@dynamic fbTickets;
+@dynamic fbActions;
+@dynamic fbCompletedActions;
 
 @dynamic calm;
 @dynamic excited;

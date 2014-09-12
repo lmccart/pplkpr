@@ -215,7 +215,7 @@
     
         NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
         NSString *ticket = [results objectForKey:@"ticket"];
-        [person.fb_tickets setObject:type forKey:ticket];
+        [person.fbTickets setObject:type forKey:ticket];
     
         // save context
         NSError* error;

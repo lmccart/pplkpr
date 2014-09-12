@@ -50,7 +50,7 @@
     
 	if ([[InteractionData data] jumpToPerson]) {
         self.curPerson = [[InteractionData data] jumpToPerson];
-        NSLog(@"%@", self.curPerson.fb_tickets);
+        NSLog(@"%@", self.curPerson.fbTickets);
         [_personLabel setText:self.curPerson.name];
         [[InteractionData data] setJumpToPerson:nil];
         
@@ -71,19 +71,19 @@
 
 - (void)checkTickets {
     Person *p = self.curPerson;
-    for (NSString *tick in self.curPerson.fb_tickets) {
+    for (NSString *tick in self.curPerson.fbTickets) {
         [[FBHandler data] checkTicket:tick withCompletion:^(int status) {
-            NSString *action = [p.fb_tickets objectForKey:tick];
+            NSString *action = [p.fbTickets objectForKey:tick];
             if (status == 1) {
                 NSLog(@"ticket successful %@ %@", tick, action);
-                [p.fb_tickets removeObjectForKey:tick];
-                [p.fb_completed_actions addObject:action];
-                NSLog(@"%@", p.fb_completed_actions);
+                [p.fbTickets removeObjectForKey:tick];
+                [p.fbCompletedActions addObject:action];
+                NSLog(@"%@", p.fbCompletedActions);
             } else if (status == 0) {
                 NSLog(@"ticket processing %@", tick);
             } else if (status == -1) {
                 NSLog(@"ticket failed %@", tick);
-                [p.fb_tickets removeObjectForKey:tick];
+                [p.fbTickets removeObjectForKey:tick];
             }
         }];
             

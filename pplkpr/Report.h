@@ -15,7 +15,7 @@
 
 @property (nonatomic, retain) NSString * emotion;
 @property (nonatomic, retain) NSNumber * rating;
-@property (nonatomic, retain) NSNumber * timestamp;
+@property (nonatomic, retain) NSDate * date;
 @property (nonatomic, retain) Person *person;
 
 @end

@@ -14,7 +14,7 @@
 
 @dynamic emotion;
 @dynamic rating;
-@dynamic timestamp;
+@dynamic date;
 @dynamic person;
 
 

@@ -15,12 +15,12 @@
 
 @property (nonatomic, retain) NSString *name;
 @property (nonatomic, retain) NSString *fbid;
-@property (nonatomic, retain) NSNumber *timestamp;
+@property (nonatomic, retain) NSDate *date;
 
 // tracking FB actions
-@property (nonatomic, retain) NSMutableDictionary *fb_tickets;
-@property (nonatomic, retain) NSMutableArray *fb_completed_actions;
-@property (nonatomic, retain) NSMutableDictionary *fb_actions;
+@property (nonatomic, retain) NSMutableDictionary *fbTickets;
+@property (nonatomic, retain) NSMutableArray *fbCompletedActions;
+@property (nonatomic, retain) NSMutableDictionary *fbActions;
 
 @property (nonatomic, retain) NSNumber *calm;
 @property (nonatomic, retain) NSNumber *excited;

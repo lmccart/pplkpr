@@ -29,8 +29,9 @@
 - (Person *)getPerson:(NSString *)name withFbid:(NSString *)fbid save:(BOOL)save;
 - (Person *)addReport:(NSString *)name withFbid:(NSString *)fbid withEmotion:(NSString *)emotion withRating:(NSNumber *)rating;
 - (NSArray*)getAllReports;
+- (Report *)getLatestReport;
+- (NSTimeInterval)getTimeSinceLastReport;
 - (NSArray*)getAllPeople;
-- (void)calculateGlobalAverages;
 - (NSMutableDictionary *)getRankedPeople;
 - (NSMutableArray *)getPriorities;
 - (NSArray *)getSortedPriorities;

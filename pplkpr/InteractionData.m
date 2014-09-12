@@ -68,7 +68,7 @@
 											  inManagedObjectContext:_managedObjectContext];
 	[fetchRequest setEntity:entity];
 	NSError* error;
-	NSArray *fetchedPeople = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+	NSArray *fetchedPeople = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
 	return fetchedPeople;
 }
 
@@ -76,15 +76,35 @@
 - (NSArray*)getAllReports {
 	
 	NSFetchRequest *request = [[NSFetchRequest alloc] init];
-	
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@", @"JOHN"];
 	[request setEntity:[NSEntityDescription entityForName:@"Report" inManagedObjectContext:_managedObjectContext]];
 	[request setPredicate:predicate];
 	NSError* error;
-	NSArray *fetchedReports = [_managedObjectContext executeFetchRequest:request error:&error];
+	NSArray *fetchedReports = [self.managedObjectContext executeFetchRequest:request error:&error];
 	return fetchedReports;
 }
 
+- (Report *)getLatestReport {
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSSortDescriptor *dateSort = [[NSSortDescriptor alloc] initWithKey:@"date" ascending:NO];
+    [request setEntity:[NSEntityDescription entityForName:@"Report" inManagedObjectContext:_managedObjectContext]];
+    [request setSortDescriptors:[NSArray arrayWithObject:dateSort]];
+    [request setFetchLimit:1];
+    NSError* error;
+    NSArray *fetchedReports = [self.managedObjectContext executeFetchRequest:request error:&error];
+    if (fetchedReports && [fetchedReports count] > 0) {
+        return fetchedReports[0];
+    } else return nil;
+}
+
+- (NSTimeInterval)getTimeSinceLastReport {
+    Report *r = [self getLatestReport];
+    if (r) {
+        return [[NSDate date] timeIntervalSinceDate:r.date];
+    } else {
+        return 0;
+    }
+}
 
 // returns existing person or makes new one
 - (Person *)getPerson:(NSString *)name withFbid:(NSString *)fbid save:(BOOL)save {
@@ -110,14 +130,15 @@
             
             person = [NSEntityDescription insertNewObjectForEntityForName:@"Person"
                                                    inManagedObjectContext:_managedObjectContext];
-            [person setValue:name forKey:@"name"];
-            [person setValue:fbid forKey:@"fbid"];
+            [person setName:name];
+            [person setFbid:fbid];
+            [person setDate:[NSDate date]]; // update for recency
             
             NSMutableDictionary *tickets_arr = [[NSMutableDictionary alloc] init];
-            [person setValue:tickets_arr forKey:@"fb_tickets"];
+            [person setFbTickets:tickets_arr];
             
             NSMutableArray *actions_arr = [[NSMutableArray alloc] init];
-            [person setValue:actions_arr forKey:@"fb_completed_actions"];
+            [person setFbCompletedActions:actions_arr];
             
             if (save) {
                 NSError *error;
@@ -140,10 +161,9 @@
 													   inManagedObjectContext:_managedObjectContext];
     
     NSString *emotionKey = [emotion lowercaseString];
-    NSNumber *ts = [NSNumber numberWithDouble:[[NSDate date] timeIntervalSince1970]];
-    [newReport setValue:emotion forKey:@"emotion"];
-    [newReport setValue:rating forKey:@"rating"];
-    [newReport setValue:ts forKey:@"timestamp"];
+    [newReport setEmotion:emotion];
+    [newReport setRating:rating];
+    [newReport setDate:[NSDate date]];
     
     // add report to person
     Person *person = [self getPerson:name withFbid:fbid save:false];
@@ -155,7 +175,7 @@
 	[person setValue:tot
               forKey:[NSString stringWithFormat:@"%@N", emotionKey]];
     NSLog(@"reports n for %@ %@ %@ now at %@", person.name, person.fbid, newReport.emotion, tot);
-    [person setTimestamp:ts]; // update for recency
+    [person setDate:[NSDate date]]; // update for recency
 
 
     NSError *error;
@@ -311,7 +331,7 @@
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setEntity:[NSEntityDescription entityForName:@"Person" inManagedObjectContext:_managedObjectContext]];
     
-    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"timestamp" ascending:NO]; // default to newest first
+    NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"date" ascending:NO]; // default to newest first
     [request setSortDescriptors:[NSArray arrayWithObject:descriptor]];
     
     NSArray *results = [_managedObjectContext executeFetchRequest:request error:nil];
@@ -415,15 +435,15 @@
     
     NSLog(@"acting on %@ for %@", person.name, emotion);
     
-    if (!person.fb_actions) {
-        [person setFb_actions:[[NSMutableDictionary alloc] init]];
+    if (!person.fbActions) {
+        [person setFbActions:[[NSMutableDictionary alloc] init]];
         for (id e in self.emotionsArray) {
-            [person.fb_actions setObject:[[NSMutableArray alloc] init] forKey:e];
+            [person.fbActions setObject:[[NSMutableArray alloc] init] forKey:e];
         }
     }
     // logic for different consequences here
     NSString* a;
-    NSMutableArray *actions_arr = [person.fb_actions valueForKey:emotion];
+    NSMutableArray *actions_arr = [person.fbActions valueForKey:emotion];
     
     if ([emotion isEqualToString:@"Excited"]) {
         [[FBHandler data] requestPost:person withMessage:@"oooh you excite me!"]; // pend
@@ -509,9 +529,8 @@
 	NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setEntity:[NSEntityDescription entityForName:@"Report" inManagedObjectContext:_managedObjectContext]];
 	
-	NSNumber *pastDate = [NSNumber numberWithDouble:[[NSDate dateWithTimeIntervalSinceNow:-5184000] timeIntervalSince1970]]; // Negative 60 days, in seconds (-60*60*24*60)
-	NSString *predString = [NSString stringWithFormat:@"timestamp < %@", pastDate];
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:predString];
+	NSDate *pastDate = [NSDate dateWithTimeIntervalSinceNow:-5184000]; // Negative 60 days, in seconds (-60*60*24*60)
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"date < %@", pastDate];
 	[request setPredicate:predicate];
 	
 	NSError *error;

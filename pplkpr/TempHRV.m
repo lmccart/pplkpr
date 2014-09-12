@@ -11,6 +11,8 @@
 
 @interface TempHRV()
 
+@property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
+
 @end
 
 
@@ -29,7 +31,7 @@
 	
     if (self = [super init]) {
         AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
-        _managedObjectContext = appDelegate.managedObjectContext;
+        self.managedObjectContext = appDelegate.managedObjectContext;
 	}
     
     return self;

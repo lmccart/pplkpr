@@ -150,6 +150,9 @@
     NSMutableDictionary *event = [[TempHRV data] getHRVEvent];
 	self.emotion = [[[InteractionData data] emotionsArray] objectAtIndex:0];
     [self.intensitySlider setValue:[[event objectForKey:@"intensity"] floatValue]];
+    
+    NSTimeInterval interval = [[InteractionData data] getTimeSinceLastReport];
+    NSLog(@"interval %f", interval);
 
 }
 

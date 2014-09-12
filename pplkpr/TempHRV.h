@@ -10,9 +10,6 @@
 
 @interface TempHRV : NSObject
 
-@property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
-
-
 +(id)data;
 -(id)init;
 
