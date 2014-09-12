@@ -11,8 +11,6 @@
 @interface HeartRateMonitor : NSObject
 
 
-@property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
-@property (nonatomic, retain) ViewController *viewController;
 
 -(void) startScan;
 -(void) stopScan;

@@ -23,14 +23,14 @@
 @interface HeartRateMonitor () <CBCentralManagerDelegate, CBPeripheralDelegate>
 @property (nonatomic, strong) CBCentralManager *manager;
 @property (nonatomic, strong) CBPeripheral *peripheral;
+@property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, retain) ViewController *viewController;
+
 @property BOOL sensorContact;
 
 @end
 
 @implementation HeartRateMonitor
-@synthesize manager = _manager;
-@synthesize peripheral = _peripheral;
-@synthesize viewController = _viewController;
 
 + (id)data {
     static HeartRateMonitor *data = nil;
@@ -143,7 +143,7 @@
 
 - (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)aPeripheral {
     
-    NSLog(@"Peripheral connected");
+    NSLog(@"Peripheral connected %@", self.viewController);
     [_viewController updateMonitorStatus:@"connecting"];
     
 	[aPeripheral setDelegate:self];
@@ -199,6 +199,7 @@ didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic
 	if (error) {
 		return;
 	}
+    NSLog(@"didUpdateValueForCharacteristic %@", characteristic);
 	CBUUID* target = [CBUUID UUIDWithString:@"2a37"]; // heart rate measurement characteristic
 	if([[characteristic.UUID data] isEqualToData:[target data]]) {
 		NSData* data = characteristic.value;
@@ -209,12 +210,13 @@ didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic
 		[data getBytes:&flags range:NSMakeRange(readOffset, 1)];
 		readOffset += 1;
         
+        // PEND KYLE
 		uint8_t HeartRateValueFormat = (flags & (1 << 0)) >> 0;
 		uint8_t SensorContactStatus = (flags & (3 << 1)) >> 1;
 		uint8_t EnergyExpendedStatus = (flags & (1 << 3)) >> 3;
 		uint8_t RRInterval = (flags & (1 << 4)) >> 4;
         
-		//        NSLog(@"Heart Rate %@ flags %hhu, %hhu, %hhu, %hhu for %@", characteristic.value, HeartRateValueFormat, SensorContactStatus, EnergyExpendedStatus, RRInterval, characteristic.UUID);
+		       NSLog(@"Heart Rate %@ flags %hhu, %hhu, %hhu, %hhu for %@", characteristic.value, HeartRateValueFormat, SensorContactStatus, EnergyExpendedStatus, RRInterval, characteristic.UUID);
         
 		if(HeartRateValueFormat) {
 			uint16_t HeartRateMeasurementValue;

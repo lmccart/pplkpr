@@ -194,6 +194,7 @@
 }
 
 - (void)updateMonitorStatus:(NSString *)status {
+    NSLog(@"updated ");
     [_monitorStatusLabel setText:status];
     if ([status isEqual: @"connecting"]) {
         [_monitorStatusLabel setFont:[GlobalMethods globalFont]];

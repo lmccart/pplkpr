@@ -38,7 +38,8 @@
 		tabBarItem.title = @"";
 	}
 
-    ViewController *vc = tabBarController.viewControllers[0];
+    UINavigationController *nc = tabBarController.viewControllers[0];
+    ViewController *vc = nc.viewControllers[0];
     [[HeartRateMonitor data] setViewController:vc];
 	/*
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
