@@ -15,6 +15,8 @@
 @dynamic emotion;
 @dynamic rating;
 @dynamic date;
+@dynamic rangeStartDate;
+@dynamic rangeEndDate;
 @dynamic person;
 
 

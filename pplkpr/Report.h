@@ -15,7 +15,9 @@
 
 @property (nonatomic, retain) NSString * emotion;
 @property (nonatomic, retain) NSNumber * rating;
-@property (nonatomic, retain) NSDate * date;
+@property (nonatomic, retain) NSDate * date; // date report filed (date means timestamp really)
+@property (nonatomic, retain) NSDate * rangeStartDate; // dates referred to in report
+@property (nonatomic, retain) NSDate * rangeEndDate;
 @property (nonatomic, retain) Person *person;
 
 @end

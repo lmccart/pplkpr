@@ -27,7 +27,12 @@
 - (id)init;
 
 - (Person *)getPerson:(NSString *)name withFbid:(NSString *)fbid save:(BOOL)save;
-- (Person *)addReport:(NSString *)name withFbid:(NSString *)fbid withEmotion:(NSString *)emotion withRating:(NSNumber *)rating;
+- (Person *)addReport:(NSString *)name
+             withFbid:(NSString *)fbid
+          withEmotion:(NSString *)emotion
+           withRating:(NSNumber *)rating
+   withRangeStartDate:(NSDate *)rangeStartDate
+     withRangeEndDate:(NSDate *)rangeEndDate;
 - (NSArray*)getAllReports;
 - (Report *)getLatestReport;
 - (NSTimeInterval)getTimeSinceLastReport;

@@ -11,22 +11,22 @@
         <attribute name="boredN" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="calm" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="calmN" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="excited" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="excitedN" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="fb_actions" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="fb_completed_actions" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="fb_tickets" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="fbActions" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="fbCompletedActions" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="fbid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fbTickets" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="scared" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="scaredN" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="timestamp" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <relationship name="reports" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Report" inverseName="person" inverseEntity="Report" syncable="YES"/>
     </entity>
     <entity name="Report" representedClassName="Report" syncable="YES">
+        <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="emotion" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="rating" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="timestamp" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <relationship name="person" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Person" inverseName="reports" inverseEntity="Person" syncable="YES"/>
     </entity>
     <elements>

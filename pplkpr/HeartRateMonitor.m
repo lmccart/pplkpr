@@ -199,7 +199,7 @@ didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic
 	if (error) {
 		return;
 	}
-    NSLog(@"didUpdateValueForCharacteristic %@", characteristic);
+    //NSLog(@"didUpdateValueForCharacteristic %@", characteristic);
 	CBUUID* target = [CBUUID UUIDWithString:@"2a37"]; // heart rate measurement characteristic
 	if([[characteristic.UUID data] isEqualToData:[target data]]) {
 		NSData* data = characteristic.value;
@@ -216,7 +216,7 @@ didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic
 		uint8_t EnergyExpendedStatus = (flags & (1 << 3)) >> 3;
 		uint8_t RRInterval = (flags & (1 << 4)) >> 4;
         
-		       NSLog(@"Heart Rate %@ flags %hhu, %hhu, %hhu, %hhu for %@", characteristic.value, HeartRateValueFormat, SensorContactStatus, EnergyExpendedStatus, RRInterval, characteristic.UUID);
+		       //NSLog(@"Heart Rate %@ flags %hhu, %hhu, %hhu, %hhu for %@", characteristic.value, HeartRateValueFormat, SensorContactStatus, EnergyExpendedStatus, RRInterval, characteristic.UUID);
         
 		if(HeartRateValueFormat) {
 			uint16_t HeartRateMeasurementValue;

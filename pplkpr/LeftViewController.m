@@ -29,10 +29,15 @@
 @property (retain, nonatomic) IBOutlet UIPickerView *emotionPicker;
 @property (strong) NSString *emotion;
 
-@property (retain, nonatomic) IBOutlet UISlider *timeSlider;
-
 @property (retain, nonatomic) IBOutlet UISlider *intensitySlider;
 @property float imgSize;
+
+@property (retain, nonatomic) IBOutlet UISlider *timeSlider;
+@property (retain, nonatomic) NSDate *rangeStart;
+@property (retain, nonatomic) NSDate *rangeEnd;
+@property (retain, nonatomic) IBOutlet UILabel *rangeStartLabel;
+@property (retain, nonatomic) IBOutlet UILabel *rangeEndLabel;
+
 
 @property BOOL needsReset;
 
@@ -151,8 +156,33 @@
 	self.emotion = [[[InteractionData data] emotionsArray] objectAtIndex:0];
     [self.intensitySlider setValue:[[event objectForKey:@"intensity"] floatValue]];
     
-    NSTimeInterval interval = [[InteractionData data] getTimeSinceLastReport];
-    NSLog(@"interval %f", interval);
+    NSTimeInterval interval = [[InteractionData data] getTimeSinceLastReport]/60.0;
+
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [calendar components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:[NSDate date]];
+    NSInteger hour = [components hour] % 12;
+    NSInteger minute = [components minute];
+    NSInteger minuteOffset = 0;
+    if (minute != 0) {
+        hour += 1;
+        minuteOffset = 60 - minute;
+        interval += minuteOffset;
+    }
+    if (hour == 0) {
+        hour += 12;
+    }
+    NSInteger startHour = hour - 2;
+    if (startHour <= 0) {
+        startHour += 12;
+    }
+    interval = MIN(interval, 120.0);
+    //NSLog(@"interval %f %d %d %d", interval, [components hour], hour, startHour);
+    
+    [self.timeSlider setValue:-1*interval];
+    self.rangeEnd = [NSDate dateWithTimeIntervalSinceNow:minuteOffset*60.0];
+    self.rangeStart = [self.rangeEnd dateByAddingTimeInterval:-2*60*60];
+    [self.rangeStartLabel setText:[NSString stringWithFormat:@"%d:00", startHour]];
+    [self.rangeEndLabel setText:[NSString stringWithFormat:@"%d:00", hour]];
 
 }
 
@@ -257,7 +287,16 @@
     } else {
         float val = [self.intensitySlider value];
         val = ((val-0.25)/0.5); // to account for hiding of edges of slider
-        Person *p = [[InteractionData data] addReport:self.whoName withFbid:self.whoFbid withEmotion:self.emotion withRating:[NSNumber numberWithFloat:val]];
+        
+        float timeVal = [self.timeSlider value];
+        NSDate *startDate = [self.rangeEnd dateByAddingTimeInterval:timeVal*60];
+        NSDate *endDate = self.rangeEnd; //pend
+        Person *p = [[InteractionData data] addReport:self.whoName
+                                             withFbid:self.whoFbid
+                                          withEmotion:self.emotion
+                                           withRating:[NSNumber numberWithFloat:val]
+                                   withRangeStartDate:startDate
+                                     withRangeEndDate:endDate];
         
         // reset form
         [self setNeedsReset:true];

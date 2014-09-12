@@ -38,7 +38,6 @@
 		
 		self.jumpToPerson = nil;
         
-        
         AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
         self.managedObjectContext = appDelegate.managedObjectContext;
         
@@ -152,9 +151,14 @@
     return person;
 }
 
-- (Person *)addReport:(NSString *)name withFbid:(NSString *)fbid withEmotion:(NSString *)emotion withRating:(NSNumber *)rating {
+- (Person *)addReport:(NSString *)name
+             withFbid:(NSString *)fbid
+          withEmotion:(NSString *)emotion
+           withRating:(NSNumber *)rating
+   withRangeStartDate:(NSDate *)rangeStartDate
+     withRangeEndDate:(NSDate *)rangeEndDate; {
 	
-	NSLog(@"ADDING REPORT %@ %@ %@ %@", name, fbid, rating, emotion);
+	NSLog(@"ADDING REPORT %@ %@ %@ %@ %@ %@", name, fbid, rating, emotion, rangeStartDate, rangeEndDate);
 	
 	// create new report
 	Report *newReport = [NSEntityDescription insertNewObjectForEntityForName:@"Report"
@@ -164,6 +168,8 @@
     [newReport setEmotion:emotion];
     [newReport setRating:rating];
     [newReport setDate:[NSDate date]];
+    [newReport setRangeStartDate:rangeStartDate];
+    [newReport setRangeEndDate:rangeEndDate];
     
     // add report to person
     Person *person = [self getPerson:name withFbid:fbid save:false];
