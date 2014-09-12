@@ -46,7 +46,7 @@
                 } else {
                     NSLog(@"facebook session opened");
                     [self requestOwnProfile:^(NSDictionary *result) {
-                        NSLog(@"%@", result);
+                        //NSLog(@"%@", result);
                         
                         NSString *gender = [result objectForKey:@"gender"];
                         if (gender) {

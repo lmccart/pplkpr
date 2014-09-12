@@ -42,7 +42,9 @@
 
 - (DayLog *)getTodayLog {
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    [request setEntity:[NSEntityDescription entityForName:@"HeartRateData" inManagedObjectContext:_managedObjectContext]];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"DayLog"
+                                              inManagedObjectContext:_managedObjectContext];
+    [request setEntity:entity];
     
     NSDate *date = [DayLog getTodayDate];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"date == %@", date];
@@ -88,7 +90,11 @@
     NSLog(@"Saved RR");
     
     // calculate hrv every so many (~100 hundreds seconds)
-    if (!self.lastHRVUpdate || [time timeIntervalSinceDate:self.lastHRVUpdate] >= 100) {
+    if (!self.lastHRVUpdate) {
+        [self setLastHRVUpdate:time];
+    }
+    
+    else if ([time timeIntervalSinceDate:self.lastHRVUpdate] >= 10) {
         
         // calculate HRV
         NSNumber *hrv = [dayLog.rrs lastObject];
@@ -98,10 +104,10 @@
         [dayLog.hrv_times addObject:time];
     
         self.lastHRVUpdate = time;
-        NSLog(@"Saved HRV");
+        NSLog(@"Saved HRV %@", hrv);
         
         // PEND: trigger a push notification based on analysis of whether our current state is significant
-        if ([hrv integerValue] > 800) {
+        if ([hrv integerValue] > 0) {
             
             // trigger alert
             UILocalNotification * notification = [[UILocalNotification alloc] init];
