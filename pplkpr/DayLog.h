@@ -18,8 +18,6 @@
 @property (nonatomic, retain) NSMutableArray *hrvs;
 @property (nonatomic, retain) NSMutableArray *hrv_times;
 
-@property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
-
 +(NSDate *)getTodayDate;
 
 @end

@@ -49,13 +49,15 @@
 	freopen([logFilePath cStringUsingEncoding:NSASCIIStringEncoding],"a+",stderr);
 	 */
     
-    
     // Handle launching from a notification
     UILocalNotification *notification =
     [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
     if (notification) {
         NSLog(@"Received Notification %@", notification);
-        [self popToReportView];
+        NSString *type = [notification.userInfo objectForKey:@"type"];
+        if ([type isEqualToString:@"hrv"] || [type isEqualToString:@"location"]) {
+            [self popToReportView];
+        }
     }
     
 	return YES;
@@ -101,8 +103,10 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+    NSLog(@"didBecomeActive");
 	// Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     [[FBHandler data] handleActivate];
+    [[HeartRateMonitor data] scheduleCheckSensor];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -248,6 +252,8 @@
         msg = @"Are you feeling something?";
     } else if ([type isEqualToString:@"location"]) {
         msg = @"Are you about to meet someone or did you just leave someone?";
+    } else if ([type isEqualToString:@"hr_monitor"]) {
+        msg = @"HR monitor is not connected.";
     }
     UILocalNotification * notification = [[UILocalNotification alloc] init];
     notification.alertBody = msg;
@@ -255,33 +261,61 @@
     notification.hasAction = YES;
     notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
     
+    NSDictionary *infoDict = [NSDictionary dictionaryWithObject:type forKey:@"type"];
+    notification.userInfo = infoDict;
+    
     [[UIApplication sharedApplication] scheduleLocalNotification:notification];
     NSLog(@"sending notification");
 }
 
+// fired in all when app notif received while app is foregrounded
+// fired in iOS7 when app opened from touch on notif
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
     NSLog(@"HIIIIII didReceiveLocalNotification");
-    if (application.applicationState == UIApplicationStateInactive ) {
-        //The application received the notification from an inactive state, i.e. the user tapped the "View" button for the alert.
-        [self popToReportView];
-    }
+    NSString *type = [notification.userInfo objectForKey:@"type"];
     
-    else if (application.applicationState == UIApplicationStateActive ) {
-        UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
-        if ([tabBarController selectedIndex] != 2) { // only show if not already reporting
-            
+    if ([type isEqualToString:@"hrv"] || [type isEqualToString:@"location"]) {
+
+        if (application.applicationState == UIApplicationStateInactive ) {
+            //The application received the notification from an inactive state, i.e. the user tapped the "View" button for the alert.
+            [self popToReportView];
+        }
+        
+        else if (application.applicationState == UIApplicationStateActive) {
+            UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
+            if ([tabBarController selectedIndex] != 2) { // only show if not already reporting
+                
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hey!"
+                                                                message:[notification alertBody]
+                                                               delegate:self
+                                                      cancelButtonTitle:@"No"
+                                                      otherButtonTitles:@"Yes", nil];
+                [alert show];
+            }
+        }
+    } else if ([type isEqualToString:@"hr_monitor"]) {
+        if (application.applicationState == UIApplicationStateInactive) {
+            [[HeartRateMonitor data] setSensorWarned:YES];
+        } else if (application.applicationState == UIApplicationStateActive) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hey!"
                                                             message:[notification alertBody]
                                                            delegate:self
-                                                  cancelButtonTitle:@"No"
-                                                  otherButtonTitles:@"Yes", nil];
+                                                  cancelButtonTitle:@"Ok"
+                                                  otherButtonTitles:nil];
             [alert show];
         }
     }
 }
 
+// fired in iOS8 when app opened from touch on notif
 - (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forLocalNotification:(UILocalNotification *)notification completionHandler:(void(^)())completionHandler {
-    [self popToReportView];
+    NSString *type = [notification.userInfo objectForKey:@"type"];
+    if ([type isEqualToString:@"hrv"] || [type isEqualToString:@"location"]) {
+        [self popToReportView];
+    } else if ([type isEqualToString:@"hr_monitor"]) {
+        [[HeartRateMonitor data] setSensorWarned:YES];
+    }
+    completionHandler();
 }
 
 

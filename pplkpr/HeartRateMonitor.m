@@ -28,6 +28,7 @@
 @property (nonatomic, retain) ViewController *viewController;
 
 @property BOOL sensorContact;
+@property BOOL sensorConnected;
 
 @end
 
@@ -47,8 +48,10 @@
     if (self = [super init]) {
         NSLog(@"init hr\n");
         AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
-        _managedObjectContext = appDelegate.managedObjectContext;
-        _manager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
+        self.managedObjectContext = appDelegate.managedObjectContext;
+        self.manager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
+        self.sensorWarned = NO;
+        self.sensorConnected = NO;
 	}
     
     return self;
@@ -58,6 +61,22 @@
     _viewController = viewController;
 }
 
+- (void)scheduleCheckSensor {
+    self.sensorWarned = NO;
+    [NSTimer scheduledTimerWithTimeInterval:45.0
+                                     target:self
+                                   selector:@selector(checkSensor)
+                                   userInfo:nil
+                                    repeats:NO];
+}
+
+- (void)checkSensor {
+    if (!self.sensorConnected && !self.sensorWarned) {
+        AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+        [appDelegate triggerNotification:@"hr_monitor"];
+        self.sensorWarned = YES;
+    }
+}
 
 #pragma mark - Start/Stop Scan methods
 
@@ -87,8 +106,7 @@
 }
 
 // Request CBCentralManager to scan for heart rate peripherals using service UUID 0x180D
-- (void) startScan 
-{
+- (void) startScan {
     
     NSLog(@"startScan");
 	
@@ -107,8 +125,7 @@
 }
 
 // Request CBCentralManager to stop scanning for heart rate peripherals
-- (void) stopScan 
-{
+- (void) stopScan {
     [self.manager stopScan];
     // log back to console
     //	int stderrSave = dup(STDERR_FILENO);
@@ -145,6 +162,7 @@
 - (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)aPeripheral {
     
     NSLog(@"Peripheral connected %@", self.viewController);
+    self.sensorConnected = YES;
     
 	[aPeripheral setDelegate:self];
 	// PEND: set reconnect [bleManager setReconnectOnDisconnect:YES];
@@ -308,6 +326,13 @@ didDisconnectPeripheral:(CBPeripheral *)aPeripheral
 {
     NSLog(@"Disconnected peripheral %@", aPeripheral.name);
     [_viewController updateMonitorStatus:0];
+    self.sensorConnected = NO;
+    
+    // trigger alert
+    AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+    [appDelegate triggerNotification:@"hr_monitor"];
+    self.sensorWarned = YES;
+    
     
     if (self.peripheral) {
         [self.peripheral setDelegate:nil];

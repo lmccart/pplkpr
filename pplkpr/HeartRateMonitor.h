@@ -12,11 +12,14 @@
 
 
 
--(void) startScan;
--(void) stopScan;
+@property BOOL sensorWarned;
 
 +(id)data;
 -(id)init;
+-(void) startScan;
+-(void) stopScan;
 -(void)setViewController:(ViewController *)viewController;
+-(void)scheduleCheckSensor;
+-(void)checkSensor;
 
 @end

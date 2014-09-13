@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		651EFCED19C3909F0089BA51 /* DayLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 651EFCEA19C3909F0089BA51 /* DayLog.m */; };
+		651EFCF019C4F01E0089BA51 /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 651EFCEF19C4F01E0089BA51 /* heart.png */; };
 		6525184A19708ADF00AF6981 /* HeartRateAnalyzer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6525184919708ADF00AF6981 /* HeartRateAnalyzer.m */; };
 		6525184D19708AE900AF6981 /* InteractionData.m in Sources */ = {isa = PBXBuildFile; fileRef = 6525184C19708AE900AF6981 /* InteractionData.m */; };
 		6525185019708AF000AF6981 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6525184F19708AF000AF6981 /* AppDelegate.m */; };
@@ -82,6 +83,7 @@
 /* Begin PBXFileReference section */
 		651EFCE919C3909F0089BA51 /* DayLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DayLog.h; sourceTree = "<group>"; };
 		651EFCEA19C3909F0089BA51 /* DayLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DayLog.m; sourceTree = "<group>"; };
+		651EFCEF19C4F01E0089BA51 /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = heart.png; path = assets/heart.png; sourceTree = "<group>"; };
 		6525184819708ADF00AF6981 /* HeartRateAnalyzer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeartRateAnalyzer.h; sourceTree = "<group>"; };
 		6525184919708ADF00AF6981 /* HeartRateAnalyzer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeartRateAnalyzer.m; sourceTree = "<group>"; };
 		6525184B19708AE900AF6981 /* InteractionData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteractionData.h; sourceTree = "<group>"; };
@@ -389,6 +391,7 @@
 				27ED09CC1860E6B100ABCC76 /* Data Structures */,
 				27ED09CB1860E5C000ABCC76 /* View Controllers */,
 				65FC7C6817A1A37F0045BFF2 /* Images.xcassets */,
+				651EFCEF19C4F01E0089BA51 /* heart.png */,
 				65E398D81849619300E3B2B4 /* assets */,
 				65FC7C5717A1A37F0045BFF2 /* Supporting Files */,
 				65F2961719B8FF7E007C1C06 /* Constants.h */,
@@ -483,6 +486,7 @@
 				65F2963619B93734007C1C06 /* rect.png in Resources */,
 				65F2963819B93734007C1C06 /* report.png in Resources */,
 				65F2962B19B93734007C1C06 /* anxious.png in Resources */,
+				651EFCF019C4F01E0089BA51 /* heart.png in Resources */,
 				65F2962A19B93734007C1C06 /* angry.png in Resources */,
 				65F2963519B93734007C1C06 /* rank.png in Resources */,
 				65FC7C5B17A1A37F0045BFF2 /* InfoPlist.strings in Resources */,

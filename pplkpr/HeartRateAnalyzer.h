@@ -14,7 +14,6 @@
 -(id)init;
 
 - (NSMutableDictionary *)getHRVEvent;
-- (NSString *)getSensorData;
 
 - (void)addRR:(NSInteger)rr withTime:(NSDate *)time;
 
