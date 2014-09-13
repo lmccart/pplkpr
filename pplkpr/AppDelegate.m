@@ -49,6 +49,15 @@
 	freopen([logFilePath cStringUsingEncoding:NSASCIIStringEncoding],"a+",stderr);
 	 */
     
+    
+    // Handle launching from a notification
+    UILocalNotification *notification =
+    [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
+    if (notification) {
+        NSLog(@"Received Notification %@", notification);
+        [self handleNotification:notification];
+    }
+    
 	return YES;
 }
 
@@ -208,6 +217,8 @@
     notification.alertAction = @"Yes";
     notification.hasAction = YES;
     notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
+    NSDictionary *infoDict = [NSDictionary dictionaryWithObject:@"location" forKey:@"trigger"];
+    notification.userInfo = infoDict;
     [[UIApplication sharedApplication] scheduleLocalNotification:notification];
 	
 }
@@ -237,9 +248,32 @@
 	locationManager.delegate = nil;
 }
 
-- (void)didReceiveLocalNotification:(UILocalNotification *)notification {
-	
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+    NSLog(@"HIIIIII didReceiveLocalNotification");
+    
+    [self handleNotification:notification];
 }
 
+- (void)handleNotification:(UILocalNotification *)notification {
+    UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
+    if ([tabBarController selectedIndex] != 2) { // only show if not already reporting
+        
+        NSString *trigger = [notification.userInfo objectForKey:@"trigger"];
+        NSString *msg = [trigger isEqualToString:@"hrv"] ? @"Are you feeling something?" : @"Are you about to meet someone or did you just leave someone?";
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hey!"
+                                                        message:msg
+                                                       delegate:self
+                                              cancelButtonTitle:@"No"
+                                              otherButtonTitles:@"Yes", nil];
+        [alert show];
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == [alertView firstOtherButtonIndex]) {
+        UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
+        [tabBarController setSelectedIndex:2];
+    }
+}
 
 @end

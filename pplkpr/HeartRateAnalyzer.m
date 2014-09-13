@@ -140,7 +140,12 @@
             notification.alertAction = @"Report";
             notification.hasAction = YES;
             notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
+            
+            NSDictionary *infoDict = [NSDictionary dictionaryWithObject:@"hrv" forKey:@"trigger"];
+            notification.userInfo = infoDict;
+
             [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+            NSLog(@"sending notification");
         }
     }
     

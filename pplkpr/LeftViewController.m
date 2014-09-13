@@ -22,13 +22,14 @@
 
 @property (strong, nonatomic) IBOutlet FriendsCompleteDataSource *autoCompleteDataSource;
 @property (weak) IBOutlet MLPAutoCompleteTextField *whoTextField;
-@property (strong) NSString *whoName;
-@property (strong) NSString *whoFbid;
-@property (strong, nonatomic) IBOutlet UIView *whoRecentView;
+@property (retain) NSString *whoName;
+@property (retain) NSString *whoFbid;
+@property (retain, nonatomic) IBOutlet UIView *whoRecentView;
+@property (retain, nonatomic) NSArray *recentPeople;
 
 @property (strong, nonatomic) IBOutlet UITextView *emotionTextView;
 @property (retain, nonatomic) IBOutlet UIPickerView *emotionPicker;
-@property (strong) NSString *emotion;
+@property (retain) NSString *emotion;
 
 @property (retain, nonatomic) IBOutlet UISlider *intensitySlider;
 @property float imgSize;
@@ -90,22 +91,15 @@
     [mask setFrame: CGRectMake(0, 0.65*self.imgSize, self.emotionPicker.bounds.size.width, self.imgSize*0.85)];
     [self.emotionPicker.layer setMask: mask];
     
-    NSArray *recents = [[InteractionData data] getRecentPeople];
     NSArray *subviews = [self.whoRecentView subviews];
     
-    int i=0;
-    for (Person *p in recents) {
-        if (i<5) {
-            
-            [[FBHandler data] requestProfilePic:p.fbid withCompletion:^(NSDictionary * result){
-                NSDictionary *pic = [result objectForKey:@"picture"];
-                NSDictionary *data = [pic objectForKey:@"data"];
-                NSString *url = [data objectForKey:@"url"];
-                
-                [subviews[i] sd_setImageWithURL:[NSURL URLWithString:url]];
-            }];
-            i++;
-        }
+    for (int i=0; i<[subviews count]; i++) {
+        [((UIImageView *)subviews[i]).layer setBorderColor: [[UIColor blackColor] CGColor]];
+        [((UIImageView *)subviews[i]).layer setBorderWidth: 1.0];
+        
+        UITapGestureRecognizer *gr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(thumbTapped:)];
+        [subviews[i] addGestureRecognizer:gr];
+        [subviews[i] setTag:i];
     }
     
     // Build a triangular path
@@ -153,6 +147,30 @@
         // previous report filed should return to reportview screen
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
+    
+    // shortcut thumbs
+    self.recentPeople = [[InteractionData data] getRecentPeople];
+    NSArray *subviews = [self.whoRecentView subviews];
+    
+    for (int i=0; i<[subviews count]; i++) {
+        if (i<[self.recentPeople count]) {
+            
+            Person *p = self.recentPeople[i];
+            
+            [[FBHandler data] requestProfilePic:p.fbid withCompletion:^(NSDictionary * result){
+                NSDictionary *pic = [result objectForKey:@"picture"];
+                NSDictionary *data = [pic objectForKey:@"data"];
+                NSString *url = [data objectForKey:@"url"];
+                [subviews[i] sd_setImageWithURL:[NSURL URLWithString:url]];
+            }];
+            
+            [subviews[i] setHidden:NO];
+        } else {
+            [subviews[i] setHidden:YES];
+        }
+    }
+    
+    
     NSMutableDictionary *event = [[HeartRateAnalyzer data] getHRVEvent];
 	self.emotion = [[[InteractionData data] emotionsArray] objectAtIndex:0];
     [self.intensitySlider setValue:[[event objectForKey:@"intensity"] floatValue]];
@@ -211,6 +229,20 @@
     }
 }
 
+
+
+- (void)thumbTapped:(UITapGestureRecognizer *)recognizer {
+    UIImageView *iv = (UIImageView *)recognizer.view;
+    if (iv.tag < [self.recentPeople count]) {
+        Person *p = [self.recentPeople objectAtIndex:iv.tag];
+        [self setWhoName:p.name];
+        [self setWhoFbid:p.fbid];
+        [self.whoTextField setText:p.name];
+        [self.whoRecentView setHidden:true];
+    }
+
+    // Location of the tap in text-container coordinates
+}
 
 #pragma mark - UIPickerView DataSource
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView

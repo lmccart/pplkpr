@@ -92,7 +92,7 @@
         NSDictionary *attrsDictionary = [NSDictionary dictionaryWithObject:[GlobalMethods globalFont]
                                                                     forKey:NSFontAttributeName];
         
-        NSMutableAttributedString* attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ makes you %@ %@.", p.name, order, [emotion lowercaseString]] attributes:attrsDictionary];
+        NSMutableAttributedString* attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ makes me %@ %@.", p.name, order, [emotion lowercaseString]] attributes:attrsDictionary];
         
         [attributedString addAttribute:@"personTag" value:p range:NSMakeRange(0,[p.name length])];
         [attributedString addAttribute:NSFontAttributeName value:[GlobalMethods globalBoldFont] range:NSMakeRange(0,[p.name length])];
@@ -113,11 +113,17 @@
         [self.priorityView addSubview:tv];
         [self.view layoutIfNeeded];
         CGRect frame = tv.frame;
+        tv.textContainerInset = UIEdgeInsetsMake(10,55,8,10);
+        [tv layoutIfNeeded];
         frame.size.height = tv.contentSize.height;
-        frame.size.width = tv.contentSize.width;
+        frame.size.width = self.priorityView.frame.size.width;
         tv.frame = frame;
-        tv.textContainerInset = UIEdgeInsetsMake(10,10,8,10);
-        [tv sizeToFit];
+        
+        UIImage *img = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", [emotion lowercaseString]]];
+        UIImageView *iv = [[UIImageView alloc] initWithImage:img];
+        [iv setFrame:CGRectMake(10, (frame.size.height-40)/2, 40, 40)];
+        [tv addSubview:iv];
+        //[tv sizeToFit];
         
         y += tv.frame.size.height + margin;
     }
