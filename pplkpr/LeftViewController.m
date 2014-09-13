@@ -157,7 +157,7 @@
             
             Person *p = self.recentPeople[i];
             
-            [[FBHandler data] requestProfilePic:p.fbid withCompletion:^(NSDictionary * result){
+            [[FBHandler data] requestProfilePic:p.fbid withType:@"square" withCompletion:^(NSDictionary * result){
                 NSDictionary *pic = [result objectForKey:@"picture"];
                 NSDictionary *data = [pic objectForKey:@"data"];
                 NSString *url = [data objectForKey:@"url"];

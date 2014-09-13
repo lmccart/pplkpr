@@ -28,7 +28,7 @@
 
 - (void)requestFriendsWithCompletion:(void (^)(NSArray *result))completionBlock;
 - (void)requestOwnProfile:(void (^)(NSDictionary *results))completionBlock;
-- (void)requestProfilePic:(NSString *)fbid withCompletion:(void (^)(NSDictionary *results))completionBlock;
+- (void)requestProfilePic:(NSString *)fbid  withType:(NSString *)type withCompletion:(void (^)(NSDictionary *results))completionBlock;
 
 - (void)requestSendWarning:(Person *)person withEmotion:(NSString *)emotion;
 - (void)requestPost:(Person *)person withMessage:(NSString *)message;

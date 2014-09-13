@@ -125,10 +125,11 @@
     }];
 }
 
-- (void)requestProfilePic:(NSString *)fbid
+// type square, small, normal, large
+- (void)requestProfilePic:(NSString *)fbid withType:(NSString *)type
             withCompletion:(void (^)(NSDictionary *result))completionBlock {
 	
-    NSString *reqString = [NSString stringWithFormat:@"%@/?fields=picture", fbid];
+    NSString *reqString = [NSString stringWithFormat:@"%@/?fields=picture.type(%@)", fbid, type];
     NSLog(@"%@", reqString);
     FBRequest* profileRequest = [FBRequest requestForGraphPath:reqString];
     [profileRequest startWithCompletionHandler: ^(FBRequestConnection *connection,

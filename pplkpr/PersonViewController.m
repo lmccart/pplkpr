@@ -50,7 +50,6 @@
     
     [self.personPhoto.layer setBorderColor: [[UIColor blackColor] CGColor]];
     [self.personPhoto.layer setBorderWidth: 1.5];
-	
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -61,12 +60,17 @@
         [_personLabel setText:self.curPerson.name];
         [[InteractionData data] setJumpToPerson:nil];
         
-        [[FBHandler data] requestProfilePic:self.curPerson.fbid withCompletion:^(NSDictionary * result){
+        [[FBHandler data] requestProfilePic:self.curPerson.fbid withType:@"large" withCompletion:^(NSDictionary * result){
             NSDictionary *pic = [result objectForKey:@"picture"];
             NSDictionary *data = [pic objectForKey:@"data"];
             NSString *url = [data objectForKey:@"url"];
             
-            [self.personPhoto sd_setImageWithURL:[NSURL URLWithString:url]];
+            [self.personPhoto sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                if (!error) {
+                    CGRect frame = self.personPhoto.frame;
+                    [self.personPhoto setFrame:CGRectMake(frame.origin.x, frame.origin.y, frame.size.width, frame.size.width*image.size.height/image.size.width)];
+                }
+            }];
         }];
         
         [self checkTickets];
