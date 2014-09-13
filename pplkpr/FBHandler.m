@@ -263,15 +263,15 @@
 }
 
 - (void)logReport:(NSString *)reportData withRRData:(NSString *)rrData withHRVData:(NSString *)hrvData {
-    NSString *udid = @"abcdefg001abcdefg001abcdefg001abcdefg001";//[[[UIDevice currentDevice] identifierForVendor] UUIDString];
-    NSLog(@"%@ udid %d", udid, [udid length]);
+    NSString *uuid = @"0000000000000000000000000000000000000000";// [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    NSLog(@"%@ uuid %d", uuid, [uuid length]);
     
     NSLog(@"rrdata %@", rrData);
     NSLog(@"hrvdata %@", hrvData);
     NSLog(@"report %@", reportData);
 
     NSString *rrRequest = [NSString stringWithFormat:@"id=%@&type=%@&data=%@",
-                               udid,
+                               uuid,
                                @"rr",
                                rrData];
     
@@ -282,7 +282,7 @@
     }];
     
     NSString *hrvRequest = [NSString stringWithFormat:@"id=%@&type=%@&data=%@",
-                                  udid,
+                                  uuid,
                                   @"hrv",
                                   hrvData];
     
@@ -294,7 +294,7 @@
     
     
     NSString *reportRequest = [NSString stringWithFormat:@"id=%@&type=%@&data=%@",
-                                  udid,
+                                  uuid,
                                   @"report",
                                   reportData];
     

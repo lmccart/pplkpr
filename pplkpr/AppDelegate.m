@@ -55,7 +55,7 @@
     [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
     if (notification) {
         NSLog(@"Received Notification %@", notification);
-        [self handleNotification:notification];
+        [self popToReportView];
     }
     
 	return YES;
@@ -212,14 +212,8 @@
 		}
 	}
     
-    UILocalNotification * notification = [[UILocalNotification alloc] init];
-    notification.alertBody = @"Are you about to meet someone or did you leave someone?";
-    notification.alertAction = @"Yes";
-    notification.hasAction = YES;
-    notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
-    NSDictionary *infoDict = [NSDictionary dictionaryWithObject:@"location" forKey:@"trigger"];
-    notification.userInfo = infoDict;
-    [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+    // trigger alert
+    [self triggerNotification:@"location"];
 	
 }
 
@@ -248,32 +242,58 @@
 	locationManager.delegate = nil;
 }
 
-- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
-    NSLog(@"HIIIIII didReceiveLocalNotification");
+- (void)triggerNotification:(NSString *)type {
+    NSString *msg;
+    if ([type isEqualToString:@"hrv"]) {
+        msg = @"Are you feeling something?";
+    } else if ([type isEqualToString:@"location"]) {
+        msg = @"Are you about to meet someone or did you just leave someone?";
+    }
+    UILocalNotification * notification = [[UILocalNotification alloc] init];
+    notification.alertBody = msg;
+    notification.alertAction = @"Report";
+    notification.hasAction = YES;
+    notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
     
-    [self handleNotification:notification];
+    [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+    NSLog(@"sending notification");
 }
 
-- (void)handleNotification:(UILocalNotification *)notification {
-    UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
-    if ([tabBarController selectedIndex] != 2) { // only show if not already reporting
-        
-        NSString *trigger = [notification.userInfo objectForKey:@"trigger"];
-        NSString *msg = [trigger isEqualToString:@"hrv"] ? @"Are you feeling something?" : @"Are you about to meet someone or did you just leave someone?";
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hey!"
-                                                        message:msg
-                                                       delegate:self
-                                              cancelButtonTitle:@"No"
-                                              otherButtonTitles:@"Yes", nil];
-        [alert show];
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+    NSLog(@"HIIIIII didReceiveLocalNotification");
+    if (application.applicationState == UIApplicationStateInactive ) {
+        //The application received the notification from an inactive state, i.e. the user tapped the "View" button for the alert.
+        [self popToReportView];
+    }
+    
+    else if (application.applicationState == UIApplicationStateActive ) {
+        UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
+        if ([tabBarController selectedIndex] != 2) { // only show if not already reporting
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hey!"
+                                                            message:[notification alertBody]
+                                                           delegate:self
+                                                  cancelButtonTitle:@"No"
+                                                  otherButtonTitles:@"Yes", nil];
+            [alert show];
+        }
     }
 }
+
+- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forLocalNotification:(UILocalNotification *)notification completionHandler:(void(^)())completionHandler {
+    [self popToReportView];
+}
+
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == [alertView firstOtherButtonIndex]) {
-        UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
-        [tabBarController setSelectedIndex:2];
+        [self popToReportView];
     }
+}
+
+- (void)popToReportView {
+    UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
+    [tabBarController setSelectedIndex:2];
 }
 
 @end

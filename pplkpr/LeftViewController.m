@@ -74,6 +74,9 @@
 	
 	[self.whoTextField setDelegate:self];
     [self.whoTextField setClearButtonMode:UITextFieldViewModeWhileEditing];
+    UIView *spacerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
+    [self.whoTextField setLeftViewMode:UITextFieldViewModeAlways];
+    [self.whoTextField setLeftView:spacerView];
     [(FriendsCompleteDataSource *) self.whoTextField.autoCompleteDataSource updateFriends];
     
     [self.whoTextField registerAutoCompleteCellClass:[CustomAutoCompleteCell class]

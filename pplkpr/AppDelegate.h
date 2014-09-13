@@ -28,6 +28,7 @@
 
 - (void) startUpdatingLocation;
 - (void) stopUpdatingLocation;
+- (void) triggerNotification:(NSString *)type;
 
 @end
 

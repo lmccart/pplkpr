@@ -135,17 +135,8 @@
         if ([hrv integerValue] > 0) {
             
             // trigger alert
-            UILocalNotification * notification = [[UILocalNotification alloc] init];
-            notification.alertBody = @"What's your damage bra?";
-            notification.alertAction = @"Report";
-            notification.hasAction = YES;
-            notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
-            
-            NSDictionary *infoDict = [NSDictionary dictionaryWithObject:@"hrv" forKey:@"trigger"];
-            notification.userInfo = infoDict;
-
-            [[UIApplication sharedApplication] scheduleLocalNotification:notification];
-            NSLog(@"sending notification");
+            AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+            [appDelegate triggerNotification:@"hrv"];
         }
     }
     

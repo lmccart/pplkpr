@@ -145,7 +145,6 @@
 - (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)aPeripheral {
     
     NSLog(@"Peripheral connected %@", self.viewController);
-    [_viewController updateMonitorStatus:@"connecting"];
     
 	[aPeripheral setDelegate:self];
 	// PEND: set reconnect [bleManager setReconnectOnDisconnect:YES];
@@ -240,9 +239,9 @@ didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic
         
 		if(SensorContactStatus == 2) {
 			NSLog(@"Sensor contact is not detected");
-            [_viewController updateMonitorStatus:@"no sensor contact"];
+            [_viewController updateMonitorStatus:0.5];
         } else {
-            [_viewController updateMonitorStatus:@"connected"];
+            [_viewController updateMonitorStatus:1];
             
             if(SensorContactStatus == 3) {
                 NSLog(@"Sensor contact is detected");
@@ -308,7 +307,7 @@ didDisconnectPeripheral:(CBPeripheral *)aPeripheral
                   error:(NSError *)error
 {
     NSLog(@"Disconnected peripheral %@", aPeripheral.name);
-    [_viewController updateMonitorStatus:@"disconnected"];
+    [_viewController updateMonitorStatus:0];
     
     if (self.peripheral) {
         [self.peripheral setDelegate:nil];

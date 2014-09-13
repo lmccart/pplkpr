@@ -12,7 +12,7 @@
 @interface ViewController : UIViewController <UITextFieldDelegate> {
 }
 
-
-- (void)updateMonitorStatus:(NSString *)status;
+- (IBAction)logoutFB:(id)sender;
+- (void)updateMonitorStatus:(float)status;
 
 @end

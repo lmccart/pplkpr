@@ -76,6 +76,9 @@
         [self checkTickets];
         [self updatePriority];
         
+        // pend test this
+        //[[FBHandler data] requestInviteToEvent:self.curPerson];
+        
 	} else {
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
@@ -121,7 +124,7 @@
     self.priorityData = [[InteractionData data] getSortedPriorities];
     
     
-    float y = margin;
+    float y = 0;
     int n = 0;
     for (int i=0; i < [self.priorityData count]; i++) {
         

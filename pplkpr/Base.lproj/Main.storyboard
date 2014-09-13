@@ -13,38 +13,38 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="431"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" id="hde-kl-3WH">
-                                <rect key="frame" x="16" y="88" width="304" height="17"/>
+                            <button opaque="NO" alpha="0.40000000000000002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="MbB-ug-AaB">
+                                <rect key="frame" x="264" y="30" width="40" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" size="system"/>
+                                <state key="normal" backgroundImage="meet.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="logoutFB:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="eJM-9l-gf3"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recently..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fG6-gK-fJS">
+                                <rect key="frame" x="30" y="54" width="124" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="TeluguSangamMN" family="Telugu Sangam MN" pointSize="16"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart.png" id="Viq-Uw-BSj">
+                                <rect key="frame" x="226" y="35" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                             <view tag="7" contentMode="scaleToFill" id="bfV-Jb-09L">
-                                <rect key="frame" x="30" y="50" width="260" height="293"/>
+                                <rect key="frame" x="30" y="86" width="260" height="309"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.29999999999999999" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="monitor status:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="436-XG-v3C">
-                                <rect key="frame" x="67" y="20" width="96" height="23"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="TeluguSangamMN" family="Telugu Sangam MN" pointSize="15"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.29999999999999999" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="disconnected" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bah-9W-rZs">
-                                <rect key="frame" x="166" y="20" width="87" height="23"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="TeluguSangamMN-Bold" family="Telugu Sangam MN" pointSize="15"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="YL6-6B-thV"/>
                     <navigationItem key="navigationItem" id="JuX-Ud-8hQ"/>
                     <connections>
-                        <outlet property="monitorStatusLabel" destination="bah-9W-rZs" id="8HQ-G9-c0V"/>
+                        <outlet property="monitorStatusIcon" destination="Viq-Uw-BSj" id="ueu-jH-8T3"/>
                         <outlet property="priorityView" destination="bfV-Jb-09L" id="WhC-uV-nTX"/>
                         <segue destination="SHJ-Mw-UT6" kind="push" identifier="loginSegue" id="cB4-0O-LGO"/>
                     </connections>
@@ -91,8 +91,8 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" borderStyle="line" minimumFontSize="16" id="9fa-v4-3v6" customClass="MLPAutoCompleteTextField">
-                                <rect key="frame" x="30" y="89" width="260" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" borderStyle="line" placeholder="Name" minimumFontSize="16" id="9fa-v4-3v6" customClass="MLPAutoCompleteTextField">
+                                <rect key="frame" x="30" y="108" width="260" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.92549019610000005" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="tintColor" red="0.9960784912109375" green="0.92156869173049927" blue="0.31372550129890442" alpha="1" colorSpace="deviceRGB"/>
@@ -104,7 +104,7 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" alpha="0.40000000000000002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="QKL-ot-aJT">
-                                <rect key="frame" x="30" y="30" width="40" height="40"/>
+                                <rect key="frame" x="16" y="30" width="40" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" backgroundImage="back.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -113,8 +113,8 @@
                                     <action selector="back:" destination="Z8x-sD-IGb" eventType="touchUpInside" id="FhA-FF-0dh"/>
                                 </connections>
                             </button>
-                            <view hidden="YES" contentMode="scaleToFill" id="YP2-NX-mY8">
-                                <rect key="frame" x="30" y="127" width="260" height="46"/>
+                            <view contentMode="scaleToFill" id="YP2-NX-mY8">
+                                <rect key="frame" x="30" y="146" width="260" height="46"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="KfI-1i-e6x">
@@ -142,7 +142,7 @@
                                 <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="0db-y5-gVG" customClass="IntensitySlider">
-                                <rect key="frame" x="28" y="224" width="183" height="31"/>
+                                <rect key="frame" x="28" y="229" width="182" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.92549019610000005" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
                                 <color key="tintColor" red="0.99607849120000003" green="0.9215686917" blue="0.31372550129999999" alpha="1" colorSpace="deviceRGB"/>
@@ -153,7 +153,7 @@
                                 </connections>
                             </slider>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="made me feel..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KC6-XV-M6X">
-                                <rect key="frame" x="30" y="194" width="118" height="26"/>
+                                <rect key="frame" x="30" y="199" width="118" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="TeluguSangamMN" family="Telugu Sangam MN" pointSize="16"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
@@ -167,11 +167,11 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <pickerView contentMode="scaleToFill" id="p1q-e4-vKi">
-                                <rect key="frame" x="168" y="184" width="100" height="162"/>
+                                <rect key="frame" x="168" y="189" width="100" height="162"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </pickerView>
                             <textView clipsSubviews="YES" contentMode="right" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" text="excited" textAlignment="right" selectable="NO" id="Xyc-Py-f9G">
-                                <rect key="frame" x="8" y="260" width="158" height="41"/>
+                                <rect key="frame" x="8" y="265" width="158" height="41"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="TeluguSangamMN" family="Telugu Sangam MN" pointSize="16"/>
@@ -189,7 +189,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="gK4-Pv-IMD">
-                                <rect key="frame" x="250" y="30" width="40" height="40"/>
+                                <rect key="frame" x="140" y="30" width="40" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" backgroundImage="plus.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -267,6 +267,7 @@
                         <color key="backgroundColor" red="1" green="0.92549019610000005" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <navigationItem key="navigationItem" id="lwe-AU-MzE"/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
                         <segue destination="Z8x-sD-IGb" kind="push" identifier="leftSegue" id="W5C-Q6-fIg"/>
                         <segue destination="F0H-pm-mTz" kind="push" identifier="meetSegue" id="fgD-H6-I1m"/>
@@ -284,8 +285,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="431"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view hidden="YES" contentMode="scaleToFill" id="Qod-EV-qsN">
-                                <rect key="frame" x="30" y="163" width="260" height="46"/>
+                            <view contentMode="scaleToFill" id="Qod-EV-qsN">
+                                <rect key="frame" x="30" y="194" width="260" height="46"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="jDe-tD-XC6">
@@ -313,14 +314,14 @@
                                 <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Right now, I feel..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qMI-b2-zZc">
-                                <rect key="frame" x="30" y="230" width="118" height="26"/>
+                                <rect key="frame" x="30" y="291" width="118" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="TeluguSangamMN" family="Telugu Sangam MN" pointSize="16"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" borderStyle="line" minimumFontSize="16" id="gNz-Xz-RqH" customClass="MLPAutoCompleteTextField">
-                                <rect key="frame" x="30" y="125" width="260" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" borderStyle="line" placeholder="Name" minimumFontSize="16" id="gNz-Xz-RqH" customClass="MLPAutoCompleteTextField">
+                                <rect key="frame" x="30" y="156" width="260" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.92549019610000005" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="tintColor" red="0.99607849120000003" green="0.9215686917" blue="0.31372550129999999" alpha="1" colorSpace="deviceRGB"/>
@@ -332,7 +333,7 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" alpha="0.40000000596046448" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="8ej-lT-NYo">
-                                <rect key="frame" x="30" y="30" width="40" height="40"/>
+                                <rect key="frame" x="16" y="30" width="40" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" backgroundImage="back.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -342,14 +343,14 @@
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="I am about to meet..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3tg-3Z-Y93">
-                                <rect key="frame" x="30" y="88" width="142" height="26"/>
+                                <rect key="frame" x="30" y="119" width="142" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="TeluguSangamMN" family="Telugu Sangam MN" pointSize="16"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="NN1-DG-s1w" customClass="IntensitySlider">
-                                <rect key="frame" x="31" y="259" width="180" height="31"/>
+                                <rect key="frame" x="31" y="320" width="180" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.92549019610000005" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
                                 <color key="tintColor" red="0.99607849120000003" green="0.9215686917" blue="0.31372550129999999" alpha="1" colorSpace="deviceRGB"/>
@@ -360,18 +361,18 @@
                                 </connections>
                             </slider>
                             <pickerView contentMode="scaleToFill" id="xcf-aM-vKt">
-                                <rect key="frame" x="168" y="220" width="100" height="162"/>
+                                <rect key="frame" x="168" y="281" width="100" height="162"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </pickerView>
                             <textView clipsSubviews="YES" contentMode="right" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" text="excited" textAlignment="right" selectable="NO" id="1XM-wA-Dfh">
-                                <rect key="frame" x="8" y="296" width="158" height="41"/>
+                                <rect key="frame" x="8" y="357" width="158" height="41"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="TeluguSangamMN" family="Telugu Sangam MN" pointSize="16"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="EV2-7O-x3I">
-                                <rect key="frame" x="250" y="30" width="40" height="40"/>
+                                <rect key="frame" x="140" y="30" width="40" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" backgroundImage="plus.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -423,7 +424,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" minimumFontSize="17" id="gPl-Or-bX6">
-                                <rect key="frame" x="30" y="194" width="260" height="30"/>
+                                <rect key="frame" x="30" y="203" width="260" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="TeluguSangamMN" family="Telugu Sangam MN" pointSize="16"/>
@@ -433,7 +434,7 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="rB8-BH-7c0">
-                                <rect key="frame" x="135" y="275" width="50" height="50"/>
+                                <rect key="frame" x="135" y="284" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" backgroundImage="plus.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -443,21 +444,21 @@
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="uYj-KD-05L">
-                                <rect key="frame" x="30" y="89" width="142" height="26"/>
+                                <rect key="frame" x="30" y="98" width="142" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="TeluguSangamMN" family="Telugu Sangam MN" pointSize="16"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Zvy-H7-tae">
-                                <rect key="frame" x="30" y="168" width="142" height="26"/>
+                                <rect key="frame" x="30" y="177" width="142" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="TeluguSangamMN" family="Telugu Sangam MN" pointSize="16"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" minimumFontSize="17" id="uv3-Cg-g2u">
-                                <rect key="frame" x="30" y="114" width="260" height="30"/>
+                                <rect key="frame" x="30" y="123" width="260" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="TeluguSangamMN" family="Telugu Sangam MN" pointSize="16"/>
@@ -624,6 +625,7 @@
     </scenes>
     <resources>
         <image name="back.png" width="101" height="101"/>
+        <image name="heart.png" width="101" height="101"/>
         <image name="left.png" width="136" height="127"/>
         <image name="meet.png" width="136" height="127"/>
         <image name="plus.png" width="101" height="101"/>

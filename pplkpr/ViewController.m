@@ -17,7 +17,7 @@
 
 @property (retain, nonatomic) NSArray *priorityData;
 @property (retain, nonatomic) IBOutlet UIView *priorityView;
-@property (retain, nonatomic) IBOutlet UILabel *monitorStatusLabel;
+@property (retain, nonatomic) IBOutlet UIImageView *monitorStatusIcon;
 
 @end
 
@@ -79,7 +79,7 @@
     self.priorityData = [[InteractionData data] getSortedPriorities];
 
     
-    float y = margin;
+    float y = 0;
     for (int i=0; i < MIN(3, [self.priorityData count]); i++) {
         
         // abs value, name, asc, emotion
@@ -199,16 +199,17 @@
     }
 }
 
-- (void)updateMonitorStatus:(NSString *)status {
+- (void)updateMonitorStatus:(float)status {
     NSLog(@"updated ");
-    [_monitorStatusLabel setText:status];
-    if ([status isEqual: @"connecting"]) {
-        [_monitorStatusLabel setFont:[GlobalMethods globalFont]];
-    } else if ([status isEqual:@"connected"]) {
-        [_monitorStatusLabel setFont:[GlobalMethods globalFont]];
-    } else {
-        [_monitorStatusLabel setFont:[GlobalMethods globalBoldFont]];
-    }
+    [self.monitorStatusIcon setAlpha:status];
+}
+
+- (IBAction)logoutFB:(id)sender {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults removeObjectForKey:@"email"];
+    [defaults removeObjectForKey:@"pass"];
+    [defaults synchronize];
+    [self performSegueWithIdentifier:@"loginSegue" sender:self];
 }
 
 @end
