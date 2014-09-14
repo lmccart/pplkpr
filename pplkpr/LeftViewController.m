@@ -66,7 +66,7 @@
 {
     [super viewDidLoad];
     
-    self.imgSize = 70.0;
+    self.imgSize = 50.0;
 	 
     [self.timeSlider setThumbImage:[UIImage imageNamed:@"ticker.png"] forState:UIControlStateNormal];
     [self.timeSlider setMinimumTrackTintColor:[UIColor lightGrayColor]];
@@ -91,7 +91,7 @@
     
     CALayer* mask = [[CALayer alloc] init];
     [mask setBackgroundColor: [UIColor blackColor].CGColor];
-    [mask setFrame: CGRectMake(0, 0.65*self.imgSize, self.emotionPicker.bounds.size.width, self.imgSize*0.85)];
+    [mask setFrame: CGRectMake(0, self.imgSize*1.1, self.emotionPicker.bounds.size.width, self.imgSize*1.04)];
     [self.emotionPicker.layer setMask: mask];
     
     NSArray *subviews = [self.whoRecentView subviews];

@@ -167,7 +167,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <pickerView contentMode="scaleToFill" id="p1q-e4-vKi">
-                                <rect key="frame" x="168" y="189" width="100" height="162"/>
+                                <rect key="frame" x="168" y="179" width="100" height="162"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </pickerView>
                             <textView clipsSubviews="YES" contentMode="right" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" text="excited" textAlignment="right" selectable="NO" id="Xyc-Py-f9G">
@@ -361,7 +361,7 @@
                                 </connections>
                             </slider>
                             <pickerView contentMode="scaleToFill" id="xcf-aM-vKt">
-                                <rect key="frame" x="168" y="281" width="100" height="162"/>
+                                <rect key="frame" x="168" y="271" width="100" height="162"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </pickerView>
                             <textView clipsSubviews="YES" contentMode="right" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" text="excited" textAlignment="right" selectable="NO" id="1XM-wA-Dfh">
