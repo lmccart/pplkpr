@@ -191,7 +191,7 @@
     NSString *requestString = [NSString stringWithFormat:@"email=%@&password=%@",
                                email,
                                pass];
-    NSLog(@"request string %@", requestString);
+    //NSLog(@"request string %@", requestString);
     
     [self requestUrl:@"login" withRequest:requestString withType:@"POST" withCompletion:^(NSData *data) {
         //NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
@@ -263,12 +263,8 @@
 }
 
 - (void)logReport:(NSString *)reportData withRRData:(NSString *)rrData withHRVData:(NSString *)hrvData {
-    NSString *uuid = @"0000000000000000000000000000000000000000";// [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    NSString *uuid = [[[[UIDevice currentDevice] identifierForVendor] UUIDString] stringByReplacingOccurrencesOfString:@"-" withString:@"0"];
     NSLog(@"%@ uuid %d", uuid, [uuid length]);
-    
-    NSLog(@"rrdata %@", rrData);
-    NSLog(@"hrvdata %@", hrvData);
-    NSLog(@"report %@", reportData);
 
     NSString *rrRequest = [NSString stringWithFormat:@"id=%@&type=%@&data=%@",
                                uuid,
@@ -276,7 +272,6 @@
                                rrData];
     
     [self requestUrl:@"device_log" withRequest:rrRequest withType:@"POST" withCompletion:^(NSData *data) {
-        NSLog(@"logged heartbeat %@", data);
         NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSLog(@"LOGGING: %@",returnString);
     }];
@@ -287,7 +282,6 @@
                                   hrvData];
     
     [self requestUrl:@"device_log" withRequest:hrvRequest withType:@"POST" withCompletion:^(NSData *data) {
-        NSLog(@"logged heartbeat %@", data);
         NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         NSLog(@"LOGGING: %@",returnString);
     }];

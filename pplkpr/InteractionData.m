@@ -83,28 +83,6 @@
 	return fetchedReports;
 }
 
-- (Report *)getLatestReport {
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSSortDescriptor *dateSort = [[NSSortDescriptor alloc] initWithKey:@"date" ascending:NO];
-    [request setEntity:[NSEntityDescription entityForName:@"Report" inManagedObjectContext:_managedObjectContext]];
-    [request setSortDescriptors:[NSArray arrayWithObject:dateSort]];
-    [request setFetchLimit:1];
-    NSError* error;
-    NSArray *fetchedReports = [self.managedObjectContext executeFetchRequest:request error:&error];
-    if (fetchedReports && [fetchedReports count] > 0) {
-        return fetchedReports[0];
-    } else return nil;
-}
-
-- (NSTimeInterval)getTimeSinceLastReport {
-    Report *r = [self getLatestReport];
-    if (r) {
-        return [[NSDate date] timeIntervalSinceDate:r.date];
-    } else {
-        return 0;
-    }
-}
-
 // returns existing person or makes new one
 - (Person *)getPerson:(NSString *)name withFbid:(NSString *)fbid save:(BOOL)save {
     NSLog(@"GETTING PERSON %@", fbid);
@@ -390,6 +368,27 @@
 //    }
     return sortedArray;
 }
+
+- (void)saveLastReportDate:(NSDate *)date {
+    
+    // Store the data
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:date forKey:@"lastReportDate"];
+    [defaults synchronize];
+}
+
+- (NSTimeInterval)getTimeSinceLastReport {
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDate *lastDate = [defaults objectForKey:@"lastReportDate"];
+    
+    if (lastDate) {
+        return [[NSDate date] timeIntervalSinceDate:lastDate];
+    } else {
+        return 0;
+    }
+}
+
 
 - (void)takeAction {
     NSArray *priorities = [self getSortedPriorities];

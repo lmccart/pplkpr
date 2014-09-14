@@ -268,6 +268,9 @@
         Person *p = [[InteractionData data] getPerson:self.whoName withFbid:self.whoFbid save:true];
         [[FBHandler data] requestSendWarning:p withEmotion:self.emotion];
         
+        // save last report date
+        [[InteractionData data] saveLastReportDate:[NSDate date]];
+        
         // reset form
         [self setNeedsReset:true];
         

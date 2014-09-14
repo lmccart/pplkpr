@@ -179,6 +179,9 @@
     [self.intensitySlider setValue:[[event objectForKey:@"intensity"] floatValue]];
     
     NSTimeInterval interval = [[InteractionData data] getTimeSinceLastReport]/60.0;
+    if (interval == 0) {
+        interval = 120.0;
+    }
 
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDateComponents *components = [calendar components:(NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:[NSDate date]];
@@ -336,6 +339,9 @@
         
         
         [[FBHandler data] logReport:[r toString] withRRData:[[HeartRateAnalyzer data] getRRDataString] withHRVData:[[HeartRateAnalyzer data] getHRVDataString]];
+        
+        // save last report date
+        [[InteractionData data] saveLastReportDate:[NSDate date]];
         
         // reset form
         [self setNeedsReset:true];

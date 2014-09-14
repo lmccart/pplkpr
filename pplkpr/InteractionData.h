@@ -34,13 +34,13 @@
    withRangeStartDate:(NSDate *)rangeStartDate
      withRangeEndDate:(NSDate *)rangeEndDate;
 - (NSArray*)getAllReports;
-- (Report *)getLatestReport;
-- (NSTimeInterval)getTimeSinceLastReport;
 - (NSArray*)getAllPeople;
 - (NSMutableDictionary *)getRankedPeople;
 - (NSMutableArray *)getPriorities;
 - (NSArray *)getSortedPriorities;
 - (NSArray *)getRecentPeople;
+- (void)saveLastReportDate:(NSDate *)date;
+- (NSTimeInterval)getTimeSinceLastReport;
 - (void)takeAction;
 
 

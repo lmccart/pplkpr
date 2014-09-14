@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		651EFCED19C3909F0089BA51 /* DayLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 651EFCEA19C3909F0089BA51 /* DayLog.m */; };
 		651EFCF019C4F01E0089BA51 /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 651EFCEF19C4F01E0089BA51 /* heart.png */; };
+		651EFCF219C51B5F0089BA51 /* InteractionData.m in Sources */ = {isa = PBXBuildFile; fileRef = 651EFCF119C51B5F0089BA51 /* InteractionData.m */; };
 		6525184A19708ADF00AF6981 /* HeartRateAnalyzer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6525184919708ADF00AF6981 /* HeartRateAnalyzer.m */; };
-		6525184D19708AE900AF6981 /* InteractionData.m in Sources */ = {isa = PBXBuildFile; fileRef = 6525184C19708AE900AF6981 /* InteractionData.m */; };
 		6525185019708AF000AF6981 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6525184F19708AF000AF6981 /* AppDelegate.m */; };
 		6525185F19708B1000AF6981 /* PersonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6525185619708B1000AF6981 /* PersonViewController.m */; };
 		6525186019708B1000AF6981 /* RankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6525185819708B1000AF6981 /* RankViewController.m */; };
@@ -84,10 +84,10 @@
 		651EFCE919C3909F0089BA51 /* DayLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DayLog.h; sourceTree = "<group>"; };
 		651EFCEA19C3909F0089BA51 /* DayLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DayLog.m; sourceTree = "<group>"; };
 		651EFCEF19C4F01E0089BA51 /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = heart.png; path = assets/heart.png; sourceTree = "<group>"; };
+		651EFCF119C51B5F0089BA51 /* InteractionData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InteractionData.m; sourceTree = "<group>"; };
 		6525184819708ADF00AF6981 /* HeartRateAnalyzer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeartRateAnalyzer.h; sourceTree = "<group>"; };
 		6525184919708ADF00AF6981 /* HeartRateAnalyzer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeartRateAnalyzer.m; sourceTree = "<group>"; };
 		6525184B19708AE900AF6981 /* InteractionData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteractionData.h; sourceTree = "<group>"; };
-		6525184C19708AE900AF6981 /* InteractionData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InteractionData.m; sourceTree = "<group>"; };
 		6525184E19708AF000AF6981 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		6525184F19708AF000AF6981 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		6525185519708B1000AF6981 /* PersonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonViewController.h; sourceTree = "<group>"; };
@@ -250,7 +250,7 @@
 				6525184819708ADF00AF6981 /* HeartRateAnalyzer.h */,
 				6525184919708ADF00AF6981 /* HeartRateAnalyzer.m */,
 				6525184B19708AE900AF6981 /* InteractionData.h */,
-				6525184C19708AE900AF6981 /* InteractionData.m */,
+				651EFCF119C51B5F0089BA51 /* InteractionData.m */,
 				65B8511D1862122800DE02E8 /* Person.h */,
 				65B8511E1862122800DE02E8 /* Person.m */,
 				65B851161861EDAC00DE02E8 /* Report.h */,
@@ -526,6 +526,7 @@
 				65CA14AC19AD173100130EEB /* CustomAutoCompleteCell.m in Sources */,
 				6525186019708B1000AF6981 /* RankViewController.m in Sources */,
 				6525186119708B1000AF6981 /* MeetViewController.m in Sources */,
+				651EFCF219C51B5F0089BA51 /* InteractionData.m in Sources */,
 				658308C819B104C100C385EB /* UIImageView+HighlightedWebCache.m in Sources */,
 				658308C019B104C100C385EB /* SDWebImageDownloader.m in Sources */,
 				658308C319B104C100C385EB /* SDWebImagePrefetcher.m in Sources */,
@@ -542,7 +543,6 @@
 				658308BE19B104C100C385EB /* SDWebImageCompat.m in Sources */,
 				65F2963F19BA545A007C1C06 /* ReportViewController.m in Sources */,
 				65B851191861EDAC00DE02E8 /* Report.m in Sources */,
-				6525184D19708AE900AF6981 /* InteractionData.m in Sources */,
 				65F2961919B8FF7F007C1C06 /* Constants.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

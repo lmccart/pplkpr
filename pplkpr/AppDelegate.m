@@ -49,6 +49,10 @@
 	freopen([logFilePath cStringUsingEncoding:NSASCIIStringEncoding],"a+",stderr);
 	 */
     
+    // make sure data is inited
+    [[FBHandler data] init];
+    self.alertShowing = NO;
+    
     // Handle launching from a notification
     UILocalNotification *notification =
     [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
@@ -271,7 +275,6 @@
 // fired in all when app notif received while app is foregrounded
 // fired in iOS7 when app opened from touch on notif
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
-    NSLog(@"HIIIIII didReceiveLocalNotification");
     NSString *type = [notification.userInfo objectForKey:@"type"];
     
     if ([type isEqualToString:@"hrv"] || [type isEqualToString:@"location"]) {
@@ -283,7 +286,7 @@
         
         else if (application.applicationState == UIApplicationStateActive) {
             UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
-            if ([tabBarController selectedIndex] != 2) { // only show if not already reporting
+            if ([tabBarController selectedIndex] != 2 && !self.alertShowing) { // only show if not already reporting
                 
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hey!"
                                                                 message:[notification alertBody]
@@ -291,18 +294,20 @@
                                                       cancelButtonTitle:@"No"
                                                       otherButtonTitles:@"Yes", nil];
                 [alert show];
+                self.alertShowing = YES;
             }
         }
     } else if ([type isEqualToString:@"hr_monitor"]) {
         if (application.applicationState == UIApplicationStateInactive) {
             [[HeartRateMonitor data] setSensorWarned:YES];
-        } else if (application.applicationState == UIApplicationStateActive) {
+        } else if (application.applicationState == UIApplicationStateActive && !self.alertShowing) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hey!"
                                                             message:[notification alertBody]
                                                            delegate:self
                                                   cancelButtonTitle:@"Ok"
                                                   otherButtonTitles:nil];
             [alert show];
+            self.alertShowing = YES;
         }
     }
 }
@@ -323,6 +328,7 @@
     if (buttonIndex == [alertView firstOtherButtonIndex]) {
         [self popToReportView];
     }
+    self.alertShowing = NO;
 }
 
 - (void)popToReportView {
