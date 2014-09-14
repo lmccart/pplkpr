@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		27E0855D19C529240071F9F8 /* tron.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E0855B19C529240071F9F8 /* tron.cpp */; };
+		27E0856419C5294D0071F9F8 /* daxpy.c in Sources */ = {isa = PBXBuildFile; fileRef = 27E0856019C5294D0071F9F8 /* daxpy.c */; };
+		27E0856519C5294D0071F9F8 /* ddot.c in Sources */ = {isa = PBXBuildFile; fileRef = 27E0856119C5294D0071F9F8 /* ddot.c */; };
+		27E0856619C5294D0071F9F8 /* dnrm2.c in Sources */ = {isa = PBXBuildFile; fileRef = 27E0856219C5294D0071F9F8 /* dnrm2.c */; };
+		27E0856719C5294D0071F9F8 /* dscal.c in Sources */ = {isa = PBXBuildFile; fileRef = 27E0856319C5294D0071F9F8 /* dscal.c */; };
+		27E0856A19C529620071F9F8 /* linear.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E0856819C529620071F9F8 /* linear.cpp */; };
 		651EFCED19C3909F0089BA51 /* DayLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 651EFCEA19C3909F0089BA51 /* DayLog.m */; };
 		651EFCF019C4F01E0089BA51 /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 651EFCEF19C4F01E0089BA51 /* heart.png */; };
 		651EFCF219C51B5F0089BA51 /* InteractionData.m in Sources */ = {isa = PBXBuildFile; fileRef = 651EFCF119C51B5F0089BA51 /* InteractionData.m */; };
@@ -81,6 +87,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		27E0855B19C529240071F9F8 /* tron.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = tron.cpp; sourceTree = "<group>"; };
+		27E0855C19C529240071F9F8 /* tron.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tron.h; sourceTree = "<group>"; };
+		27E0855E19C5294D0071F9F8 /* blas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = blas.h; sourceTree = "<group>"; };
+		27E0855F19C5294D0071F9F8 /* blasp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = blasp.h; sourceTree = "<group>"; };
+		27E0856019C5294D0071F9F8 /* daxpy.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = daxpy.c; sourceTree = "<group>"; };
+		27E0856119C5294D0071F9F8 /* ddot.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = ddot.c; sourceTree = "<group>"; };
+		27E0856219C5294D0071F9F8 /* dnrm2.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = dnrm2.c; sourceTree = "<group>"; };
+		27E0856319C5294D0071F9F8 /* dscal.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.objc; fileEncoding = 4; path = dscal.c; sourceTree = "<group>"; };
+		27E0856819C529620071F9F8 /* linear.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = linear.cpp; sourceTree = "<group>"; };
+		27E0856919C529620071F9F8 /* linear.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = linear.h; sourceTree = "<group>"; };
 		651EFCE919C3909F0089BA51 /* DayLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DayLog.h; sourceTree = "<group>"; };
 		651EFCEA19C3909F0089BA51 /* DayLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DayLog.m; sourceTree = "<group>"; };
 		651EFCEF19C4F01E0089BA51 /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = heart.png; path = assets/heart.png; sourceTree = "<group>"; };
@@ -217,6 +233,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		27E0854319C525340071F9F8 /* linear */ = {
+			isa = PBXGroup;
+			children = (
+				27E0856819C529620071F9F8 /* linear.cpp */,
+				27E0856919C529620071F9F8 /* linear.h */,
+				27E0855E19C5294D0071F9F8 /* blas.h */,
+				27E0855F19C5294D0071F9F8 /* blasp.h */,
+				27E0856019C5294D0071F9F8 /* daxpy.c */,
+				27E0856119C5294D0071F9F8 /* ddot.c */,
+				27E0856219C5294D0071F9F8 /* dnrm2.c */,
+				27E0856319C5294D0071F9F8 /* dscal.c */,
+				27E0855B19C529240071F9F8 /* tron.cpp */,
+				27E0855C19C529240071F9F8 /* tron.h */,
+			);
+			path = linear;
+			sourceTree = "<group>";
+		};
 		27ED09CB1860E5C000ABCC76 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -383,6 +416,7 @@
 		65FC7C5617A1A37F0045BFF2 /* pplkpr */ = {
 			isa = PBXGroup;
 			children = (
+				27E0854319C525340071F9F8 /* linear */,
 				6583089919B104C100C385EB /* SDWebImage */,
 				65CA149419ACD8F300130EEB /* AutoComplete */,
 				6525184E19708AF000AF6981 /* AppDelegate.h */,
@@ -510,11 +544,13 @@
 				653F8F79185FA9A50009F785 /* pplkpr.xcdatamodeld in Sources */,
 				65E88A4D19BB8E6A00379268 /* IntensitySlider.m in Sources */,
 				65F2961619B8DE5F007C1C06 /* LoginViewController.m in Sources */,
+				27E0856419C5294D0071F9F8 /* daxpy.c in Sources */,
 				65CA14A619ACD93200130EEB /* NSString+Levenshtein.m in Sources */,
 				658308C719B104C100C385EB /* UIImage+WebP.m in Sources */,
 				65F2961319B7D14B007C1C06 /* FBHandler.m in Sources */,
 				658308BC19B104C100C385EB /* NSData+ImageContentType.m in Sources */,
 				6525185F19708B1000AF6981 /* PersonViewController.m in Sources */,
+				27E0856719C5294D0071F9F8 /* dscal.c in Sources */,
 				65CA14A919ACDD6600130EEB /* FriendsCompleteDataSource.m in Sources */,
 				658308BF19B104C100C385EB /* SDWebImageDecoder.m in Sources */,
 				6525186219708B1000AF6981 /* ViewController.m in Sources */,
@@ -524,11 +560,14 @@
 				658308C919B104C100C385EB /* UIImageView+WebCache.m in Sources */,
 				65FC7C5D17A1A37F0045BFF2 /* main.m in Sources */,
 				65CA14AC19AD173100130EEB /* CustomAutoCompleteCell.m in Sources */,
+				27E0855D19C529240071F9F8 /* tron.cpp in Sources */,
 				6525186019708B1000AF6981 /* RankViewController.m in Sources */,
 				6525186119708B1000AF6981 /* MeetViewController.m in Sources */,
 				651EFCF219C51B5F0089BA51 /* InteractionData.m in Sources */,
+				27E0856A19C529620071F9F8 /* linear.cpp in Sources */,
 				658308C819B104C100C385EB /* UIImageView+HighlightedWebCache.m in Sources */,
 				658308C019B104C100C385EB /* SDWebImageDownloader.m in Sources */,
+				27E0856519C5294D0071F9F8 /* ddot.c in Sources */,
 				658308C319B104C100C385EB /* SDWebImagePrefetcher.m in Sources */,
 				65CA14A519ACD93200130EEB /* MLPAutoCompleteTextField.m in Sources */,
 				658308BD19B104C100C385EB /* SDImageCache.m in Sources */,
@@ -544,6 +583,7 @@
 				65F2963F19BA545A007C1C06 /* ReportViewController.m in Sources */,
 				65B851191861EDAC00DE02E8 /* Report.m in Sources */,
 				65F2961919B8FF7F007C1C06 /* Constants.m in Sources */,
+				27E0856619C5294D0071F9F8 /* dnrm2.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

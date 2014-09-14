@@ -10,6 +10,8 @@
 #import "AppDelegate.h"
 #import "DayLog.h"
 
+#import "linear.h"
+
 @interface HeartRateAnalyzer()
 
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
@@ -121,6 +123,11 @@
         // calculate HRV
         NSNumber *hrv = [dayLog.rrs lastObject];
         // PEND: calculate hrv properly from the last 100 seconds of data
+        
+        struct parameter param;
+        struct problem prob;
+        struct model* model_;
+//        model_=train(&prob, &param);
         
         [dayLog.hrvs addObject:hrv];
         [dayLog.hrv_times addObject:time];
