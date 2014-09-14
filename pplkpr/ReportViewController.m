@@ -19,12 +19,19 @@
 	NSLog(@"initing\n");
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        self.side = 0;
     }
     return self;
 }
 
-
-
+- (void)viewWillAppear:(BOOL)animated {
+    if (self.side == -1) {
+        [self performSegueWithIdentifier:@"meetSegue" sender:self];
+    } else if (self.side == 1) {
+        [self performSegueWithIdentifier:@"leftSegue" sender:self];
+    }
+    self.side = 0;
+}
 
 #pragma mark UI handlers
 

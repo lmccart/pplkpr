@@ -13,6 +13,7 @@
 }
 
 - (IBAction)logoutFB:(id)sender;
+- (IBAction)report:(id)sender;
 - (void)updateMonitorStatus:(float)status;
 
 @end

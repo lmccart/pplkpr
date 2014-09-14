@@ -33,6 +33,37 @@
     if (self = [super init]) {
 
 		self.emotionsArray = [[NSArray alloc] initWithObjects:@"Excited",@"Aroused",@"Angry",@"Scared", @"Anxious", @"Bored", @"Calm", nil];
+        
+        //@property (nonatomic, strong) NSDictionary *possibleActionsDict; // emotion -> array [order of actions]
+        //@property (nonatomic, strong) NSDictionary *descriptiveActionsDict; // action -> array [command, past]
+        //@property (nonatomic, strong) NSDictionary *messageDict; // emotion -> array [possible msgs for given emotion]
+
+        NSArray *excitedActions = [[NSArray alloc] initWithObjects:@"post", nil];
+        NSArray *arousedActions = [[NSArray alloc] initWithObjects:@"poke", @"join_event", nil];
+        NSArray *angryActions = [[NSArray alloc] initWithObjects:@"post", @"block", @"unfriend", nil];
+        NSArray *scaredActions = [[NSArray alloc] initWithObjects:@"post", @"block", @"unfriend", nil];
+        NSArray *anxiousActions = [[NSArray alloc] initWithObjects:@"post", @"block", nil];
+        NSArray *boredActions = [[NSArray alloc] initWithObjects:@"block", nil];
+        NSArray *calmActions = [[NSArray alloc] initWithObjects:@"invite", nil];
+        self.possibleActionsDict = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                    excitedActions, @"Excited",
+                                    arousedActions, @"Aroused",
+                                    angryActions, @"Angry",
+                                    scaredActions, @"Scared",
+                                    anxiousActions, @"Anxious",
+                                    boredActions, @"Bored",
+                                    calmActions, @"Calm", nil];
+        
+        self.descriptiveActionsDict = [[NSDictionary alloc] initWithObjectsAndKeys:
+           [[NSArray alloc] initWithObjects:@"Let them know?", @"I let them know.", nil], @"post",
+           [[NSArray alloc] initWithObjects:@"Poke them?", @"I poked them.", nil], @"poke",
+           [[NSArray alloc] initWithObjects:@"Invite them to hang out?", @"I invited them to hang out.", nil], @"join_event",
+           [[NSArray alloc] initWithObjects:@"Unblock them?", @"I unblocked them.", nil], @"unblock",
+           [[NSArray alloc] initWithObjects:@"Block them?", @"I blocked them.", nil], @"block",
+           [[NSArray alloc] initWithObjects:@"Unfriend them?", @"I unfriended them.", nil], @"unfriend",
+           [[NSArray alloc] initWithObjects:@"Friend them?", @"I friended them.", nil], @"friend", nil];
+
+        
 		self.locationsArray = [[NSMutableArray alloc] init];
 		self.summary = [[NSDictionary alloc] init];
 		
@@ -48,6 +79,18 @@
     return self;
 }
 
+- (NSString *)getFutureAction:(NSString *)emotion forIndex:(int)ind {
+    return [[self.possibleActionsDict objectForKey:emotion] objectAtIndex:ind];
+}
+
+- (NSString *)getFutureDescriptiveAction:(NSString *)emotion {
+    NSString *action = [self getFutureAction:emotion forIndex:0];
+    return [[self.descriptiveActionsDict objectForKey:action] objectAtIndex:0];
+}
+
+- (NSString *)getPastDescriptiveAction:(NSString *)action {
+    return [[self.descriptiveActionsDict objectForKey:action] objectAtIndex:1];
+}
 
 
 - (NSArray*)getRankedReports {
@@ -339,7 +382,7 @@
             [results addObject:mostEntry];
             
             // add least person
-            Person *leastPerson = [people_arr objectAtIndex:[people_arr count]-1];
+            Person *leastPerson = [people_arr lastObject];
             NSArray *leastEntry = [[NSArray alloc] initWithObjects: [leastPerson valueForKey:eKey], leastPerson, [NSNumber numberWithInt:1], e, nil];
             [results addObject:leastEntry];
         }
@@ -442,41 +485,14 @@
     }
     // logic for different consequences here
     NSMutableArray *actions_arr = [person.fbActions valueForKey:emotion];
-    
-    if ([emotion isEqualToString:@"Excited"]) {
-        [[FBHandler data] requestPost:person withMessage:@"oooh you excite me!" withEmotion:emotion]; // pend
-    } else if ([emotion isEqualToString:@"Aroused"]) {
-        if (![actions_arr containsObject:@"poke"]) {
-            [[FBHandler data] requestPoke:person withEmotion:emotion];
-        } else {
-            [[FBHandler data] requestInviteToEvent:person withEmotion:emotion];
-            [actions_arr removeObject:@"poke"];
-        }
-    } else if ([emotion isEqualToString:@"Calm"]) {
-        [[FBHandler data] requestInviteToEvent:person withEmotion:emotion];
-    } else if ([emotion isEqualToString:@"Angry"]) {
-        if (![actions_arr containsObject:@"post"]) {
-            [[FBHandler data] requestPost:person withMessage:@"you make me seethe with anger" withEmotion:emotion]; // pend
-        } else if (![actions_arr containsObject:@"block"]) {
-            [[FBHandler data] requestBlock:person withEmotion:emotion];
-        } else if (![actions_arr containsObject:@"unfriend"]) {
-            [[FBHandler data] requestUnfriend:person withEmotion:emotion];
-        }
-    } else if ([emotion isEqualToString:@"Scared"]) {
-        if (![actions_arr containsObject:@"post"]) {
-            [[FBHandler data] requestPost:person withMessage:@"you scare me, please stay away!" withEmotion:emotion]; // pend
-        } else if (![actions_arr containsObject:@"block"]) {
-            [[FBHandler data] requestBlock:person withEmotion:emotion];
-        }
-    } else if ([emotion isEqualToString:@"Anxious"]) {
-        if (![actions_arr containsObject:@"post"]) {
-            [[FBHandler data] requestPost:person withMessage:@"you make me feel anxious" withEmotion:emotion]; // pend
-        } else if (![actions_arr containsObject:@"block"]) {
-            [[FBHandler data] requestBlock:person withEmotion:emotion];
-        }
-    } else if ([emotion isEqualToString:@"Bored"]) {
-        // do nothing
+    NSArray *possible_actions_arr = [self.possibleActionsDict objectForKey:emotion];
+    NSString *last_act = [actions_arr lastObject];
+    int ind = 0;
+    if (last_act) {
+        ind = ([possible_actions_arr indexOfObject:last_act] + 1) % [possible_actions_arr count];
     }
+
+    [[FBHandler data] createFakebookRequest:person withType:[possible_actions_arr objectAtIndex:ind] withMessage:@"test" withEmotion:emotion];
 }
 
 // returns dictionary {emotion:array of people} sorted most to least

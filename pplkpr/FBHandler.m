@@ -152,42 +152,9 @@
     if (self.gender) {
         pronoun = self.gender == -1 ? @"his" : @"her";
     }
-    [self requestPost:person withMessage:[NSString stringWithFormat:@"%@ is on %@ way to meet you and is very %@", self.firstName, pronoun, [emotion lowercaseString]] withEmotion:nil];
+    [self createFakebookRequest:person withType:@"post" withMessage:[NSString stringWithFormat:@"%@ is on %@ way to meet you and is very %@", self.firstName, pronoun, [emotion lowercaseString]] withEmotion:nil];
 }
 
-
-- (void)requestPost:(Person *)person withMessage:(NSString *)message withEmotion:(NSString *)emotion {
-    [self createFakebookRequest:person withType:@"post" withMessage:message withEmotion:emotion];
-    
-}
-
-- (void)requestPoke:(Person *)person withEmotion:(NSString *)emotion {
-    [self createFakebookRequest:person withType:@"post" withMessage:@"" withEmotion:emotion];
-}
-
-
-- (void)requestBlock:(Person *)person withEmotion:(NSString *)emotion {
-    [self createFakebookRequest:person withType:@"block" withMessage:@"" withEmotion:emotion];
-}
-
-- (void)requestUnblock:(Person *)person withEmotion:(NSString *)emotion {
-    [self createFakebookRequest:person withType:@"unblock" withMessage:@"" withEmotion:emotion];
-}
-
-
-- (void)requestFriend:(Person *)person withEmotion:(NSString *)emotion {
-    [self createFakebookRequest:person withType:@"friend" withMessage:@"" withEmotion:emotion];
-}
-
-
-- (void)requestUnfriend:(Person *)person withEmotion:(NSString *)emotion {
-    [self createFakebookRequest:person withType:@"unfriend" withMessage:@"" withEmotion:emotion];
-}
-
-// pend
-- (void)requestInviteToEvent:(Person *)person withEmotion:(NSString *)emotion {
-    [self createFakebookRequest:person withType:@"join_event" withMessage:@"" withEmotion:emotion];
-}
 
 - (void)requestLogin:(NSString *)email withPass:(NSString *)pass withCompletion:(void (^)(NSDictionary *results))completionBlock {
     NSString *requestString = [NSString stringWithFormat:@"email=%@&password=%@",

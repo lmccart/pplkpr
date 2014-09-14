@@ -13,6 +13,7 @@
 
 @property (retain, nonatomic) IBOutlet UITextField *emailField;
 @property (retain, nonatomic) IBOutlet UITextField *passField;
+@property (retain, nonatomic) IBOutlet UIButton *loginButton;
 
 @end
 
@@ -91,6 +92,11 @@
         return;
     }
     
+    [UIView animateWithDuration:0.6 delay:0.0 options:UIViewAnimationOptionRepeat | UIViewAnimationOptionCurveLinear animations:^{
+        CGAffineTransform transform = CGAffineTransformMakeRotation(M_PI);
+        self.loginButton.transform = transform;
+    } completion:NULL];
+    
     [self.emailField resignFirstResponder];
     [self.passField resignFirstResponder];
     
@@ -113,12 +119,14 @@
     [[FBHandler data] checkTicket:ticket withCompletion:^(int status) {
         if (status == 1) {
             NSLog(@"login successful");
+            [self stopRotatingAnim];
             [self.navigationController popToRootViewControllerAnimated:YES];
         } else if (status == 0) {
             NSLog(@"login processing");
             [self checkLoginStatus:ticket];
         } else if (status == -1) {
             NSLog(@"login failed, try again");
+            [self stopRotatingAnim];
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sorry!"
                                                             message:@"Incorrect username or password."
                                                            delegate:nil
@@ -131,6 +139,13 @@
 
 - (void)viewDidUnload {
 	[super viewDidUnload];
+}
+
+- (void)stopRotatingAnim {
+    [UIView animateWithDuration:0.1 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveLinear animations:^{
+        CGAffineTransform transform = CGAffineTransformMakeRotation(M_PI * 0.05);
+        self.loginButton.transform = transform;
+    } completion:NULL];
 }
 
 @end

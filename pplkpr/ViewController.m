@@ -12,6 +12,7 @@
 #import "InteractionData.h"
 #import "HeartRateMonitor.h"
 #import "FBHandler.h"
+#import "ReportViewController.h"
 
 @interface ViewController()
 
@@ -91,10 +92,7 @@
         NSString *order = [[entry objectAtIndex:2] intValue] == 0 ? @"most" : @"least";
         NSString *emotion = [entry objectAtIndex:3];
         
-        NSDictionary *attrsDictionary = [NSDictionary dictionaryWithObject:[GlobalMethods globalFont]
-                                                                    forKey:NSFontAttributeName];
-        
-        NSMutableAttributedString* attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ makes me %@ %@.", p.name, order, [emotion lowercaseString]] attributes:attrsDictionary];
+        NSMutableAttributedString* attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ makes me %@ %@.", p.name, order, [emotion lowercaseString]] attributes:[GlobalMethods attrsDict]];
         
         [attributedString addAttribute:@"personTag" value:p range:NSMakeRange(0,[p.name length])];
         [attributedString addAttribute:NSFontAttributeName value:[GlobalMethods globalBoldFont] range:NSMakeRange(0,[p.name length])];
@@ -145,23 +143,26 @@
 
 
 
-- (void)pushPersonViewController:(Person *)p
-{
+- (void)pushPersonViewController:(Person *)p {
     NSLog(@"jump to person %@", p.name);
 	[[InteractionData data] setJumpToPerson:p];
 	[self.tabBarController setSelectedIndex:1];
 }
 
 
-
-- (void)pushRankViewController:(NSString *)emotion withOrder:(BOOL)order
-{
+- (void)pushRankViewController:(NSString *)emotion withOrder:(BOOL)order {
     NSLog(@"jump to rank %d %@", order, emotion);
 	[[InteractionData data] setJumpToEmotion:emotion];
 	[[InteractionData data] setJumpToOrder:order];
 	[self.tabBarController setSelectedIndex:1];
 }
 
+- (IBAction)report:(id)sender {
+    [self.tabBarController setSelectedIndex:2];
+    UINavigationController *nc = self.tabBarController.viewControllers[2];
+    ReportViewController *rvc = (ReportViewController *)nc.viewControllers[0];
+    [rvc setSide:((UIButton *)sender).tag];
+}
 
 - (void)textTapped:(UITapGestureRecognizer *)recognizer {
     UITextView *textView = (UITextView *)recognizer.view;

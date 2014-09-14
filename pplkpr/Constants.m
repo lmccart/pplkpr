@@ -14,4 +14,9 @@
 +(UIColor *) globalYellowColor { return [UIColor colorWithRed:(255.0f/255.0f) green:(236.0f/255.0f) blue:(0.0f/255.0f) alpha:1.0f]; }
 +(UIFont *)globalFont { return [UIFont fontWithName:@"TeluguSangamMN" size:15.0]; }
 +(UIFont *)globalBoldFont { return [UIFont fontWithName:@"TeluguSangamMN-Bold" size:15.0]; }
+
++ (NSDictionary *)attrsDict { return [NSDictionary dictionaryWithObject:[GlobalMethods globalFont]
+                                                                 forKey:NSFontAttributeName]; };
++ (NSDictionary *) attrsBoldDict { return [NSDictionary dictionaryWithObject:[GlobalMethods globalBoldFont]
+                                                                      forKey:NSFontAttributeName]; };
 @end

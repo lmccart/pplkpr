@@ -31,14 +31,8 @@
 - (void)requestProfilePic:(NSString *)fbid  withType:(NSString *)type withCompletion:(void (^)(NSDictionary *results))completionBlock;
 
 - (void)requestSendWarning:(Person *)person withEmotion:(NSString *)emotion;
-- (void)requestPost:(Person *)person withMessage:(NSString *)message withEmotion:(NSString *)emotion;
-- (void)requestPoke:(Person *)person withEmotion:(NSString *)emotion;
-- (void)requestBlock:(Person *)person withEmotion:(NSString *)emotion;
-- (void)requestUnblock:(Person *)person withEmotion:(NSString *)emotion;
-- (void)requestFriend:(Person *)person withEmotion:(NSString *)emotion;
-- (void)requestUnfriend:(Person *)person withEmotion:(NSString *)emotion;
-- (void)requestInviteToEvent:(Person *)person withEmotion:(NSString *)emotion;
 - (void)requestLogin:(NSString *)email withPass:(NSString *)pass withCompletion:(void (^)(NSDictionary *results))completionBlock;
+- (void)createFakebookRequest:(Person *)person withType:(NSString *)type withMessage:(NSString *)message withEmotion:(NSString *)emotion;
 
 - (void)checkTicket:(NSString *)ticket  withCompletion:(void (^)(int status))completionBlock;
 - (void)logReport:(NSString *)reportData withRRData:(NSString *) rrData withHRVData:(NSString *)hrvData;

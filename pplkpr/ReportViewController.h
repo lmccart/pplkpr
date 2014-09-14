@@ -10,6 +10,8 @@
 
 @interface ReportViewController : UIViewController
 
+@property int side;
+
 - (IBAction)reportMeet:(id)sender;
 - (IBAction)reportLeft:(id)sender;
 

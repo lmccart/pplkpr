@@ -139,7 +139,7 @@
         NSLog(@"Saved HRV %@", hrv);
         
         // PEND: trigger a push notification based on analysis of whether our current state is significant
-        if ([hrv integerValue] > 0) {
+        if ([hrv integerValue] > 1000) {
             
             // trigger alert
             AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;

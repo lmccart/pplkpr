@@ -20,6 +20,11 @@
 @property BOOL jumpToOrder;
 
 @property (nonatomic, strong) NSArray *emotionsArray;
+@property (nonatomic, strong) NSDictionary *possibleActionsDict; // emotion -> array [order of actions]
+@property (nonatomic, strong) NSDictionary *descriptiveActionsDict; // action -> array [future, past]
+@property (nonatomic, strong) NSDictionary *messageDict; // emotion -> array [possible msgs for given emotion]
+
+
 
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 
@@ -43,6 +48,9 @@
 - (void)takeAction;
 - (void)checkTickets;
 
+- (NSString *)getFutureAction:(NSString *)emotion forIndex:(int)ind;
+- (NSString *)getFutureDescriptiveAction:(NSString *)emotion;
+- (NSString *)getPastDescriptiveAction:(NSString *)action;
 
 
 @end

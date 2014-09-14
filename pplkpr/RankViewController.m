@@ -219,11 +219,9 @@
 }
 
 - (void)updateDescriptor {
-    NSDictionary *attrsDictionary = [NSDictionary dictionaryWithObject:[GlobalMethods globalFont]
-                                                                forKey:NSFontAttributeName];
     NSString *chosen = self.order ? @"less" : @"more";
     
-    NSMutableAttributedString* attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@", chosen, [self.emotion lowercaseString]] attributes:attrsDictionary];
+    NSMutableAttributedString* attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@", chosen, [self.emotion lowercaseString]] attributes:[GlobalMethods attrsDict]];
     [attributedString addAttribute:NSFontAttributeName value:[GlobalMethods globalBoldFont] range:NSMakeRange(0,[chosen length])];
     
     [self.descriptorView setAttributedText:attributedString];

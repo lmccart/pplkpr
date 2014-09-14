@@ -10,10 +10,7 @@
 #import "MLPAutoCompleteTextFieldDelegate.h"
 #import "PersonViewController.h"
 
-@interface LeftViewController : UIViewController <UITextFieldDelegate, MLPAutoCompleteTextFieldDelegate, UIGestureRecognizerDelegate> {
-    CGPoint firstPos;
-}
-
+@interface LeftViewController : UIViewController <UITextFieldDelegate, MLPAutoCompleteTextFieldDelegate>
 - (IBAction)submit:(id)sender;
 - (IBAction)back:(id)sender;
 - (IBAction)sliderValueChanged:(UISlider *)sender;

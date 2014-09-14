@@ -59,7 +59,7 @@
 	if ([[InteractionData data] jumpToPerson]) {
         self.curPerson = [[InteractionData data] jumpToPerson];
         NSLog(@"%@", self.curPerson.fbTickets);
-        [_personLabel setText:self.curPerson.name];
+        [self.personLabel setText:self.curPerson.name];
         [[InteractionData data] setJumpToPerson:nil];
         
         [[FBHandler data] requestProfilePic:self.curPerson.fbid withType:@"large" withCompletion:^(NSDictionary * result){
@@ -74,7 +74,7 @@
         
         // pend test this
         //[[FBHandler data] requestInviteToEvent:self.curPerson];
-        [[FBHandler data] requestPost:self.curPerson withMessage:@"hi there" withEmotion:@"Excited"];
+        //[[FBHandler data] createFakebookRequest:self.curPerson withType:@"post" withMessage:@"hi there" withEmotion:@"Excited"];
         
 	} else {
         [self.navigationController popToRootViewControllerAnimated:YES];
@@ -115,23 +115,43 @@
             NSString *order = [[entry objectAtIndex:2] intValue] == 0 ? @"most" : @"least";
             NSString *emotion = [entry objectAtIndex:3];
             
-            NSDictionary *attrsDictionary = [NSDictionary dictionaryWithObject:[GlobalMethods globalFont]
-                                                                        forKey:NSFontAttributeName];
             
-            NSMutableAttributedString* attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"Makes me %@ %@.\n", order, [emotion lowercaseString]] attributes:attrsDictionary];
             
-            int l = [emotion length] + [order length] + 2;
-            [attributedString addAttribute:@"emotionTag" value:emotion range:NSMakeRange([attributedString length]-l-1, l-1)];
-            [attributedString addAttribute:@"orderTag" value:[entry objectAtIndex:2] range:NSMakeRange([attributedString length]-l-1, l-1)];
-            [attributedString addAttribute:NSFontAttributeName value:[GlobalMethods globalBoldFont] range:NSMakeRange([attributedString length]-l-1, l-1)];
+            NSMutableAttributedString* attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"Makes me %@ %@.\n", order, [emotion lowercaseString]] attributes:[GlobalMethods attrsDict]];
             
+            NSMutableAttributedString* actionAttributedStr;
+            BOOL tap = NO;
+            if (p.fbActions && [order isEqualToString:@"most"]) { // only check for most
+                NSArray *actions = [p.fbActions objectForKey:emotion];
+                if ([actions count] > 0) {
+                    NSString *actionStr = [[InteractionData data] getPastDescriptiveAction:[[p.fbActions objectForKey:emotion] lastObject]];
+                    
+                    actionAttributedStr = [[NSMutableAttributedString alloc] initWithString:actionStr attributes:[GlobalMethods attrsDict]];
+                } else {
+                    tap = YES;
+                    NSString *actionStr = [[InteractionData data] getFutureDescriptiveAction:emotion];
+                    actionAttributedStr = [[NSMutableAttributedString alloc] initWithString:actionStr attributes:[GlobalMethods attrsBoldDict]];
+                }
+            } else {
+                actionAttributedStr = [[NSMutableAttributedString alloc] initWithString:@"" attributes:[GlobalMethods attrsDict]];
+            }
+            
+            [attributedString appendAttributedString:actionAttributedStr];
             
             UITextView *tv = [[UITextView alloc] initWithFrame:CGRectMake(0, y, self.priorityView.frame.size.width, 50)];
-            [tv setAttributedText:attributedString];
-            [tv setBackgroundColor:[GlobalMethods globalYellowColor]];
+            if (tap) {
+                [tv setBackgroundColor:[GlobalMethods globalYellowColor]];
+                UITapGestureRecognizer *gr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(textTapped:)];
+                [tv addGestureRecognizer:gr];
+                [attributedString addAttribute:@"emotionTag" value:emotion range:NSMakeRange(0, [attributedString length])];
+                NSString *action = [[InteractionData data] getFutureAction:emotion forIndex:0];
+                [attributedString addAttribute:@"actionTag" value:action range:NSMakeRange(0, [attributedString length])];
+            } else {
+                [tv.layer setBorderColor:[[GlobalMethods globalYellowColor] CGColor]];
+                [tv.layer setBorderWidth:1];
+            }
             
-            UITapGestureRecognizer *gr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(textTapped:)];
-            [tv addGestureRecognizer:gr];
+            [tv setAttributedText:attributedString];
             
             [self.priorityView addSubview:tv];
             [self.view layoutIfNeeded];
@@ -176,12 +196,22 @@
     if (characterIndex < textView.textStorage.length) {
         
         NSRange range;
-        id value = [textView.attributedText attribute:@"emotionTag" atIndex:characterIndex effectiveRange:&range];
-        id order = [textView.attributedText attribute:@"orderTag" atIndex:characterIndex effectiveRange:&range];
-        //NSLog(@"%@, %d, %d, %d", value, [order boolValue], range.location, range.length);
+        id action = [textView.attributedText attribute:@"actionTag" atIndex:characterIndex effectiveRange:&range];
+        id emotion = [textView.attributedText attribute:@"emotionTag" atIndex:characterIndex effectiveRange:&range];
         
-        if (value) {
-            [self pushRankViewController:value withOrder:[order boolValue]];
+        if (action) {
+            [[FBHandler data] createFakebookRequest:self.curPerson withType:action withMessage:@"person view test" withEmotion:emotion];
+            
+            [textView.layer setBorderColor:[[GlobalMethods globalYellowColor] CGColor]];
+            [textView.layer setBorderWidth:1];
+            [textView setBackgroundColor:[UIColor whiteColor]];
+            
+            NSString *newStr = [NSString stringWithFormat:@"%@\nI let them know.", [textView.attributedText.string componentsSeparatedByString:@"\n"][0]];
+            NSMutableAttributedString* attributedString = [[NSMutableAttributedString alloc] initWithString:newStr attributes:[GlobalMethods attrsDict]];
+            [textView setAttributedText:attributedString];
+            
+            [textView removeGestureRecognizer:textView.gestureRecognizers[0]];
+            
         }
         
     }
