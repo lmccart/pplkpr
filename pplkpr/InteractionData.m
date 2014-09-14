@@ -111,11 +111,8 @@
             [person setFbid:fbid];
             [person setDate:[NSDate date]]; // update for recency
             
-            NSMutableDictionary *tickets_arr = [[NSMutableDictionary alloc] init];
-            [person setFbTickets:tickets_arr];
-            
-            NSMutableArray *actions_arr = [[NSMutableArray alloc] init];
-            [person setFbCompletedActions:actions_arr];
+            NSMutableDictionary *tickets_dict = [[NSMutableDictionary alloc] init];
+            [person setFbTickets:tickets_dict];
             
             if (save) {
                 NSError *error;
@@ -444,60 +441,41 @@
         }
     }
     // logic for different consequences here
-    NSString* a;
     NSMutableArray *actions_arr = [person.fbActions valueForKey:emotion];
     
     if ([emotion isEqualToString:@"Excited"]) {
-        [[FBHandler data] requestPost:person withMessage:@"oooh you excite me!"]; // pend
-        a = @"post";
+        [[FBHandler data] requestPost:person withMessage:@"oooh you excite me!" withEmotion:emotion]; // pend
     } else if ([emotion isEqualToString:@"Aroused"]) {
         if (![actions_arr containsObject:@"poke"]) {
-            [[FBHandler data] requestPoke:person];
-            a = @"poke";
+            [[FBHandler data] requestPoke:person withEmotion:emotion];
         } else {
-            [[FBHandler data] requestInviteToEvent:person];
-            a = @"invite";
+            [[FBHandler data] requestInviteToEvent:person withEmotion:emotion];
             [actions_arr removeObject:@"poke"];
         }
     } else if ([emotion isEqualToString:@"Calm"]) {
-        [[FBHandler data] requestInviteToEvent:person];
-        a = @"invite";
+        [[FBHandler data] requestInviteToEvent:person withEmotion:emotion];
     } else if ([emotion isEqualToString:@"Angry"]) {
         if (![actions_arr containsObject:@"post"]) {
-            [[FBHandler data] requestPost:person withMessage:@"you make me seethe with anger"]; // pend
-            a = @"post";
+            [[FBHandler data] requestPost:person withMessage:@"you make me seethe with anger" withEmotion:emotion]; // pend
         } else if (![actions_arr containsObject:@"block"]) {
-            [[FBHandler data] requestBlock:person];
-            a = @"block";
+            [[FBHandler data] requestBlock:person withEmotion:emotion];
         } else if (![actions_arr containsObject:@"unfriend"]) {
-            [[FBHandler data] requestUnfriend:person];
-            a = @"unfriend";
+            [[FBHandler data] requestUnfriend:person withEmotion:emotion];
         }
     } else if ([emotion isEqualToString:@"Scared"]) {
         if (![actions_arr containsObject:@"post"]) {
-            [[FBHandler data] requestPost:person withMessage:@"you scare me, please stay away!"]; // pend
-            a = @"post";
+            [[FBHandler data] requestPost:person withMessage:@"you scare me, please stay away!" withEmotion:emotion]; // pend
         } else if (![actions_arr containsObject:@"block"]) {
-            [[FBHandler data] requestBlock:person];
-            a = @"block";
+            [[FBHandler data] requestBlock:person withEmotion:emotion];
         }
     } else if ([emotion isEqualToString:@"Anxious"]) {
         if (![actions_arr containsObject:@"post"]) {
-            [[FBHandler data] requestPost:person withMessage:@"you make me feel anxious"]; // pend
-            a = @"post";
+            [[FBHandler data] requestPost:person withMessage:@"you make me feel anxious" withEmotion:emotion]; // pend
         } else if (![actions_arr containsObject:@"block"]) {
-            [[FBHandler data] requestBlock:person];
-            a = @"block";
+            [[FBHandler data] requestBlock:person withEmotion:emotion];
         }
     } else if ([emotion isEqualToString:@"Bored"]) {
         // do nothing
-    }
-    
-    if (a) [actions_arr addObject:a];
-    
-    NSError *error;
-    if (![_managedObjectContext save:&error]) {
-        NSLog(@"Error deleting - error:%@",error);
     }
 }
 
@@ -524,6 +502,50 @@
         }
     }
     return dict;
+}
+
+- (void)checkTickets {
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:[NSEntityDescription entityForName:@"Person" inManagedObjectContext:_managedObjectContext]];
+    
+    NSArray *results = [_managedObjectContext executeFetchRequest:request error:nil];
+    for (Person *p in results) {
+        if (!p.fbActions) {
+            [p setFbActions:[[NSMutableDictionary alloc] init]];
+            for (id e in self.emotionsArray) {
+                [p.fbActions setObject:[[NSMutableArray alloc] init] forKey:e];
+            }
+        }
+        for (NSString *tick in p.fbTickets) {
+            NSArray *arr = [tick componentsSeparatedByString:@":"];
+            NSString *tick_id = arr[0];
+            NSString *emotion = arr[1];
+            [[FBHandler data] checkTicket:tick_id withCompletion:^(int status) {
+                NSString *action = [p.fbTickets objectForKey:tick];
+                if (status == 1) {
+                    NSLog(@"ticket successful %@ %@", tick, action);
+                    [p.fbTickets removeObjectForKey:tick];
+                    if (action) {
+                        NSMutableArray *emo_actions = [p.fbActions valueForKey:emotion];
+                        [emo_actions addObject:action];
+                        NSLog(@"tickets %@", p.fbTickets);
+                        NSLog(@"actions %@", p.fbActions);
+                    }
+                } else if (status == 0) {
+                    NSLog(@"ticket processing %@", tick);
+                } else if (status == -1) {
+                    NSLog(@"ticket failed %@", tick);
+                    [p.fbTickets removeObjectForKey:tick];
+                }
+            }];
+            
+        }
+    }
+    NSError *error;
+    if (![_managedObjectContext save:&error]) {
+        NSLog(@"Error deleting - error:%@",error);
+    }
 }
 
 - (void)purgeOldRecords {

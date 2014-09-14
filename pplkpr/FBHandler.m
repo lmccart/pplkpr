@@ -128,8 +128,10 @@
 // type square, small, normal, large
 - (void)requestProfilePic:(NSString *)fbid withType:(NSString *)type
             withCompletion:(void (^)(NSDictionary *result))completionBlock {
+    
+    NSString *extra = [type isEqualToString:@"square"] ? @"type(square)" : @"height(200).width(200)";
 	
-    NSString *reqString = [NSString stringWithFormat:@"%@/?fields=picture.type(%@)", fbid, type];
+    NSString *reqString = [NSString stringWithFormat:@"%@/?fields=picture.%@", fbid, extra];
     NSLog(@"%@", reqString);
     FBRequest* profileRequest = [FBRequest requestForGraphPath:reqString];
     [profileRequest startWithCompletionHandler: ^(FBRequestConnection *connection,
@@ -150,41 +152,41 @@
     if (self.gender) {
         pronoun = self.gender == -1 ? @"his" : @"her";
     }
-    [self requestPost:person withMessage:[NSString stringWithFormat:@"%@ is on %@ way to meet you and is very %@", self.firstName, pronoun, [emotion lowercaseString]]];
+    [self requestPost:person withMessage:[NSString stringWithFormat:@"%@ is on %@ way to meet you and is very %@", self.firstName, pronoun, [emotion lowercaseString]] withEmotion:nil];
 }
 
 
-- (void)requestPost:(Person *)person withMessage:(NSString *)message {
-    [self createFakebookRequest:person withType:@"post" withMessage:message];
+- (void)requestPost:(Person *)person withMessage:(NSString *)message withEmotion:(NSString *)emotion {
+    [self createFakebookRequest:person withType:@"post" withMessage:message withEmotion:emotion];
     
 }
 
-- (void)requestPoke:(Person *)person {
-    [self createFakebookRequest:person withType:@"post" withMessage:@""];
+- (void)requestPoke:(Person *)person withEmotion:(NSString *)emotion {
+    [self createFakebookRequest:person withType:@"post" withMessage:@"" withEmotion:emotion];
 }
 
 
-- (void)requestBlock:(Person *)person {
-    [self createFakebookRequest:person withType:@"block" withMessage:@""];
+- (void)requestBlock:(Person *)person withEmotion:(NSString *)emotion {
+    [self createFakebookRequest:person withType:@"block" withMessage:@"" withEmotion:emotion];
 }
 
-- (void)requestUnblock:(Person *)person {
-    [self createFakebookRequest:person withType:@"unblock" withMessage:@""];
-}
-
-
-- (void)requestFriend:(Person *)person {
-    [self createFakebookRequest:person withType:@"friend" withMessage:@""];
+- (void)requestUnblock:(Person *)person withEmotion:(NSString *)emotion {
+    [self createFakebookRequest:person withType:@"unblock" withMessage:@"" withEmotion:emotion];
 }
 
 
-- (void)requestUnfriend:(Person *)person {
-    [self createFakebookRequest:person withType:@"unfriend" withMessage:@""];
+- (void)requestFriend:(Person *)person withEmotion:(NSString *)emotion {
+    [self createFakebookRequest:person withType:@"friend" withMessage:@"" withEmotion:emotion];
+}
+
+
+- (void)requestUnfriend:(Person *)person withEmotion:(NSString *)emotion {
+    [self createFakebookRequest:person withType:@"unfriend" withMessage:@"" withEmotion:emotion];
 }
 
 // pend
-- (void)requestInviteToEvent:(Person *)person {
-    [self createFakebookRequest:person withType:@"join_event" withMessage:@""];
+- (void)requestInviteToEvent:(Person *)person withEmotion:(NSString *)emotion {
+    [self createFakebookRequest:person withType:@"join_event" withMessage:@"" withEmotion:emotion];
 }
 
 - (void)requestLogin:(NSString *)email withPass:(NSString *)pass withCompletion:(void (^)(NSDictionary *results))completionBlock {
@@ -203,7 +205,7 @@
 }
 
 
-- (void)createFakebookRequest:(Person *)person withType:(NSString *)type withMessage:(NSString *)message {
+- (void)createFakebookRequest:(Person *)person withType:(NSString *)type withMessage:(NSString *)message withEmotion:(NSString *)emotion {
     NSString *requestString = [NSString stringWithFormat:@"email=%@&password=%@&message=%@&id=%@",
                                self.email,
                                self.pass,
@@ -214,14 +216,17 @@
         //NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         //NSLog(@"SUCCEEDED: %@",returnString);
     
-        NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-        NSString *ticket = [results objectForKey:@"ticket"];
-        [person.fbTickets setObject:type forKey:ticket];
-    
-        // save context
-        NSError* error;
-        if (![_managedObjectContext save:&error]) {
-            NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+        if (emotion) { // warning posts won't have emotion and don't need to be saved
+            NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+            NSString *ticket = [NSString stringWithFormat:@"%@:%@", [results objectForKey:@"ticket"], emotion];
+            [person.fbTickets setObject:type forKey:ticket];
+            NSLog(@"adding ticket(id:emo) %@ for action %@", ticket, type);
+        
+            // save context
+            NSError* error;
+            if (![_managedObjectContext save:&error]) {
+                NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+            }
         }
     }];
 }

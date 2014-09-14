@@ -51,6 +51,7 @@
     
     // make sure data is inited
     [[FBHandler data] init];
+    [[InteractionData data] checkTickets];
     self.alertShowing = NO;
     
     // Handle launching from a notification

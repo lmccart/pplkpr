@@ -31,6 +31,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self.emailField setLeftViewMode:UITextFieldViewModeAlways];
+    [self.emailField setLeftView:[[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)]];
+    [self.passField setLeftViewMode:UITextFieldViewModeAlways];
+    [self.passField setLeftView:[[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)]];
 	
 }
 

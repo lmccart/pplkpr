@@ -41,6 +41,7 @@
 - (void)saveLastReportDate:(NSDate *)date;
 - (NSTimeInterval)getTimeSinceLastReport;
 - (void)takeAction;
+- (void)checkTickets;
 
 
 

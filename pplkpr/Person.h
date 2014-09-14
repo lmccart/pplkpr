@@ -18,9 +18,8 @@
 @property (nonatomic, retain) NSDate *date;
 
 // tracking FB actions
-@property (nonatomic, retain) NSMutableDictionary *fbTickets;
-@property (nonatomic, retain) NSMutableArray *fbCompletedActions;
-@property (nonatomic, retain) NSMutableDictionary *fbActions;
+@property (nonatomic, retain) NSMutableDictionary *fbTickets; // ticket - action
+@property (nonatomic, retain) NSMutableDictionary *fbActions; // emotion - actions arr
 
 @property (nonatomic, retain) NSNumber *calm;
 @property (nonatomic, retain) NSNumber *excited;

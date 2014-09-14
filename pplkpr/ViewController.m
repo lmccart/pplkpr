@@ -29,6 +29,7 @@
 	[super viewDidLoad];
 	
     [self updatePriority];
+    [[InteractionData data] checkTickets];
     //[[InteractionData data] takeAction];
 }
 
@@ -51,6 +52,7 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *email = [defaults objectForKey:@"email"];
     NSString *pass = [defaults objectForKey:@"pass"];
+    
     
     if (!email || !pass) {
         [self performSegueWithIdentifier:@"loginSegue" sender:self];

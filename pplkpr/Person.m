@@ -18,7 +18,6 @@
 
 @dynamic fbTickets;
 @dynamic fbActions;
-@dynamic fbCompletedActions;
 
 @dynamic calm;
 @dynamic excited;
