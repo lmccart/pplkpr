@@ -10,7 +10,8 @@
 #import "AppDelegate.h"
 #import "DayLog.h"
 
-#import "linear.h"
+#include "linear.h"
+#include "hrv.h"
 
 @interface HeartRateAnalyzer()
 
@@ -72,7 +73,6 @@
     [request setPredicate:predicate];
     [request setFetchLimit:1];
     
-    
     NSArray *results = [_managedObjectContext executeFetchRequest:request error:nil];
     
     DayLog *dayLog;
@@ -101,56 +101,67 @@
     return dayLog;
 }
 
-
-
 - (void)addRR:(NSInteger)rr withTime:(NSDate *)time {
-    // store in core data the values
-    DayLog *dayLog = [self getTodayLog];
-    [dayLog.rrs addObject:[NSNumber numberWithInteger:rr]];
-    [dayLog.rr_times addObject:time];
-    
     [self.recentData.rrs addObject:[NSNumber numberWithInteger:rr]];
     [self.recentData.rr_times addObject:time];
-    NSLog(@"Saved RR");
+//    NSLog(@"Saved RR");
     
-    // calculate hrv every so many (~100 hundreds seconds)
+    // calculate hrv every so many (~100 seconds)
     if (!self.lastHRVUpdate) {
         [self setLastHRVUpdate:time];
-    }
+    } else if ([time timeIntervalSinceDate:self.lastHRVUpdate] >= 10) {
+        
+        // PEND: instead of using all rrs, just need last 100 seconds
+        // PEND: if 100 seconds of data isn't available, forget about it (e.g., right after POSTing the data)
+        NSMutableArray* chunk = self.recentData.rrs;
+        
+        // convert NSMutableArray of NSNumbers to vector<float>
+        int n = [chunk count];
+        std::vector<float> rrms(n);
+        for(int i = 0; i < n; i++) {
+            rrms[i] = [chunk[i] floatValue];
+        }
+        
+        // get all hrv metrics
+        std::vector<double> hrvMetrics = hrv::buildMetrics(rrms);
+        
+        // prepare hrv metrics in feature_nodes
+        int featureCount = hrvMetrics.size();
+        std::vector<feature_node> data(featureCount + 1); // need extra for end feature
+        for(int i = 0; i < featureCount; i++) {
+            data[i].index = i + 1; // features are 1-indexed for liblinear
+            data[i].value = hrvMetrics[i];
+//            NSLog(@"HRV metric %d: %f", i, hrvMetrics[i]);
+        }
+        data[featureCount].index = -1; // end of elements list
+        
+        // load linear regression model and run prediction
+        NSString * path = [[NSBundle mainBundle] pathForResource: @"mio-8" ofType: @"model"];
+        struct model* model_ = load_model(path.UTF8String);
+        double stress = predict(model_, &(data.front()));
+        free_and_destroy_model(&model_);
+        
+        // clamp output to 0 to 1 range?
+        // people might go above/below if the data is very different from the driver-stress dataset
+        stress = MAX(stress, 0);
+        stress = MIN(stress, 1);
+        
+        NSNumber *stressNumber = [NSNumber numberWithFloat:stress];
     
-    else if ([time timeIntervalSinceDate:self.lastHRVUpdate] >= 10) {
-        
-        // calculate HRV
-        NSNumber *hrv = [dayLog.rrs lastObject];
-        // PEND: calculate hrv properly from the last 100 seconds of data
-        
-        struct parameter param;
-        struct problem prob;
-        struct model* model_;
-//        model_=train(&prob, &param);
-        
-        [dayLog.hrvs addObject:hrv];
-        [dayLog.hrv_times addObject:time];
-    
-        [self.recentData.hrvs addObject:hrv];
+        [self.recentData.hrvs addObject:stressNumber];
         [self.recentData.hrv_times addObject:time];
         
         self.lastHRVUpdate = time;
-        NSLog(@"Saved HRV %@", hrv);
+        
+        NSLog(@"Saved stress level %@", stressNumber);
         
         // PEND: trigger a push notification based on analysis of whether our current state is significant
-        if ([hrv integerValue] > 0) {
+        if (stress > .9) {
             
             // trigger alert
             AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
             [appDelegate triggerNotification:@"hrv"];
         }
-    }
-    
-    // save object
-    NSError *error;
-    if (![_managedObjectContext save:&error]) {
-        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
     }
 }
 
