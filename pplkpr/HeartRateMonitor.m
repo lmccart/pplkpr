@@ -262,9 +262,9 @@ didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic
             [_viewController updateMonitorStatus:1];
             
             if(SensorContactStatus == 3) {
-                NSLog(@"Sensor contact is detected");
+//                NSLog(@"Sensor contact is detected");
             } else {
-                NSLog(@"Sensor contact is not supported");
+//                NSLog(@"Sensor contact is not supported");
             }
             
             if(RRInterval) {
