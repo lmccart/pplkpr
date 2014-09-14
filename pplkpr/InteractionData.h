@@ -31,8 +31,7 @@
              withFbid:(NSString *)fbid
           withEmotion:(NSString *)emotion
            withRating:(NSNumber *)rating
-   withRangeStartDate:(NSDate *)rangeStartDate
-     withRangeEndDate:(NSDate *)rangeEndDate;
+             withDate:(NSDate *)date;
 - (NSArray*)getAllReports;
 - (NSArray*)getAllPeople;
 - (NSMutableDictionary *)getRankedPeople;

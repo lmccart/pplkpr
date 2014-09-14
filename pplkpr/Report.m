@@ -15,8 +15,6 @@
 @dynamic emotion;
 @dynamic rating;
 @dynamic date;
-@dynamic rangeStartDate;
-@dynamic rangeEndDate;
 @dynamic person;
 
 - (NSString *)toString {
@@ -27,9 +25,7 @@
     [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"];
     
     NSString *date = [dateFormatter stringFromDate:self.date];
-    NSString *rsDate = [dateFormatter stringFromDate:self.rangeStartDate];
-    NSString *reDate = [dateFormatter stringFromDate:self.rangeEndDate];
     
-    return [NSString stringWithFormat:@"%@\t%@\t%@\t%@\t%@\t%@\t%@\n", date, self.person.name, self.person.fbid, self.emotion, self.rating, rsDate, reDate];
+    return [NSString stringWithFormat:@"%@\t%@\t%@\t%@\t%@\n", date, self.person.name, self.person.fbid, self.emotion, self.rating];
 }
 @end

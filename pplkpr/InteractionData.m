@@ -133,10 +133,9 @@
              withFbid:(NSString *)fbid
           withEmotion:(NSString *)emotion
            withRating:(NSNumber *)rating
-   withRangeStartDate:(NSDate *)rangeStartDate
-     withRangeEndDate:(NSDate *)rangeEndDate; {
+             withDate:(NSDate *)date; {
 	
-	NSLog(@"ADDING REPORT %@ %@ %@ %@ %@ %@", name, fbid, rating, emotion, rangeStartDate, rangeEndDate);
+	NSLog(@"ADDING REPORT %@ %@ %@ %@ %@", name, fbid, rating, emotion, date);
 	
 	// create new report
 	Report *newReport = [NSEntityDescription insertNewObjectForEntityForName:@"Report"
@@ -145,9 +144,7 @@
     NSString *emotionKey = [emotion lowercaseString];
     [newReport setEmotion:emotion];
     [newReport setRating:rating];
-    [newReport setDate:[NSDate date]];
-    [newReport setRangeStartDate:rangeStartDate];
-    [newReport setRangeEndDate:rangeEndDate];
+    [newReport setDate:date];
     
     // add report to person
     Person *person = [self getPerson:name withFbid:fbid save:false];

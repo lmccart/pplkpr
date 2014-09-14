@@ -73,7 +73,7 @@
     [self.timeSlider setThumbImage:[UIImage imageNamed:@"ticker.png"] forState:UIControlStateNormal];
     [self.timeSlider setMinimumTrackTintColor:[UIColor lightGrayColor]];
     [self.timeSlider setMaximumTrackTintColor:[UIColor blackColor]];
-	
+    
 	[self.whoTextField setDelegate:self];
     [self.whoTextField setClearButtonMode:UITextFieldViewModeWhileEditing];
     UIView *spacerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
@@ -336,14 +336,12 @@
         val = ((val-0.25)/0.5); // to account for hiding of edges of slider
         
         float timeVal = [self.timeSlider value];
-        NSDate *startDate = [self.rangeEnd dateByAddingTimeInterval:timeVal*60];
-        NSDate *endDate = self.rangeEnd; //pend
+        NSDate *date = [self.rangeEnd dateByAddingTimeInterval:timeVal*60];
         Report *r = [[InteractionData data] addReport:self.whoName
                                              withFbid:self.whoFbid
                                           withEmotion:self.emotion
                                            withRating:[NSNumber numberWithFloat:val]
-                                   withRangeStartDate:startDate
-                                     withRangeEndDate:endDate];
+                                             withDate:date];
         
         
         [[FBHandler data] logReport:[r toString] withRRData:[[HeartRateAnalyzer data] getRRDataString] withHRVData:[[HeartRateAnalyzer data] getHRVDataString]];
@@ -408,7 +406,7 @@
     }
 }
 
-#pragma mark - Slider Delegate
+#pragma mark - Slider
 
 - (IBAction)sliderValueChanged:(UISlider *)sender {
     if (sender.value < 0.25) {
@@ -417,5 +415,6 @@
         [sender setValue:0.75];
     }
 }
+
 
 @end
