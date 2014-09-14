@@ -31,8 +31,10 @@
 @property (retain) NSString *emotion;
 
 @property (retain, nonatomic) IBOutlet UISlider *intensitySlider;
-@property float imgSize;
 
+@property (retain, nonatomic) IBOutlet UIButton *submitButton;
+
+@property float imgSize;
 @property BOOL needsReset;
 
 @end
@@ -129,6 +131,12 @@
     shapeLayer.lineWidth = 1.0;
     shapeLayer.fillColor = [[UIColor clearColor] CGColor];
     [self.view.layer addSublayer:shapeLayer];
+    
+    // move submit button down if iphone5
+    if (self.view.frame.size.height == 568) {
+        CGRect frame = self.submitButton.frame;
+        [self.submitButton setFrame:CGRectMake(frame.origin.x, 449, frame.size.width, frame.size.height)];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {

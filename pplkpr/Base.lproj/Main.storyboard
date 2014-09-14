@@ -209,6 +209,7 @@
                         <outlet property="intensitySlider" destination="0db-y5-gVG" id="fLv-qq-N25"/>
                         <outlet property="rangeEndLabel" destination="ORG-qe-BAv" id="NeD-CQ-xys"/>
                         <outlet property="rangeStartLabel" destination="HGK-1y-3i2" id="iKR-mD-Jkl"/>
+                        <outlet property="submitButton" destination="gK4-Pv-IMD" id="wWW-QQ-xXJ"/>
                         <outlet property="timeSlider" destination="JkY-er-b42" id="cwb-5z-GeN"/>
                         <outlet property="whoRecentView" destination="YP2-NX-mY8" id="RDS-Mq-mzl"/>
                         <outlet property="whoTextField" destination="9fa-v4-3v6" id="G1f-yl-pEv"/>
@@ -389,6 +390,7 @@
                         <outlet property="emotionPicker" destination="xcf-aM-vKt" id="CIE-iY-ym6"/>
                         <outlet property="emotionTextView" destination="1XM-wA-Dfh" id="SLX-vp-Qk0"/>
                         <outlet property="intensitySlider" destination="NN1-DG-s1w" id="Xud-Xm-Czy"/>
+                        <outlet property="submitButton" destination="EV2-7O-x3I" id="nqm-fI-pI8"/>
                         <outlet property="whoRecentView" destination="Qod-EV-qsN" id="jxb-z2-7sq"/>
                         <outlet property="whoTextField" destination="gNz-Xz-RqH" id="6HV-sv-sxV"/>
                     </connections>
