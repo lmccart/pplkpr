@@ -219,12 +219,14 @@ didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic
              error:(NSError *)error {
 	if (error) {
 		return;
-	}
+    }
+    NSDate* time = [NSDate date];
     //NSLog(@"didUpdateValueForCharacteristic %@ %@", characteristic, characteristic.UUID);
     CBUUID* hrTarget = [CBUUID UUIDWithString:@"2a37"]; // heart rate measurement characteristic
     CBUUID* batteryTarget = [CBUUID UUIDWithString:@"2a19"]; // battery characteristic
     
 	if([[characteristic.UUID data] isEqualToData:[hrTarget data]]) {
+
 		NSData* data = characteristic.value;
         
 		int readOffset = 0;
@@ -233,7 +235,6 @@ didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic
 		[data getBytes:&flags range:NSMakeRange(readOffset, 1)];
 		readOffset += 1;
         
-        // PEND KYLE
 		uint8_t HeartRateValueFormat = (flags & (1 << 0)) >> 0;
 		uint8_t SensorContactStatus = (flags & (3 << 1)) >> 1;
 		uint8_t EnergyExpendedStatus = (flags & (1 << 3)) >> 3;
@@ -283,7 +284,7 @@ didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic
                     // time_t unixTime = (time_t) [[NSDate date] timeIntervalSince1970];
                     // NSString* cur = [NSString stringWithFormat:@"%ld\t%hu", unixTime, rr];
                     // NSLog(@"%@", cur);
-                    [[HeartRateAnalyzer data] addRR:[[NSNumber numberWithUnsignedShort:rr] integerValue] withTime:[NSDate date]];
+                    [[HeartRateAnalyzer data] addRR:[[NSNumber numberWithUnsignedShort:rr] integerValue] withTime:time];
                     //[self writeToLogFile:cur];
                     
                     entry++;

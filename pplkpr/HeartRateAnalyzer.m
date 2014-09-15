@@ -19,9 +19,9 @@
 @property (nonatomic, retain) NSDate *lastStressUpdateTime;
 @property (nonatomic, retain) NSNumber *lastStressValue;
 @property (nonatomic, retain) DayLog *recentData;
+@property (nonatomic, retain) NSMutableArray *rrs;
 
 @end
-
 
 @implementation HeartRateAnalyzer
 
@@ -37,6 +37,9 @@
 - (id)init {
 	
     if (self = [super init]) {
+        self.lastStressValue = [NSNumber numberWithFloat:0.5];
+        self.rrs = [[NSMutableArray alloc] init];
+        
         AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
         self.managedObjectContext = appDelegate.managedObjectContext;
     
@@ -103,26 +106,26 @@
 }
 
 - (void)addRR:(NSInteger)rr withTime:(NSDate *)time {
+    [self.rrs addObject:[NSNumber numberWithInteger:rr]];
     [self.recentData.rrs addObject:[NSNumber numberWithInteger:rr]];
     [self.recentData.rr_times addObject:time];
-//    NSLog(@"Saved RR");
     
-    // calculate hrv every so many (~100 seconds)
+    // calculate hrv every updateInterval seconds
+    float updateInterval = 100;
     if (!self.lastStressUpdateTime) {
         self.lastStressUpdateTime = time;
-        self.lastStressValue = [NSNumber numberWithFloat:0.5];
-    } else if ([time timeIntervalSinceDate:self.lastStressUpdateTime] >= 10) {
-        
-        // PEND: instead of using all rrs, just need last 100 seconds
-        // PEND: if 100 seconds of data isn't available, forget about it (e.g., right after POSTing the data)
-        NSMutableArray* chunk = self.recentData.rrs;
+    } else if ([time timeIntervalSinceDate:self.lastStressUpdateTime] > updateInterval) {
+        // PEND: if not enough data is available, forget about it
         
         // convert NSMutableArray of NSNumbers to vector<float>
-        int n = [chunk count];
+        int n = [self.rrs count];
+        NSLog(@"Processing %d rrs over %f seconds", n, updateInterval);
         std::vector<float> rrms(n);
         for(int i = 0; i < n; i++) {
-            rrms[i] = [chunk[i] floatValue];
+            rrms[i] = [self.rrs[i] floatValue];
         }
+        // clear in preparation for next update
+        [self.rrs removeAllObjects];
         
         // get all hrv metrics
         std::vector<double> hrvMetrics = hrv::buildMetrics(rrms);
@@ -138,6 +141,7 @@
         data[featureCount].index = -1; // end of elements list
         
         // load linear regression model and run prediction
+        // PEND: cache model by loading it once in init
         NSString * path = [[NSBundle mainBundle] pathForResource: @"mio-8" ofType: @"model"];
         struct model* model_ = load_model(path.UTF8String);
         double stress = predict(model_, &(data.front()));
