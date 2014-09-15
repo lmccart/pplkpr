@@ -16,7 +16,8 @@
 @interface HeartRateAnalyzer()
 
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
-@property (nonatomic, retain) NSDate *lastHRVUpdate;
+@property (nonatomic, retain) NSDate *lastStressUpdateTime;
+@property (nonatomic, retain) NSNumber *lastStressValue;
 @property (nonatomic, retain) DayLog *recentData;
 
 @end
@@ -107,9 +108,10 @@
 //    NSLog(@"Saved RR");
     
     // calculate hrv every so many (~100 seconds)
-    if (!self.lastHRVUpdate) {
-        [self setLastHRVUpdate:time];
-    } else if ([time timeIntervalSinceDate:self.lastHRVUpdate] >= 10) {
+    if (!self.lastStressUpdateTime) {
+        self.lastStressUpdateTime = time;
+        self.lastStressValue = [NSNumber numberWithFloat:0.5];
+    } else if ([time timeIntervalSinceDate:self.lastStressUpdateTime] >= 10) {
         
         // PEND: instead of using all rrs, just need last 100 seconds
         // PEND: if 100 seconds of data isn't available, forget about it (e.g., right after POSTing the data)
@@ -151,7 +153,8 @@
         [self.recentData.hrvs addObject:stressNumber];
         [self.recentData.hrv_times addObject:time];
         
-        self.lastHRVUpdate = time;
+        self.lastStressUpdateTime = time;
+        self.lastStressValue = stressNumber;
         
         NSLog(@"Saved stress level %@", stressNumber);
         
@@ -165,11 +168,9 @@
 }
 
 
-- (NSMutableDictionary *)getHRVEvent {
-	
+- (NSMutableDictionary *)getStressEvent {
 	NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
-	[dict setObject:[NSNumber numberWithFloat:0.5] forKey:@"intensity"];
-
+	[dict setObject:self.lastStressValue forKey:@"intensity"];
 	return dict;
 }
 
