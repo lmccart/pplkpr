@@ -142,10 +142,17 @@
     if (!self.lastStressUpdateTime) {
         self.lastStressUpdateTime = time;
     } else if ([time timeIntervalSinceDate:self.lastStressUpdateTime] > self.stressUpdateInterval) {
-        // PEND: if not enough data is available, forget about calculating hrv metrics
+        int n = [self.rrs count];
+        
+        // if there isn't enough data available, forget about calculating hrv metrics
+        float minimumHeartrate = 30;
+        float minimumSamplesPerSecond = minimumHeartrate / 60.;
+        int minimumSampleCount = self.stressUpdateInterval * minimumSamplesPerSecond;
+        if(n < minimumSampleCount) {
+            return;
+        }
         
         // convert NSMutableArray of NSNumbers to vector<float>
-        int n = [self.rrs count];
         NSLog(@"Processing %d rrs over %f seconds", n, self.stressUpdateInterval);
         std::vector<float> rrms(n);
         for(int i = 0; i < n; i++) {
