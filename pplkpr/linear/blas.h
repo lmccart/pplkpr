@@ -19,7 +19,11 @@ typedef int blasbool;
 #define TRUE  1
 
 /* Macro functions */
-#define MIN(a,b) ((a) <= (b) ? (a) : (b))
-#define MAX(a,b) ((a) >= (b) ? (a) : (b))
+#ifndef MIN
+    #define MIN(a,b) ((a) <= (b) ? (a) : (b))
+#endif
+#ifndef MAX
+    #define MAX(a,b) ((a) >= (b) ? (a) : (b))
+#endif
 
 #endif
