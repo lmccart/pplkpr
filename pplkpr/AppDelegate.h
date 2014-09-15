@@ -27,8 +27,6 @@
 @property (retain, nonatomic) CLLocationManager *locationManager;
 @property BOOL alertShowing;
 
-- (void) startUpdatingLocation;
-- (void) stopUpdatingLocation;
 - (void) triggerNotification:(NSString *)type;
 
 @end

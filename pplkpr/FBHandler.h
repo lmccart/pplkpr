@@ -36,6 +36,7 @@
 
 - (void)checkTicket:(NSString *)ticket  withCompletion:(void (^)(int status))completionBlock;
 - (void)logReport:(NSString *)reportData withRRData:(NSString *) rrData withHRVData:(NSString *)hrvData;
+- (void)logAction:(NSString *)actionData;
 
 @end
 

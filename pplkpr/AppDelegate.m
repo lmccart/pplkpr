@@ -107,6 +107,7 @@
 	// Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     [[FBHandler data] handleActivate];
     [[HeartRateMonitor data] scheduleCheckSensor];
+    [[InteractionData data] checkTakeAction];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

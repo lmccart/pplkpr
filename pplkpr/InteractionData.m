@@ -38,7 +38,7 @@
         //@property (nonatomic, strong) NSDictionary *descriptiveActionsDict; // action -> array [command, past]
         //@property (nonatomic, strong) NSDictionary *messageDict; // emotion -> array [possible msgs for given emotion]
 
-        NSArray *excitedActions = [[NSArray alloc] initWithObjects:@"post", nil];
+        NSArray *excitedActions = [[NSArray alloc] initWithObjects:@"post", @"invite", nil];
         NSArray *arousedActions = [[NSArray alloc] initWithObjects:@"poke", @"join_event", nil];
         NSArray *angryActions = [[NSArray alloc] initWithObjects:@"post", @"block", @"unfriend", nil];
         NSArray *scaredActions = [[NSArray alloc] initWithObjects:@"post", @"block", @"unfriend", nil];
@@ -72,12 +72,13 @@
         AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
         self.managedObjectContext = appDelegate.managedObjectContext;
         
-        [self purgeOldRecords];
+        //[self purgeOldRecords];
         
     }
 	
     return self;
 }
+
 
 - (NSString *)getFutureAction:(NSString *)emotion forIndex:(int)ind {
     return [[self.possibleActionsDict objectForKey:emotion] objectAtIndex:ind];
@@ -427,6 +428,28 @@
 }
 
 
++ (NSDate *)getTodayDate {
+    NSCalendar *cal = [NSCalendar currentCalendar];
+    
+    NSDate *date = [NSDate date];
+    NSDateComponents *comps = [cal components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit)
+                                     fromDate:date];
+    NSDate *today = [cal dateFromComponents:comps];
+    return today;
+}
+
+- (void)checkTakeAction {
+    [self checkTickets];
+    NSDate *today = [InteractionData getTodayDate];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDate *lastDate = [defaults objectForKey:@"lastActionDate"]; // once a day
+    if (!lastDate || ![lastDate isEqual:today]) {
+        [defaults setObject:today forKey:@"lastActionDate"];
+        [defaults synchronize];
+        [self takeAction];
+    }
+}
+
 - (void)takeAction {
     NSArray *priorities = [self getSortedPriorities];
     if ([priorities count] > 0) {
@@ -490,9 +513,23 @@
     int ind = 0;
     if (last_act) {
         ind = ([possible_actions_arr indexOfObject:last_act] + 1) % [possible_actions_arr count];
+        NSLog(@"last act %@ ind %d i %d count %d", last_act, ind, [possible_actions_arr indexOfObject:last_act], [possible_actions_arr count]);
     }
 
-    [[FBHandler data] createFakebookRequest:person withType:[possible_actions_arr objectAtIndex:ind] withMessage:@"test" withEmotion:emotion];
+    NSString *action = [possible_actions_arr objectAtIndex:ind];
+    NSString *msg = @"test";
+    
+    [[FBHandler data] createFakebookRequest:person withType:action withMessage:msg withEmotion:emotion];
+    
+    // log action
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    NSLocale *enUSPOSIXLocale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
+    [dateFormatter setLocale:enUSPOSIXLocale];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"];
+    NSString *date = [dateFormatter stringFromDate:[InteractionData getTodayDate]];
+    
+    NSString *actionData = [NSString stringWithFormat:@"%@\t%@\t%@\t%@\t%@\t%@\n", date, person.name, person.fbid, emotion, action, msg];
+    [[FBHandler data] logAction:actionData];
 }
 
 // returns dictionary {emotion:array of people} sorted most to least
@@ -564,26 +601,26 @@
     }
 }
 
-- (void)purgeOldRecords {
-	
-	NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    [request setEntity:[NSEntityDescription entityForName:@"Report" inManagedObjectContext:_managedObjectContext]];
-	
-	NSDate *pastDate = [NSDate dateWithTimeIntervalSinceNow:-5184000]; // Negative 60 days, in seconds (-60*60*24*60)
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"date < %@", pastDate];
-	[request setPredicate:predicate];
-	
-	NSError *error;
-    NSArray *results = [_managedObjectContext executeFetchRequest:request error:nil];
-
-    for (NSManagedObject *managedObject in results) {
-    	[_managedObjectContext deleteObject:managedObject];
-    	//NSLog(@"report deleted");
-    }
-    if (![_managedObjectContext save:&error]) {
-    	NSLog(@"Error deleting - error:%@",error);
-    }
-}
+//- (void)purgeOldRecords {
+//    
+//    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+//    [request setEntity:[NSEntityDescription entityForName:@"Report" inManagedObjectContext:_managedObjectContext]];
+//    
+//    NSDate *pastDate = [NSDate dateWithTimeIntervalSinceNow:-5184000]; // Negative 60 days, in seconds (-60*60*24*60)
+//    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"date < %@", pastDate];
+//    [request setPredicate:predicate];
+//    
+//    NSError *error;
+//    NSArray *results = [_managedObjectContext executeFetchRequest:request error:nil];
+//
+//    for (NSManagedObject *managedObject in results) {
+//        [_managedObjectContext deleteObject:managedObject];
+//        //NSLog(@"report deleted");
+//    }
+//    if (![_managedObjectContext save:&error]) {
+//        NSLog(@"Error deleting - error:%@",error);
+//    }
+//}
 
 @end
 

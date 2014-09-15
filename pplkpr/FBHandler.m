@@ -269,5 +269,22 @@
     }];
 }
 
+
+- (void)logAction:(NSString *)actionData {
+    NSString *uuid = [[[[UIDevice currentDevice] identifierForVendor] UUIDString] stringByReplacingOccurrencesOfString:@"-" withString:@"0"];
+    NSLog(@"%@ uuid %d", uuid, [uuid length]);
+    
+    NSString *request = [NSString stringWithFormat:@"id=%@&type=%@&data=%@",
+                           uuid,
+                           @"action",
+                           actionData];
+    
+    [self requestUrl:@"device_log" withRequest:request withType:@"POST" withCompletion:^(NSData *data) {
+        NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"LOGGING: %@",returnString);
+    }];
+    
+}
+
 @end
 

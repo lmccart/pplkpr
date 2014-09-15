@@ -30,6 +30,7 @@
 
 + (id)data;
 - (id)init;
++ (NSDate *)getTodayDate;
 
 - (Person *)getPerson:(NSString *)name withFbid:(NSString *)fbid save:(BOOL)save;
 - (Report *)addReport:(NSString *)name
@@ -45,6 +46,7 @@
 - (NSArray *)getRecentPeople;
 - (void)saveLastReportDate:(NSDate *)date;
 - (NSTimeInterval)getTimeSinceLastReport;
+- (void)checkTakeAction;
 - (void)takeAction;
 - (void)checkTickets;
 
