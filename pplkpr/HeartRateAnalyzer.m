@@ -16,10 +16,23 @@
 @interface HeartRateAnalyzer()
 
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
-@property (nonatomic, retain) NSDate *lastStressUpdateTime;
-@property (nonatomic, retain) NSNumber *lastStressValue;
 @property (nonatomic, retain) DayLog *recentData;
+
+@property (nonatomic, retain) NSDate *lastStressUpdateTime;
 @property (nonatomic, retain) NSMutableArray *rrs;
+@property float lastStressValue;
+
+// configuration
+@property float stressUpdateInterval;
+@property float stressThreshold;
+@property float stressThresholdRate;
+@property float stressSmoothedRate;
+@property float notifyTimeMinimum;
+
+// running values
+@property float stressSmoothed;
+@property (nonatomic, retain) NSDate *notifyTimePrevious;
+
 
 @end
 
@@ -37,8 +50,18 @@
 - (id)init {
 	
     if (self = [super init]) {
-        self.lastStressValue = [NSNumber numberWithFloat:0.5];
         self.rrs = [[NSMutableArray alloc] init];
+        self.lastStressValue = 0.5;
+        
+        // configuration
+        self.stressUpdateInterval = 100; // smallest HRV interval used by researchers is 100 seconds
+        self.stressThreshold = 0.5; // lower this to have a notification pop up sooner on startup
+        self.stressThresholdRate = 0.01; // this allows the threshold to slowly adapt on too many/few crossings
+        self.stressSmoothedRate = 0.5; // adapt rate, means that stress must be sustained to cause a notification, 1 disables
+        self.notifyTimeMinimum = 3600; // minimum time between notifications, 1 hour in seconds
+        
+        // running values
+        self.stressSmoothed = 0.5;
         
         AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
         self.managedObjectContext = appDelegate.managedObjectContext;
@@ -105,21 +128,24 @@
     return dayLog;
 }
 
+- (float) lerpFrom:(float)a to:(float)b at:(float)t {
+    return ((1 - t) * a) + (t * b);
+}
+
 - (void)addRR:(NSInteger)rr withTime:(NSDate *)time {
     [self.rrs addObject:[NSNumber numberWithInteger:rr]];
     [self.recentData.rrs addObject:[NSNumber numberWithInteger:rr]];
     [self.recentData.rr_times addObject:time];
     
-    // calculate hrv every updateInterval seconds
-    float updateInterval = 100;
+    // calculate hrv every stressUpdateInterval seconds
     if (!self.lastStressUpdateTime) {
         self.lastStressUpdateTime = time;
-    } else if ([time timeIntervalSinceDate:self.lastStressUpdateTime] > updateInterval) {
-        // PEND: if not enough data is available, forget about it
+    } else if ([time timeIntervalSinceDate:self.lastStressUpdateTime] > self.stressUpdateInterval) {
+        // PEND: if not enough data is available, forget about calculating hrv metrics
         
         // convert NSMutableArray of NSNumbers to vector<float>
         int n = [self.rrs count];
-        NSLog(@"Processing %d rrs over %f seconds", n, updateInterval);
+        NSLog(@"Processing %d rrs over %f seconds", n, self.stressUpdateInterval);
         std::vector<float> rrms(n);
         for(int i = 0; i < n; i++) {
             rrms[i] = [self.rrs[i] floatValue];
@@ -144,29 +170,44 @@
         // PEND: cache model by loading it once in init
         NSString * path = [[NSBundle mainBundle] pathForResource: @"mio-8" ofType: @"model"];
         struct model* model_ = load_model(path.UTF8String);
-        double stress = predict(model_, &(data.front()));
+        float stress = (float) predict(model_, &(data.front()));
         free_and_destroy_model(&model_);
         
         // clamp output to 0 to 1 range?
         // people might go above/below if the data is very different from the driver-stress dataset
+        NSLog(@"Raw stress is %f", stress);
         stress = MAX(stress, 0);
         stress = MIN(stress, 1);
-        
-        NSNumber *stressNumber = [NSNumber numberWithFloat:stress];
     
-        [self.recentData.hrvs addObject:stressNumber];
+        [self.recentData.hrvs addObject:[NSNumber numberWithFloat:stress]];
         [self.recentData.hrv_times addObject:time];
         
         self.lastStressUpdateTime = time;
-        self.lastStressValue = stressNumber;
+        self.lastStressValue = stress;
         
-        NSLog(@"Saved stress level %@", stressNumber);
+        NSLog(@"Saved stress is %f", stress);
         
-        // PEND: trigger a push notification based on analysis of whether our current state is significant
-        if (stress > .9) {
-            // trigger alert
-            AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
-            [appDelegate triggerNotification:@"hrv"];
+        self.stressSmoothed = [self lerpFrom:self.stressSmoothed to:stress at:self.stressSmoothedRate];
+        if(!self.notifyTimePrevious) {
+            self.notifyTimePrevious = time;
+        }
+        double timeElapsed = [time timeIntervalSinceDate:self.notifyTimePrevious];
+        if (self.stressSmoothed >= self.stressThreshold) {
+            if (timeElapsed > self.notifyTimeMinimum) {
+                self.notifyTimePrevious = time;
+                NSLog(@"Sending notification duration %f > %f and stress %f > %f", timeElapsed, self.notifyTimeMinimum, self.stressSmoothed, self.stressThreshold);
+                AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+                [appDelegate triggerNotification:@"hrv"];
+            } else {
+                NSLog(@"Notifying too often, raising threshold %f towards %f", self.stressThreshold, self.stressSmoothed);
+                self.stressThreshold = [self lerpFrom:self.stressThreshold to:self.stressSmoothed at:self.stressThresholdRate];
+                NSLog(@"New threshold is %f", self.stressThreshold);
+            }
+        }
+        if(timeElapsed > self.notifyTimeMinimum) {
+            NSLog(@"Notifying too rarely, lowering threshold %f towards %f", self.stressThreshold, self.stressSmoothed);
+            self.stressThreshold = [self lerpFrom:self.stressThreshold to:self.stressSmoothed at:self.stressThresholdRate];
+            NSLog(@"New threshold is %f", self.stressThreshold);
         }
     }
 }
@@ -174,7 +215,7 @@
 
 - (NSMutableDictionary *)getStressEvent {
 	NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
-	[dict setObject:self.lastStressValue forKey:@"intensity"];
+	[dict setObject:[NSNumber numberWithFloat:self.lastStressValue] forKey:@"intensity"];
 	return dict;
 }
 
