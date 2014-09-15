@@ -188,12 +188,12 @@
         NSLog(@"Saved stress is %f", stress);
         
         self.stressSmoothed = [self lerpFrom:self.stressSmoothed to:stress at:self.stressSmoothedRate];
-        if(!self.notifyTimePrevious) {
-            self.notifyTimePrevious = time;
-        }
         double timeElapsed = [time timeIntervalSinceDate:self.notifyTimePrevious];
+        if(!self.notifyTimePrevious) {
+            timeElapsed = self.notifyTimeMinimum;
+        }
         if (self.stressSmoothed >= self.stressThreshold) {
-            if (timeElapsed > self.notifyTimeMinimum) {
+            if (timeElapsed >= self.notifyTimeMinimum) {
                 self.notifyTimePrevious = time;
                 NSLog(@"Sending notification duration %f > %f and stress %f > %f", timeElapsed, self.notifyTimeMinimum, self.stressSmoothed, self.stressThreshold);
                 AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
@@ -204,7 +204,7 @@
                 NSLog(@"New threshold is %f", self.stressThreshold);
             }
         }
-        if(timeElapsed > self.notifyTimeMinimum) {
+        if(timeElapsed >= self.notifyTimeMinimum) {
             NSLog(@"Notifying too rarely, lowering threshold %f towards %f", self.stressThreshold, self.stressSmoothed);
             self.stressThreshold = [self lerpFrom:self.stressThreshold to:self.stressSmoothed at:self.stressThresholdRate];
             NSLog(@"New threshold is %f", self.stressThreshold);
