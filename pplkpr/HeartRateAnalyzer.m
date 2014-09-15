@@ -20,6 +20,7 @@
 
 @property (nonatomic, retain) NSDate *lastStressUpdateTime;
 @property (nonatomic, retain) NSMutableArray *rrs;
+@property model* model_;
 @property float lastStressValue;
 
 // configuration
@@ -50,12 +51,17 @@
 - (id)init {
 	
     if (self = [super init]) {
+        // load linear regression model
+        NSString * modelPath = [[NSBundle mainBundle] pathForResource: @"mio-8" ofType: @"model"];
+        self.model_ = load_model(modelPath.UTF8String);
+        NSLog(@"Loaded model from %@ with %d features and %d classes.", modelPath, self.model_->nr_feature, self.model_->nr_class);
+        
         self.rrs = [[NSMutableArray alloc] init];
         self.lastStressValue = 0.5;
         
         // configuration
         self.stressUpdateInterval = 100; // smallest HRV interval used by researchers is 100 seconds
-        self.stressThreshold = 0.5; // lower this to have a notification pop up sooner on startup
+        self.stressThreshold = 0.9; // lower this to have a notification pop up sooner on startup
         self.stressThresholdRate = 0.01; // this allows the threshold to slowly adapt on too many/few crossings
         self.stressSmoothedRate = 0.5; // adapt rate, means that stress must be sustained to cause a notification, 1 disables
         self.notifyTimeMinimum = 3600; // minimum time between notifications, 1 hour in seconds
@@ -89,6 +95,13 @@
     return self;
 }
 
+- (void)dealloc {
+    // pretty sure this only happens when the app closes
+    model* cur = self.model_;
+    if(cur) {
+        free_and_destroy_model(&cur);
+    }
+}
 
 - (DayLog *)getTodayLog {
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -174,12 +187,8 @@
         }
         data[featureCount].index = -1; // end of elements list
         
-        // load linear regression model and run prediction
-        // PEND: cache model by loading it once in init
-        NSString * path = [[NSBundle mainBundle] pathForResource: @"mio-8" ofType: @"model"];
-        struct model* model_ = load_model(path.UTF8String);
-        float stress = (float) predict(model_, &(data.front()));
-        free_and_destroy_model(&model_);
+        // run prediction from linear regression model
+        float stress = (float) predict(self.model_, &(data.front()));
         
         // clamp output to 0 to 1 range?
         // people might go above/below if the data is very different from the driver-stress dataset
