@@ -247,30 +247,34 @@
 }
 
 - (void)triggerNotification:(NSString *)type {
-    NSString *msg;
-    if ([type isEqualToString:@"hrv"]) {
-        msg = @"Are you feeling something?";
-    } else if ([type isEqualToString:@"location"]) {
-        msg = @"Are you about to meet someone or did you just leave someone?";
-    } else if ([type isEqualToString:@"hr_monitor"]) {
-        msg = @"HR monitor is not connected.";
+    
+    if ([[FBHandler data] pass]) { // logged in
+        NSString *msg;
+        if ([type isEqualToString:@"hrv"]) {
+            msg = @"Are you feeling something?";
+        } else if ([type isEqualToString:@"location"]) {
+            msg = @"Are you about to meet someone or did you just leave someone?";
+        } else if ([type isEqualToString:@"hr_monitor"]) {
+            msg = @"HR monitor is not connected.";
+        }
+        UILocalNotification * notification = [[UILocalNotification alloc] init];
+        notification.alertBody = msg;
+        notification.alertAction = @"Report";
+        notification.hasAction = YES;
+        notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
+        
+        NSDictionary *infoDict = [NSDictionary dictionaryWithObject:type forKey:@"type"];
+        notification.userInfo = infoDict;
+        
+        [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+        NSLog(@"sending notification");
     }
-    UILocalNotification * notification = [[UILocalNotification alloc] init];
-    notification.alertBody = msg;
-    notification.alertAction = @"Report";
-    notification.hasAction = YES;
-    notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
-    
-    NSDictionary *infoDict = [NSDictionary dictionaryWithObject:type forKey:@"type"];
-    notification.userInfo = infoDict;
-    
-    [[UIApplication sharedApplication] scheduleLocalNotification:notification];
-    NSLog(@"sending notification");
 }
 
 // fired in all when app notif received while app is foregrounded
 // fired in iOS7 when app opened from touch on notif
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+    
     NSString *type = [notification.userInfo objectForKey:@"type"];
     
     if ([type isEqualToString:@"hrv"] || [type isEqualToString:@"location"]) {
