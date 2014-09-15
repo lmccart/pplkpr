@@ -182,7 +182,7 @@
     }
     
     
-    NSMutableDictionary *event = [[HeartRateAnalyzer data] getHRVEvent];
+    NSMutableDictionary *event = [[HeartRateAnalyzer data] getStressEvent];
 	self.emotion = [[[InteractionData data] emotionsArray] objectAtIndex:0];
     [self.intensitySlider setValue:[[event objectForKey:@"intensity"] floatValue]];
     

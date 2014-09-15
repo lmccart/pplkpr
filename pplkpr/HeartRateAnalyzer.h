@@ -13,7 +13,7 @@
 +(id)data;
 -(id)init;
 
-- (NSMutableDictionary *)getHRVEvent;
+- (NSMutableDictionary *)getStressEvent;
 
 - (void)addRR:(NSInteger)rr withTime:(NSDate *)time;
 
