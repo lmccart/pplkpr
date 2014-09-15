@@ -256,6 +256,8 @@
             msg = @"Are you about to meet someone or did you just leave someone?";
         } else if ([type isEqualToString:@"hr_monitor"]) {
             msg = @"HR monitor is not connected.";
+        } else if ([type isEqualToString:@"hr_battery"]) {
+            msg = @"HR monitor battery is low.";
         }
         UILocalNotification * notification = [[UILocalNotification alloc] init];
         notification.alertBody = msg;
@@ -308,6 +310,15 @@
                                                   otherButtonTitles:nil];
             [alert show];
             self.alertShowing = YES;
+        }
+    } else if ([type isEqualToString:@"hr_battery"]) {
+        if (application.applicationState == UIApplicationStateActive) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hey!"
+                                                            message:[notification alertBody]
+                                                           delegate:self
+                                                  cancelButtonTitle:@"Ok"
+                                                  otherButtonTitles:nil];
+            [alert show];
         }
     }
 }

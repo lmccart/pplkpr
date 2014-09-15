@@ -43,7 +43,7 @@
                                     <action selector="report:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="leQ-U2-cDY"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart.png" id="Viq-Uw-BSj">
+                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart.png" id="Viq-Uw-BSj">
                                 <rect key="frame" x="226" y="35" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>

@@ -204,7 +204,12 @@
 
 - (void)updateMonitorStatus:(float)status {
     NSLog(@"updated ");
-    [self.monitorStatusIcon setAlpha:status];
+    [self.monitorStatusIcon setHidden:!status];
+}
+
+- (void)updateMonitorBatteryLevel:(float)level {
+    NSLog(@"updated ");
+    [self.monitorStatusIcon setAlpha:level];
 }
 
 - (IBAction)logoutFB:(id)sender {

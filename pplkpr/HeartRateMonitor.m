@@ -171,12 +171,14 @@
 }
 
 - (void)peripheral:(CBPeripheral *)aPeripheral didDiscoverServices:(NSError *)error {
-	CBUUID* target = [CBUUID UUIDWithString:@"180d"]; // heart rate service
+    CBUUID* hrTarget = [CBUUID UUIDWithString:@"180d"]; // heart rate service
+    CBUUID* batteryTarget = [CBUUID UUIDWithString:@"180f"]; // heart rate service
     for (CBService *service in aPeripheral.services) {
-        NSLog(@"Discovered service %@", service.UUID);
-		if([[service.UUID data] isEqualToData:[target data]]) {
+        if([[service.UUID data] isEqualToData:[hrTarget data]] ||
+           [[service.UUID data] isEqualToData:[batteryTarget data]]) {
+            NSLog(@"Discovered service %@", service.UUID);
 			[aPeripheral discoverCharacteristics:nil forService:service];
-		}
+        }
     }
 }
 
@@ -184,12 +186,14 @@
 didDiscoverCharacteristicsForService:(CBService *)service
 			 error:(NSError *)error {
     
-	CBUUID* target = [CBUUID UUIDWithString:@"2a38"]; // body location characteristic (testing)
+    CBUUID* hrTarget = [CBUUID UUIDWithString:@"2a38"]; // body location characteristic (testing)
+    CBUUID* batteryTarget = [CBUUID UUIDWithString:@"2a19"]; // battery characteristic (testing)
     for (CBCharacteristic *characteristic in service.characteristics) {
-		if([[characteristic.UUID data] isEqualToData:[target data]]) {
-			[peripheral readValueForCharacteristic:characteristic];
+		if([[characteristic.UUID data] isEqualToData:[hrTarget data]] ||
+           [[characteristic.UUID data] isEqualToData:[batteryTarget data]]) {
+            [peripheral readValueForCharacteristic:characteristic];
+            NSLog(@"Discovered characteristic %@ for service %@ notifying %hhd", characteristic.UUID, service.UUID, characteristic.isNotifying);
 		}
-        NSLog(@"Discovered characteristic %@ for service %@ notifying %hhd", characteristic.UUID, service.UUID, characteristic.isNotifying);
 		[peripheral discoverDescriptorsForCharacteristic:characteristic];
     }
 }
@@ -199,10 +203,9 @@ didDiscoverDescriptorsForCharacteristic:(CBCharacteristic *)characteristic
 			 error:(NSError *)error {
 	CBUUID* target = [CBUUID UUIDWithString:@"2902"]; // client characteristic configuration
 	for(CBDescriptor *descriptor in characteristic.descriptors) {
-		NSLog(@"Discovered descriptor %@ for characteristic %@ ", descriptor.UUID, characteristic.UUID);
-		if([[descriptor.UUID data] isEqualToData:[target data]]) {
+        if([[descriptor.UUID data] isEqualToData:[target data]]) {
+            NSLog(@"Discovered descriptor %@ for characteristic %@ ", descriptor.UUID, characteristic.UUID);
 			// need to configure here according to https://developer.bluetooth.org/gatt/descriptors/Pages/DescriptorViewer.aspx?u=org.bluetooth.descriptor.gatt.client_characteristic_configuration.xml
-			NSLog(@"Ready to configure heart rate notifications");
 			[peripheral setNotifyValue:YES forCharacteristic:characteristic];
 			// stopScan should call the following
 			// [peripheral setNotifyValue:NO forCharacteristic:characteristic];
@@ -217,9 +220,11 @@ didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic
 	if (error) {
 		return;
 	}
-    //NSLog(@"didUpdateValueForCharacteristic %@", characteristic);
-	CBUUID* target = [CBUUID UUIDWithString:@"2a37"]; // heart rate measurement characteristic
-	if([[characteristic.UUID data] isEqualToData:[target data]]) {
+    //NSLog(@"didUpdateValueForCharacteristic %@ %@", characteristic, characteristic.UUID);
+    CBUUID* hrTarget = [CBUUID UUIDWithString:@"2a37"]; // heart rate measurement characteristic
+    CBUUID* batteryTarget = [CBUUID UUIDWithString:@"2a19"]; // battery characteristic
+    
+	if([[characteristic.UUID data] isEqualToData:[hrTarget data]]) {
 		NSData* data = characteristic.value;
         
 		int readOffset = 0;
@@ -286,14 +291,27 @@ didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic
                 }
             }
         }
-	}
+    } else if([[characteristic.UUID data] isEqualToData:[batteryTarget data]]) {
+
+        char batteryValue;
+        [characteristic.value getBytes:&batteryValue length:1];
+        float n = (float)batteryValue;
+        NSLog(@"battery level: %f", n);
+        [self.viewController updateMonitorBatteryLevel:n/100.0];
+        
+        // notif if needed
+        if (n < 15.0) {
+            AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+            [appDelegate triggerNotification:@"hr_battery"];
+        }
+    }
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral
 didUpdateNotificationStateForCharacteristic:(CBCharacteristic *)characteristic
 			 error:(NSError *)error {
 	if (!error) {
-        NSLog(@"didUpdateNotificationStateForCharacteristic %@ for %@", characteristic.value, characteristic.UUID);
+        //NSLog(@"didUpdateNotificationStateForCharacteristic %@ for %@", characteristic.value, characteristic.UUID);
 	}
 }
 
