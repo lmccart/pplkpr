@@ -47,7 +47,15 @@
     self.alertShowing = NO;
     
     // Make sure notifs are allowed
-    [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil]];
+    
+    UIApplication *sharedApplication = [UIApplication sharedApplication];
+
+#ifdef __IPHONE_8_0
+    if ([sharedApplication respondsToSelector:@selector(registerUserNotificationSettings)]) {
+        NSLog(@"hi");
+        [sharedApplication registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil]];
+    }
+#endif
     
     // Handle launching from a notification
     UILocalNotification *notification =

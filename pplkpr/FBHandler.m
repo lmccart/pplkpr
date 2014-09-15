@@ -63,7 +63,6 @@
                         NSString *firstName = [result objectForKey:@"first_name"];
                         [self setFirstName:firstName];
                         NSString *fullName = [[result objectForKey:@"name"] stringByReplacingOccurrencesOfString:@" " withString:@"_"];
-                        NSLog(@"%@ %@", result, fullName);
                         [self setFullName:fullName];
                     }];
                 }
@@ -150,7 +149,6 @@
     }];
 }
 
-
 - (void)requestSendWarning:(Person *)person withEmotion:(NSString *)emotion {
     NSString *pronoun = @"their";
     if (self.gender) {
@@ -158,7 +156,6 @@
     }
     [self createFakebookRequest:person withType:@"post" withMessage:[NSString stringWithFormat:@"%@ is on %@ way to meet you and is very %@", self.firstName, pronoun, [emotion lowercaseString]] withEmotion:nil];
 }
-
 
 - (void)requestLogin:(NSString *)email withPass:(NSString *)pass withCompletion:(void (^)(NSDictionary *results))completionBlock {
     NSString *requestString = [NSString stringWithFormat:@"email=%@&password=%@",
