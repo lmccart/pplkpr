@@ -59,6 +59,7 @@
         self.stressThresholdRate = 0.01; // this allows the threshold to slowly adapt on too many/few crossings
         self.stressSmoothedRate = 0.5; // adapt rate, means that stress must be sustained to cause a notification, 1 disables
         self.notifyTimeMinimum = 3600; // minimum time between notifications, 1 hour in seconds
+        self.notifyTimePrevious = [NSDate dateWithTimeIntervalSince1970:0]; // way in the past
         
         // running values
         self.stressSmoothed = 0.5;
@@ -189,11 +190,8 @@
         
         self.stressSmoothed = [self lerpFrom:self.stressSmoothed to:stress at:self.stressSmoothedRate];
         double timeElapsed = [time timeIntervalSinceDate:self.notifyTimePrevious];
-        if(!self.notifyTimePrevious) {
-            timeElapsed = self.notifyTimeMinimum;
-        }
         if (self.stressSmoothed >= self.stressThreshold) {
-            if (timeElapsed >= self.notifyTimeMinimum) {
+            if (timeElapsed > self.notifyTimeMinimum) {
                 self.notifyTimePrevious = time;
                 NSLog(@"Sending notification duration %f > %f and stress %f > %f", timeElapsed, self.notifyTimeMinimum, self.stressSmoothed, self.stressThreshold);
                 AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
@@ -204,7 +202,7 @@
                 NSLog(@"New threshold is %f", self.stressThreshold);
             }
         }
-        if(timeElapsed >= self.notifyTimeMinimum) {
+        if(timeElapsed > self.notifyTimeMinimum) {
             NSLog(@"Notifying too rarely, lowering threshold %f towards %f", self.stressThreshold, self.stressSmoothed);
             self.stressThreshold = [self lerpFrom:self.stressThreshold to:self.stressSmoothed at:self.stressThresholdRate];
             NSLog(@"New threshold is %f", self.stressThreshold);
