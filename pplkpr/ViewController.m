@@ -220,4 +220,8 @@
     [self performSegueWithIdentifier:@"loginSegue" sender:self];
 }
 
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    return NO;
+}
+
 @end

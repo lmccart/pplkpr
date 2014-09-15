@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "InteractionData.h"
 
-@interface PersonViewController : UIViewController <UINavigationControllerDelegate>
+@interface PersonViewController : UIViewController <UINavigationControllerDelegate, UITextViewDelegate>
 
 //- (IBAction) showMore:(id)sender;
 //- (IBAction) sendInAppSMS:(id)sender;

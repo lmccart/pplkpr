@@ -139,6 +139,7 @@
             [attributedString appendAttributedString:actionAttributedStr];
             
             UITextView *tv = [[UITextView alloc] initWithFrame:CGRectMake(0, y, self.priorityView.frame.size.width, 50)];
+            [tv setDelegate:self];
             if (tap) {
                 [tv setBackgroundColor:[GlobalMethods globalYellowColor]];
                 UITapGestureRecognizer *gr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(textTapped:)];
@@ -215,6 +216,11 @@
         }
         
     }
+}
+
+-(BOOL)textViewShouldBeginEditing:(UITextView *)textView {
+    NSLog(@"hi");
+    return NO;
 }
 
 - (void)pushRankViewController:(NSString *)emotion withOrder:(BOOL)order
