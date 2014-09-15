@@ -219,7 +219,6 @@
 }
 
 -(BOOL)textViewShouldBeginEditing:(UITextView *)textView {
-    NSLog(@"hi");
     return NO;
 }
 

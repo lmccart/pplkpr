@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
-@interface ViewController : UIViewController <UITextFieldDelegate> {
+@interface ViewController : UIViewController <UITextFieldDelegate, UITextViewDelegate> {
 }
 
 - (IBAction)logoutFB:(id)sender;
