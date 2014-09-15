@@ -23,8 +23,7 @@
 {
 	[self startUpdatingLocation];
 	
-	// tab bar items
-	
+	// Setup tab bar items
 	UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
 	UITabBar *tabBar = tabBarController.tabBar;
 	
@@ -41,18 +40,14 @@
     UINavigationController *nc = tabBarController.viewControllers[0];
     ViewController *vc = nc.viewControllers[0];
     [[HeartRateMonitor data] setViewController:vc];
-	/*
-	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-	NSString *documentsDirectory = [paths objectAtIndex:0];
-	NSString *fileName =[NSString stringWithFormat:@"%@.log",[NSDate date]];
-	NSString *logFilePath = [documentsDirectory stringByAppendingPathComponent:fileName];
-	freopen([logFilePath cStringUsingEncoding:NSASCIIStringEncoding],"a+",stderr);
-	 */
     
-    // make sure data is inited
+    // Init data
     [[FBHandler data] init];
     [[InteractionData data] checkTickets];
     self.alertShowing = NO;
+    
+    // Make sure notifs are allowed
+    [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil]];
     
     // Handle launching from a notification
     UILocalNotification *notification =
