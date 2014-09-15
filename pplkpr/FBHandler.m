@@ -16,6 +16,7 @@
 @property NSString *fakebookURL;
 @property int gender;
 @property NSString *firstName;
+@property NSString *fullName;
 
 @end
 
@@ -59,8 +60,11 @@
                             [self setGender:0];
                         }
                         
-                        NSString *name = [result objectForKey:@"first_name"];
-                        [self setFirstName:name];
+                        NSString *firstName = [result objectForKey:@"first_name"];
+                        [self setFirstName:firstName];
+                        NSString *fullName = [[result objectForKey:@"name"] stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+                        NSLog(@"%@ %@", result, fullName);
+                        [self setFullName:fullName];
                     }];
                 }
             }];
@@ -235,11 +239,9 @@
 }
 
 - (void)logReport:(NSString *)reportData withRRData:(NSString *)rrData withHRVData:(NSString *)hrvData {
-    NSString *uuid = [[[[UIDevice currentDevice] identifierForVendor] UUIDString] stringByReplacingOccurrencesOfString:@"-" withString:@"0"];
-    NSLog(@"%@ uuid %d", uuid, [uuid length]);
-
+    
     NSString *rrRequest = [NSString stringWithFormat:@"id=%@&type=%@&data=%@",
-                               uuid,
+                               self.fullName,
                                @"rr",
                                rrData];
     
@@ -249,7 +251,7 @@
     }];
     
     NSString *hrvRequest = [NSString stringWithFormat:@"id=%@&type=%@&data=%@",
-                                  uuid,
+                                  self.fullName,
                                   @"hrv",
                                   hrvData];
     
@@ -260,7 +262,7 @@
     
     
     NSString *reportRequest = [NSString stringWithFormat:@"id=%@&type=%@&data=%@",
-                                  uuid,
+                                  self.fullName,
                                   @"report",
                                   reportData];
     
@@ -271,11 +273,9 @@
 
 
 - (void)logAction:(NSString *)actionData {
-    NSString *uuid = [[[[UIDevice currentDevice] identifierForVendor] UUIDString] stringByReplacingOccurrencesOfString:@"-" withString:@"0"];
-    NSLog(@"%@ uuid %d", uuid, [uuid length]);
     
     NSString *request = [NSString stringWithFormat:@"id=%@&type=%@&data=%@",
-                           uuid,
+                           self.fullName,
                            @"action",
                            actionData];
     

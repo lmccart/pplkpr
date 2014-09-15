@@ -54,6 +54,23 @@
                                     boredActions, @"Bored",
                                     calmActions, @"Calm", nil];
         
+        NSArray *excitedMsgs = [[NSArray alloc] initWithObjects:@"excited_test_0", @"excited_test_1", nil];
+        NSArray *arousedMsgs = [[NSArray alloc] initWithObjects:@"aroused_test_0", @"aroused_test_1", nil];
+        NSArray *angryMsgs = [[NSArray alloc] initWithObjects:@"angry_test_0", @"angry_test_1", @"angry_test_2", nil];
+        NSArray *scaredMsgs = [[NSArray alloc] initWithObjects:@"scared_test_0", @"scared_test_1", @"scared_test_2", nil];
+        NSArray *anxiousMsgs = [[NSArray alloc] initWithObjects:@"anxious_test_0", @"anxious_test_1", nil];
+        NSArray *boredMsgs = [[NSArray alloc] initWithObjects:@"bored_test_0", nil];
+        NSArray *calmMsgs = [[NSArray alloc] initWithObjects:@"calm_test_0", @"calm_test_1", nil];
+        self.messageDict = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                    excitedMsgs, @"Excited",
+                                    arousedMsgs, @"Aroused",
+                                    angryMsgs, @"Angry",
+                                    scaredMsgs, @"Scared",
+                                    anxiousMsgs, @"Anxious",
+                                    boredMsgs, @"Bored",
+                                    calmMsgs, @"Calm", nil];
+        
+        
         self.descriptiveActionsDict = [[NSDictionary alloc] initWithObjectsAndKeys:
            [[NSArray alloc] initWithObjects:@"Let them know?", @"I let them know.", nil], @"post",
            [[NSArray alloc] initWithObjects:@"Poke them?", @"I poked them.", nil], @"poke",
@@ -517,7 +534,11 @@
     }
 
     NSString *action = [possible_actions_arr objectAtIndex:ind];
-    NSString *msg = @"test";
+    
+    NSArray *possible_messages_arr = [self.messageDict objectForKey:emotion];
+    NSUInteger randomInd = arc4random() % [possible_messages_arr count];
+    NSString *msg = [possible_messages_arr objectAtIndex:randomInd];
+    NSLog(@"arr %@ ind %d msg %@", possible_messages_arr, randomInd, msg);
     
     [[FBHandler data] createFakebookRequest:person withType:action withMessage:msg withEmotion:emotion];
     
@@ -526,7 +547,7 @@
     NSLocale *enUSPOSIXLocale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
     [dateFormatter setLocale:enUSPOSIXLocale];
     [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"];
-    NSString *date = [dateFormatter stringFromDate:[InteractionData getTodayDate]];
+    NSString *date = [dateFormatter stringFromDate:[NSDate date]];
     
     NSString *actionData = [NSString stringWithFormat:@"%@\t%@\t%@\t%@\t%@\t%@\n", date, person.name, person.fbid, emotion, action, msg];
     [[FBHandler data] logAction:actionData];
