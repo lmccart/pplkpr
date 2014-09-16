@@ -87,46 +87,6 @@
         free_and_destroy_model(&cur);
     }
 }
-
-- (DayLog *)getTodayLog {
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"DayLog"
-                                              inManagedObjectContext:_managedObjectContext];
-    [request setEntity:entity];
-    
-    NSDate *date = [DayLog getTodayDate];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"date == %@", date];
-    [request setPredicate:predicate];
-    [request setFetchLimit:1];
-    
-    NSArray *results = [_managedObjectContext executeFetchRequest:request error:nil];
-    
-    DayLog *dayLog;
-    
-    if (results && [results count] > 0) {
-        // return existing object
-        dayLog = [results objectAtIndex:0];
-    } else {
-        // create new object for this day
-        dayLog = [NSEntityDescription insertNewObjectForEntityForName:@"DayLog"
-                                               inManagedObjectContext:_managedObjectContext];
-        // init props
-        [dayLog setDate:date];
-        [dayLog setRrs:[[NSMutableArray alloc] init]];
-        [dayLog setRr_times:[[NSMutableArray alloc] init]];
-        [dayLog setHrvs:[[NSMutableArray alloc] init]];
-        [dayLog setHrv_times:[[NSMutableArray alloc] init]];
-        
-        // save object
-        NSError *error;
-        if (![_managedObjectContext save:&error]) {
-            NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
-        }
-    }
-
-    return dayLog;
-}
-
 - (float) lerpFrom:(float)a to:(float)b at:(float)t {
     return ((1 - t) * a) + (t * b);
 }
