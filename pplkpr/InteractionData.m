@@ -54,13 +54,13 @@
                                     boredActions, @"Bored",
                                     calmActions, @"Calm", nil];
         
-        NSArray *excitedMsgs = [[NSArray alloc] initWithObjects:@"excited_test_0", @"excited_test_1", nil];
-        NSArray *arousedMsgs = [[NSArray alloc] initWithObjects:@"aroused_test_0", @"aroused_test_1", nil];
-        NSArray *angryMsgs = [[NSArray alloc] initWithObjects:@"angry_test_0", @"angry_test_1", @"angry_test_2", nil];
-        NSArray *scaredMsgs = [[NSArray alloc] initWithObjects:@"scared_test_0", @"scared_test_1", @"scared_test_2", nil];
-        NSArray *anxiousMsgs = [[NSArray alloc] initWithObjects:@"anxious_test_0", @"anxious_test_1", nil];
-        NSArray *boredMsgs = [[NSArray alloc] initWithObjects:@"bored_test_0", nil];
-        NSArray *calmMsgs = [[NSArray alloc] initWithObjects:@"calm_test_0", @"calm_test_1", nil];
+        NSArray *excitedMsgs = [[NSArray alloc] initWithObjects:@":)", @"wooo!", @"so psyched!", @"i'm beyond excited :)", @"i'm so excited!", @"you got me all excited :)", @"wooo yeahh!!", nil];
+        NSArray *arousedMsgs = [[NSArray alloc] initWithObjects:@"hey babe ;)", @"get over here <3 <3 <3", @"what's up hottie :))", @"you got me going... ;)", nil];
+        NSArray *angryMsgs = [[NSArray alloc] initWithObjects:@"sometimes you make me really mad", @"what's your issue?", @" you're really bugging me.", @"i'm angry...", nil];
+        NSArray *scaredMsgs = [[NSArray alloc] initWithObjects:@"you scare me sometimes", @"you're kind of scaring me...", @"i'm a bit frightened...", nil];
+        NSArray *anxiousMsgs = [[NSArray alloc] initWithObjects:@"i feel so anxious around you :(", @"you make me feel really nervous", nil];
+        NSArray *boredMsgs = [[NSArray alloc] initWithObjects:@"you're sooo boring!", @"so bored.", @"sometimes you leave me completely uninterested.", nil];
+        NSArray *calmMsgs = [[NSArray alloc] initWithObjects:@"ahhh so peaceful :)", @"so calm right now :)", @"mm i feel so relaxed :)", @"you really relax me :)", nil];
         self.messageDict = [[NSDictionary alloc] initWithObjectsAndKeys:
                                     excitedMsgs, @"Excited",
                                     arousedMsgs, @"Aroused",

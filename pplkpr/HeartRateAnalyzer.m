@@ -20,6 +20,7 @@
 
 @property (nonatomic, retain) NSDate *lastStressUpdateTime;
 @property (nonatomic, retain) NSMutableArray *rrs;
+@property model* model_;
 @property float lastStressValue;
 
 // configuration
@@ -50,12 +51,17 @@
 - (id)init {
 	
     if (self = [super init]) {
+        // load linear regression model
+        NSString * modelPath = [[NSBundle mainBundle] pathForResource: @"mio-8" ofType: @"model"];
+        self.model_ = load_model(modelPath.UTF8String);
+        NSLog(@"Loaded model from %@ with %d features and %d classes.", modelPath, self.model_->nr_feature, self.model_->nr_class);
+        
         self.rrs = [[NSMutableArray alloc] init];
         self.lastStressValue = 0.5;
         
         // configuration
         self.stressUpdateInterval = 100; // smallest HRV interval used by researchers is 100 seconds
-        self.stressThreshold = 0.5; // lower this to have a notification pop up sooner on startup
+        self.stressThreshold = 0.9; // lower this to have a notification pop up sooner on startup
         self.stressThresholdRate = 0.01; // this allows the threshold to slowly adapt on too many/few crossings
         self.stressSmoothedRate = 0.5; // adapt rate, means that stress must be sustained to cause a notification, 1 disables
         self.notifyTimeMinimum = 3600; // minimum time between notifications, 1 hour in seconds
@@ -74,6 +80,53 @@
     return self;
 }
 
+- (void)dealloc {
+    // pretty sure this only happens when the app closes
+    model* cur = self.model_;
+    if(cur) {
+        free_and_destroy_model(&cur);
+    }
+}
+
+- (DayLog *)getTodayLog {
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"DayLog"
+                                              inManagedObjectContext:_managedObjectContext];
+    [request setEntity:entity];
+    
+    NSDate *date = [DayLog getTodayDate];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"date == %@", date];
+    [request setPredicate:predicate];
+    [request setFetchLimit:1];
+    
+    NSArray *results = [_managedObjectContext executeFetchRequest:request error:nil];
+    
+    DayLog *dayLog;
+    
+    if (results && [results count] > 0) {
+        // return existing object
+        dayLog = [results objectAtIndex:0];
+    } else {
+        // create new object for this day
+        dayLog = [NSEntityDescription insertNewObjectForEntityForName:@"DayLog"
+                                               inManagedObjectContext:_managedObjectContext];
+        // init props
+        [dayLog setDate:date];
+        [dayLog setRrs:[[NSMutableArray alloc] init]];
+        [dayLog setRr_times:[[NSMutableArray alloc] init]];
+        [dayLog setHrvs:[[NSMutableArray alloc] init]];
+        [dayLog setHrv_times:[[NSMutableArray alloc] init]];
+        
+        // save object
+        NSError *error;
+        if (![_managedObjectContext save:&error]) {
+            NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+        }
+    }
+
+    return dayLog;
+}
+
 - (float) lerpFrom:(float)a to:(float)b at:(float)t {
     return ((1 - t) * a) + (t * b);
 }
@@ -87,10 +140,17 @@
     if (!self.lastStressUpdateTime) {
         self.lastStressUpdateTime = time;
     } else if ([time timeIntervalSinceDate:self.lastStressUpdateTime] > self.stressUpdateInterval) {
-        // PEND: if not enough data is available, forget about calculating hrv metrics
+        int n = [self.rrs count];
+        
+        // if there isn't enough data available, forget about calculating hrv metrics
+        float minimumHeartrate = 30;
+        float minimumSamplesPerSecond = minimumHeartrate / 60.;
+        int minimumSampleCount = self.stressUpdateInterval * minimumSamplesPerSecond;
+        if(n < minimumSampleCount) {
+            return;
+        }
         
         // convert NSMutableArray of NSNumbers to vector<float>
-        int n = [self.rrs count];
         NSLog(@"Processing %d rrs over %f seconds", n, self.stressUpdateInterval);
         std::vector<float> rrms(n);
         for(int i = 0; i < n; i++) {
@@ -112,12 +172,8 @@
         }
         data[featureCount].index = -1; // end of elements list
         
-        // load linear regression model and run prediction
-        // PEND: cache model by loading it once in init
-        NSString * path = [[NSBundle mainBundle] pathForResource: @"mio-8" ofType: @"model"];
-        struct model* model_ = load_model(path.UTF8String);
-        float stress = (float) predict(model_, &(data.front()));
-        free_and_destroy_model(&model_);
+        // run prediction from linear regression model
+        float stress = (float) predict(self.model_, &(data.front()));
         
         // clamp output to 0 to 1 range?
         // people might go above/below if the data is very different from the driver-stress dataset

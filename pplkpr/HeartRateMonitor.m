@@ -240,7 +240,7 @@ didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic
 		uint8_t EnergyExpendedStatus = (flags & (1 << 3)) >> 3;
 		uint8_t RRInterval = (flags & (1 << 4)) >> 4;
         
-		       //NSLog(@"Heart Rate %@ flags %hhu, %hhu, %hhu, %hhu for %@", characteristic.value, HeartRateValueFormat, SensorContactStatus, EnergyExpendedStatus, RRInterval, characteristic.UUID);
+//        NSLog(@"Heart Rate %@ flags %hhu, %hhu, %hhu, %hhu for %@", characteristic.value, HeartRateValueFormat, SensorContactStatus, EnergyExpendedStatus, RRInterval, characteristic.UUID);
         
 		if(HeartRateValueFormat) {
 			uint16_t HeartRateMeasurementValue;
@@ -267,11 +267,11 @@ didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic
         } else {
             [_viewController updateMonitorStatus:1];
             
-            if(SensorContactStatus == 3) {
+//            if(SensorContactStatus == 3) {
 //                NSLog(@"Sensor contact is detected");
-            } else {
+//            } else {
 //                NSLog(@"Sensor contact is not supported");
-            }
+//            }
             
             if(RRInterval) {
                 //			NSLog(@"One or more RR-Interval values are present.");
