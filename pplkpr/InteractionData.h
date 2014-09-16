@@ -24,8 +24,6 @@
 @property (nonatomic, strong) NSDictionary *descriptiveActionsDict; // action -> array [future, past]
 @property (nonatomic, strong) NSDictionary *messageDict; // emotion -> array [possible msgs for given emotion]
 
-
-
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 
 + (id)data;

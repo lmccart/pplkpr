@@ -8,23 +8,20 @@
 
 #import "DayLog.h"
 
+
 @implementation DayLog
 
-@dynamic date;
-@dynamic rrs;
-@dynamic rr_times;
-@dynamic hrvs;
-@dynamic hrv_times;
-
-
-+ (NSDate *)getTodayDate {
-    NSCalendar *cal = [NSCalendar currentCalendar];
-    
-    NSDate *date = [NSDate date];
-    NSDateComponents *comps = [cal components:(NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit)
-                                     fromDate:date];
-    NSDate *today = [cal dateFromComponents:comps];
-    return today;
+- (id)init {
+    self = [super init];
+    if (self) {
+        self.date = [NSDate date];
+        self.rrs = [[NSMutableArray alloc] init];
+        self.rr_times = [[NSMutableArray alloc] init];
+        self.hrvs = [[NSMutableArray alloc] init];
+        self.hrv_times = [[NSMutableArray alloc] init];
+    }
+    return self;
 }
+
 
 @end

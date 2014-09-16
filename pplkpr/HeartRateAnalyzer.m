@@ -64,69 +64,14 @@
         // running values
         self.stressSmoothed = 0.5;
         
-        AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
-        self.managedObjectContext = appDelegate.managedObjectContext;
     
         if (!self.recentData) {
-            // create new object for this day
-            self.recentData = [NSEntityDescription insertNewObjectForEntityForName:@"DayLog"
-                                                   inManagedObjectContext:_managedObjectContext];
-            // init props
-            [self.recentData setDate:[NSDate date]];
-            [self.recentData setRrs:[[NSMutableArray alloc] init]];
-            [self.recentData setRr_times:[[NSMutableArray alloc] init]];
-            [self.recentData setHrvs:[[NSMutableArray alloc] init]];
-            [self.recentData setHrv_times:[[NSMutableArray alloc] init]];
-            
-            // save object
-            NSError *error;
-            if (![_managedObjectContext save:&error]) {
-                NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
-            }
+            // create new recent object
+            self.recentData = [[DayLog alloc] init];
         }
 	}
     
     return self;
-}
-
-
-- (DayLog *)getTodayLog {
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"DayLog"
-                                              inManagedObjectContext:_managedObjectContext];
-    [request setEntity:entity];
-    
-    NSDate *date = [DayLog getTodayDate];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"date == %@", date];
-    [request setPredicate:predicate];
-    [request setFetchLimit:1];
-    
-    NSArray *results = [_managedObjectContext executeFetchRequest:request error:nil];
-    
-    DayLog *dayLog;
-    
-    if (results && [results count] > 0) {
-        // return existing object
-        dayLog = [results objectAtIndex:0];
-    } else {
-        // create new object for this day
-        dayLog = [NSEntityDescription insertNewObjectForEntityForName:@"DayLog"
-                                               inManagedObjectContext:_managedObjectContext];
-        // init props
-        [dayLog setDate:date];
-        [dayLog setRrs:[[NSMutableArray alloc] init]];
-        [dayLog setRr_times:[[NSMutableArray alloc] init]];
-        [dayLog setHrvs:[[NSMutableArray alloc] init]];
-        [dayLog setHrv_times:[[NSMutableArray alloc] init]];
-        
-        // save object
-        NSError *error;
-        if (![_managedObjectContext save:&error]) {
-            NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
-        }
-    }
-
-    return dayLog;
 }
 
 - (float) lerpFrom:(float)a to:(float)b at:(float)t {
@@ -228,17 +173,7 @@
     
     for (int i=0; i<[self.recentData.rrs count]; i++) {
         NSString *dateString = [dateFormatter stringFromDate:self.recentData.rr_times[i]];
-        [dataString appendString:[NSString stringWithFormat:@"%@\t%d\n", dateString, [self.recentData.rrs[i] integerValue]]];
-    }
-    
-    // clear out stored sensor data
-    [self.recentData.rrs removeAllObjects];
-    [self.recentData.rr_times removeAllObjects];
-    
-    // save object
-    NSError *error;
-    if (![_managedObjectContext save:&error]) {
-        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+        [dataString appendString:[NSString stringWithFormat:@"%@\t%f\n", dateString, [self.recentData.rrs[i] integerValue]]];
     }
     
     return dataString;
@@ -255,20 +190,18 @@
     
     for (int i=0; i<[self.recentData.hrvs count]; i++) {
         NSString *dateString = [dateFormatter stringFromDate:self.recentData.hrv_times[i]];
-        [dataString appendString:[NSString stringWithFormat:@"%@\t%d\n", dateString, [self.recentData.hrvs[i] integerValue]]];
-    }
-    
-    // clear out stored sensor data
-    [self.recentData.hrvs removeAllObjects];
-    [self.recentData.hrv_times removeAllObjects];
-    
-    // save object
-    NSError *error;
-    if (![_managedObjectContext save:&error]) {
-        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+        [dataString appendString:[NSString stringWithFormat:@"%@\t%f\n", dateString, [self.recentData.hrvs[i] floatValue]]];
     }
     
     return dataString;
+}
+
+- (void) resetRecentData {
+    [self.recentData setDate:[NSDate date]];
+    [self.recentData.rrs removeAllObjects];
+    [self.recentData.rr_times removeAllObjects];
+    [self.recentData.hrvs removeAllObjects];
+    [self.recentData.hrv_times removeAllObjects];
 }
 
 

@@ -15,7 +15,6 @@
 		27E0856A19C529620071F9F8 /* linear.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E0856819C529620071F9F8 /* linear.cpp */; };
 		27ECB4D619C645AF00D5AAB5 /* hrv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27ECB4D419C645AF00D5AAB5 /* hrv.cpp */; };
 		27ECB4D919C659B900D5AAB5 /* mio-8.model in Resources */ = {isa = PBXBuildFile; fileRef = 27ECB4D819C659B900D5AAB5 /* mio-8.model */; };
-		651EFCED19C3909F0089BA51 /* DayLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 651EFCEA19C3909F0089BA51 /* DayLog.m */; };
 		651EFCF019C4F01E0089BA51 /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 651EFCEF19C4F01E0089BA51 /* heart.png */; };
 		651EFCF219C51B5F0089BA51 /* InteractionData.m in Sources */ = {isa = PBXBuildFile; fileRef = 651EFCF119C51B5F0089BA51 /* InteractionData.m */; };
 		6525184A19708ADF00AF6981 /* HeartRateAnalyzer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6525184919708ADF00AF6981 /* HeartRateAnalyzer.m */; };
@@ -53,6 +52,7 @@
 		65909D0B19C70B6D002953A2 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65909D0719C70B6D002953A2 /* Icon@2x.png */; };
 		65909D1219C74D0A002953A2 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 65909D1019C74D0A002953A2 /* Icon-Small.png */; };
 		65909D1319C74D0A002953A2 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65909D1119C74D0A002953A2 /* Icon-Small@2x.png */; };
+		65909D1619C76724002953A2 /* DayLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 65909D1519C76724002953A2 /* DayLog.m */; };
 		6596CB721868A3E80045D6E2 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6596CB711868A3E80045D6E2 /* MessageUI.framework */; };
 		6596CB741868AAE40045D6E2 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6596CB731868AAE40045D6E2 /* AddressBook.framework */; };
 		65B851191861EDAC00DE02E8 /* Report.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B851171861EDAC00DE02E8 /* Report.m */; };
@@ -111,8 +111,6 @@
 		27ECB4D419C645AF00D5AAB5 /* hrv.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = hrv.cpp; sourceTree = "<group>"; };
 		27ECB4D519C645AF00D5AAB5 /* hrv.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = hrv.h; sourceTree = "<group>"; };
 		27ECB4D819C659B900D5AAB5 /* mio-8.model */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "mio-8.model"; sourceTree = "<group>"; };
-		651EFCE919C3909F0089BA51 /* DayLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DayLog.h; sourceTree = "<group>"; };
-		651EFCEA19C3909F0089BA51 /* DayLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DayLog.m; sourceTree = "<group>"; };
 		651EFCEF19C4F01E0089BA51 /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = heart.png; path = assets/heart.png; sourceTree = "<group>"; };
 		651EFCF119C51B5F0089BA51 /* InteractionData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InteractionData.m; sourceTree = "<group>"; };
 		6525184819708ADF00AF6981 /* HeartRateAnalyzer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeartRateAnalyzer.h; sourceTree = "<group>"; };
@@ -176,6 +174,8 @@
 		65909D0719C70B6D002953A2 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "assets/Icon@2x.png"; sourceTree = "<group>"; };
 		65909D1019C74D0A002953A2 /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small.png"; path = "assets/Icon-Small.png"; sourceTree = "<group>"; };
 		65909D1119C74D0A002953A2 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small@2x.png"; path = "assets/Icon-Small@2x.png"; sourceTree = "<group>"; };
+		65909D1419C76724002953A2 /* DayLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DayLog.h; sourceTree = "<group>"; };
+		65909D1519C76724002953A2 /* DayLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DayLog.m; sourceTree = "<group>"; };
 		6596CB711868A3E80045D6E2 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		6596CB731868AAE40045D6E2 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		65B851161861EDAC00DE02E8 /* Report.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Report.h; sourceTree = "<group>"; };
@@ -306,8 +306,8 @@
 		27ED09CC1860E6B100ABCC76 /* Data Structures */ = {
 			isa = PBXGroup;
 			children = (
-				651EFCE919C3909F0089BA51 /* DayLog.h */,
-				651EFCEA19C3909F0089BA51 /* DayLog.m */,
+				65909D1419C76724002953A2 /* DayLog.h */,
+				65909D1519C76724002953A2 /* DayLog.m */,
 				65F2961119B7D14B007C1C06 /* FBHandler.h */,
 				65F2961219B7D14B007C1C06 /* FBHandler.m */,
 				65251866197B5B1100AF6981 /* HeartRateMonitor.h */,
@@ -626,7 +626,6 @@
 				65CA14A519ACD93200130EEB /* MLPAutoCompleteTextField.m in Sources */,
 				658308BD19B104C100C385EB /* SDImageCache.m in Sources */,
 				658308C119B104C100C385EB /* SDWebImageDownloaderOperation.m in Sources */,
-				651EFCED19C3909F0089BA51 /* DayLog.m in Sources */,
 				65F2964219BA5B9A007C1C06 /* LeftViewController.m in Sources */,
 				65B8511F1862122800DE02E8 /* Person.m in Sources */,
 				658308CD19B1075900C385EB /* FriendsCustomAutoCompleteObject.m in Sources */,
@@ -638,6 +637,7 @@
 				65B851191861EDAC00DE02E8 /* Report.m in Sources */,
 				65F2961919B8FF7F007C1C06 /* Constants.m in Sources */,
 				27E0856619C5294D0071F9F8 /* dnrm2.c in Sources */,
+				65909D1619C76724002953A2 /* DayLog.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

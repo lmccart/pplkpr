@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 
 
-@interface DayLog : NSManagedObject
+@interface DayLog : NSObject
 
 @property (nonatomic, retain) NSDate *date;
 @property (nonatomic, retain) NSMutableArray *rrs;
@@ -18,6 +18,6 @@
 @property (nonatomic, retain) NSMutableArray *hrvs;
 @property (nonatomic, retain) NSMutableArray *hrv_times;
 
-+(NSDate *)getTodayDate;
+- (id)init;
 
 @end

@@ -35,8 +35,7 @@
 - (void)createFakebookRequest:(Person *)person withType:(NSString *)type withMessage:(NSString *)message withEmotion:(NSString *)emotion;
 
 - (void)checkTicket:(NSString *)ticket  withCompletion:(void (^)(int status))completionBlock;
-- (void)logReport:(NSString *)reportData withRRData:(NSString *) rrData withHRVData:(NSString *)hrvData;
-- (void)logAction:(NSString *)actionData;
+- (void)logData:(NSString *)data withTag:(NSString *)tag withCompletion:(void (^)(NSData *))completionBlock;
 
 @end
 

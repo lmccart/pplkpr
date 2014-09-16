@@ -183,8 +183,9 @@
     
     
     NSMutableDictionary *event = [[HeartRateAnalyzer data] getStressEvent];
-	self.emotion = [[[InteractionData data] emotionsArray] objectAtIndex:0];
-    [self.intensitySlider setValue:[[event objectForKey:@"intensity"] floatValue]];
+    self.emotion = [[[InteractionData data] emotionsArray] objectAtIndex:0];
+    float intensity = [[event objectForKey:@"intensity"] floatValue];
+    [self.intensitySlider setValue:intensity*0.5+0.25];
     
     NSTimeInterval interval = [[InteractionData data] getTimeSinceLastReport]/60.0;
     if (interval == 0) {
@@ -343,8 +344,7 @@
                                            withRating:[NSNumber numberWithFloat:val]
                                              withDate:date];
         
-        
-        [[FBHandler data] logReport:[r toString] withRRData:[[HeartRateAnalyzer data] getRRDataString] withHRVData:[[HeartRateAnalyzer data] getHRVDataString]];
+        [[FBHandler data] logData:[r toString] withTag:@"report" withCompletion:nil];
         
         // save last report date
         [[InteractionData data] saveLastReportDate:[NSDate date]];

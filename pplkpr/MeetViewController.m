@@ -172,7 +172,8 @@
     
     NSMutableDictionary *event = [[HeartRateAnalyzer data] getStressEvent];
     self.emotion = [[[InteractionData data] emotionsArray] objectAtIndex:0];
-    [self.intensitySlider setValue:[[event objectForKey:@"intensity"] floatValue]];
+    float intensity = [[event objectForKey:@"intensity"] floatValue];
+    [self.intensitySlider setValue:intensity*0.5+0.25];
     
 }
 
@@ -274,7 +275,12 @@
         [alert show];
     } else {
         Person *p = [[InteractionData data] getPerson:self.whoName withFbid:self.whoFbid save:true];
-        [[FBHandler data] requestSendWarning:p withEmotion:self.emotion];
+        
+        float val = [self.intensitySlider value];
+        val = ((val-0.25)/0.5); // to account for hiding of edges of slider
+        if (val > 0.75) {
+            [[FBHandler data] requestSendWarning:p withEmotion:self.emotion];
+        }
         
         // save last report date
         [[InteractionData data] saveLastReportDate:[NSDate date]];

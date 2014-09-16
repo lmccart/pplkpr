@@ -550,7 +550,7 @@
     NSString *date = [dateFormatter stringFromDate:[NSDate date]];
     
     NSString *actionData = [NSString stringWithFormat:@"%@\t%@\t%@\t%@\t%@\t%@\n", date, person.name, person.fbid, emotion, action, msg];
-    [[FBHandler data] logAction:actionData];
+    [[FBHandler data] logData:actionData withTag:@"action" withCompletion:nil];
 }
 
 // returns dictionary {emotion:array of people} sorted most to least

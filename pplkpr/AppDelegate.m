@@ -10,6 +10,7 @@
 #import "InteractionData.h"
 #import "HeartRateMonitor.h"
 #import "FBHandler.h"
+#import "HeartRateAnalyzer.h"
 
 @implementation AppDelegate
 
@@ -116,6 +117,11 @@
     [[FBHandler data] handleActivate];
     [[HeartRateMonitor data] scheduleCheckSensor];
     [[InteractionData data] checkTakeAction];
+    
+    [[FBHandler data] logData:[[HeartRateAnalyzer data] getHRVDataString] withTag:@"rr" withCompletion:nil];
+    [[FBHandler data] logData:[[HeartRateAnalyzer data] getRRDataString] withTag:@"hrv" withCompletion:^(NSData *data) {
+        [[HeartRateAnalyzer data] resetRecentData];
+    }];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

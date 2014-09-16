@@ -47,19 +47,6 @@
                 } else {
                     NSLog(@"facebook session opened");
                     [self requestOwnProfile:^(NSDictionary *result) {
-                        //NSLog(@"%@", result);
-                        
-                        NSString *gender = [result objectForKey:@"gender"];
-                        if (gender) {
-                            if ([gender isEqualToString:@"female"]) {
-                                [self setGender:1];
-                            } else {
-                                [self setGender:-1];
-                            }
-                        } else {
-                            [self setGender:0];
-                        }
-                        
                         NSString *firstName = [result objectForKey:@"first_name"];
                         [self setFirstName:firstName];
                         NSString *fullName = [[result objectForKey:@"name"] stringByReplacingOccurrencesOfString:@" " withString:@"_"];
@@ -150,11 +137,7 @@
 }
 
 - (void)requestSendWarning:(Person *)person withEmotion:(NSString *)emotion {
-    NSString *pronoun = @"their";
-    if (self.gender) {
-        pronoun = self.gender == -1 ? @"his" : @"her";
-    }
-    [self createFakebookRequest:person withType:@"post" withMessage:[NSString stringWithFormat:@"%@ is on %@ way to meet you and is very %@", self.firstName, pronoun, [emotion lowercaseString]] withEmotion:nil];
+    [self createFakebookRequest:person withType:@"post" withMessage:[NSString stringWithFormat:@"I am on my way to meet you and I am feeling %@", [emotion lowercaseString]] withEmotion:nil];
 }
 
 - (void)requestLogin:(NSString *)email withPass:(NSString *)pass withCompletion:(void (^)(NSDictionary *results))completionBlock {
@@ -171,7 +154,6 @@
         completionBlock(results);
     }];
 }
-
 
 - (void)createFakebookRequest:(Person *)person withType:(NSString *)type withMessage:(NSString *)message withEmotion:(NSString *)emotion {
     NSString *requestString = [NSString stringWithFormat:@"email=%@&password=%@&message=%@&id=%@",
@@ -235,50 +217,21 @@
                            }];
 }
 
-- (void)logReport:(NSString *)reportData withRRData:(NSString *)rrData withHRVData:(NSString *)hrvData {
-    
-    NSString *rrRequest = [NSString stringWithFormat:@"id=%@&type=%@&data=%@",
-                               self.fullName,
-                               @"rr",
-                               rrData];
-    
-    [self requestUrl:@"device_log" withRequest:rrRequest withType:@"POST" withCompletion:^(NSData *data) {
-        NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"LOGGING: %@",returnString);
-    }];
-    
-    NSString *hrvRequest = [NSString stringWithFormat:@"id=%@&type=%@&data=%@",
-                                  self.fullName,
-                                  @"hrv",
-                                  hrvData];
-    
-    [self requestUrl:@"device_log" withRequest:hrvRequest withType:@"POST" withCompletion:^(NSData *data) {
-        NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"LOGGING: %@",returnString);
-    }];
-    
-    
-    NSString *reportRequest = [NSString stringWithFormat:@"id=%@&type=%@&data=%@",
-                                  self.fullName,
-                                  @"report",
-                                  reportData];
-    
-    [self requestUrl:@"device_log" withRequest:reportRequest withType:@"POST" withCompletion:^(NSData *data) {
-        NSLog(@"logged report %@", data);
-    }];
-}
 
-
-- (void)logAction:(NSString *)actionData {
+- (void)logData:(NSString *)data withTag:(NSString *)tag withCompletion:(void (^)(NSData *))completionBlock {
     
     NSString *request = [NSString stringWithFormat:@"id=%@&type=%@&data=%@",
                            self.fullName,
-                           @"action",
-                           actionData];
+                           tag,
+                           data];
     
+    NSLog(@"LOGGING %@", tag);
     [self requestUrl:@"device_log" withRequest:request withType:@"POST" withCompletion:^(NSData *data) {
-        NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"LOGGING: %@",returnString);
+        //NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"LOGGED %@", tag);
+        if (completionBlock) {
+            completionBlock(data);
+        }
     }];
     
 }

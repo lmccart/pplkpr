@@ -214,11 +214,23 @@
 }
 
 - (IBAction)logoutFB:(id)sender {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults removeObjectForKey:@"email"];
-    [defaults removeObjectForKey:@"pass"];
-    [defaults synchronize];
-    [self performSegueWithIdentifier:@"loginSegue" sender:self];
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Just checking..."
+                                                    message:@"Are you sure you want to logout?"
+                                                   delegate:self
+                                          cancelButtonTitle:@"Cancel"
+                                          otherButtonTitles:@"Yes", nil];
+    [alert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == [alertView firstOtherButtonIndex]) {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults removeObjectForKey:@"email"];
+        [defaults removeObjectForKey:@"pass"];
+        [defaults synchronize];
+        [self performSegueWithIdentifier:@"loginSegue" sender:self];
+    }
 }
 
 -(BOOL)textViewShouldBeginEditing:(UITextView *)textView {

@@ -19,6 +19,7 @@
 
 - (NSString *)getRRDataString;
 - (NSString *)getHRVDataString;
+- (void) resetRecentData;
 
 @end
 

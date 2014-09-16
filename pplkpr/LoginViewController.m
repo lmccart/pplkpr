@@ -134,7 +134,7 @@
                                                   otherButtonTitles:nil];
             [alert show];
         }
-    }];
+        }];
 }
 
 - (void)viewDidUnload {
