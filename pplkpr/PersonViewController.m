@@ -201,7 +201,9 @@
         id emotion = [textView.attributedText attribute:@"emotionTag" atIndex:characterIndex effectiveRange:&range];
         
         if (action) {
-            [[FBHandler data] createFakebookRequest:self.curPerson withType:action withMessage:@"person view test" withEmotion:emotion];
+            
+            NSString *msg = [[InteractionData data] getMessage:emotion];
+            [[FBHandler data] createFakebookRequest:self.curPerson withType:action withMessage:msg withEmotion:emotion];
             
             [textView.layer setBorderColor:[[GlobalMethods globalYellowColor] CGColor]];
             [textView.layer setBorderWidth:1];

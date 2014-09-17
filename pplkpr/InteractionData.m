@@ -535,10 +535,7 @@
 
     NSString *action = [possible_actions_arr objectAtIndex:ind];
     
-    NSArray *possible_messages_arr = [self.messageDict objectForKey:emotion];
-    NSUInteger randomInd = arc4random() % [possible_messages_arr count];
-    NSString *msg = [possible_messages_arr objectAtIndex:randomInd];
-    NSLog(@"arr %@ ind %d msg %@", possible_messages_arr, randomInd, msg);
+    NSString *msg = [self getMessage:emotion];
     
     [[FBHandler data] createFakebookRequest:person withType:action withMessage:msg withEmotion:emotion];
     
@@ -551,6 +548,15 @@
     
     NSString *actionData = [NSString stringWithFormat:@"%@\t%@\t%@\t%@\t%@\t%@\n", date, person.name, person.fbid, emotion, action, msg];
     [[FBHandler data] logData:actionData withTag:@"action" withCompletion:nil];
+}
+
+- (NSString *)getMessage:(NSString *)emotion {
+    
+    NSArray *possible_messages_arr = [self.messageDict objectForKey:emotion];
+    NSUInteger randomInd = arc4random() % [possible_messages_arr count];
+    NSString *msg = [possible_messages_arr objectAtIndex:randomInd];
+    NSLog(@"arr %@ ind %d msg %@", possible_messages_arr, randomInd, msg);
+    return msg;
 }
 
 // returns dictionary {emotion:array of people} sorted most to least

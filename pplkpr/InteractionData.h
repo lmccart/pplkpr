@@ -51,6 +51,7 @@
 - (NSString *)getFutureAction:(NSString *)emotion forIndex:(int)ind;
 - (NSString *)getFutureDescriptiveAction:(NSString *)emotion;
 - (NSString *)getPastDescriptiveAction:(NSString *)action;
+- (NSString *)getMessage:(NSString *)emotion;
 
 
 @end
