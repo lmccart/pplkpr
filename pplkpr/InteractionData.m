@@ -54,13 +54,13 @@
                                     boredActions, @"Bored",
                                     calmActions, @"Calm", nil];
         
-        NSArray *excitedMsgs = [[NSArray alloc] initWithObjects:@"you excite me", @"wooo!", @"so psyched!", @"i'm beyond excited", @"i'm so excited!", @"you got me all excited", @"wooo yeahh!!", nil];
+        NSArray *excitedMsgs = [[NSArray alloc] initWithObjects:@"you excite me", @"wooo!", @"so psyched!", @"i'm beyond excited", @"i'm so excited!", @"you got me all excited", @"wooo yeahh!!", @"weeeeeee!", @"soo excited by yooou", nil];
         NSArray *arousedMsgs = [[NSArray alloc] initWithObjects:@"hey babe", @"how are you doing?", @"what's up hottie", @"you got me going...", nil];
-        NSArray *angryMsgs = [[NSArray alloc] initWithObjects:@"sometimes you make me really mad", @"what's your issue?", @" you're really bugging me.", @"i'm angry...", @"what's your problem?", nil];
-        NSArray *scaredMsgs = [[NSArray alloc] initWithObjects:@"you scare me sometimes", @"you're kind of scaring me...", @"i'm a bit frightened...", nil];
-        NSArray *anxiousMsgs = [[NSArray alloc] initWithObjects:@"i feel so anxious around you", @"you make me feel really nervous", @"you stress me out", nil];
-        NSArray *boredMsgs = [[NSArray alloc] initWithObjects:@"you're sooo boring!", @"so bored.", @"sometimes you leave me completely uninterested.", nil];
-        NSArray *calmMsgs = [[NSArray alloc] initWithObjects:@"ahhh so peaceful", @"so calm right now", @"mm i feel so relaxed", @"you really relax me", @"you're so chill", nil];
+        NSArray *angryMsgs = [[NSArray alloc] initWithObjects:@"sometimes you make me really mad", @"what's your issue?", @" you're really bugging me.", @"i'm angry...", @"what's your problem?", @"you're pissing me off", @"just leave me alone", nil];
+        NSArray *scaredMsgs = [[NSArray alloc] initWithObjects:@"you scare me sometimes", @"you're kind of scaring me...", @"i'm a bit frightened...", @"i feel scared around you", @"you terrify me", nil];
+        NSArray *anxiousMsgs = [[NSArray alloc] initWithObjects:@"i feel so anxious around you", @"you make me feel really nervous", @"you stress me out", @"being around you makes my blood pressure rise", @"you're disrupting my chilll", nil];
+        NSArray *boredMsgs = [[NSArray alloc] initWithObjects:@"you're sooo boring!", @"so bored.", @"sometimes you leave me completely uninterested.", @"bleh whatever", nil];
+        NSArray *calmMsgs = [[NSArray alloc] initWithObjects:@"ahhh so peaceful", @"so calm right now", @"mm i feel so relaxed", @"you really relax me", @"you're so chill", @"ommmmmmm", nil];
         self.messageDict = [[NSDictionary alloc] initWithObjectsAndKeys:
                                     excitedMsgs, @"Excited",
                                     arousedMsgs, @"Aroused",
