@@ -32,7 +32,8 @@
 	
 	for (int i=0; i<3; i++) {
 		UITabBarItem *tabBarItem = [tabBar.items objectAtIndex:i];
-		tabBarItem.image = [[UIImage imageNamed:[NSString stringWithFormat:@"%@.png", names[i]]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        UIImage* image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", names[i]]];
+		tabBarItem.image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 		tabBarItem.selectedImage = [[UIImage imageNamed:[NSString stringWithFormat:@"%@_sel.png", names[i]]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 		tabBarItem.imageInsets = UIEdgeInsetsMake(9, 0, -9, 0);
 		tabBarItem.title = @"";
@@ -53,7 +54,6 @@
 
 #ifdef __IPHONE_8_0
     if ([sharedApplication respondsToSelector:@selector(registerUserNotificationSettings)]) {
-        NSLog(@"hi");
         [sharedApplication registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil]];
     }
 #endif
@@ -263,9 +263,9 @@
         } else if ([type isEqualToString:@"location"]) {
             msg = @"Are you about to meet someone or did you just leave someone?";
         } else if ([type isEqualToString:@"hr_monitor"]) {
-            msg = @"HR monitor is not connected.";
+            msg = @"Heart rate monitor is not connected.";
         } else if ([type isEqualToString:@"hr_battery"]) {
-            msg = @"HR monitor battery is low.";
+            msg = @"Heart rate monitor battery is low.";
         }
         UILocalNotification * notification = [[UILocalNotification alloc] init];
         notification.alertBody = msg;

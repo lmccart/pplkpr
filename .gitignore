@@ -27,6 +27,5 @@ pplkpr/assets/credentials.txt
 
 # Processing data foler
 data/
-
-# HRV research
 HRV/
+assets/
