@@ -8,6 +8,7 @@
 
 #import "CustomAutoCompleteCell.h"
 #import <QuartzCore/QuartzCore.h>
+#import "Constants.h"
 
 @implementation CustomAutoCompleteCell
 
@@ -45,10 +46,10 @@
         
         // Configure Main Label
         [self.textLabel setTextAlignment:NSTextAlignmentCenter];
-        [self.textLabel setTextColor:[UIColor redColor]];
+        [self.textLabel setTextColor:[GlobalMethods globalYellowColor]];
         [self.textLabel setAutoresizingMask:(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight)];
-        
-        [self setBackgroundColor:[UIColor redColor]];
+       
+        [self setBackgroundColor:[GlobalMethods globalYellowColor]];
         
     }
     return self;
@@ -61,14 +62,14 @@
 
 - (void)initialize
 {
-    [self setSelectedBackgroundView:[self redBackgroundView]];
+    [self setSelectedBackgroundView:[self yellowBackgroundView]];
 }
 
 
-- (UIView *)redBackgroundView
+- (UIView *)yellowBackgroundView
 {
     UIView *selectedBackgroundView = [[UIView alloc] initWithFrame:self.bounds];
-    [selectedBackgroundView setBackgroundColor:[UIColor redColor]];
+    [selectedBackgroundView setBackgroundColor:[GlobalMethods globalYellowColor]];
     return selectedBackgroundView;
 }
 

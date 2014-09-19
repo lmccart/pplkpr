@@ -23,7 +23,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	[self startUpdatingLocation];
-	
+    
+	[[UITextField appearance] setTintColor:[UIColor blackColor]];
+    
 	// Setup tab bar items
 	UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
 	UITabBar *tabBar = tabBarController.tabBar;

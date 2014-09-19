@@ -622,21 +622,23 @@ withAutoCompleteString:(NSString *)string
             return;
         }
     }
+//    LM
+//    switch (borderStyle) {
+//        case UITextBorderStyleRoundedRect:
+//            [self setRoundedRectStyleForAutoCompleteTableView];
+//            break;
+//        case UITextBorderStyleBezel:
+//        case UITextBorderStyleLine:
+//            [self setLineStyleForAutoCompleteTableView];
+//            break;
+//        case UITextBorderStyleNone:
+//            [self setNoneStyleForAutoCompleteTableView];
+//            break;
+//        default:
+//            break;
+//    }
     
-    switch (borderStyle) {
-        case UITextBorderStyleRoundedRect:
-            [self setRoundedRectStyleForAutoCompleteTableView];
-            break;
-        case UITextBorderStyleBezel:
-        case UITextBorderStyleLine:
-            [self setLineStyleForAutoCompleteTableView];
-            break;
-        case UITextBorderStyleNone:
-            [self setNoneStyleForAutoCompleteTableView];
-            break;
-        default:
-            break;
-    }
+    [self setLineStyleForAutoCompleteTableView];
 }
 
 - (void)setRoundedRectStyleForAutoCompleteTableView
