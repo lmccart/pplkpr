@@ -54,13 +54,13 @@
                                     boredActions, @"Bored",
                                     calmActions, @"Calm", nil];
         
-        NSArray *excitedMsgs = [[NSArray alloc] initWithObjects:@":)", @"wooo!", @"so psyched!", @"i'm beyond excited :)", @"i'm so excited!", @"you got me all excited :)", @"wooo yeahh!!", nil];
-        NSArray *arousedMsgs = [[NSArray alloc] initWithObjects:@"hey babe ;)", @"get over here <3 <3 <3", @"what's up hottie :))", @"you got me going... ;)", nil];
-        NSArray *angryMsgs = [[NSArray alloc] initWithObjects:@"sometimes you make me really mad", @"what's your issue?", @" you're really bugging me.", @"i'm angry...", nil];
+        NSArray *excitedMsgs = [[NSArray alloc] initWithObjects:@"you excite me", @"wooo!", @"so psyched!", @"i'm beyond excited", @"i'm so excited!", @"you got me all excited", @"wooo yeahh!!", nil];
+        NSArray *arousedMsgs = [[NSArray alloc] initWithObjects:@"hey babe", @"how are you doing?", @"what's up hottie", @"you got me going...", nil];
+        NSArray *angryMsgs = [[NSArray alloc] initWithObjects:@"sometimes you make me really mad", @"what's your issue?", @" you're really bugging me.", @"i'm angry...", @"what's your problem?", nil];
         NSArray *scaredMsgs = [[NSArray alloc] initWithObjects:@"you scare me sometimes", @"you're kind of scaring me...", @"i'm a bit frightened...", nil];
-        NSArray *anxiousMsgs = [[NSArray alloc] initWithObjects:@"i feel so anxious around you :(", @"you make me feel really nervous", nil];
+        NSArray *anxiousMsgs = [[NSArray alloc] initWithObjects:@"i feel so anxious around you", @"you make me feel really nervous", @"you stress me out", nil];
         NSArray *boredMsgs = [[NSArray alloc] initWithObjects:@"you're sooo boring!", @"so bored.", @"sometimes you leave me completely uninterested.", nil];
-        NSArray *calmMsgs = [[NSArray alloc] initWithObjects:@"ahhh so peaceful :)", @"so calm right now :)", @"mm i feel so relaxed :)", @"you really relax me :)", nil];
+        NSArray *calmMsgs = [[NSArray alloc] initWithObjects:@"ahhh so peaceful", @"so calm right now", @"mm i feel so relaxed", @"you really relax me", @"you're so chill", nil];
         self.messageDict = [[NSDictionary alloc] initWithObjectsAndKeys:
                                     excitedMsgs, @"Excited",
                                     arousedMsgs, @"Aroused",
@@ -455,13 +455,24 @@
     return today;
 }
 
+- (void)scheduleCheckTakeAction {
+    
+    [NSTimer scheduledTimerWithTimeInterval:20.0
+                                     target:self
+                                   selector:@selector(checkTakeAction)
+                                   userInfo:nil
+                                    repeats:NO];
+}
+
 - (void)checkTakeAction {
     [self checkTickets];
-    NSDate *today = [InteractionData getTodayDate];
+    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSDate *lastDate = [defaults objectForKey:@"lastActionDate"]; // once a day
-    if (!lastDate || ![lastDate isEqual:today]) {
-        [defaults setObject:today forKey:@"lastActionDate"];
+    NSDate *lastDate = [defaults objectForKey:@"lastActionDate"];
+    NSDate *date = [NSDate date];
+    
+    if (!lastDate || [date timeIntervalSinceDate:lastDate] > 2*60*60) { // every 2 hours
+        [defaults setObject:date forKey:@"lastActionDate"];
         [defaults synchronize];
         [self takeAction];
     }

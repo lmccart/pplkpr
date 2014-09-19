@@ -115,8 +115,6 @@
             NSString *order = [[entry objectAtIndex:2] intValue] == 0 ? @"most" : @"least";
             NSString *emotion = [entry objectAtIndex:3];
             
-            
-            
             NSMutableAttributedString* attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"Makes me %@ %@.\n", order, [emotion lowercaseString]] attributes:[GlobalMethods attrsDict]];
             
             NSMutableAttributedString* actionAttributedStr;

@@ -98,7 +98,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="-120" minValue="-120" maxValue="0.0" id="JkY-er-b42">
-                                <rect key="frame" x="28" y="361" width="264" height="31"/>
+                                <rect key="frame" x="30" y="361" width="260" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="minimumTrackTintColor" red="0.60000002384185791" green="0.60000002384185791" blue="0.60000002384185791" alpha="1" colorSpace="calibratedRGB"/>
@@ -122,7 +122,7 @@
                                 </connections>
                             </button>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="0db-y5-gVG" customClass="IntensitySlider">
-                                <rect key="frame" x="28" y="229" width="182" height="31"/>
+                                <rect key="frame" x="30" y="229" width="182" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.92549019610000005" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
                                 <color key="tintColor" red="0.99607849120000003" green="0.9215686917" blue="0.31372550129999999" alpha="1" colorSpace="deviceRGB"/>
@@ -174,7 +174,7 @@
                                     <action selector="submit:" destination="Z8x-sD-IGb" eventType="touchUpInside" id="OLz-qX-Fkb"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" borderStyle="line" placeholder="Name" minimumFontSize="16" id="9fa-v4-3v6" customClass="MLPAutoCompleteTextField">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" placeholder="Name" minimumFontSize="16" id="9fa-v4-3v6" customClass="MLPAutoCompleteTextField">
                                 <rect key="frame" x="30" y="97" width="260" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.92549019610000005" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -214,6 +214,14 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrows-up.png" id="eaB-IO-oSK">
+                                <rect key="frame" x="212" y="213" width="12" height="12"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrows-down.png" id="T6Y-7h-zaC">
+                                <rect key="frame" x="212" y="294" width="12" height="12"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -351,7 +359,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" borderStyle="line" placeholder="Name" minimumFontSize="16" id="gNz-Xz-RqH" customClass="MLPAutoCompleteTextField">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" placeholder="Name" minimumFontSize="16" id="gNz-Xz-RqH" customClass="MLPAutoCompleteTextField">
                                 <rect key="frame" x="30" y="156" width="260" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.92549019610000005" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -381,7 +389,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="NN1-DG-s1w" customClass="IntensitySlider">
-                                <rect key="frame" x="31" y="320" width="180" height="31"/>
+                                <rect key="frame" x="30" y="320" width="180" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.92549019610000005" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
                                 <color key="tintColor" red="0.99607849120000003" green="0.9215686917" blue="0.31372550129999999" alpha="1" colorSpace="deviceRGB"/>
@@ -412,6 +420,14 @@
                                     <action selector="submit:" destination="F0H-pm-mTz" eventType="touchUpInside" id="XI2-xe-e0L"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrows-up.png" id="ady-fC-ouT">
+                                <rect key="frame" x="212" y="305" width="12" height="12"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrows-down.png" id="K9O-pg-Qee">
+                                <rect key="frame" x="212" y="386" width="12" height="12"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -643,6 +659,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="arrows-down.png" width="41" height="41"/>
+        <image name="arrows-up.png" width="41" height="41"/>
         <image name="back.png" width="101" height="101"/>
         <image name="heart.png" width="101" height="101"/>
         <image name="left.png" width="136" height="127"/>

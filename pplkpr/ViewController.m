@@ -11,6 +11,7 @@
 #import "Constants.h"
 #import "InteractionData.h"
 #import "HeartRateMonitor.h"
+#import "HeartRateAnalyzer.h"
 #import "FBHandler.h"
 #import "ReportViewController.h"
 
@@ -60,6 +61,14 @@
     } else {
         [[FBHandler data] setEmail:email];
         [[FBHandler data] setPass:pass];
+        
+        [[HeartRateMonitor data] scheduleCheckSensor];
+        [[InteractionData data] scheduleCheckTakeAction];
+        
+        [[FBHandler data] logData:[[HeartRateAnalyzer data] getHRVDataString] withTag:@"rr" withCompletion:nil];
+        [[FBHandler data] logData:[[HeartRateAnalyzer data] getRRDataString] withTag:@"hrv" withCompletion:^(NSData *data) {
+            [[HeartRateAnalyzer data] resetRecentData];
+        }];
     }
 }
 
