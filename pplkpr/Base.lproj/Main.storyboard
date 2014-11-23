@@ -428,6 +428,11 @@
                                 <rect key="frame" x="212" y="386" width="12" height="12"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <imageView autoresizesSubviews="NO" userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="faces-oneline.png" id="xwe-Sl-Nkp">
+                                <rect key="frame" x="20" y="243" width="284" height="42"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="0.92549019610000005" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -662,6 +667,7 @@
         <image name="arrows-down.png" width="41" height="41"/>
         <image name="arrows-up.png" width="41" height="41"/>
         <image name="back.png" width="101" height="101"/>
+        <image name="faces-oneline.png" width="701" height="114"/>
         <image name="heart.png" width="101" height="101"/>
         <image name="left.png" width="136" height="127"/>
         <image name="meet.png" width="136" height="127"/>

@@ -22,6 +22,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    // Toggle Fakebook!
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setBool:false forKey:@"useFakebook"];
+    [defaults synchronize];
+    
 	[self startUpdatingLocation];
     
 	[[UITextField appearance] setTintColor:[UIColor blackColor]];

@@ -52,24 +52,34 @@
     [super viewDidAppear:animated];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *email = [defaults objectForKey:@"email"];
-    NSString *pass = [defaults objectForKey:@"pass"];
+    BOOL useFakebook = [defaults boolForKey:@"useFakebook"];
     
+    if (useFakebook) {
     
-    if (!email || !pass) {
-        [self performSegueWithIdentifier:@"loginSegue" sender:self];
+        NSString *email = [defaults objectForKey:@"email"];
+        NSString *pass = [defaults objectForKey:@"pass"];
+        
+        if (!email || !pass) {
+            [self performSegueWithIdentifier:@"loginSegue" sender:self];
+        } else {
+            [[FBHandler data] setEmail:email];
+            [[FBHandler data] setPass:pass];
+            [self start];
+        }
     } else {
-        [[FBHandler data] setEmail:email];
-        [[FBHandler data] setPass:pass];
-        
-        [[HeartRateMonitor data] scheduleCheckSensor];
-        [[InteractionData data] scheduleCheckTakeAction];
-        
-        [[FBHandler data] logData:[[HeartRateAnalyzer data] getHRVDataString] withTag:@"rr" withCompletion:nil];
-        [[FBHandler data] logData:[[HeartRateAnalyzer data] getRRDataString] withTag:@"hrv" withCompletion:^(NSData *data) {
-            [[HeartRateAnalyzer data] resetRecentData];
-        }];
+        [self start];
     }
+}
+
+- (void)start {
+    
+    [[HeartRateMonitor data] scheduleCheckSensor];
+    [[InteractionData data] scheduleCheckTakeAction];
+    
+    [[FBHandler data] logData:[[HeartRateAnalyzer data] getHRVDataString] withTag:@"rr" withCompletion:nil];
+    [[FBHandler data] logData:[[HeartRateAnalyzer data] getRRDataString] withTag:@"hrv" withCompletion:^(NSData *data) {
+        [[HeartRateAnalyzer data] resetRecentData];
+    }];
 }
 
 - (void)clearPriority {
@@ -86,7 +96,7 @@
     float margin = 10.0;
     
 	//_priorityData = [[InteractionData data] getRankedPeople];
-   // NSLog(@"%@", [[InteractionData data] getPriorities]);
+    // NSLog(@"%@", [[InteractionData data] getPriorities]);
     
     self.priorityData = [[InteractionData data] getSortedPriorities];
 

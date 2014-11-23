@@ -40,28 +40,6 @@
 	
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    
-//	if ([[InteractionData data] jumpToPerson]) {
-//        self.curPerson = [[InteractionData data] jumpToPerson];
-//        NSLog(@"%@", self.curPerson.fb_tickets);
-//        [_personLabel setText:self.curPerson.name];
-//        [[InteractionData data] setJumpToPerson:nil];
-//        
-//        [[FBHandler data] requestProfile:self.curPerson.fbid withCompletion:^(NSDictionary * result){
-//            NSDictionary *pic = [result objectForKey:@"picture"];
-//            NSDictionary *data = [pic objectForKey:@"data"];
-//            NSString *url = [data objectForKey:@"url"];
-//            
-//            [self.personPhoto sd_setImageWithURL:[NSURL URLWithString:url]];
-//        }];
-//        
-//	} else {
-//        [self.navigationController popToRootViewControllerAnimated:YES];
-//    }
-}
-
-
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if (textField == self.emailField) {
         [self.passField becomeFirstResponder];

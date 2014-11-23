@@ -11,17 +11,17 @@
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>FDFBB37C4A586063685E8CBA879996EFE3D0E7B2</key>
-		<string>ssh://github.com/lmccart/pplkpr.git</string>
+		<string>github.com:lmccart/pplkpr.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>pplkpr.xcodeproj/project.xcworkspace</string>
+	<string>pplkpr.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>FDFBB37C4A586063685E8CBA879996EFE3D0E7B2</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>ssh://github.com/lmccart/pplkpr.git</string>
+	<string>github.com:lmccart/pplkpr.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
