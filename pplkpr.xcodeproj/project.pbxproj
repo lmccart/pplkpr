@@ -55,8 +55,6 @@
 		65909CF719C65604002953A2 /* up.png in Resources */ = {isa = PBXBuildFile; fileRef = 65909CF619C65604002953A2 /* up.png */; };
 		65909CFA19C708DF002953A2 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 65909CF819C708DF002953A2 /* Default.png */; };
 		65909CFB19C708DF002953A2 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65909CF919C708DF002953A2 /* Default@2x.png */; };
-		65909D0219C70ACB002953A2 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 65909CFE19C70ACB002953A2 /* Icon.png */; };
-		65909D0319C70ACB002953A2 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65909CFF19C70ACB002953A2 /* Icon@2x.png */; };
 		65909D0A19C70B6D002953A2 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 65909D0619C70B6D002953A2 /* Icon.png */; };
 		65909D0B19C70B6D002953A2 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65909D0719C70B6D002953A2 /* Icon@2x.png */; };
 		65909D1219C74D0A002953A2 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 65909D1019C74D0A002953A2 /* Icon-Small.png */; };
@@ -524,7 +522,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = PK;
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "Lauren McCarthy";
 				TargetAttributes = {
 					65FC7C4C17A1A37F0045BFF2 = {
@@ -575,11 +573,9 @@
 				65F2962C19B93734007C1C06 /* aroused.png in Resources */,
 				65909CFB19C708DF002953A2 /* Default@2x.png in Resources */,
 				27DED48419CCAFBE00F9B543 /* report_sel@2x.png in Resources */,
-				65909D0219C70ACB002953A2 /* Icon.png in Resources */,
 				27ECB4D919C659B900D5AAB5 /* mio-8.model in Resources */,
 				27DED48119CCAFBE00F9B543 /* home@2x.png in Resources */,
 				65E88A5319BBB01600379268 /* ticker.png in Resources */,
-				65909D0319C70ACB002953A2 /* Icon@2x.png in Resources */,
 				65909D1319C74D0A002953A2 /* Icon-Small@2x.png in Resources */,
 				27DED48019CCAFBE00F9B543 /* home_sel@2x.png in Resources */,
 				65F2962D19B93734007C1C06 /* bored.png in Resources */,

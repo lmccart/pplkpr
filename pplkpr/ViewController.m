@@ -20,6 +20,7 @@
 @property (retain, nonatomic) NSArray *priorityData;
 @property (retain, nonatomic) IBOutlet UIView *priorityView;
 @property (retain, nonatomic) IBOutlet UIImageView *monitorStatusIcon;
+@property (retain, nonatomic) IBOutlet UIButton *logoutButton;
 
 @end
 
@@ -67,6 +68,9 @@
             [self start];
         }
     } else {
+        [self.logoutButton setHidden:YES];
+        CGRect frame = self.monitorStatusIcon.frame;
+        [self.monitorStatusIcon setFrame:CGRectMake(frame.origin.x+43, frame.origin.y, frame.size.width, frame.size.height)];
         [self start];
     }
 }
