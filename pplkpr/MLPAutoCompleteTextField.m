@@ -17,7 +17,6 @@
 #import "NSString+Levenshtein.h"
 #import <QuartzCore/QuartzCore.h>
 
-
 static NSString *kSortInputStringKey = @"sortInputString";
 static NSString *kSortEditDistancesKey = @"editDistances";
 static NSString *kSortObjectKey = @"sortObject";
@@ -376,10 +375,12 @@ withAutoCompleteString:(NSString *)string
 {
     [self saveCurrentShadowProperties];
     
-    if(self.showAutoCompleteTableWhenEditingBegins ||
-       self.autoCompleteTableAppearsAsKeyboardAccessory){
-        [self fetchAutoCompleteSuggestions];
-    }
+    [self fetchAutoCompleteSuggestions]; // do it on empty string too for recents
+//    LM
+//    if(self.showAutoCompleteTableWhenEditingBegins ||
+//       self.autoCompleteTableAppearsAsKeyboardAccessory){
+//        [self fetchAutoCompleteSuggestions];
+//    }
     
     return [super becomeFirstResponder];
 }
@@ -884,8 +885,7 @@ withAutoCompleteString:(NSString *)string
             [self.dataSource autoCompleteTextField:self.textField
                       possibleCompletionsForString:self.incompleteString
                                  completionHandler:^(NSArray *suggestions){
-                                     
-                                     [operation performSelector:@selector(didReceiveSuggestions:) withObject:suggestions];
+                                    [operation performSelector:@selector(didReceiveSuggestions:) withObject:suggestions];
                                      dispatch_semaphore_signal(sentinelSemaphore);
                                  }];
             

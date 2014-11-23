@@ -23,8 +23,6 @@
 @property (weak) IBOutlet MLPAutoCompleteTextField *whoTextField;
 @property (retain) NSString *whoName;
 @property (retain) NSString *whoFbid;
-@property (retain, nonatomic) IBOutlet UIView *whoRecentView;
-@property (retain, nonatomic) NSArray *recentPeople;
 
 @property (strong, nonatomic) IBOutlet UITextView *emotionTextView;
 @property (retain, nonatomic) IBOutlet UIPickerView *emotionPicker;
@@ -83,54 +81,28 @@
     [mask setBackgroundColor: [UIColor blackColor].CGColor];
     [mask setFrame: CGRectMake(0, self.imgSize*1.1, self.emotionPicker.bounds.size.width, self.imgSize*1.04)];
     [self.emotionPicker.layer setMask: mask];
- 
-    NSArray *subviews = [self.whoRecentView subviews];
     
-    for (int i=0; i<[subviews count]; i++) {
-        [((UIImageView *)subviews[i]).layer setBorderColor: [[UIColor blackColor] CGColor]];
-        [((UIImageView *)subviews[i]).layer setBorderWidth: 1.0];
-        
-        UITapGestureRecognizer *gr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(thumbTapped:)];
-        [subviews[i] addGestureRecognizer:gr];
-        [subviews[i] setTag:i];
-    }
+    // make a yellow rect for slider thumb img
+    CGSize size = CGSizeMake(self.intensitySlider.bounds.size.height, self.intensitySlider.bounds.size.height);
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(size.width, size.height), YES, 0.0);
+    [[GlobalMethods globalYellowColor] setFill];
+    UIRectFill(CGRectMake(0, 0, size.width, size.height));
+    UIImage *fImg = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
     
-    // Build a triangular path
-    float w = self.intensitySlider.frame.size.width;
-    UIBezierPath *path = [UIBezierPath new];
-    [path moveToPoint:(CGPoint){0.25*w, 43}];
-    [path addLineToPoint:(CGPoint){0.75*w, 43}];
-    [path addLineToPoint:(CGPoint){0.75*w, 7}];
-    [path addLineToPoint:(CGPoint){0.25*w, 43}];
+    [self.intensitySlider setThumbImage:fImg forState:UIControlStateNormal];
+    [self.intensitySlider setMinimumTrackImage:fImg forState:UIControlStateNormal];
+    [self.intensitySlider setMaximumTrackTintColor:[GlobalMethods globalLightGrayColor]];
     
-    // Create a CAShapeLayer with this triangular path
-    // Same size as the original imageView
-    CAShapeLayer *sliderMask = [CAShapeLayer new];
-    sliderMask.frame = self.intensitySlider.bounds;
-    sliderMask.path = path.CGPath;
+    // slider masking
+    float wPad = 10;
+    float hPad = 5;
+    [self.intensitySlider setFrame:CGRectMake(self.intensitySlider.frame.origin.x, self.intensitySlider.frame.origin.y, self.intensitySlider.frame.size.width, self.whoTextField.frame.size.height+2*hPad)];
     
-    // Mask the imageView's layer with this shape
+    CALayer* sliderMask = [[CALayer alloc] init];
+    [sliderMask setBackgroundColor: [UIColor blackColor].CGColor];
+    [sliderMask setFrame:CGRectMake(wPad, hPad, self.intensitySlider.bounds.size.width-2*wPad, self.intensitySlider.bounds.size.height-2*hPad)];
     [self.intensitySlider.layer setMask:sliderMask];
-    [self.intensitySlider setThumbImage:[[UIImage alloc] init] forState:UIControlStateNormal];
-    [self.intensitySlider setMinimumTrackTintColor:[GlobalMethods globalYellowColor]];
-    [self.intensitySlider setMaximumTrackTintColor:[UIColor clearColor]];
-    [self.intensitySlider setFrame:CGRectMake(self.intensitySlider.frame.origin.x, self.intensitySlider.frame.origin.y, w, 50)];
-    
-    float h = self.intensitySlider.frame.size.height;
-    float x = self.intensitySlider.frame.origin.x;
-    float y = self.intensitySlider.frame.origin.y;
-    
-    UIBezierPath *sliderPath = [UIBezierPath bezierPath];
-    [sliderPath moveToPoint:CGPointMake(x+0.25*w, y+h-7)];
-    [sliderPath addLineToPoint:CGPointMake(x+0.75*w, y+h-7)];
-    [sliderPath addLineToPoint:CGPointMake(x+0.75*w, y+h-43)];
-    [sliderPath addLineToPoint:CGPointMake(x+0.25*w, y+h-7)];
-    CAShapeLayer *shapeLayer = [CAShapeLayer layer];
-    shapeLayer.path = [sliderPath CGPath];
-    shapeLayer.strokeColor = [[UIColor blackColor] CGColor];
-    shapeLayer.lineWidth = 1.0;
-    shapeLayer.fillColor = [[UIColor clearColor] CGColor];
-    [self.view.layer addSublayer:shapeLayer];
     
     // move submit button down if iphone5
     if (self.view.frame.size.height == 568) {
@@ -147,33 +119,11 @@
         // previous report filed should return to reportview screen
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
-    // shortcut thumbs
-    self.recentPeople = [[InteractionData data] getRecentPeople];
-    NSArray *subviews = [self.whoRecentView subviews];
-    
-    for (int i=0; i<[subviews count]; i++) {
-        if (i<[self.recentPeople count]) {
-            
-            Person *p = self.recentPeople[i];
-            
-            [[FBHandler data] requestProfilePic:p.fbid  withType:@"square" withCompletion:^(NSDictionary * result){
-                NSDictionary *pic = [result objectForKey:@"picture"];
-                NSDictionary *data = [pic objectForKey:@"data"];
-                NSString *url = [data objectForKey:@"url"];
-                [subviews[i] sd_setImageWithURL:[NSURL URLWithString:url]];
-            }];
-            
-            [subviews[i] setHidden:NO];
-        } else {
-            [subviews[i] setHidden:YES];
-        }
-    }
-    
-    
+
     NSMutableDictionary *event = [[HeartRateAnalyzer data] getStressEvent];
     self.emotion = [[[InteractionData data] emotionsArray] objectAtIndex:0];
     float intensity = [[event objectForKey:@"intensity"] floatValue];
-    [self.intensitySlider setValue:intensity*0.5+0.25];
+    [self.intensitySlider setValue:intensity];
     
 }
 
@@ -194,21 +144,8 @@
     if ([self.whoTextField.text length] == 0) {
         [self setWhoName:@""];
         [self setWhoFbid:@""];
-        [self.whoRecentView setHidden:false];
     } else {
         [self.whoTextField setText:self.whoName];
-        [self.whoRecentView setHidden:true];
-    }
-}
-
-- (void)thumbTapped:(UITapGestureRecognizer *)recognizer {
-    UIImageView *iv = (UIImageView *)recognizer.view;
-    if (iv.tag < [self.recentPeople count]) {
-        Person *p = [self.recentPeople objectAtIndex:iv.tag];
-        [self setWhoName:p.name];
-        [self setWhoFbid:p.fbid];
-        [self.whoTextField setText:p.name];
-        [self.whoRecentView setHidden:true];
     }
 }
 
@@ -277,7 +214,6 @@
         Person *p = [[InteractionData data] getPerson:self.whoName withFbid:self.whoFbid save:true];
         
         float val = [self.intensitySlider value];
-        val = ((val-0.25)/0.5); // to account for hiding of edges of slider
         if (val > 0.75) {
             [[FBHandler data] requestSendWarning:p withEmotion:self.emotion];
         }
@@ -301,7 +237,6 @@
 - (void)resetForm {
     
     [self.whoTextField setText:@""];
-    [self.whoRecentView setHidden:false];
     [self setWhoName:@""];
     [self setWhoFbid:@""];
     
@@ -323,19 +258,21 @@
         FriendsCustomAutoCompleteObject *fObj = (FriendsCustomAutoCompleteObject *)selectedObject;
         [self setWhoName:fObj.name];
         [self setWhoFbid:fObj.fbid];
-        [self.whoRecentView setHidden:true];
         
     }
 }
 
-#pragma mark - Slider Delegate
+
+#pragma mark - Slider
 
 - (IBAction)sliderValueChanged:(UISlider *)sender {
-    if (sender.value < 0.25) {
-        [sender setValue:0.25];
-    } else if (sender.value > 0.75) {
-        [sender setValue:0.75];
+//    if (sender.value < 0.1) {
+//        [sender setValue:0.1];
+//    }
+    if (sender.value > 0.92) {
+        [sender setValue:0.92];
     }
+    //NSLog(@"slider value %f", sender.value);
 }
 
 @end

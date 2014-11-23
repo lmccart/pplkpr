@@ -9,6 +9,7 @@
 #import "FriendsCompleteDataSource.h"
 #import "FriendsCustomAutoCompleteObject.h"
 #import "FBHandler.h"
+#import "InteractionData.h"
 
 @interface FriendsCompleteDataSource()
 
@@ -20,7 +21,7 @@
 @implementation FriendsCompleteDataSource
 
 
-- (void) updateFriends {
+- (void)updateFriends {
     
     NSMutableArray *mutableFriends = [NSMutableArray new];
 
@@ -49,10 +50,26 @@
             NSLog(@"sleeping fetch of completions for %f", seconds);
             sleep(seconds);
         }
-        NSArray *completions = _friendObjects;
-        
+        NSArray *completions;
+        if ([string isEqualToString:@""]) {
+            completions = [self getRecentFriendsComplete];
+        } else {
+            completions = _friendObjects;
+        }
         handler(completions);
     });
+}
+
+- (NSMutableArray *)getRecentFriendsComplete {
+    NSArray *recents = [[InteractionData data] getRecentPeople];
+    
+    NSMutableArray *mutableRecents = [NSMutableArray new];
+    
+    for (Person *p in recents) {
+        FriendsCustomAutoCompleteObject *friendObj = [[FriendsCustomAutoCompleteObject alloc] initWithName:p.name withFbid:p.fbid];
+        [mutableRecents addObject:friendObj];
+    }
+    return mutableRecents;
 }
 
 

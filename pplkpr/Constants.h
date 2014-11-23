@@ -12,6 +12,7 @@
 +(UIFont *) globalFont;
 +(UIFont *) globalBoldFont;
 +(UIColor *) globalYellowColor;
++(UIColor *) globalLightGrayColor;
 + (NSDictionary *) attrsDict;
 + (NSDictionary *) attrsBoldDict;
 

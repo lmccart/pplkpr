@@ -14,7 +14,6 @@
 
 - (IBAction)submit:(id)sender;
 - (IBAction)back:(id)sender;
-- (IBAction)sliderValueChanged:(UISlider *)sender;
 
 
 @end
