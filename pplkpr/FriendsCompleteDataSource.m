@@ -47,7 +47,6 @@
     dispatch_async(queue, ^{
         if(self.simulateLatency){
             CGFloat seconds = arc4random_uniform(4)+arc4random_uniform(4); //normal distribution
-            NSLog(@"sleeping fetch of completions for %f", seconds);
             sleep(seconds);
         }
         NSArray *completions;

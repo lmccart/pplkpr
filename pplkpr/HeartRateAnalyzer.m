@@ -54,7 +54,7 @@
         // load linear regression model
         NSString * modelPath = [[NSBundle mainBundle] pathForResource: @"mio-8" ofType: @"model"];
         self.model_ = load_model(modelPath.UTF8String);
-        NSLog(@"Loaded model from %@ with %d features and %d classes.", modelPath, self.model_->nr_feature, self.model_->nr_class);
+        //NSLog(@"Loaded model from %@ with %d features and %d classes.", modelPath, self.model_->nr_feature, self.model_->nr_class);
         
         self.rrs = [[NSMutableArray alloc] init];
         self.lastStressValue = 0.5;
@@ -111,7 +111,7 @@
         }
         
         // convert NSMutableArray of NSNumbers to vector<float>
-        NSLog(@"Processing %d rrs over %f seconds", n, self.stressUpdateInterval);
+        //NSLog(@"Processing %d rrs over %f seconds", n, self.stressUpdateInterval);
         std::vector<float> rrms(n);
         for(int i = 0; i < n; i++) {
             rrms[i] = [self.rrs[i] floatValue];
@@ -137,7 +137,7 @@
         
         // clamp output to 0 to 1 range?
         // people might go above/below if the data is very different from the driver-stress dataset
-        NSLog(@"Raw stress is %f", stress);
+        //NSLog(@"Raw stress is %f", stress);
         stress = MAX(stress, 0);
         stress = MIN(stress, 1);
     
@@ -147,26 +147,26 @@
         self.lastStressUpdateTime = time;
         self.lastStressValue = stress;
         
-        NSLog(@"Saved stress is %f", stress);
+        //NSLog(@"Saved stress is %f", stress);
         
         self.stressSmoothed = [self lerpFrom:self.stressSmoothed to:stress at:self.stressSmoothedRate];
         double timeElapsed = [time timeIntervalSinceDate:self.notifyTimePrevious];
         if (self.stressSmoothed >= self.stressThreshold) {
             if (timeElapsed > self.notifyTimeMinimum) {
                 self.notifyTimePrevious = time;
-                NSLog(@"Sending notification duration %f > %f and stress %f > %f", timeElapsed, self.notifyTimeMinimum, self.stressSmoothed, self.stressThreshold);
+                //NSLog(@"Sending notification duration %f > %f and stress %f > %f", timeElapsed, self.notifyTimeMinimum, self.stressSmoothed, self.stressThreshold);
                 AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
                 [appDelegate triggerNotification:@"hrv"];
             } else {
-                NSLog(@"Notifying too often, raising threshold %f towards %f", self.stressThreshold, self.stressSmoothed);
+                //NSLog(@"Notifying too often, raising threshold %f towards %f", self.stressThreshold, self.stressSmoothed);
                 self.stressThreshold = [self lerpFrom:self.stressThreshold to:self.stressSmoothed at:self.stressThresholdRate];
-                NSLog(@"New threshold is %f", self.stressThreshold);
+                //NSLog(@"New threshold is %f", self.stressThreshold);
             }
         }
         if(timeElapsed > self.notifyTimeMinimum) {
-            NSLog(@"Notifying too rarely, lowering threshold %f towards %f", self.stressThreshold, self.stressSmoothed);
+            //NSLog(@"Notifying too rarely, lowering threshold %f towards %f", self.stressThreshold, self.stressSmoothed);
             self.stressThreshold = [self lerpFrom:self.stressThreshold to:self.stressSmoothed at:self.stressThresholdRate];
-            NSLog(@"New threshold is %f", self.stressThreshold);
+            //NSLog(@"New threshold is %f", self.stressThreshold);
         }
     }
 }

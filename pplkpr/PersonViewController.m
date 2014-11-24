@@ -47,7 +47,7 @@
     
 	for(id key in [[InteractionData data] summary]) {
 		id value = [[[InteractionData data] summary] objectForKey:key];
-		NSLog(@"%@ %@", value, key);
+		//NSLog(@"%@ %@", value, key);
 	}
     
     [self.personPhoto.layer setBorderColor: [[UIColor blackColor] CGColor]];
@@ -58,7 +58,7 @@
     
 	if ([[InteractionData data] jumpToPerson]) {
         self.curPerson = [[InteractionData data] jumpToPerson];
-        NSLog(@"%@", self.curPerson.fbTickets);
+        //NSLog(@"%@", self.curPerson.fbTickets);
         [self.personLabel setText:self.curPerson.name];
         [[InteractionData data] setJumpToPerson:nil];
         
@@ -224,7 +224,7 @@
 
 - (void)pushRankViewController:(NSString *)emotion withOrder:(BOOL)order
 {
-    NSLog(@"jump to rank %d %@", order, emotion);
+    //NSLog(@"jump to rank %d %@", order, emotion);
     [[InteractionData data] setJumpToEmotion:emotion];
     [[InteractionData data] setJumpToOrder:order];
     [self.navigationController popToRootViewControllerAnimated:YES];

@@ -168,15 +168,13 @@
 
 
 - (void)pushPersonViewController:(Person *)p {
-    NSLog(@"jump to person %@", p.name);
-	[[InteractionData data] setJumpToPerson:p];
+    [[InteractionData data] setJumpToPerson:p];
 	[self.tabBarController setSelectedIndex:1];
 }
 
 
 - (void)pushRankViewController:(NSString *)emotion withOrder:(BOOL)order {
-    NSLog(@"jump to rank %d %@", order, emotion);
-	[[InteractionData data] setJumpToEmotion:emotion];
+    [[InteractionData data] setJumpToEmotion:emotion];
 	[[InteractionData data] setJumpToOrder:order];
 	[self.tabBarController setSelectedIndex:1];
 }
@@ -227,12 +225,10 @@
 }
 
 - (void)updateMonitorStatus:(float)status {
-    NSLog(@"updated ");
     [self.monitorStatusIcon setHidden:!status];
 }
 
 - (void)updateMonitorBatteryLevel:(float)level {
-    NSLog(@"updated ");
     [self.monitorStatusIcon setAlpha:level];
 }
 

@@ -72,7 +72,6 @@
     UILocalNotification *notification =
     [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
     if (notification) {
-        NSLog(@"Received Notification %@", notification);
         NSString *type = [notification.userInfo objectForKey:@"type"];
         if ([type isEqualToString:@"hrv"] || [type isEqualToString:@"location"]) {
             [self popToReportView];
@@ -122,8 +121,7 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    NSLog(@"didBecomeActive");
-	// Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     [[FBHandler data] handleActivate];
 }
 
@@ -212,9 +210,9 @@
 	[locationsArray addObjectsFromArray:locations];
 	CLLocation* current = [locationsArray lastObject];
     
-	NSLog(@"didUpdateLocations: %+.6f, %+.6f\n",
-          current.coordinate.latitude,
-          current.coordinate.longitude);
+//	NSLog(@"didUpdateLocations: %+.6f, %+.6f\n",
+//          current.coordinate.latitude,
+//          current.coordinate.longitude);
 	
 	NSTimeInterval timeThresholdInSeconds = 15 * 60; // 15 minutes
 	CLLocationDistance distanceThresholdInMeters = 100; // 100 meters
@@ -224,12 +222,12 @@
 		CLLocation* previous = [locationsArray objectAtIndex:(count - 2)];
 		NSTimeInterval time = [[current timestamp] timeIntervalSinceDate:[previous timestamp]];
 		if(time < timeThresholdInSeconds) {
-			NSLog(@"too recent: %f < %f\n", time, timeThresholdInSeconds);
+			//NSLog(@"too recent: %f < %f\n", time, timeThresholdInSeconds);
 			return;
 		}
 		CLLocationDistance distance = [current distanceFromLocation:previous];
 		if(distance < distanceThresholdInMeters) {
-			NSLog(@"too close: %f < %f\n", distance, distanceThresholdInMeters);
+			//NSLog(@"too close: %f < %f\n", distance, distanceThresholdInMeters);
 			return;
 		}
 	}
@@ -287,7 +285,7 @@
         notification.userInfo = infoDict;
         
         [[UIApplication sharedApplication] scheduleLocalNotification:notification];
-        NSLog(@"sending notification");
+        //NSLog(@"sending notification");
     }
 }
 

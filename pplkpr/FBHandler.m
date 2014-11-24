@@ -102,7 +102,7 @@
                                                   NSDictionary* result,
                                                   NSError *error) {
         if (error) {
-            NSLog(@"error: %@", error);
+            //NSLog(@"error: %@", error);
         } else {
             completionBlock([result objectForKey:@"data"]);
         }
@@ -116,7 +116,7 @@
                                                   NSDictionary* result,
                                                   NSError *error) {
         if (error) {
-            NSLog(@"error: %@", error);
+            //NSLog(@"error: %@", error);
         }
         else {
             completionBlock(result);
@@ -131,13 +131,12 @@
     NSString *extra = [type isEqualToString:@"square"] ? @"type(square)" : @"height(200).width(200)";
 	
     NSString *reqString = [NSString stringWithFormat:@"%@/?fields=picture.%@", fbid, extra];
-    NSLog(@"%@", reqString);
     FBRequest* profileRequest = [FBRequest requestForGraphPath:reqString];
     [profileRequest startWithCompletionHandler: ^(FBRequestConnection *connection,
                                                   NSDictionary* result,
                                                   NSError *error) {
         if (error) {
-            NSLog(@"error: %@", error);
+            //NSLog(@"error: %@", error);
         }
         else {
             completionBlock(result);
@@ -190,12 +189,12 @@
                 NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
                 NSString *ticket = [NSString stringWithFormat:@"%@:%@", [results objectForKey:@"ticket"], emotion];
                 [person.fbTickets setObject:type forKey:ticket];
-                NSLog(@"adding ticket(id:emo) %@ for action %@", ticket, type);
+                //NSLog(@"adding ticket(id:emo) %@ for action %@", ticket, type);
             
                 // save context
                 NSError* error;
                 if (![_managedObjectContext save:&error]) {
-                    NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+                    //NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
                 }
             }
         }];
@@ -235,7 +234,7 @@
                                            queue:[NSOperationQueue mainQueue]
                                completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
                                    if (error) {
-                                       NSLog(@"error: %@", error);
+                                       //NSLog(@"error: %@", error);
                                    } else {
                                        completionBlock(data);
                                    }
@@ -250,11 +249,9 @@
                                self.fullName,
                                tag,
                                data];
-        
-        NSLog(@"LOGGING %@", tag);
         [self requestUrl:@"device_log" withRequest:request withType:@"POST" withCompletion:^(NSData *data) {
             //NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-            NSLog(@"LOGGED %@", tag);
+            //NSLog(@"LOGGED %@", tag);
             if (completionBlock) {
                 completionBlock(data);
             }

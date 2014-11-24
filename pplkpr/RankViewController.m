@@ -33,11 +33,9 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-	NSLog(@"initing\n");
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-		NSLog(@"init\n");
     }
     return self;
 }
@@ -78,7 +76,6 @@
         [self.navigationController popToRootViewControllerAnimated:YES];
         if ([[InteractionData data] jumpToEmotion]) {
             _emotion = [[InteractionData data] jumpToEmotion];
-            NSLog(@"emotion in view will appear %@", _emotion);
             int d = [[[InteractionData data] emotionsArray] indexOfObject:_emotion];
             [_emotionPicker selectRow:d inComponent:0 animated:NO];
             [[InteractionData data] setJumpToEmotion:nil];
@@ -94,7 +91,6 @@
 
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-	NSLog(@"return\n");
     [textField resignFirstResponder];
     return YES;
 }
@@ -139,9 +135,8 @@
 //If the user chooses from the pickerview, it calls this function;
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     //Let's print in the console what the user had chosen;
-    NSLog(@"Chosen item: %@", [[[InteractionData data] emotionsArray] objectAtIndex:row]);
     _emotion = [[[InteractionData data] emotionsArray] objectAtIndex:row];
-	NSLog(@"order %d emotion %@", _order, _emotion);
+	//NSLog(@"order %d emotion %@", _order, _emotion);
 	[self updateView];
 }
 
@@ -200,10 +195,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	
 	int ind = (_order) ? [[_rankData objectForKey:_emotion] count] - indexPath.row - 1 : indexPath.row;
-    NSLog(@"select ind %d", ind);
     Person *p = [[_rankData objectForKey:_emotion] objectAtIndex:ind];
-    NSLog(@"select name %@", p.name);
-	[[InteractionData data] setJumpToPerson:p];
+    [[InteractionData data] setJumpToPerson:p];
 	[self performSegueWithIdentifier:@"personSegue" sender:self];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
@@ -233,7 +226,6 @@
 
 - (void)textTapped:(UITapGestureRecognizer *)recognizer
 {
-    NSLog(@"tap");
     UITextView *textView = (UITextView *)recognizer.view;
     
     // Location of the tap in text-container coordinates

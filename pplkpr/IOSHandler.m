@@ -43,8 +43,7 @@
             
             //request authorization
             [self.addressBook requestAuthorizationWithCompletion:^(bool granted, NSError *error) {
-                //[abViewController setAddressBook:ab];
-                NSLog(@"authorized");
+                //NSLog(@"authorized");
             }];
         } else {
             [self removeContact:@"nika and austin airbnb"];

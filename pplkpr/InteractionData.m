@@ -146,7 +146,7 @@
 
 // returns existing person or makes new one
 - (Person *)getPerson:(NSString *)name withFbid:(NSString *)fbid save:(BOOL)save {
-    NSLog(@"GETTING PERSON %@", fbid);
+    //NSLog(@"GETTING PERSON %@", fbid);
     
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"fbid == %@", fbid];
@@ -160,7 +160,7 @@
     
     
     if (result == nil) {
-        NSLog(@"fetch result = nil");
+        //NSLog(@"fetch result = nil");
     } else {
         if([result count] > 0) {
             person = (Person *)[result objectAtIndex:0];
@@ -178,7 +178,7 @@
             if (save) {
                 NSError *error;
                 if (![_managedObjectContext save:&error]) {
-                    NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+                    //NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
                 }
             }
         }
@@ -193,7 +193,7 @@
            withRating:(NSNumber *)rating
              withDate:(NSDate *)date; {
 	
-	NSLog(@"ADDING REPORT %@ %@ %@ %@ %@", name, fbid, rating, emotion, date);
+	//NSLog(@"ADDING REPORT %@ %@ %@ %@ %@", name, fbid, rating, emotion, date);
 	
 	// create new report
 	Report *newReport = [NSEntityDescription insertNewObjectForEntityForName:@"Report"
@@ -213,13 +213,13 @@
     tot = [NSNumber numberWithInteger:[tot intValue] + 1];
 	[person setValue:tot
               forKey:[NSString stringWithFormat:@"%@N", emotionKey]];
-    NSLog(@"reports n for %@ %@ %@ now at %@", person.name, person.fbid, newReport.emotion, tot);
+    //NSLog(@"reports n for %@ %@ %@ now at %@", person.name, person.fbid, newReport.emotion, tot);
     [person setDate:[NSDate date]]; // update for recency
 
 
     NSError *error;
 	if (![_managedObjectContext save:&error]) {
-		NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+		//NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
 	}
     
     return newReport;
@@ -258,7 +258,7 @@
 	// save context
 	NSError* error;
 	if (![_managedObjectContext save:&error]) {
-		NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+		//NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
 	}
 }
 
@@ -526,7 +526,7 @@
 
 - (void)actOn:(Person *)person forEmotion:(NSString *)emotion {
     
-    NSLog(@"acting on %@ for %@", person.name, emotion);
+    //NSLog(@"acting on %@ for %@", person.name, emotion);
     
     if (!person.fbActions) {
         [person setFbActions:[[NSMutableDictionary alloc] init]];
@@ -541,7 +541,7 @@
     int ind = 0;
     if (last_act) {
         ind = ([possible_actions_arr indexOfObject:last_act] + 1) % [possible_actions_arr count];
-        NSLog(@"last act %@ ind %d i %d count %d", last_act, ind, [possible_actions_arr indexOfObject:last_act], [possible_actions_arr count]);
+        //NSLog(@"last act %@ ind %d i %d count %d", last_act, ind, [possible_actions_arr indexOfObject:last_act], [possible_actions_arr count]);
     }
 
     NSString *action = [possible_actions_arr objectAtIndex:ind];
@@ -566,7 +566,7 @@
     NSArray *possible_messages_arr = [self.messageDict objectForKey:emotion];
     NSUInteger randomInd = arc4random() % [possible_messages_arr count];
     NSString *msg = [possible_messages_arr objectAtIndex:randomInd];
-    NSLog(@"arr %@ ind %d msg %@", possible_messages_arr, randomInd, msg);
+    //NSLog(@"arr %@ ind %d msg %@", possible_messages_arr, randomInd, msg);
     return msg;
 }
 
@@ -615,18 +615,18 @@
             [[FBHandler data] checkTicket:tick_id withCompletion:^(int status) {
                 NSString *action = [p.fbTickets objectForKey:tick];
                 if (status == 1) {
-                    NSLog(@"ticket successful %@ %@", tick, action);
+                    //NSLog(@"ticket successful %@ %@", tick, action);
                     [p.fbTickets removeObjectForKey:tick];
                     if (action) {
                         NSMutableArray *emo_actions = [p.fbActions valueForKey:emotion];
                         [emo_actions addObject:action];
-                        NSLog(@"tickets %@", p.fbTickets);
-                        NSLog(@"actions %@", p.fbActions);
+                        //NSLog(@"tickets %@", p.fbTickets);
+                        //NSLog(@"actions %@", p.fbActions);
                     }
                 } else if (status == 0) {
-                    NSLog(@"ticket processing %@", tick);
+                    //NSLog(@"ticket processing %@", tick);
                 } else if (status == -1) {
-                    NSLog(@"ticket failed %@", tick);
+                    //NSLog(@"ticket failed %@", tick);
                     [p.fbTickets removeObjectForKey:tick];
                 }
             }];
@@ -635,7 +635,7 @@
     }
     NSError *error;
     if (![_managedObjectContext save:&error]) {
-        NSLog(@"Error deleting - error:%@",error);
+        //NSLog(@"Error deleting - error:%@",error);
     }
 }
 

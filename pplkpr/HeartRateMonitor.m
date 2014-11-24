@@ -297,7 +297,7 @@ didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic
         char batteryValue;
         [characteristic.value getBytes:&batteryValue length:1];
         float n = (float)batteryValue;
-        NSLog(@"battery level: %f", n);
+        //NSLog(@"battery level: %f", n);
         [self.viewController updateMonitorBatteryLevel:n/100.0];
         
         // notif if needed
@@ -323,7 +323,7 @@ didUpdateNotificationStateForCharacteristic:(CBCharacteristic *)characteristic
 // Automatically connect to first known peripheral
 - (void)centralManager:(CBCentralManager *)central didRetrievePeripherals:(NSArray *)peripherals
 {
-    NSLog(@"Retrieved peripheral: %u - %@", [peripherals count], peripherals);
+    //NSLog(@"Retrieved peripheral: %u - %@", [peripherals count], peripherals);
     [self stopScan];
     // If there are any known devices, automatically connect to it.
     if([peripherals count] >= 1) {
@@ -343,7 +343,7 @@ didUpdateNotificationStateForCharacteristic:(CBCharacteristic *)characteristic
 didDisconnectPeripheral:(CBPeripheral *)aPeripheral 
                   error:(NSError *)error
 {
-    NSLog(@"Disconnected peripheral %@", aPeripheral.name);
+    //NSLog(@"Disconnected peripheral %@", aPeripheral.name);
     [_viewController updateMonitorStatus:0];
     self.sensorConnected = NO;
     
@@ -366,7 +366,7 @@ didDisconnectPeripheral:(CBPeripheral *)aPeripheral
 didFailToConnectPeripheral:(CBPeripheral *)aPeripheral 
                   error:(NSError *)error
 {
-    NSLog(@"Fail to connect to peripheral: %@ with error = %@", aPeripheral, [error localizedDescription]);
+    //NSLog(@"Fail to connect to peripheral: %@ with error = %@", aPeripheral, [error localizedDescription]);
     if (self.peripheral) {
         [self.peripheral setDelegate:nil];
         self.peripheral = nil;
