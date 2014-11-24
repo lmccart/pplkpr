@@ -14,6 +14,7 @@
 }
 
 @property NSString *fakebookURL;
+@property BOOL useFakebook;
 @property int gender;
 @property NSString *firstName;
 @property NSString *fullName;
@@ -57,37 +58,45 @@
         }
         
         // load credentials for fakebook
-        NSString* path = [[NSBundle mainBundle] pathForResource:@"credentials"
-                                                         ofType:@"txt"];
-        NSString* content = [NSString stringWithContentsOfFile:path
-                                                      encoding:NSUTF8StringEncoding
-                                                         error:NULL];
-        if (content) {
-            NSArray *toks = [content componentsSeparatedByString:@":"];
-            self.fakebookURL = [NSString stringWithFormat:@"https://%@:%@@server.pplkpr.com:3000/", toks[0], toks[1]];
-        } else {
-            NSLog(@"problem loading credentials.txt");
-        }
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        self.useFakebook = [defaults boolForKey:@"useFakebook"];
         
+        if (self.useFakebook) {
+            NSString* path = [[NSBundle mainBundle] pathForResource:@"credentials"
+                                                             ofType:@"txt"];
+            NSString* content = [NSString stringWithContentsOfFile:path
+                                                          encoding:NSUTF8StringEncoding
+                                                             error:NULL];
+            if (content) {
+                NSArray *toks = [content componentsSeparatedByString:@":"];
+                self.fakebookURL = [NSString stringWithFormat:@"https://%@:%@@server.pplkpr.com:3000/", toks[0], toks[1]];
+            } else {
+                NSLog(@"problem loading credentials.txt");
+            }
+        }
 	}
     return self;
 }
+
+/**
+ * LEGIT FACEBOOK METHODS
+ */
 
 - (BOOL)handleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication {
     return [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];
 }
 
-- (void) handleActivate {
+- (void)handleActivate {
     [FBAppEvents activateApp];
     [FBAppCall handleDidBecomeActive];
 }
 
-- (void) closeSession {
+- (void)closeSession {
     [FBSession.activeSession close];
 }
 
 
-- (void) requestFriendsWithCompletion:(void (^)(NSArray *))completionBlock {
+- (void)requestFriendsWithCompletion:(void (^)(NSArray *))completionBlock {
     FBRequest* friendsRequest = [FBRequest requestForMyFriends];
     [friendsRequest startWithCompletionHandler: ^(FBRequestConnection *connection,
                                                   NSDictionary* result,
@@ -136,104 +145,121 @@
     }];
 }
 
+
+/**
+ * FAKEBOOK METHODS
+ */
+
 - (void)requestSendWarning:(Person *)person withEmotion:(NSString *)emotion {
-    [self createFakebookRequest:person withType:@"post" withMessage:[NSString stringWithFormat:@"I am on my way to meet you and I am feeling %@", [emotion lowercaseString]] withEmotion:nil];
+    if (self.useFakebook) {
+        [self createFakebookRequest:person withType:@"post" withMessage:[NSString stringWithFormat:@"I am on my way to meet you and I am feeling %@", [emotion lowercaseString]] withEmotion:nil];
+    }
 }
 
 - (void)requestLogin:(NSString *)email withPass:(NSString *)pass withCompletion:(void (^)(NSDictionary *results))completionBlock {
-    NSString *requestString = [NSString stringWithFormat:@"email=%@&password=%@",
-                               email,
-                               pass];
-    //NSLog(@"request string %@", requestString);
-    
-    [self requestUrl:@"login" withRequest:requestString withType:@"POST" withCompletion:^(NSData *data) {
-        //NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        //NSLog(@"SUCCEEDED LOGIN: %@",returnString);
+    if (self.useFakebook) {
+        NSString *requestString = [NSString stringWithFormat:@"email=%@&password=%@",
+                                   email,
+                                   pass];
+        //NSLog(@"request string %@", requestString);
         
-        NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-        completionBlock(results);
-    }];
+        [self requestUrl:@"login" withRequest:requestString withType:@"POST" withCompletion:^(NSData *data) {
+            //NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            //NSLog(@"SUCCEEDED LOGIN: %@",returnString);
+            
+            NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+            completionBlock(results);
+        }];
+    }
 }
 
 - (void)createFakebookRequest:(Person *)person withType:(NSString *)type withMessage:(NSString *)message withEmotion:(NSString *)emotion {
-    NSString *requestString = [NSString stringWithFormat:@"email=%@&password=%@&message=%@&id=%@",
-                               self.email,
-                               self.pass,
-                               message,
-                               person.fbid];
     
-    [self requestUrl:type withRequest:requestString withType:@"POST" withCompletion:^(NSData *data) {
-        //NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        //NSLog(@"SUCCEEDED: %@",returnString);
-    
-        if (emotion) { // warning posts won't have emotion and don't need to be saved
-            NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-            NSString *ticket = [NSString stringWithFormat:@"%@:%@", [results objectForKey:@"ticket"], emotion];
-            [person.fbTickets setObject:type forKey:ticket];
-            NSLog(@"adding ticket(id:emo) %@ for action %@", ticket, type);
+    if (self.useFakebook) {
+        NSString *requestString = [NSString stringWithFormat:@"email=%@&password=%@&message=%@&id=%@",
+                                   self.email,
+                                   self.pass,
+                                   message,
+                                   person.fbid];
         
-            // save context
-            NSError* error;
-            if (![_managedObjectContext save:&error]) {
-                NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+        [self requestUrl:type withRequest:requestString withType:@"POST" withCompletion:^(NSData *data) {
+            //NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            //NSLog(@"SUCCEEDED: %@",returnString);
+        
+            if (emotion) { // warning posts won't have emotion and don't need to be saved
+                NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+                NSString *ticket = [NSString stringWithFormat:@"%@:%@", [results objectForKey:@"ticket"], emotion];
+                [person.fbTickets setObject:type forKey:ticket];
+                NSLog(@"adding ticket(id:emo) %@ for action %@", ticket, type);
+            
+                // save context
+                NSError* error;
+                if (![_managedObjectContext save:&error]) {
+                    NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+                }
             }
-        }
-    }];
+        }];
+    }
 }
 
 - (void)checkTicket:(NSString *)ticket withCompletion:(void (^)(int status))completionBlock {
     
-    NSString *endpoint = [NSString stringWithFormat:@"status/%@", ticket];
-    
-    [self requestUrl:endpoint withRequest:@"" withType:@"GET" withCompletion:^(NSData *data) {
-        //NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        //NSLog(@"SUCCEEDED TICKET CHECK: %@",returnString);
+    if (self.useFakebook) {
+        NSString *endpoint = [NSString stringWithFormat:@"status/%@", ticket];
         
-        NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-        int status = [[results objectForKey:@"status"] integerValue];
-        completionBlock(status);
-    }];
+        [self requestUrl:endpoint withRequest:@"" withType:@"GET" withCompletion:^(NSData *data) {
+            //NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            //NSLog(@"SUCCEEDED TICKET CHECK: %@",returnString);
+            
+            NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+            int status = [[results objectForKey:@"status"] integerValue];
+            completionBlock(status);
+        }];
+    }
 }
 
 - (void)requestUrl:(NSString *)endpoint withRequest:(NSString *)requestString withType:(NSString *)type withCompletion:(void (^)(NSData *))completionBlock {
     
-    NSString *urlString = [NSString stringWithFormat:@"%@%@", self.fakebookURL, endpoint];
-    NSURL *url = [NSURL URLWithString:urlString];
+    if (self.useFakebook) {
     
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:url];
-    [request setHTTPMethod:type];
-    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"content-type"];
-    [request setHTTPBody:[requestString dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    [NSURLConnection sendAsynchronousRequest:request
-                                       queue:[NSOperationQueue mainQueue]
-                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                               if (error) {
-                                   NSLog(@"error: %@", error);
-                               } else {
-                                   completionBlock(data);
-                               }
-                           }];
+        NSString *urlString = [NSString stringWithFormat:@"%@%@", self.fakebookURL, endpoint];
+        NSURL *url = [NSURL URLWithString:urlString];
+        
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+        [request setURL:url];
+        [request setHTTPMethod:type];
+        [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"content-type"];
+        [request setHTTPBody:[requestString dataUsingEncoding:NSUTF8StringEncoding]];
+        
+        [NSURLConnection sendAsynchronousRequest:request
+                                           queue:[NSOperationQueue mainQueue]
+                               completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                                   if (error) {
+                                       NSLog(@"error: %@", error);
+                                   } else {
+                                       completionBlock(data);
+                                   }
+                               }];
+    }
 }
 
 
 - (void)logData:(NSString *)data withTag:(NSString *)tag withCompletion:(void (^)(NSData *))completionBlock {
-    
-    NSString *request = [NSString stringWithFormat:@"id=%@&type=%@&data=%@",
-                           self.fullName,
-                           tag,
-                           data];
-    
-    NSLog(@"LOGGING %@", tag);
-    [self requestUrl:@"device_log" withRequest:request withType:@"POST" withCompletion:^(NSData *data) {
-        //NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"LOGGED %@", tag);
-        if (completionBlock) {
-            completionBlock(data);
-        }
-    }];
-    
+    if (self.useFakebook) {
+        NSString *request = [NSString stringWithFormat:@"id=%@&type=%@&data=%@",
+                               self.fullName,
+                               tag,
+                               data];
+        
+        NSLog(@"LOGGING %@", tag);
+        [self requestUrl:@"device_log" withRequest:request withType:@"POST" withCompletion:^(NSData *data) {
+            //NSString *returnString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSLog(@"LOGGED %@", tag);
+            if (completionBlock) {
+                completionBlock(data);
+            }
+        }];
+    }
 }
 
 @end
