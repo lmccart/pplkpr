@@ -24,6 +24,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     if (self.side == -1) {
         [self performSegueWithIdentifier:@"meetSegue" sender:self];
     } else if (self.side == 1) {

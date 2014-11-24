@@ -16,8 +16,6 @@
 @property (nonatomic, retain) NSString *email;
 @property (nonatomic, retain) NSString *pass;
 
-@property (strong, nonatomic) FBSession *session;
-
 
 +(id)data;
 -(id)init;

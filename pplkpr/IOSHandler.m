@@ -56,7 +56,7 @@
     NSArray *matches = [self.addressBook peopleWithName:name];
     if ([matches count] > 0) {
         RHPerson *p = [matches objectAtIndex:0]; // duplicate names? hell just pick the first sucker :)
-        BOOL success = [self.addressBook removePerson:p];
+        [self.addressBook removePerson:p];
         [self.addressBook save];
     }
 }

@@ -46,7 +46,7 @@
     [[InteractionData data] checkTickets];
     
 	for(id key in [[InteractionData data] summary]) {
-		id value = [[[InteractionData data] summary] objectForKey:key];
+		[[[InteractionData data] summary] objectForKey:key];
 		//NSLog(@"%@ %@", value, key);
 	}
     
@@ -55,7 +55,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    
+    [super viewWillAppear:animated];
 	if ([[InteractionData data] jumpToPerson]) {
         self.curPerson = [[InteractionData data] jumpToPerson];
         //NSLog(@"%@", self.curPerson.fbTickets);

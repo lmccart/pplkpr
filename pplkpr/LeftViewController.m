@@ -132,6 +132,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     if (self.needsReset) {
         [self resetForm];
         self.needsReset = false;
