@@ -189,7 +189,7 @@
     
     for (int i=0; i<[self.recentData.rrs count]; i++) {
         NSString *dateString = [dateFormatter stringFromDate:self.recentData.rr_times[i]];
-        [dataString appendString:[NSString stringWithFormat:@"%@\t%f\n", dateString, [self.recentData.rrs[i] integerValue]]];
+        [dataString appendString:[NSString stringWithFormat:@"%@\t%ld\n", dateString, (long)[self.recentData.rrs[i] integerValue]]];
     }
     
     return dataString;

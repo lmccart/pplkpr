@@ -57,8 +57,6 @@
 		65909CFB19C708DF002953A2 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65909CF919C708DF002953A2 /* Default@2x.png */; };
 		65909D0A19C70B6D002953A2 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 65909D0619C70B6D002953A2 /* Icon.png */; };
 		65909D0B19C70B6D002953A2 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65909D0719C70B6D002953A2 /* Icon@2x.png */; };
-		65909D1219C74D0A002953A2 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 65909D1019C74D0A002953A2 /* Icon-Small.png */; };
-		65909D1319C74D0A002953A2 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65909D1119C74D0A002953A2 /* Icon-Small@2x.png */; };
 		65909D1619C76724002953A2 /* DayLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 65909D1519C76724002953A2 /* DayLog.m */; };
 		6596CB721868A3E80045D6E2 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6596CB711868A3E80045D6E2 /* MessageUI.framework */; };
 		6596CB741868AAE40045D6E2 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6596CB731868AAE40045D6E2 /* AddressBook.framework */; };
@@ -91,6 +89,8 @@
 		65F2964219BA5B9A007C1C06 /* LeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F2964119BA5B9A007C1C06 /* LeftViewController.m */; };
 		65F3F7111A22BD8D0098054D /* IOSHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F3F7101A22BD8D0098054D /* IOSHandler.m */; };
 		65F3F7A71A22C18D0098054D /* libRHAddressBook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F3F79E1A22C1670098054D /* libRHAddressBook.a */; };
+		65F3F7CA1A23792D0098054D /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 65F3F7C81A23792D0098054D /* Icon-Small.png */; };
+		65F3F7CB1A23792D0098054D /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65F3F7C91A23792D0098054D /* Icon-Small@2x.png */; };
 		65FC7C5117A1A37F0045BFF2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65FC7C5017A1A37F0045BFF2 /* Foundation.framework */; };
 		65FC7C5317A1A37F0045BFF2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65FC7C5217A1A37F0045BFF2 /* CoreGraphics.framework */; };
 		65FC7C5517A1A37F0045BFF2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65FC7C5417A1A37F0045BFF2 /* UIKit.framework */; };
@@ -222,8 +222,6 @@
 		65909CFF19C70ACB002953A2 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "assets/Icon@2x.png"; sourceTree = "<group>"; };
 		65909D0619C70B6D002953A2 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = assets/Icon.png; sourceTree = "<group>"; };
 		65909D0719C70B6D002953A2 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "assets/Icon@2x.png"; sourceTree = "<group>"; };
-		65909D1019C74D0A002953A2 /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small.png"; path = "assets/Icon-Small.png"; sourceTree = "<group>"; };
-		65909D1119C74D0A002953A2 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small@2x.png"; path = "assets/Icon-Small@2x.png"; sourceTree = "<group>"; };
 		65909D1419C76724002953A2 /* DayLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DayLog.h; sourceTree = "<group>"; };
 		65909D1519C76724002953A2 /* DayLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DayLog.m; sourceTree = "<group>"; };
 		6596CB711868A3E80045D6E2 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -300,6 +298,8 @@
 		65F3F7C51A22C40F0098054D /* RHRecord.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RHRecord.m; sourceTree = "<group>"; };
 		65F3F7C61A22C40F0098054D /* RHSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RHSource.h; sourceTree = "<group>"; };
 		65F3F7C71A22C40F0098054D /* RHSource.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RHSource.m; sourceTree = "<group>"; };
+		65F3F7C81A23792D0098054D /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small.png"; path = "assets/Icon-Small.png"; sourceTree = "<group>"; };
+		65F3F7C91A23792D0098054D /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small@2x.png"; path = "assets/Icon-Small@2x.png"; sourceTree = "<group>"; };
 		65FC7C4D17A1A37F0045BFF2 /* pplkpr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pplkpr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65FC7C5017A1A37F0045BFF2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		65FC7C5217A1A37F0045BFF2 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -471,13 +471,13 @@
 				27DED47B19CCAFBE00F9B543 /* home@2x.png */,
 				27DED47C19CCAFBE00F9B543 /* rank_sel@2x.png */,
 				27DED47D19CCAFBE00F9B543 /* rank@2x.png */,
+				65F3F7C81A23792D0098054D /* Icon-Small.png */,
+				65F3F7C91A23792D0098054D /* Icon-Small@2x.png */,
 				27DED47E19CCAFBE00F9B543 /* report_sel@2x.png */,
 				27DED47F19CCAFBE00F9B543 /* report@2x.png */,
 				65200C6619CC9A8F00BABDD3 /* arrows-down.png */,
 				65200C6719CC9A8F00BABDD3 /* arrows-up.png */,
 				651EFCEF19C4F01E0089BA51 /* heart.png */,
-				65909D1019C74D0A002953A2 /* Icon-Small.png */,
-				65909D1119C74D0A002953A2 /* Icon-Small@2x.png */,
 				65909D0619C70B6D002953A2 /* Icon.png */,
 				65909D0719C70B6D002953A2 /* Icon@2x.png */,
 				65909CFE19C70ACB002953A2 /* Icon.png */,
@@ -740,9 +740,10 @@
 				27DED48319CCAFBE00F9B543 /* rank@2x.png in Resources */,
 				27DED48219CCAFBE00F9B543 /* rank_sel@2x.png in Resources */,
 				65F2963319B93734007C1C06 /* meet.png in Resources */,
-				65909D1219C74D0A002953A2 /* Icon-Small.png in Resources */,
+				65F3F7CA1A23792D0098054D /* Icon-Small.png in Resources */,
 				65E88A5119BBAEFA00379268 /* plus.png in Resources */,
 				65FC7C6917A1A37F0045BFF2 /* Images.xcassets in Resources */,
+				65F3F7CB1A23792D0098054D /* Icon-Small@2x.png in Resources */,
 				65909CFA19C708DF002953A2 /* Default.png in Resources */,
 				65909D0A19C70B6D002953A2 /* Icon.png in Resources */,
 				65200C6819CC9A8F00BABDD3 /* arrows-down.png in Resources */,
@@ -752,7 +753,6 @@
 				27ECB4D919C659B900D5AAB5 /* mio-8.model in Resources */,
 				27DED48119CCAFBE00F9B543 /* home@2x.png in Resources */,
 				65E88A5319BBB01600379268 /* ticker.png in Resources */,
-				65909D1319C74D0A002953A2 /* Icon-Small@2x.png in Resources */,
 				27DED48019CCAFBE00F9B543 /* home_sel@2x.png in Resources */,
 				65F2962D19B93734007C1C06 /* bored.png in Resources */,
 				65F2963619B93734007C1C06 /* rect.png in Resources */,
@@ -936,17 +936,17 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					include/,
 					/Users/lmccart/Documents/pplkeeper/FacebookSDK,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "pplkpr/pplkpr-Prefix.pch";
-				INFOPLIST_FILE = "pplkpr/pplkpr-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
+				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/HxM2\\ iOS\\ Library",
-					"$(SRCROOT)/pplkpr/HxM2\\ iOS\\ Library",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					include/,
 				);
+				INFOPLIST_FILE = "pplkpr/pplkpr-Info.plist";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-all_load",
@@ -969,17 +969,17 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					include/,
 					/Users/lmccart/Documents/pplkeeper/FacebookSDK,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "pplkpr/pplkpr-Prefix.pch";
-				INFOPLIST_FILE = "pplkpr/pplkpr-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
+				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/HxM2\\ iOS\\ Library",
-					"$(SRCROOT)/pplkpr/HxM2\\ iOS\\ Library",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					include/,
 				);
+				INFOPLIST_FILE = "pplkpr/pplkpr-Info.plist";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-all_load",
 					"-ObjC",
