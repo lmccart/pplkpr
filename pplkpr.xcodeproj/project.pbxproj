@@ -89,6 +89,8 @@
 		65F2963919B93734007C1C06 /* scared.png in Resources */ = {isa = PBXBuildFile; fileRef = 65F2962919B93734007C1C06 /* scared.png */; };
 		65F2963F19BA545A007C1C06 /* ReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F2963E19BA545A007C1C06 /* ReportViewController.m */; };
 		65F2964219BA5B9A007C1C06 /* LeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F2964119BA5B9A007C1C06 /* LeftViewController.m */; };
+		65F3F7111A22BD8D0098054D /* IOSHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F3F7101A22BD8D0098054D /* IOSHandler.m */; };
+		65F3F7A71A22C18D0098054D /* libRHAddressBook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65F3F79E1A22C1670098054D /* libRHAddressBook.a */; };
 		65FC7C5117A1A37F0045BFF2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65FC7C5017A1A37F0045BFF2 /* Foundation.framework */; };
 		65FC7C5317A1A37F0045BFF2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65FC7C5217A1A37F0045BFF2 /* CoreGraphics.framework */; };
 		65FC7C5517A1A37F0045BFF2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65FC7C5417A1A37F0045BFF2 /* UIKit.framework */; };
@@ -97,6 +99,44 @@
 		65FC7C6417A1A37F0045BFF2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65FC7C6217A1A37F0045BFF2 /* Main.storyboard */; };
 		65FC7C6917A1A37F0045BFF2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65FC7C6817A1A37F0045BFF2 /* Images.xcassets */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		65F3F79D1A22C1670098054D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65F3F75A1A22C1660098054D /* RHAddressBook.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 13C9D500146C5A8600327D15;
+			remoteInfo = RHAddressBook;
+		};
+		65F3F79F1A22C1670098054D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65F3F75A1A22C1660098054D /* RHAddressBook.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 13D15189193E7688003B0F45;
+			remoteInfo = RHAddressBook.framework;
+		};
+		65F3F7A11A22C1670098054D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65F3F75A1A22C1660098054D /* RHAddressBook.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 133DF0A81470F273005330C7;
+			remoteInfo = RHAddressBookTester;
+		};
+		65F3F7A31A22C1670098054D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65F3F75A1A22C1660098054D /* RHAddressBook.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 133DF0931470EE36005330C7;
+			remoteInfo = RHAddressBookLogicTests;
+		};
+		65F3F7A51A22C17D0098054D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 65F3F75A1A22C1660098054D /* RHAddressBook.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 13C9D4FF146C5A8600327D15;
+			remoteInfo = RHAddressBook;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		27DED47A19CCAFBE00F9B543 /* home_sel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "home_sel@2x.png"; path = "assets/home_sel@2x.png"; sourceTree = "<group>"; };
@@ -230,6 +270,36 @@
 		65F2963E19BA545A007C1C06 /* ReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReportViewController.m; sourceTree = "<group>"; };
 		65F2964019BA5B9A007C1C06 /* LeftViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeftViewController.h; sourceTree = "<group>"; };
 		65F2964119BA5B9A007C1C06 /* LeftViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeftViewController.m; sourceTree = "<group>"; };
+		65F3F70F1A22BD8D0098054D /* IOSHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOSHandler.h; sourceTree = "<group>"; };
+		65F3F7101A22BD8D0098054D /* IOSHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IOSHandler.m; sourceTree = "<group>"; };
+		65F3F75A1A22C1660098054D /* RHAddressBook.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = RHAddressBook.xcodeproj; sourceTree = "<group>"; };
+		65F3F7AD1A22C40F0098054D /* AddressBook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddressBook.h; sourceTree = "<group>"; };
+		65F3F7AE1A22C40F0098054D /* NSThread+RHBlockAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSThread+RHBlockAdditions.h"; sourceTree = "<group>"; };
+		65F3F7AF1A22C40F0098054D /* NSThread+RHBlockAdditions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSThread+RHBlockAdditions.m"; sourceTree = "<group>"; };
+		65F3F7B01A22C40F0098054D /* RHAddressBook_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RHAddressBook_Private.h; sourceTree = "<group>"; };
+		65F3F7B11A22C40F0098054D /* RHAddressBook-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "RHAddressBook-Info.plist"; sourceTree = "<group>"; };
+		65F3F7B21A22C40F0098054D /* RHAddressBook-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RHAddressBook-Prefix.pch"; sourceTree = "<group>"; };
+		65F3F7B31A22C40F0098054D /* RHAddressBook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RHAddressBook.h; sourceTree = "<group>"; };
+		65F3F7B41A22C40F0098054D /* RHAddressBook.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RHAddressBook.m; sourceTree = "<group>"; };
+		65F3F7B51A22C40F0098054D /* RHAddressBookGeoResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RHAddressBookGeoResult.h; sourceTree = "<group>"; };
+		65F3F7B61A22C40F0098054D /* RHAddressBookGeoResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RHAddressBookGeoResult.m; sourceTree = "<group>"; };
+		65F3F7B71A22C40F0098054D /* RHAddressBookSharedServices.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RHAddressBookSharedServices.h; sourceTree = "<group>"; };
+		65F3F7B81A22C40F0098054D /* RHAddressBookSharedServices.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RHAddressBookSharedServices.m; sourceTree = "<group>"; };
+		65F3F7B91A22C40F0098054D /* RHAddressBookThreadMain.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RHAddressBookThreadMain.h; sourceTree = "<group>"; };
+		65F3F7BA1A22C40F0098054D /* RHAddressBookThreadMain.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RHAddressBookThreadMain.m; sourceTree = "<group>"; };
+		65F3F7BB1A22C40F0098054D /* RHARCSupport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RHARCSupport.h; sourceTree = "<group>"; };
+		65F3F7BC1A22C40F0098054D /* RHGroup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RHGroup.h; sourceTree = "<group>"; };
+		65F3F7BD1A22C40F0098054D /* RHGroup.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RHGroup.m; sourceTree = "<group>"; };
+		65F3F7BE1A22C40F0098054D /* RHMultiValue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RHMultiValue.h; sourceTree = "<group>"; };
+		65F3F7BF1A22C40F0098054D /* RHMultiValue.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RHMultiValue.m; sourceTree = "<group>"; };
+		65F3F7C01A22C40F0098054D /* RHPerson.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RHPerson.h; sourceTree = "<group>"; };
+		65F3F7C11A22C40F0098054D /* RHPerson.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RHPerson.m; sourceTree = "<group>"; };
+		65F3F7C21A22C40F0098054D /* RHPersonLabels.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RHPersonLabels.h; sourceTree = "<group>"; };
+		65F3F7C31A22C40F0098054D /* RHRecord_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RHRecord_Private.h; sourceTree = "<group>"; };
+		65F3F7C41A22C40F0098054D /* RHRecord.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RHRecord.h; sourceTree = "<group>"; };
+		65F3F7C51A22C40F0098054D /* RHRecord.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RHRecord.m; sourceTree = "<group>"; };
+		65F3F7C61A22C40F0098054D /* RHSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RHSource.h; sourceTree = "<group>"; };
+		65F3F7C71A22C40F0098054D /* RHSource.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RHSource.m; sourceTree = "<group>"; };
 		65FC7C4D17A1A37F0045BFF2 /* pplkpr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pplkpr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65FC7C5017A1A37F0045BFF2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		65FC7C5217A1A37F0045BFF2 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -247,6 +317,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65F3F7A71A22C18D0098054D /* libRHAddressBook.a in Frameworks */,
 				6596CB741868AAE40045D6E2 /* AddressBook.framework in Frameworks */,
 				6596CB721868A3E80045D6E2 /* MessageUI.framework in Frameworks */,
 				653F8F76185FA9760009F785 /* CoreData.framework in Frameworks */,
@@ -314,6 +385,8 @@
 				65909D1519C76724002953A2 /* DayLog.m */,
 				65F2961119B7D14B007C1C06 /* FBHandler.h */,
 				65F2961219B7D14B007C1C06 /* FBHandler.m */,
+				65F3F70F1A22BD8D0098054D /* IOSHandler.h */,
+				65F3F7101A22BD8D0098054D /* IOSHandler.m */,
 				65251866197B5B1100AF6981 /* HeartRateMonitor.h */,
 				65251867197B5B1100AF6981 /* HeartRateMonitor.m */,
 				6525184819708ADF00AF6981 /* HeartRateAnalyzer.h */,
@@ -432,6 +505,70 @@
 			name = assets;
 			sourceTree = "<group>";
 		};
+		65F3F7121A22BFF70098054D /* RHAddressBook */ = {
+			isa = PBXGroup;
+			children = (
+				65F3F7391A22C1660098054D /* RHAddressBook-master */,
+			);
+			name = RHAddressBook;
+			path = "../../libs_examples/RHAddressBook-master/RHAddressBook";
+			sourceTree = "<group>";
+		};
+		65F3F7391A22C1660098054D /* RHAddressBook-master */ = {
+			isa = PBXGroup;
+			children = (
+				65F3F73E1A22C1660098054D /* RHAddressBook */,
+				65F3F75A1A22C1660098054D /* RHAddressBook.xcodeproj */,
+			);
+			name = "RHAddressBook-master";
+			path = ..;
+			sourceTree = "<group>";
+		};
+		65F3F73E1A22C1660098054D /* RHAddressBook */ = {
+			isa = PBXGroup;
+			children = (
+				65F3F7AD1A22C40F0098054D /* AddressBook.h */,
+				65F3F7AE1A22C40F0098054D /* NSThread+RHBlockAdditions.h */,
+				65F3F7AF1A22C40F0098054D /* NSThread+RHBlockAdditions.m */,
+				65F3F7B01A22C40F0098054D /* RHAddressBook_Private.h */,
+				65F3F7B11A22C40F0098054D /* RHAddressBook-Info.plist */,
+				65F3F7B21A22C40F0098054D /* RHAddressBook-Prefix.pch */,
+				65F3F7B31A22C40F0098054D /* RHAddressBook.h */,
+				65F3F7B41A22C40F0098054D /* RHAddressBook.m */,
+				65F3F7B51A22C40F0098054D /* RHAddressBookGeoResult.h */,
+				65F3F7B61A22C40F0098054D /* RHAddressBookGeoResult.m */,
+				65F3F7B71A22C40F0098054D /* RHAddressBookSharedServices.h */,
+				65F3F7B81A22C40F0098054D /* RHAddressBookSharedServices.m */,
+				65F3F7B91A22C40F0098054D /* RHAddressBookThreadMain.h */,
+				65F3F7BA1A22C40F0098054D /* RHAddressBookThreadMain.m */,
+				65F3F7BB1A22C40F0098054D /* RHARCSupport.h */,
+				65F3F7BC1A22C40F0098054D /* RHGroup.h */,
+				65F3F7BD1A22C40F0098054D /* RHGroup.m */,
+				65F3F7BE1A22C40F0098054D /* RHMultiValue.h */,
+				65F3F7BF1A22C40F0098054D /* RHMultiValue.m */,
+				65F3F7C01A22C40F0098054D /* RHPerson.h */,
+				65F3F7C11A22C40F0098054D /* RHPerson.m */,
+				65F3F7C21A22C40F0098054D /* RHPersonLabels.h */,
+				65F3F7C31A22C40F0098054D /* RHRecord_Private.h */,
+				65F3F7C41A22C40F0098054D /* RHRecord.h */,
+				65F3F7C51A22C40F0098054D /* RHRecord.m */,
+				65F3F7C61A22C40F0098054D /* RHSource.h */,
+				65F3F7C71A22C40F0098054D /* RHSource.m */,
+			);
+			path = RHAddressBook;
+			sourceTree = "<group>";
+		};
+		65F3F75B1A22C1660098054D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				65F3F79E1A22C1670098054D /* libRHAddressBook.a */,
+				65F3F7A01A22C1670098054D /* RHAddressBook.framework */,
+				65F3F7A21A22C1670098054D /* RHAddressBookTester.app */,
+				65F3F7A41A22C1670098054D /* RHAddressBookLogicTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		65FC7C4417A1A37F0045BFF2 = {
 			isa = PBXGroup;
 			children = (
@@ -466,6 +603,7 @@
 		65FC7C5617A1A37F0045BFF2 /* pplkpr */ = {
 			isa = PBXGroup;
 			children = (
+				65F3F7121A22BFF70098054D /* RHAddressBook */,
 				27ECB4D319C645A300D5AAB5 /* hrv */,
 				27E0854319C525340071F9F8 /* linear */,
 				6583089919B104C100C385EB /* SDWebImage */,
@@ -509,6 +647,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				65F3F7A61A22C17D0098054D /* PBXTargetDependency */,
 			);
 			name = pplkpr;
 			productName = pplkpr;
@@ -542,12 +681,49 @@
 			mainGroup = 65FC7C4417A1A37F0045BFF2;
 			productRefGroup = 65FC7C4E17A1A37F0045BFF2 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 65F3F75B1A22C1660098054D /* Products */;
+					ProjectRef = 65F3F75A1A22C1660098054D /* RHAddressBook.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				65FC7C4C17A1A37F0045BFF2 /* pplkpr */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		65F3F79E1A22C1670098054D /* libRHAddressBook.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRHAddressBook.a;
+			remoteRef = 65F3F79D1A22C1670098054D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		65F3F7A01A22C1670098054D /* RHAddressBook.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = RHAddressBook.framework;
+			remoteRef = 65F3F79F1A22C1670098054D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		65F3F7A21A22C1670098054D /* RHAddressBookTester.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = RHAddressBookTester.app;
+			remoteRef = 65F3F7A11A22C1670098054D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		65F3F7A41A22C1670098054D /* RHAddressBookLogicTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RHAddressBookLogicTests.xctest;
+			remoteRef = 65F3F7A31A22C1670098054D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		65FC7C4B17A1A37F0045BFF2 /* Resources */ = {
@@ -631,6 +807,7 @@
 				658308C019B104C100C385EB /* SDWebImageDownloader.m in Sources */,
 				27E0856519C5294D0071F9F8 /* ddot.c in Sources */,
 				658308C319B104C100C385EB /* SDWebImagePrefetcher.m in Sources */,
+				65F3F7111A22BD8D0098054D /* IOSHandler.m in Sources */,
 				65CA14A519ACD93200130EEB /* MLPAutoCompleteTextField.m in Sources */,
 				658308BD19B104C100C385EB /* SDImageCache.m in Sources */,
 				658308C119B104C100C385EB /* SDWebImageDownloaderOperation.m in Sources */,
@@ -650,6 +827,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		65F3F7A61A22C17D0098054D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = RHAddressBook;
+			targetProxy = 65F3F7A51A22C17D0098054D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		65FC7C5917A1A37F0045BFF2 /* InfoPlist.strings */ = {
@@ -751,11 +936,8 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../FacebookSDK",
-					/Users/lmccart/Documents/FacebookSDK,
-					/Users/lmccart/Documents/FacebookSDK/FBAudienceNetwork,
+					include/,
 					/Users/lmccart/Documents/pplkeeper/FacebookSDK,
-					/Users/lmccart/Documents/pplkeeper/FacebookSDK_old,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "pplkpr/pplkpr-Prefix.pch";
@@ -766,6 +948,10 @@
 					"$(SRCROOT)/pplkpr/HxM2\\ iOS\\ Library",
 				);
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
@@ -783,11 +969,8 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/../FacebookSDK",
-					/Users/lmccart/Documents/FacebookSDK,
-					/Users/lmccart/Documents/FacebookSDK/FBAudienceNetwork,
+					include/,
 					/Users/lmccart/Documents/pplkeeper/FacebookSDK,
-					/Users/lmccart/Documents/pplkeeper/FacebookSDK_old,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "pplkpr/pplkpr-Prefix.pch";
@@ -796,6 +979,10 @@
 					"$(inherited)",
 					"$(SRCROOT)/HxM2\\ iOS\\ Library",
 					"$(SRCROOT)/pplkpr/HxM2\\ iOS\\ Library",
+				);
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

@@ -10,6 +10,7 @@
 #import "InteractionData.h"
 #import "HeartRateMonitor.h"
 #import "FBHandler.h"
+#import "IOSHandler.h"
 #import "HeartRateAnalyzer.h"
 
 @implementation AppDelegate
@@ -53,6 +54,7 @@
     
     // Init data
     [[FBHandler data] init];
+    [[IOSHandler data] init];
     [[InteractionData data] checkTickets];
     self.alertShowing = NO;
     
