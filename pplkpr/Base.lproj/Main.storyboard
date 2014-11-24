@@ -64,7 +64,6 @@
                     <tabBarItem key="tabBarItem" title="Item" id="YL6-6B-thV"/>
                     <navigationItem key="navigationItem" id="JuX-Ud-8hQ"/>
                     <connections>
-                        <outlet property="logoutButton" destination="MbB-ug-AaB" id="NUb-ME-YKT"/>
                         <outlet property="monitorStatusIcon" destination="Viq-Uw-BSj" id="ueu-jH-8T3"/>
                         <outlet property="priorityView" destination="bfV-Jb-09L" id="WhC-uV-nTX"/>
                         <segue destination="SHJ-Mw-UT6" kind="push" identifier="loginSegue" id="cB4-0O-LGO"/>

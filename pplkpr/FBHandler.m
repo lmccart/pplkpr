@@ -39,8 +39,10 @@
         AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
         _managedObjectContext = appDelegate.managedObjectContext;
         
+        //[FBSession.activeSession closeAndClearTokenInformation];
         if (!FBSession.activeSession.isOpen) {
             // if the session is closed, then we open it here, and establish a handler for state changes
+            
             [FBSession openActiveSessionWithReadPermissions:nil allowLoginUI:YES completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {
                 if (error) {
                     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:error.localizedDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];

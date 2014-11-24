@@ -25,6 +25,7 @@
     
     NSMutableArray *mutableFriends = [NSMutableArray new];
 
+    NSLog(@"updating friends");
     [[FBHandler data] requestFriendsWithCompletion:^(NSArray *result) {
         for (NSDictionary<FBGraphUser>* friend in result) {
             FriendsCustomAutoCompleteObject *friendObj = [[FriendsCustomAutoCompleteObject alloc] initWithName:friend.name withFbid:friend.id];
