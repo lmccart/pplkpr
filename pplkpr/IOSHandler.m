@@ -16,6 +16,7 @@
 //@property NSString *firstName;
 //@property NSString *fullName;
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
+@property RHAddressBook *addressBook;
 
 @end
 
@@ -35,24 +36,30 @@
 	
     if (self = [super init]) {
         AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
-        _managedObjectContext = appDelegate.managedObjectContext;
+        self.managedObjectContext = appDelegate.managedObjectContext;
         
-        RHAddressBook *ab = [[RHAddressBook alloc] init];
+        self.addressBook = [[RHAddressBook alloc] init];
         if ([RHAddressBook authorizationStatus] == RHAuthorizationStatusNotDetermined){
             
             //request authorization
-            [ab requestAuthorizationWithCompletion:^(bool granted, NSError *error) {
+            [self.addressBook requestAuthorizationWithCompletion:^(bool granted, NSError *error) {
                 //[abViewController setAddressBook:ab];
                 NSLog(@"authorized");
-                NSArray *allKyles = [ab peopleWithName:@"Kyle"];
-                NSLog(@"all kyles %@", allKyles);
             }];
         } else {
-            NSArray *allKyles = [ab peopleWithName:@"Kyle"];
-            NSLog(@"all kyles %@", allKyles);
+            [self removeContact:@"nika and austin airbnb"];
         }
     }
     return self;
+}
+
+- (void)removeContact:(NSString *)name {
+    NSArray *matches = [self.addressBook peopleWithName:name];
+    if ([matches count] > 0) {
+        RHPerson *p = [matches objectAtIndex:0]; // duplicate names? hell just pick the first sucker :)
+        BOOL success = [self.addressBook removePerson:p];
+        [self.addressBook save];
+    }
 }
 @end
 
