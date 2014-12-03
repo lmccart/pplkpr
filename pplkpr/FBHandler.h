@@ -13,12 +13,19 @@
 @interface FBHandler : NSObject <NSURLConnectionDelegate>
 
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
+
 @property (nonatomic, retain) NSString *email;
 @property (nonatomic, retain) NSString *pass;
+@property BOOL useFakebook;
+
+@property BOOL loggedIn;
 
 
-+(id)data;
--(id)init;
+
++ (id)data;
+- (id)init;
+- (void)loginWithCompletion:(void (^)(BOOL status))completionBlock;
+- (void)logout;
 
 - (void)closeSession;
 - (void)handleActivate;

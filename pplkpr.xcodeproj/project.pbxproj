@@ -32,6 +32,7 @@
 		6525186119708B1000AF6981 /* MeetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6525185A19708B1000AF6981 /* MeetViewController.m */; };
 		6525186219708B1000AF6981 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6525185C19708B1000AF6981 /* ViewController.m */; };
 		65251868197B5B1100AF6981 /* HeartRateMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 65251867197B5B1100AF6981 /* HeartRateMonitor.m */; };
+		653DB7331A2F944600F50BAC /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 653DB7321A2F944600F50BAC /* FacebookSDK.framework */; };
 		653F8F76185FA9760009F785 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 653F8F75185FA9760009F785 /* CoreData.framework */; };
 		653F8F79185FA9A50009F785 /* pplkpr.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 653F8F77185FA9A50009F785 /* pplkpr.xcdatamodeld */; };
 		657369BC19D4D898003DA331 /* faces-oneline.png in Resources */ = {isa = PBXBuildFile; fileRef = 657369BB19D4D898003DA331 /* faces-oneline.png */; };
@@ -62,7 +63,6 @@
 		6596CB741868AAE40045D6E2 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6596CB731868AAE40045D6E2 /* AddressBook.framework */; };
 		65B851191861EDAC00DE02E8 /* Report.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B851171861EDAC00DE02E8 /* Report.m */; };
 		65B8511F1862122800DE02E8 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B8511E1862122800DE02E8 /* Person.m */; };
-		65CA149319ABF81600130EEB /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65CA149219ABF81600130EEB /* FacebookSDK.framework */; };
 		65CA14A519ACD93200130EEB /* MLPAutoCompleteTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CA149F19ACD93200130EEB /* MLPAutoCompleteTextField.m */; };
 		65CA14A619ACD93200130EEB /* NSString+Levenshtein.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CA14A419ACD93200130EEB /* NSString+Levenshtein.m */; };
 		65CA14A919ACDD6600130EEB /* FriendsCompleteDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CA14A819ACDD6600130EEB /* FriendsCompleteDataSource.m */; };
@@ -177,6 +177,7 @@
 		6525185C19708B1000AF6981 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		65251866197B5B1100AF6981 /* HeartRateMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeartRateMonitor.h; sourceTree = "<group>"; };
 		65251867197B5B1100AF6981 /* HeartRateMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeartRateMonitor.m; sourceTree = "<group>"; };
+		653DB7321A2F944600F50BAC /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		653F8F75185FA9760009F785 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		653F8F78185FA9A50009F785 /* pplkpr.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = pplkpr.xcdatamodel; sourceTree = "<group>"; };
 		657369BB19D4D898003DA331 /* faces-oneline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "faces-oneline.png"; path = "../../design/pplkpr_mockups/faces-oneline.png"; sourceTree = "<group>"; };
@@ -230,7 +231,6 @@
 		65B851171861EDAC00DE02E8 /* Report.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Report.m; sourceTree = "<group>"; };
 		65B8511D1862122800DE02E8 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
 		65B8511E1862122800DE02E8 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
-		65CA149219ABF81600130EEB /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		65CA149E19ACD93200130EEB /* MLPAutoCompleteTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLPAutoCompleteTextField.h; sourceTree = "<group>"; };
 		65CA149F19ACD93200130EEB /* MLPAutoCompleteTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLPAutoCompleteTextField.m; sourceTree = "<group>"; };
 		65CA14A019ACD93200130EEB /* MLPAutoCompleteTextFieldDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLPAutoCompleteTextFieldDataSource.h; sourceTree = "<group>"; };
@@ -322,9 +322,9 @@
 				6596CB721868A3E80045D6E2 /* MessageUI.framework in Frameworks */,
 				653F8F76185FA9760009F785 /* CoreData.framework in Frameworks */,
 				65FC7C5317A1A37F0045BFF2 /* CoreGraphics.framework in Frameworks */,
+				653DB7331A2F944600F50BAC /* FacebookSDK.framework in Frameworks */,
 				65FC7C5517A1A37F0045BFF2 /* UIKit.framework in Frameworks */,
 				65FC7C5117A1A37F0045BFF2 /* Foundation.framework in Frameworks */,
-				65CA149319ABF81600130EEB /* FacebookSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -589,7 +589,7 @@
 		65FC7C4F17A1A37F0045BFF2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				65CA149219ABF81600130EEB /* FacebookSDK.framework */,
+				653DB7321A2F944600F50BAC /* FacebookSDK.framework */,
 				6596CB731868AAE40045D6E2 /* AddressBook.framework */,
 				6596CB711868A3E80045D6E2 /* MessageUI.framework */,
 				653F8F75185FA9760009F785 /* CoreData.framework */,
@@ -930,6 +930,10 @@
 		65FC7C8017A1A37F0045BFF2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					armv6,
+					armv7,
+				);
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -957,6 +961,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
+				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -964,6 +969,10 @@
 		65FC7C8117A1A37F0045BFF2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					armv6,
+					armv7,
+				);
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -990,6 +999,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
+				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

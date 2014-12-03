@@ -14,11 +14,9 @@
 }
 
 @property NSString *fakebookURL;
-@property BOOL useFakebook;
 @property int gender;
 @property NSString *firstName;
 @property NSString *fullName;
-
 @end
 
 
@@ -39,26 +37,6 @@
         AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
         _managedObjectContext = appDelegate.managedObjectContext;
         
-        //[FBSession.activeSession closeAndClearTokenInformation];
-        if (!FBSession.activeSession.isOpen) {
-            // if the session is closed, then we open it here, and establish a handler for state changes
-            
-            [FBSession openActiveSessionWithReadPermissions:nil allowLoginUI:YES completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {
-                if (error) {
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:error.localizedDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                    [alertView show];
-                } else {
-                    NSLog(@"facebook session opened");
-                    [self requestOwnProfile:^(NSDictionary *result) {
-                        NSString *firstName = [result objectForKey:@"first_name"];
-                        [self setFirstName:firstName];
-                        NSString *fullName = [[result objectForKey:@"name"] stringByReplacingOccurrencesOfString:@" " withString:@"_"];
-                        [self setFullName:fullName];
-                    }];
-                }
-            }];
-        }
-        
         // load credentials for fakebook
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         self.useFakebook = [defaults boolForKey:@"useFakebook"];
@@ -78,6 +56,39 @@
         }
 	}
     return self;
+}
+
+- (void)loginWithCompletion:(void (^)(BOOL status))completionBlock {
+    //[FBSession.activeSession closeAndClearTokenInformation];
+    if (!FBSession.activeSession.isOpen) {
+        // if the session is closed, then we open it here, and establish a handler for state changes
+        
+        [FBSession openActiveSessionWithReadPermissions:nil allowLoginUI:YES completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {
+            if (error) {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:error.localizedDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                [alertView show];
+                completionBlock(false);
+            } else {
+                NSLog(@"facebook session opened");
+                [self requestOwnProfile:^(NSDictionary *result) {
+                    NSString *firstName = [result objectForKey:@"first_name"];
+                    [self setFirstName:firstName];
+                    NSString *fullName = [[result objectForKey:@"name"] stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+                    [self setFullName:fullName];
+                    self.loggedIn = true;
+                    completionBlock(true);
+                }];
+            }
+        }];
+    } else {
+        self.loggedIn = true;
+        completionBlock(true);
+    }
+}
+
+- (void)logout {
+    NSLog(@"logging out of facebook!");
+    [FBSession.activeSession closeAndClearTokenInformation];
 }
 
 /**

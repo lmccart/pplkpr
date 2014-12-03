@@ -12,6 +12,4 @@
 @interface LoginViewController : UIViewController <UITextFieldDelegate, UINavigationControllerDelegate>
 
 
-- (IBAction)login:(id)sender;
-
 @end

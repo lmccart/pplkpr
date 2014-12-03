@@ -52,11 +52,9 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    BOOL useFakebook = [defaults boolForKey:@"useFakebook"];
-    
-    if (useFakebook) {
-    
+    if ([[FBHandler data] useFakebook]) {
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         NSString *email = [defaults objectForKey:@"email"];
         NSString *pass = [defaults objectForKey:@"pass"];
         
@@ -68,10 +66,13 @@
             [self start];
         }
     } else {
-        [self.logoutButton setHidden:YES];
-        CGRect frame = self.monitorStatusIcon.frame;
-        [self.monitorStatusIcon setFrame:CGRectMake(frame.origin.x+43, frame.origin.y, frame.size.width, frame.size.height)];
-        [self start];
+        if (![[FBHandler data] loggedIn]) {
+            [self performSegueWithIdentifier:@"loginSegue" sender:self];
+        }
+        //        [self.logoutButton setHidden:YES];
+        //        CGRect frame = self.monitorStatusIcon.frame;
+        //        [self.monitorStatusIcon setFrame:CGRectMake(frame.origin.x+43, frame.origin.y, frame.size.width, frame.size.height)];
+        //        [self start];
     }
 }
 
@@ -244,10 +245,14 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == [alertView firstOtherButtonIndex]) {
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults removeObjectForKey:@"email"];
-        [defaults removeObjectForKey:@"pass"];
-        [defaults synchronize];
+        if ([[FBHandler data] useFakebook]) {
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            [defaults removeObjectForKey:@"email"];
+            [defaults removeObjectForKey:@"pass"];
+            [defaults synchronize];
+        } else {
+            [[FBHandler data] logout];
+        }
         [self performSegueWithIdentifier:@"loginSegue" sender:self];
     }
 }

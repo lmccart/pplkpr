@@ -11,6 +11,9 @@
 
 @interface LoginViewController()
 
+@property (retain, nonatomic) IBOutlet UIView *faceLoginView;
+@property (retain, nonatomic) IBOutlet UIView *fakeLoginView;
+
 @property (retain, nonatomic) IBOutlet UITextField *emailField;
 @property (retain, nonatomic) IBOutlet UITextField *passField;
 @property (retain, nonatomic) IBOutlet UIButton *loginButton;
@@ -37,6 +40,17 @@
     [self.emailField setLeftView:[[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)]];
     [self.passField setLeftViewMode:UITextFieldViewModeAlways];
     [self.passField setLeftView:[[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)]];
+    
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    BOOL useFakebook = [defaults boolForKey:@"useFakebook"];
+    if (useFakebook) {
+        [self.faceLoginView setHidden:true];
+        [self.fakeLoginView setHidden:false];
+    } else {
+        [self.faceLoginView setHidden:false];
+        [self.fakeLoginView setHidden:true];
+    }
 	
 }
 
@@ -46,7 +60,7 @@
     } else if (textField == self.passField) {
         [textField resignFirstResponder];
         if (![self.passField.text isEqualToString:@""] && ![self.passField.text isEqualToString:@""]) {
-            [self login:nil];
+            [self fakeLogin:nil];
         }
     }
     return YES;
@@ -58,7 +72,7 @@
     [super touchesBegan:touches withEvent:event];
 }
 
-- (IBAction)login:(id)sender {
+- (IBAction)fakeLogin:(id)sender {
     
     if ([self.passField.text isEqualToString:@""] || [self.passField.text isEqualToString:@""]) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sorry!"
@@ -70,10 +84,7 @@
         return;
     }
     
-    [UIView animateWithDuration:0.6 delay:0.0 options:UIViewAnimationOptionRepeat | UIViewAnimationOptionCurveLinear animations:^{
-        CGAffineTransform transform = CGAffineTransformMakeRotation(M_PI);
-        self.loginButton.transform = transform;
-    } completion:NULL];
+    [self startRotatingAnim];
     
     [self.emailField resignFirstResponder];
     [self.passField resignFirstResponder];
@@ -93,6 +104,16 @@
     }];
 }
 
+- (IBAction)faceLogin {
+    [[FBHandler data] loginWithCompletion:^(BOOL status) {
+        if (status) {
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        } {
+            [self stopRotatingAnim];
+        }
+    }];
+}
+
 - (void)checkLoginStatus:(NSString *)ticket {
     [[FBHandler data] checkTicket:ticket withCompletion:^(int status) {
         if (status == 1) {
@@ -109,11 +130,18 @@
                                                   otherButtonTitles:nil];
             [alert show];
         }
-        }];
+    }];
 }
 
 - (void)viewDidUnload {
 	[super viewDidUnload];
+}
+
+- (void)startRotatingAnim {
+    [UIView animateWithDuration:0.6 delay:0.0 options:UIViewAnimationOptionRepeat | UIViewAnimationOptionCurveLinear animations:^{
+        CGAffineTransform transform = CGAffineTransformMakeRotation(M_PI);
+        self.loginButton.transform = transform;
+    } completion:NULL];
 }
 
 - (void)stopRotatingAnim {
