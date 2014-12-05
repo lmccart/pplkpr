@@ -48,6 +48,7 @@
         [self.faceLoginView setHidden:true];
         [self.fakeLoginView setHidden:false];
     } else {
+        [[FBHandler data] logout];
         [self.faceLoginView setHidden:false];
         [self.fakeLoginView setHidden:true];
     }

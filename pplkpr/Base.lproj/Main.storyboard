@@ -455,7 +455,7 @@
                                     </button>
                                 </subviews>
                             </view>
-                            <view hidden="YES" contentMode="scaleToFill" id="zaa-ep-K0C">
+                            <view contentMode="scaleToFill" id="zaa-ep-K0C">
                                 <rect key="frame" x="16" y="78" width="288" height="66"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
