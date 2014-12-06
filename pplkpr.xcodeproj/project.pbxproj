@@ -35,7 +35,6 @@
 		653DB7331A2F944600F50BAC /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 653DB7321A2F944600F50BAC /* FacebookSDK.framework */; };
 		653F8F76185FA9760009F785 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 653F8F75185FA9760009F785 /* CoreData.framework */; };
 		653F8F79185FA9A50009F785 /* pplkpr.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 653F8F77185FA9A50009F785 /* pplkpr.xcdatamodeld */; };
-		657369BC19D4D898003DA331 /* faces-oneline.png in Resources */ = {isa = PBXBuildFile; fileRef = 657369BB19D4D898003DA331 /* faces-oneline.png */; };
 		658308BB19B104C100C385EB /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6583089B19B104C100C385EB /* MKAnnotationView+WebCache.m */; };
 		658308BC19B104C100C385EB /* NSData+ImageContentType.m in Sources */ = {isa = PBXBuildFile; fileRef = 6583089D19B104C100C385EB /* NSData+ImageContentType.m */; };
 		658308BD19B104C100C385EB /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6583089F19B104C100C385EB /* SDImageCache.m */; };
@@ -180,7 +179,6 @@
 		653DB7321A2F944600F50BAC /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		653F8F75185FA9760009F785 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		653F8F78185FA9A50009F785 /* pplkpr.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = pplkpr.xcdatamodel; sourceTree = "<group>"; };
-		657369BB19D4D898003DA331 /* faces-oneline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "faces-oneline.png"; path = "../../design/pplkpr_mockups/faces-oneline.png"; sourceTree = "<group>"; };
 		6583089A19B104C100C385EB /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
 		6583089B19B104C100C385EB /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
 		6583089C19B104C100C385EB /* NSData+ImageContentType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+ImageContentType.h"; sourceTree = "<group>"; };
@@ -466,7 +464,6 @@
 		65E398D81849619300E3B2B4 /* assets */ = {
 			isa = PBXGroup;
 			children = (
-				657369BB19D4D898003DA331 /* faces-oneline.png */,
 				27DED47A19CCAFBE00F9B543 /* home_sel@2x.png */,
 				27DED47B19CCAFBE00F9B543 /* home@2x.png */,
 				27DED47C19CCAFBE00F9B543 /* rank_sel@2x.png */,
@@ -732,7 +729,6 @@
 			files = (
 				65909CF719C65604002953A2 /* up.png in Resources */,
 				65909D0B19C70B6D002953A2 /* Icon@2x.png in Resources */,
-				657369BC19D4D898003DA331 /* faces-oneline.png in Resources */,
 				65F2962E19B93734007C1C06 /* calm.png in Resources */,
 				65F2962F19B93734007C1C06 /* excited.png in Resources */,
 				65E88A5619BE0F9400379268 /* credentials.txt in Resources */,
