@@ -203,7 +203,7 @@
 
 - (IBAction)submit:(id)sender {
     
-    if ([self.whoName isEqualToString:@""] || [self.whoName isEqual:[NSNull null]]) {
+    if ([self.whoName isEqualToString:@""] || [self.whoName isEqual:[NSNull null]] || !self.whoName) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sorry!"
                                                         message:@"Please enter a name in the yellow box."
                                                        delegate:nil

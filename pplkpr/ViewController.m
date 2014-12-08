@@ -17,10 +17,10 @@
 
 @interface ViewController()
 
+@property (retain, nonatomic) IBOutlet UILabel *priorityLabel;
 @property (retain, nonatomic) NSArray *priorityData;
 @property (retain, nonatomic) IBOutlet UIView *priorityView;
 @property (retain, nonatomic) IBOutlet UIImageView *monitorStatusIcon;
-@property (retain, nonatomic) IBOutlet UIButton *logoutButton;
 
 @end
 
@@ -69,10 +69,6 @@
         if (![[FBHandler data] loggedIn]) {
             [self performSegueWithIdentifier:@"loginSegue" sender:self];
         }
-        //        [self.logoutButton setHidden:YES];
-        //        CGRect frame = self.monitorStatusIcon.frame;
-        //        [self.monitorStatusIcon setFrame:CGRectMake(frame.origin.x+43, frame.origin.y, frame.size.width, frame.size.height)];
-        //        [self start];
     }
 }
 
@@ -107,50 +103,61 @@
 
     
     float y = 0;
-    for (int i=0; i < MIN(3, [self.priorityData count]); i++) {
-        
-        // abs value, name, asc, emotion
-        NSArray *entry = [self.priorityData objectAtIndex:i];
-        
-        Person *p = [entry objectAtIndex:1];
-        NSString *order = [[entry objectAtIndex:2] intValue] == 0 ? @"most" : @"least";
-        NSString *emotion = [entry objectAtIndex:3];
-        
-        NSMutableAttributedString* attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ makes me %@ %@.", p.name, order, [emotion lowercaseString]] attributes:[GlobalMethods attrsDict]];
-        
-        [attributedString addAttribute:@"personTag" value:p range:NSMakeRange(0,[p.name length])];
-        [attributedString addAttribute:NSFontAttributeName value:[GlobalMethods globalBoldFont] range:NSMakeRange(0,[p.name length])];
-        
-        int l = [emotion length] + [order length] + 2;
-        [attributedString addAttribute:@"emotionTag" value:emotion range:NSMakeRange([attributedString length]-l, l-1)];
-        [attributedString addAttribute:@"orderTag" value:[entry objectAtIndex:2] range:NSMakeRange([attributedString length]-l, l-1)];
-        [attributedString addAttribute:NSFontAttributeName value:[GlobalMethods globalBoldFont] range:NSMakeRange([attributedString length]-l, l)];
-        
-        
-        UITextView *tv = [[UITextView alloc] initWithFrame:CGRectMake(0, y, self.priorityView.frame.size.width, 50)];
-        [tv setDelegate:self];
-        [tv setAttributedText:attributedString];
-        [tv setBackgroundColor:[GlobalMethods globalYellowColor]];
-        
-        UITapGestureRecognizer *gr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(textTapped:)];
-        [tv addGestureRecognizer:gr];
-        
-        [self.priorityView addSubview:tv];
-        [self.view layoutIfNeeded];
-        CGRect frame = tv.frame;
-        tv.textContainerInset = UIEdgeInsetsMake(10,55,8,10);
-        [tv layoutIfNeeded];
-        frame.size.height = tv.contentSize.height;
-        frame.size.width = self.priorityView.frame.size.width;
-        tv.frame = frame;
-        
-        UIImage *img = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", [emotion lowercaseString]]];
-        UIImageView *iv = [[UIImageView alloc] initWithImage:img];
-        [iv setFrame:CGRectMake(10, (frame.size.height-40)/2, 40, 40)];
-        [tv addSubview:iv];
-        //[tv sizeToFit];
-        
-        y += tv.frame.size.height + margin;
+    if ([self.priorityData count] == 0) {
+        [self.priorityLabel setText:@"Welcome to pplkpr!\n\nBegin by filling out a report."];
+        [self.priorityLabel setTextAlignment:NSTextAlignmentCenter];
+        [self.priorityLabel setLineBreakMode:NSLineBreakByWordWrapping];
+        [self.priorityLabel setNumberOfLines:0];
+        //[self.priorityLabel sizeToFit];
+    } else {
+        for (int i=0; i < MIN(3, [self.priorityData count]); i++) {
+            [self.priorityLabel setText:@"Recently..."];
+            [self.priorityLabel setTextAlignment:NSTextAlignmentLeft];
+            [self.priorityLabel sizeToFit];
+            
+            // abs value, name, asc, emotion
+            NSArray *entry = [self.priorityData objectAtIndex:i];
+            
+            Person *p = [entry objectAtIndex:1];
+            NSString *order = [[entry objectAtIndex:2] intValue] == 0 ? @"most" : @"least";
+            NSString *emotion = [entry objectAtIndex:3];
+            
+            NSMutableAttributedString* attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ makes me %@ %@.", p.name, order, [emotion lowercaseString]] attributes:[GlobalMethods attrsDict]];
+            
+            [attributedString addAttribute:@"personTag" value:p range:NSMakeRange(0,[p.name length])];
+            [attributedString addAttribute:NSFontAttributeName value:[GlobalMethods globalBoldFont] range:NSMakeRange(0,[p.name length])];
+            
+            int l = [emotion length] + [order length] + 2;
+            [attributedString addAttribute:@"emotionTag" value:emotion range:NSMakeRange([attributedString length]-l, l-1)];
+            [attributedString addAttribute:@"orderTag" value:[entry objectAtIndex:2] range:NSMakeRange([attributedString length]-l, l-1)];
+            [attributedString addAttribute:NSFontAttributeName value:[GlobalMethods globalBoldFont] range:NSMakeRange([attributedString length]-l, l)];
+            
+            
+            UITextView *tv = [[UITextView alloc] initWithFrame:CGRectMake(0, y, self.priorityView.frame.size.width, 50)];
+            [tv setDelegate:self];
+            [tv setAttributedText:attributedString];
+            [tv setBackgroundColor:[GlobalMethods globalYellowColor]];
+            
+            UITapGestureRecognizer *gr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(textTapped:)];
+            [tv addGestureRecognizer:gr];
+            
+            [self.priorityView addSubview:tv];
+            [self.view layoutIfNeeded];
+            CGRect frame = tv.frame;
+            tv.textContainerInset = UIEdgeInsetsMake(10,55,8,10);
+            [tv layoutIfNeeded];
+            frame.size.height = tv.contentSize.height;
+            frame.size.width = self.priorityView.frame.size.width;
+            tv.frame = frame;
+            
+            UIImage *img = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png", [emotion lowercaseString]]];
+            UIImageView *iv = [[UIImageView alloc] initWithImage:img];
+            [iv setFrame:CGRectMake(10, (frame.size.height-40)/2, 40, 40)];
+            [tv addSubview:iv];
+            //[tv sizeToFit];
+            
+            y += tv.frame.size.height + margin;
+        }
     }
     [self.view layoutIfNeeded];
 }

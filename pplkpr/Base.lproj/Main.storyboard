@@ -24,7 +24,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" tag="-1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="vzD-F8-jnq">
-                                <rect key="frame" x="16" y="30" width="40" height="40"/>
+                                <rect key="frame" x="116" y="30" width="40" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" backgroundImage="meet.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -34,7 +34,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="zIX-iX-7ee">
-                                <rect key="frame" x="64" y="30" width="40" height="40"/>
+                                <rect key="frame" x="164" y="30" width="40" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" backgroundImage="left.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -48,11 +48,11 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <view autoresizesSubviews="NO" tag="7" contentMode="scaleToFill" id="bfV-Jb-09L">
-                                <rect key="frame" x="30" y="126" width="260" height="305"/>
+                                <rect key="frame" x="30" y="135" width="260" height="276"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recently..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fG6-gK-fJS">
-                                <rect key="frame" x="30" y="94" width="124" height="24"/>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recently..." lineBreakMode="clip" baselineAdjustment="none" adjustsFontSizeToFit="NO" id="fG6-gK-fJS">
+                                <rect key="frame" x="30" y="96" width="267" height="159"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="TeluguSangamMN" family="Telugu Sangam MN" pointSize="16"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -65,6 +65,7 @@
                     <navigationItem key="navigationItem" id="JuX-Ud-8hQ"/>
                     <connections>
                         <outlet property="monitorStatusIcon" destination="Viq-Uw-BSj" id="ueu-jH-8T3"/>
+                        <outlet property="priorityLabel" destination="fG6-gK-fJS" id="cCZ-Ce-VSZ"/>
                         <outlet property="priorityView" destination="bfV-Jb-09L" id="WhC-uV-nTX"/>
                         <segue destination="SHJ-Mw-UT6" kind="push" identifier="loginSegue" id="cB4-0O-LGO"/>
                     </connections>

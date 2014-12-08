@@ -53,6 +53,8 @@
             } else {
                 NSLog(@"problem loading credentials.txt");
             }
+        } else {
+            self.loggedIn = [defaults boolForKey:@"faceLoggedIn"];
         }
 	}
     return self;
@@ -75,13 +77,20 @@
                     [self setFirstName:firstName];
                     NSString *fullName = [[result objectForKey:@"name"] stringByReplacingOccurrencesOfString:@" " withString:@"_"];
                     [self setFullName:fullName];
+                   
                     self.loggedIn = true;
+                    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                    [defaults setBool:true forKey:@"faceLoggedIn"];
+                    [defaults synchronize];
+                    
                     completionBlock(true);
                 }];
             }
         }];
     } else {
-        self.loggedIn = true;
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setBool:true forKey:@"faceLoggedIn"];
+        [defaults synchronize];
         completionBlock(true);
     }
 }
