@@ -14,9 +14,11 @@
 @property (retain, nonatomic) IBOutlet UIView *faceLoginView;
 @property (retain, nonatomic) IBOutlet UIView *fakeLoginView;
 
+@property (retain, nonatomic) IBOutlet UIButton *faceLoginButton;
+
 @property (retain, nonatomic) IBOutlet UITextField *emailField;
 @property (retain, nonatomic) IBOutlet UITextField *passField;
-@property (retain, nonatomic) IBOutlet UIButton *loginButton;
+@property (retain, nonatomic) IBOutlet UIButton *fakeLoginButton;
 
 @end
 
@@ -85,7 +87,7 @@
         return;
     }
     
-    [self startRotatingAnim];
+    [self startRotatingAnim:self.fakeLoginButton];
     
     [self.emailField resignFirstResponder];
     [self.passField resignFirstResponder];
@@ -106,11 +108,11 @@
 }
 
 - (IBAction)faceLogin {
+    [self startRotatingAnim:self.faceLoginButton];
     [[FBHandler data] loginWithCompletion:^(BOOL status) {
         if (status) {
             [self.navigationController popToRootViewControllerAnimated:YES];
-        } {
-            [self stopRotatingAnim];
+            [self stopRotatingAnim:self.faceLoginButton];
         }
     }];
 }
@@ -118,12 +120,12 @@
 - (void)checkLoginStatus:(NSString *)ticket {
     [[FBHandler data] checkTicket:ticket withCompletion:^(int status) {
         if (status == 1) {
-            [self stopRotatingAnim];
+            [self stopRotatingAnim:self.fakeLoginButton];
             [self.navigationController popToRootViewControllerAnimated:YES];
         } else if (status == 0) {
             [self checkLoginStatus:ticket];
         } else if (status == -1) {
-            [self stopRotatingAnim];
+            [self stopRotatingAnim:self.fakeLoginButton];
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sorry!"
                                                             message:@"Incorrect username or password."
                                                            delegate:nil
@@ -138,17 +140,17 @@
 	[super viewDidUnload];
 }
 
-- (void)startRotatingAnim {
+- (void)startRotatingAnim:(UIButton *)button {
     [UIView animateWithDuration:0.6 delay:0.0 options:UIViewAnimationOptionRepeat | UIViewAnimationOptionCurveLinear animations:^{
         CGAffineTransform transform = CGAffineTransformMakeRotation(M_PI);
-        self.loginButton.transform = transform;
+        button.transform = transform;
     } completion:NULL];
 }
 
-- (void)stopRotatingAnim {
+- (void)stopRotatingAnim:(UIButton *)button {
     [UIView animateWithDuration:0.1 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionCurveLinear animations:^{
         CGAffineTransform transform = CGAffineTransformMakeRotation(M_PI * 0.05);
-        self.loginButton.transform = transform;
+        button.transform = transform;
     } completion:NULL];
 }
 

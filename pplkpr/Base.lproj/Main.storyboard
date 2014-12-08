@@ -478,9 +478,10 @@
                     <navigationItem key="navigationItem" id="YnE-AQ-9ee"/>
                     <connections>
                         <outlet property="emailField" destination="uv3-Cg-g2u" id="ZUI-QK-9Dd"/>
+                        <outlet property="faceLoginButton" destination="1gS-3g-rAa" id="vIz-dz-EgM"/>
                         <outlet property="faceLoginView" destination="zaa-ep-K0C" id="r5f-Yz-sJu"/>
+                        <outlet property="fakeLoginButton" destination="rB8-BH-7c0" id="oN1-zS-5f5"/>
                         <outlet property="fakeLoginView" destination="4VJ-dq-Zy8" id="8L7-h8-f4C"/>
-                        <outlet property="loginButton" destination="rB8-BH-7c0" id="Ei6-Cl-VDU"/>
                         <outlet property="passField" destination="gPl-Or-bX6" id="daa-aw-fCd"/>
                     </connections>
                 </viewController>
