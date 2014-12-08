@@ -56,6 +56,8 @@
     if (self) {
         // Custom initialization
         self.needsReset = false;
+        self.whoName = @"";
+        self.whoFbid = @"";
     }
     return self;
 }
@@ -267,7 +269,7 @@
 
 - (IBAction)submit:(id)sender {
 	
-    if ([self.whoName isEqualToString:@""]) {
+    if ([self.whoName isEqualToString:@""] || [self.whoName isEqual:[NSNull null]]) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Sorry!"
                                                         message:@"Please enter a name in the yellow box."
                                                        delegate:nil
