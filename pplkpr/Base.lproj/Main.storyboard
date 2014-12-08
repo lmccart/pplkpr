@@ -628,6 +628,13 @@
                                 <rect key="frame" x="210" y="101" width="12" height="12"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nobody makes you feel this." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="sab-xv-LqC">
+                                <rect key="frame" x="30" y="140" width="260" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="TeluguSangamMN" family="Telugu Sangam MN" pointSize="16"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -637,6 +644,7 @@
                         <outlet property="descriptorView" destination="rd8-jD-HuR" id="s6v-qp-yRJ"/>
                         <outlet property="downArrow" destination="o9v-1b-CcO" id="Bcy-ii-x8D"/>
                         <outlet property="emotionPicker" destination="Ccx-oW-7m1" id="QfT-dL-OD7"/>
+                        <outlet property="nobodyText" destination="sab-xv-LqC" id="3kL-B0-JjI"/>
                         <outlet property="rankView" destination="TRZ-XU-p2V" id="nfd-dJ-Vbc"/>
                         <outlet property="upArrow" destination="Ohw-PM-MDC" id="DKr-Qz-0Vt"/>
                         <segue destination="aqQ-rz-qeF" kind="push" identifier="personSegue" id="sTc-4p-FzG"/>

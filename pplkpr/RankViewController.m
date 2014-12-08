@@ -16,6 +16,8 @@
 	NSMutableData *receivedData;
 }
 
+@property (retain, nonatomic) IBOutlet UILabel *nobodyText;
+
 @property (retain, nonatomic) IBOutlet UIPickerView *emotionPicker;
 @property (retain) NSString *emotion;
 @property float imgSize;
@@ -173,9 +175,15 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if ([_rankData objectForKey:_emotion]) {
-		return [[_rankData objectForKey:_emotion] count];
+        [self.nobodyText setHidden:true];
+        NSLog(@"rows n");
+        return [[_rankData objectForKey:_emotion] count];
 	}
-    else return 0;
+    else {
+        [self.nobodyText setHidden:false];
+        NSLog(@"rows 0");
+        return 0;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -197,9 +205,13 @@
         UIImageView *imgView = (UIImageView*)[cell viewWithTag:1];
         [imgView setFrame:CGRectMake(0, 11, [val floatValue]*tableView.frame.size.width, 23)];
 	}
-    else cell.textLabel.text = @"";
+    else {
+        cell.textLabel.text = @"";
+    }
     cell.accessoryType = UITableViewCellAccessoryNone;
 	
+    
+    
     return cell;
 }
 
@@ -218,9 +230,13 @@
 
 
 - (void)updateView {
-	//NSLog(@"updating for key %@ order %d", _emotion, _order);
-	//NSLog(@"%d", [[_rankData objectForKey:_emotion] count]);
-	//NSLog(@"%@", [_rankData objectForKey:_emotion]);
+    
+    if ([[_rankData objectForKey:_emotion] count] == 0) {
+        [self.nobodyText setText:[NSString stringWithFormat:@"Nobody makes you feel %@.", _emotion.lowercaseString]];
+        [self.nobodyText setHidden:false];
+    } else {
+        [self.nobodyText setHidden:true];
+    }
 	
 	[self.rankView reloadData];
     [self updateDescriptor];
