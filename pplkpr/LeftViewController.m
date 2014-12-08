@@ -28,6 +28,8 @@
 @property (strong, nonatomic) IBOutlet UITextView *emotionTextView;
 @property (retain, nonatomic) IBOutlet UIPickerView *emotionPicker;
 @property (retain) NSString *emotion;
+@property (retain, nonatomic) IBOutlet UIImageView *upArrow;
+@property (retain, nonatomic) IBOutlet UIImageView *downArrow;
 
 @property (retain, nonatomic) IBOutlet UISlider *intensitySlider;
 @property float imgSize;
@@ -232,6 +234,18 @@
     imgView.frame = CGRectMake(0, 0, self.imgSize, self.imgSize);
     //imgView.center = imgView.superview.center;
     [newView addSubview:imgView];
+    
+    if (row == 0) {
+        [self.upArrow setHidden:true];
+    } else {
+        [self.upArrow setHidden:false];
+    }
+    
+    if (row == [[[InteractionData data] emotionsArray] count]-1) {
+        [self.downArrow setHidden:true];
+    } else {
+        [self.downArrow setHidden:false];
+    }
     
     return newView;
 }

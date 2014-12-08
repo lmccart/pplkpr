@@ -104,7 +104,9 @@
     
     float y = 0;
     if ([self.priorityData count] == 0) {
-        [self.priorityLabel setText:@"Welcome to pplkpr!\n\nBegin by filling out a report."];
+        
+        [self.priorityLabel setText:@"Welcome to pplkpr!\n\nIf you just left somone or are about to meet someone, touch one of the doors above to fill out a report. Or wear your heart rate monitor and let pplkpr detect when someone is making you feel something.\n\nOver time, pplkpr will analyze your relationships, find trends, and auto-manage your social life for you."];
+        //[self.priorityLabel setAlpha:1.0];
         [self.priorityLabel setTextAlignment:NSTextAlignmentCenter];
         [self.priorityLabel setLineBreakMode:NSLineBreakByWordWrapping];
         [self.priorityLabel setNumberOfLines:0];
@@ -112,6 +114,7 @@
     } else {
         for (int i=0; i < MIN(3, [self.priorityData count]); i++) {
             [self.priorityLabel setText:@"Recently..."];
+            [self.priorityLabel setAlpha:0.4];
             [self.priorityLabel setTextAlignment:NSTextAlignmentLeft];
             [self.priorityLabel sizeToFit];
             

@@ -52,7 +52,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recently..." lineBreakMode="clip" baselineAdjustment="none" adjustsFontSizeToFit="NO" id="fG6-gK-fJS">
-                                <rect key="frame" x="30" y="96" width="267" height="159"/>
+                                <rect key="frame" x="30" y="96" width="267" height="320"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="TeluguSangamMN" family="Telugu Sangam MN" pointSize="16"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -204,6 +204,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="Hv7-p1-PUJ"/>
                     <connections>
+                        <outlet property="downArrow" destination="T6Y-7h-zaC" id="X8M-KO-Fkh"/>
                         <outlet property="emotionPicker" destination="p1q-e4-vKi" id="Hqq-WR-Mql"/>
                         <outlet property="emotionTextView" destination="Xyc-Py-f9G" id="Wbz-G0-ccM"/>
                         <outlet property="intensitySlider" destination="0db-y5-gVG" id="fLv-qq-N25"/>
@@ -211,6 +212,7 @@
                         <outlet property="rangeStartLabel" destination="HGK-1y-3i2" id="iKR-mD-Jkl"/>
                         <outlet property="submitButton" destination="gK4-Pv-IMD" id="wWW-QQ-xXJ"/>
                         <outlet property="timeSlider" destination="JkY-er-b42" id="cwb-5z-GeN"/>
+                        <outlet property="upArrow" destination="eaB-IO-oSK" id="3eA-Uj-MXy"/>
                         <outlet property="whoTextField" destination="9fa-v4-3v6" id="G1f-yl-pEv"/>
                     </connections>
                 </viewController>
@@ -383,10 +385,12 @@
                     </view>
                     <navigationItem key="navigationItem" id="cSB-qn-4na"/>
                     <connections>
+                        <outlet property="downArrow" destination="K9O-pg-Qee" id="ApM-Ll-A0w"/>
                         <outlet property="emotionPicker" destination="xcf-aM-vKt" id="CIE-iY-ym6"/>
                         <outlet property="emotionTextView" destination="1XM-wA-Dfh" id="SLX-vp-Qk0"/>
                         <outlet property="intensitySlider" destination="NN1-DG-s1w" id="Xud-Xm-Czy"/>
                         <outlet property="submitButton" destination="EV2-7O-x3I" id="nqm-fI-pI8"/>
+                        <outlet property="upArrow" destination="ady-fC-ouT" id="D6R-1b-RZh"/>
                         <outlet property="whoTextField" destination="gNz-Xz-RqH" id="6HV-sv-sxV"/>
                     </connections>
                 </viewController>
@@ -616,6 +620,14 @@
                                 </prototypes>
                                 <sections/>
                             </tableView>
+                            <imageView userInteractionEnabled="NO" alpha="0.30000001192092896" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrows-up.png" id="Ohw-PM-MDC">
+                                <rect key="frame" x="210" y="32" width="12" height="12"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" alpha="0.30000001192092896" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrows-down.png" id="o9v-1b-CcO">
+                                <rect key="frame" x="210" y="101" width="12" height="12"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -623,8 +635,10 @@
                     <navigationItem key="navigationItem" id="heO-sV-9P5"/>
                     <connections>
                         <outlet property="descriptorView" destination="rd8-jD-HuR" id="s6v-qp-yRJ"/>
+                        <outlet property="downArrow" destination="o9v-1b-CcO" id="Bcy-ii-x8D"/>
                         <outlet property="emotionPicker" destination="Ccx-oW-7m1" id="QfT-dL-OD7"/>
                         <outlet property="rankView" destination="TRZ-XU-p2V" id="nfd-dJ-Vbc"/>
+                        <outlet property="upArrow" destination="Ohw-PM-MDC" id="DKr-Qz-0Vt"/>
                         <segue destination="aqQ-rz-qeF" kind="push" identifier="personSegue" id="sTc-4p-FzG"/>
                     </connections>
                 </viewController>

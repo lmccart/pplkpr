@@ -25,6 +25,8 @@
 
 @property (retain, nonatomic) NSDictionary *rankData;
 @property (retain, nonatomic) IBOutlet UITableView *rankView;
+@property (retain, nonatomic) IBOutlet UIImageView *upArrow;
+@property (retain, nonatomic) IBOutlet UIImageView *downArrow;
 
 
 @end
@@ -49,6 +51,8 @@
 	[self.emotionPicker setDelegate:self];
 	[self.emotionPicker setDataSource:self];
     self.emotion = [[[InteractionData data] emotionsArray] objectAtIndex:0];
+    [self.upArrow setHidden:true];
+    [self.downArrow setHidden:false];
     
     CALayer* mask = [[CALayer alloc] init];
     [mask setBackgroundColor: [UIColor blackColor].CGColor];
@@ -129,6 +133,17 @@
     //imgView.center = imgView.superview.center;
     [newView addSubview:imgView];
     
+    if (row == 0) {
+        [self.upArrow setHidden:true];
+    } else {
+        [self.upArrow setHidden:false];
+    }
+    
+    if (row == [[[InteractionData data] emotionsArray] count]-1) {
+        [self.downArrow setHidden:true];
+    } else {
+        [self.downArrow setHidden:false];
+    }
     return newView;
 }
 
