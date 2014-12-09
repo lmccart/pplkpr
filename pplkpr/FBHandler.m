@@ -54,10 +54,21 @@
                 NSLog(@"problem loading credentials.txt");
             }
         } else {
-            self.loggedIn = [defaults boolForKey:@"faceLoggedIn"];
+            self.loggedIn = FBSession.activeSession.isOpen;
+            // PEND IS THIS OK?
+//            if (!self.loggedIn) {
+//                if ([defaults boolForKey:@"okFaceLogin"]) {
+//                    [self login];
+//                }
+//                
+//            }
         }
 	}
     return self;
+}
+
+- (void)login {
+    [self loginWithCompletion:^(BOOL status) {}];
 }
 
 - (void)loginWithCompletion:(void (^)(BOOL status))completionBlock {
@@ -80,7 +91,7 @@
                    
                     self.loggedIn = true;
                     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                    [defaults setBool:true forKey:@"faceLoggedIn"];
+                    [defaults setBool:true forKey:@"okFaceLogin"];
                     [defaults synchronize];
                     
                     completionBlock(true);
@@ -88,9 +99,7 @@
             }
         }];
     } else {
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setBool:true forKey:@"faceLoggedIn"];
-        [defaults synchronize];
+        self.loggedIn = true;
         completionBlock(true);
     }
 }
