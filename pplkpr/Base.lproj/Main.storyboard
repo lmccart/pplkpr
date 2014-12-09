@@ -424,8 +424,43 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="431"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" id="zaa-ep-K0C">
+                                <rect key="frame" x="30" y="-1" width="260" height="493"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="1gS-3g-rAa">
+                                        <rect key="frame" x="110" y="60" width="40" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" backgroundImage="plus.png">
+                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="faceLogin:" destination="SHJ-Mw-UT6" eventType="touchUpInside" id="4uD-3l-cUw"/>
+                                        </connections>
+                                    </button>
+                                    <textView clipsSubviews="YES" contentMode="right" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" text="pplkpr is an app for tracking, analyzing, and auto-managing your relationships." textAlignment="center" selectable="NO" id="jAS-jI-ZI4">
+                                        <rect key="frame" x="41" y="130" width="178" height="167"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" name="TeluguSangamMN" family="Telugu Sangam MN" pointSize="16"/>
+                                        <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
+                                    </textView>
+                                    <textView clipsSubviews="YES" contentMode="right" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" text="pplkpr measures your physical and emotional response to the people around you, and optimizes your social life accordingly." textAlignment="center" selectable="NO" id="65a-JN-odp">
+                                        <rect key="frame" x="38" y="259" width="185" height="161"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" name="TeluguSangamMN" family="Telugu Sangam MN" pointSize="16"/>
+                                        <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
+                                    </textView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="home@2x.png" id="hj4-8K-GZq">
+                                        <rect key="frame" x="107" y="60" width="46" height="46"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                </subviews>
+                            </view>
                             <view hidden="YES" contentMode="scaleToFill" id="4VJ-dq-Zy8">
-                                <rect key="frame" x="16" y="103" width="288" height="238"/>
+                                <rect key="frame" x="16" y="87" width="288" height="238"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" borderStyle="line" placeholder="Password" minimumFontSize="17" id="gPl-Or-bX6">
@@ -460,23 +495,6 @@
                                     </button>
                                 </subviews>
                             </view>
-                            <view contentMode="scaleToFill" id="zaa-ep-K0C">
-                                <rect key="frame" x="16" y="78" width="288" height="66"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="1gS-3g-rAa">
-                                        <rect key="frame" x="119" y="8" width="50" height="50"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" backgroundImage="plus.png">
-                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="faceLogin" destination="SHJ-Mw-UT6" eventType="touchUpInside" id="sTq-lG-wcL"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.92549019607843142" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
                     </view>
@@ -488,6 +506,7 @@
                         <outlet property="fakeLoginButton" destination="rB8-BH-7c0" id="oN1-zS-5f5"/>
                         <outlet property="fakeLoginView" destination="4VJ-dq-Zy8" id="8L7-h8-f4C"/>
                         <outlet property="passField" destination="gPl-Or-bX6" id="daa-aw-fCd"/>
+                        <outlet property="personImage" destination="hj4-8K-GZq" id="c3q-xY-kZ3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9Qd-jn-gTa" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -660,6 +679,7 @@
         <image name="arrows-up.png" width="41" height="41"/>
         <image name="back.png" width="101" height="101"/>
         <image name="heart.png" width="101" height="101"/>
+        <image name="home@2x.png" width="101" height="101"/>
         <image name="left.png" width="136" height="127"/>
         <image name="meet.png" width="136" height="127"/>
         <image name="plus.png" width="101" height="101"/>

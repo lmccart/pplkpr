@@ -129,7 +129,7 @@
     [self.timeSlider.layer setMask:tSliderMask];
     
     // move submit button down if iphone5
-    if (self.view.frame.size.height == 568) {
+    if (self.view.frame.size.height >= 568) {
         CGRect frame = self.submitButton.frame;
         [self.submitButton setFrame:CGRectMake(frame.origin.x, 449, frame.size.width, frame.size.height)];
     }

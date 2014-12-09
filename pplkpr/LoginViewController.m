@@ -15,6 +15,7 @@
 @property (retain, nonatomic) IBOutlet UIView *fakeLoginView;
 
 @property (retain, nonatomic) IBOutlet UIButton *faceLoginButton;
+@property (retain, nonatomic) IBOutlet UIImageView *personImage;
 
 @property (retain, nonatomic) IBOutlet UITextField *emailField;
 @property (retain, nonatomic) IBOutlet UITextField *passField;
@@ -55,6 +56,14 @@
         [self.fakeLoginView setHidden:true];
     }
 	
+    // rearrange things if iphone5
+    if (self.view.frame.size.height >= 568) {
+        CGRect frame = self.faceLoginButton.frame;
+        [self.faceLoginButton setFrame:CGRectMake(frame.origin.x, 449, frame.size.width, frame.size.height)];
+        [self.personImage setHidden:false];
+    } else {
+        [self.personImage setHidden:true];
+    }
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -107,7 +116,8 @@
     }];
 }
 
-- (IBAction)faceLogin {
+- (IBAction)faceLogin:(id)sender {
+    NSLog(@"login");
     [self startRotatingAnim:self.faceLoginButton];
     [[FBHandler data] loginWithCompletion:^(BOOL status) {
         if (status) {
