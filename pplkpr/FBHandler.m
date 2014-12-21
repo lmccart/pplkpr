@@ -8,6 +8,7 @@
 
 #import "FBHandler.h"
 #import "AppDelegate.h"
+#import "IOSHandler.h"
 
 @interface FBHandler() {
     NSMutableData * _responseData;
@@ -67,6 +68,12 @@
     return self;
 }
 
+
+/**
+ * LEGIT FACEBOOK METHODS
+ */
+
+
 - (void)login {
     [self loginWithCompletion:^(BOOL status) {}];
 }
@@ -108,10 +115,6 @@
     NSLog(@"logging out of facebook!");
     [FBSession.activeSession closeAndClearTokenInformation];
 }
-
-/**
- * LEGIT FACEBOOK METHODS
- */
 
 - (BOOL)handleOpenURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication {
     return [FBAppCall handleOpenURL:url sourceApplication:sourceApplication];

@@ -465,7 +465,9 @@
 }
 
 - (void)checkTakeAction {
-    [self checkTickets];
+    if ([[FBHandler data] useFakebook]) {
+        [self checkTickets];
+    }
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSDate *lastDate = [defaults objectForKey:@"lastActionDate"];

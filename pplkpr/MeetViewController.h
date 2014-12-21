@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
 #import "MLPAutoCompleteTextFieldDelegate.h"
 #import "PersonViewController.h"
 
-@interface MeetViewController : UIViewController <UITextFieldDelegate, MLPAutoCompleteTextFieldDelegate>
+@interface MeetViewController : UIViewController <UITextFieldDelegate, MLPAutoCompleteTextFieldDelegate, MFMessageComposeViewControllerDelegate>
 
 - (IBAction)submit:(id)sender;
 - (IBAction)back:(id)sender;

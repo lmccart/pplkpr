@@ -10,6 +10,7 @@
 #import "InteractionData.h"
 #import "HeartRateAnalyzer.h"
 #import "FBHandler.h"
+#import "IOSHandler.h"
 #import "MLPAutoCompleteTextField.h"
 #import "CustomAutoCompleteCell.h"
 #import "FriendsCompleteDataSource.h"
@@ -229,7 +230,11 @@
         
         float val = [self.intensitySlider value];
         if (val > 0.75) {
-            [[FBHandler data] requestSendWarning:p withEmotion:self.emotion];
+            if ([[FBHandler data] useFakebook]) {
+                [[FBHandler data] requestSendWarning:p withEmotion:self.emotion];
+            } else {
+                [[IOSHandler data] sendText:p.name withMessage:[NSString stringWithFormat:@"I am on my way to meet you and I am feeling %@.", [self.emotion lowercaseString]] fromController:self];
+            }
         }
         
         // save last report date
@@ -288,5 +293,29 @@
     }
     //NSLog(@"slider value %f", sender.value);
 }
+
+#pragma mark - MFMessageComposeViewController
+
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult) result {
+    switch (result) {
+        case MessageComposeResultCancelled:
+            break;
+            
+        case MessageComposeResultFailed:
+        {
+            UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Failed to send SMS." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [warningAlert show];
+            break;
+        }
+            
+        case MessageComposeResultSent:
+            break;
+            
+        default:
+            break;
+    }
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 
 @end
