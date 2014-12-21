@@ -201,10 +201,13 @@
         
         if (action) {
             
-            NSString *msg = [[InteractionData data] getMessage:emotion];
-            [[FBHandler data] createFakebookRequest:self.curPerson withType:action withMessage:msg withEmotion:emotion];
-            
-            [[IOSHandler data] sendText:self.curPerson.name withMessage:msg fromController:self];
+            if ([[FBHandler data] useFakebook]) {
+                NSString *msg = [[InteractionData data] getMessage:emotion];
+                [[FBHandler data] createFakebookRequest:self.curPerson withType:action withMessage:msg withEmotion:emotion];
+            } else {
+                NSString *msg = [NSString stringWithFormat:@"You make me feel very %@.", [emotion lowercaseString]];
+                [[IOSHandler data] sendText:self.curPerson.name withMessage:msg fromController:self];
+            }
             
             [textView.layer setBorderColor:[[GlobalMethods globalYellowColor] CGColor]];
             [textView.layer setBorderWidth:1];
@@ -215,7 +218,6 @@
             [textView setAttributedText:attributedString];
             
             [textView removeGestureRecognizer:textView.gestureRecognizers[0]];
-            
         }
         
     }

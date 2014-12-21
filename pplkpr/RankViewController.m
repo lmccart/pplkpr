@@ -176,12 +176,10 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if ([_rankData objectForKey:_emotion]) {
         [self.nobodyText setHidden:true];
-        NSLog(@"rows n");
         return [[_rankData objectForKey:_emotion] count];
 	}
     else {
         [self.nobodyText setHidden:false];
-        NSLog(@"rows 0");
         return 0;
     }
 }
