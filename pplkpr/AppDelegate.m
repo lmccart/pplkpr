@@ -62,11 +62,10 @@
     
     UIApplication *sharedApplication = [UIApplication sharedApplication];
 
-#ifdef __IPHONE_8_0
-    if ([sharedApplication respondsToSelector:@selector(registerUserNotificationSettings)]) {
-        [sharedApplication registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeBadge|UIUserNotificationTypeSound categories:nil]];
+
+    if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]) {
+        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeSound categories:nil]];
     }
-#endif
     
     // Handle launching from a notification
     UILocalNotification *notification =
@@ -264,7 +263,7 @@
 
 - (void)triggerNotification:(NSString *)type {
     
-    if ([[FBHandler data] pass]) { // logged in
+    if ([[FBHandler data] loggedIn]) {
         NSString *msg;
         if ([type isEqualToString:@"hrv"]) {
             msg = @"Are you feeling something?";
@@ -285,7 +284,7 @@
         notification.userInfo = infoDict;
         
         [[UIApplication sharedApplication] scheduleLocalNotification:notification];
-        //NSLog(@"sending notification");
+        NSLog(@"sending notification");
     }
 }
 

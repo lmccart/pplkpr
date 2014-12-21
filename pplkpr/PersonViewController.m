@@ -9,6 +9,7 @@
 #import "PersonViewController.h"
 #import "SDWebImage/UIImageView+WebCache.h"
 #import "FBHandler.h"
+#import "IOSHandler.h"
 #import "Constants.h"
 #import "InteractionData.h"
 
@@ -203,6 +204,8 @@
             NSString *msg = [[InteractionData data] getMessage:emotion];
             [[FBHandler data] createFakebookRequest:self.curPerson withType:action withMessage:msg withEmotion:emotion];
             
+            [[IOSHandler data] sendText:self.curPerson.name withMessage:msg fromController:self];
+            
             [textView.layer setBorderColor:[[GlobalMethods globalYellowColor] CGColor]];
             [textView.layer setBorderWidth:1];
             [textView setBackgroundColor:[UIColor whiteColor]];
@@ -230,6 +233,26 @@
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult) result {
+    switch (result) {
+        case MessageComposeResultCancelled:
+            break;
+            
+        case MessageComposeResultFailed:
+        {
+            UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Failed to send SMS!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [warningAlert show];
+            break;
+        }
+            
+        case MessageComposeResultSent:
+            break;
+            
+        default:
+            break;
+    }
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 	
 - (void)didReceiveMemoryWarning
 {

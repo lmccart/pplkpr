@@ -16,7 +16,8 @@
 //@property NSString *firstName;
 //@property NSString *fullName;
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
-@property RHAddressBook *addressBook;
+@property (nonatomic, retain) RHAddressBook *addressBook;
+@property (nonatomic, retain) MFMessageComposeViewController *messageComposeController;
 
 @end
 
@@ -39,6 +40,7 @@
         self.managedObjectContext = appDelegate.managedObjectContext;
         
         self.addressBook = [[RHAddressBook alloc] init];
+        [self removeContact:@"rafrafdesign@aim.com"];
         if ([RHAddressBook authorizationStatus] == RHAuthorizationStatusNotDetermined){
             
             //request authorization
@@ -46,19 +48,57 @@
                 //NSLog(@"authorized");
             }];
         } else {
-            [self removeContact:@"nika and austin airbnb"];
         }
     }
     return self;
 }
 
-- (void)removeContact:(NSString *)name {
+- (RHPerson *)getContact:(NSString *)name {
     NSArray *matches = [self.addressBook peopleWithName:name];
+    NSLog(@"%@ %@", name, matches);
     if ([matches count] > 0) {
-        RHPerson *p = [matches objectAtIndex:0]; // duplicate names? hell just pick the first sucker :)
+        return [matches objectAtIndex:0]; // duplicate names? hell just pick the first sucker :)
+    }
+    else return nil;
+    
+}
+- (void)removeContact:(NSString *)name {
+    RHPerson *p = [self getContact:name];
+    if (p) {
         [self.addressBook removePerson:p];
         [self.addressBook save];
     }
 }
+
+- (void)sendText:(NSString *)name withMessage:(NSString *)msg fromController:(UIViewController *)controller {
+    RHPerson *p = [self getContact:name];
+    NSLog(@"%@", p.phoneNumbers);
+    if (p && [p.phoneNumbers count] > 0) {
+        if(![MFMessageComposeViewController canSendText]) {
+            UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Your device doesn't support SMS!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [warningAlert show];
+            return;
+        }
+        
+        if (self.messageComposeController) {
+            self.messageComposeController = nil;
+        }
+        self.messageComposeController = [[MFMessageComposeViewController alloc]init];
+        
+        NSString *str = [p.phoneNumbers valueAtIndex:0];
+        NSArray *recipents = @[str];
+        
+        self.messageComposeController.messageComposeDelegate = controller;
+        [self.messageComposeController setRecipients:recipents];
+        [self.messageComposeController setBody:msg];
+        
+        // Present message view controller on screen
+        [controller presentViewController:self.messageComposeController animated:YES completion:nil];
+    }
+    
+}
+
+
+
 @end
 

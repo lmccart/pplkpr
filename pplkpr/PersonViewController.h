@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
 #import "InteractionData.h"
 
-@interface PersonViewController : UIViewController <UINavigationControllerDelegate, UITextViewDelegate>
+@interface PersonViewController : UIViewController <UINavigationControllerDelegate, UITextViewDelegate, MFMessageComposeViewControllerDelegate>
 
 //- (IBAction) showMore:(id)sender;
 //- (IBAction) sendInAppSMS:(id)sender;

@@ -8,12 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import <RHAddressBook/AddressBook.h>
+#import <MessageUI/MessageUI.h>
 #import "Person.h"
 
-@interface IOSHandler : NSObject <NSURLConnectionDelegate>
+@interface IOSHandler : UIViewController <NSURLConnectionDelegate>
 
 +(id)data;
 -(id)init;
+-(void)sendText:(NSString *)name withMessage:(NSString *)msg fromController:(UIViewController *)controller;
 
 @end
 
