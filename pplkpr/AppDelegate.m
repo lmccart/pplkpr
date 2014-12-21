@@ -49,8 +49,8 @@
 	}
 
     UINavigationController *nc = tabBarController.viewControllers[0];
-    ViewController *vc = nc.viewControllers[0];
-    [[HeartRateMonitor data] setViewController:vc];
+    self.homeController = nc.viewControllers[0];
+    [[HeartRateMonitor data] setViewController:self.homeController];
     
     // Init data
     [[FBHandler data] init];

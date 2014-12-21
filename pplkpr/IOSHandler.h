@@ -16,6 +16,7 @@
 +(id)data;
 -(id)init;
 -(void)sendText:(NSString *)name withMessage:(NSString *)msg fromController:(UIViewController *)controller;
+- (void)performAction:(Person *)person withType:(NSString *)type withMessage:(NSString *)message withEmotion:(NSString *)emotion;
 
 @end
 

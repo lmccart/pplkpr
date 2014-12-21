@@ -44,7 +44,6 @@
 - (NSArray *)getRecentPeople;
 - (void)saveLastReportDate:(NSDate *)date;
 - (NSTimeInterval)getTimeSinceLastReport;
-- (void)scheduleCheckTakeAction;
 - (void)checkTakeAction;
 - (void)takeAction;
 - (void)checkTickets;

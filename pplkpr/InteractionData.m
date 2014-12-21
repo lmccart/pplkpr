@@ -11,6 +11,7 @@
 #import "Person.h"
 #import "AppDelegate.h"
 #import "FBHandler.h"
+#import "IOSHandler.h"
 
 @interface InteractionData()
 
@@ -38,13 +39,13 @@
         //@property (nonatomic, strong) NSDictionary *descriptiveActionsDict; // action -> array [command, past]
         //@property (nonatomic, strong) NSDictionary *messageDict; // emotion -> array [possible msgs for given emotion]
 
-        NSArray *excitedActions = [[NSArray alloc] initWithObjects:@"post", @"invite", nil];
+        NSArray *excitedActions = [[NSArray alloc] initWithObjects:@"post", @"join_event", nil];
         NSArray *arousedActions = [[NSArray alloc] initWithObjects:@"poke", @"join_event", nil];
         NSArray *angryActions = [[NSArray alloc] initWithObjects:@"post", @"block", @"unfriend", nil];
         NSArray *scaredActions = [[NSArray alloc] initWithObjects:@"post", @"block", @"unfriend", nil];
         NSArray *anxiousActions = [[NSArray alloc] initWithObjects:@"post", @"block", nil];
         NSArray *boredActions = [[NSArray alloc] initWithObjects:@"block", nil];
-        NSArray *calmActions = [[NSArray alloc] initWithObjects:@"invite", nil];
+        NSArray *calmActions = [[NSArray alloc] initWithObjects:@"join_event", nil];
         self.possibleActionsDict = [[NSDictionary alloc] initWithObjectsAndKeys:
                                     excitedActions, @"Excited",
                                     arousedActions, @"Aroused",
@@ -455,15 +456,6 @@
     return today;
 }
 
-- (void)scheduleCheckTakeAction {
-    
-    [NSTimer scheduledTimerWithTimeInterval:20.0
-                                     target:self
-                                   selector:@selector(checkTakeAction)
-                                   userInfo:nil
-                                    repeats:NO];
-}
-
 - (void)checkTakeAction {
     if ([[FBHandler data] useFakebook]) {
         [self checkTickets];
@@ -473,6 +465,7 @@
     NSDate *lastDate = [defaults objectForKey:@"lastActionDate"];
     NSDate *date = [NSDate date];
     
+    //if (true) {
     if (!lastDate || [date timeIntervalSinceDate:lastDate] > 2*60*60) { // every 2 hours
         [defaults setObject:date forKey:@"lastActionDate"];
         [defaults synchronize];
@@ -481,6 +474,7 @@
 }
 
 - (void)takeAction {
+    NSLog(@"take action");
     NSArray *priorities = [self getSortedPriorities];
     if ([priorities count] > 0) {
     
@@ -550,7 +544,11 @@
     
     NSString *msg = [self getMessage:emotion];
     
-    [[FBHandler data] createFakebookRequest:person withType:action withMessage:msg withEmotion:emotion];
+    if ([[FBHandler data] useFakebook]) {
+        [[FBHandler data] createFakebookRequest:person withType:action withMessage:msg withEmotion:emotion];
+    } else {
+        [[IOSHandler data] performAction:person withType:action withMessage:msg withEmotion:emotion];
+    }
     
     // log action
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];

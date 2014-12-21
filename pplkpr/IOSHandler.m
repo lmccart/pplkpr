@@ -40,7 +40,6 @@
         self.managedObjectContext = appDelegate.managedObjectContext;
         
         self.addressBook = [[RHAddressBook alloc] init];
-        [self removeContact:@"rafrafdesign@aim.com"];
         if ([RHAddressBook authorizationStatus] == RHAuthorizationStatusNotDetermined){
             
             //request authorization
@@ -98,6 +97,28 @@
     
 }
 
+- (void)performAction:(Person *)person withType:(NSString *)type withMessage:(NSString *)message withEmotion:(NSString *)emotion {
+    
+    AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+//    UIViewController *controller = ((UINavigationController*)appDelegate.window.rootViewController).visibleViewController;
+    
+    if ([type isEqualToString:@"poke"]) {
+        [self sendText:person.name withMessage:@"poke" fromController:appDelegate.homeController];
+    }
+    else if ([type isEqualToString:@"post"]) {
+        [self sendText:person.name withMessage:message fromController:appDelegate.homeController];
+    }
+    else if ([type isEqualToString:@"join_event"]) {
+        [self sendText:person.name withMessage:@"invite" fromController:appDelegate.homeController];
+        
+    }
+    else if ([type isEqualToString:@"block"]) {
+        [self removeContact:person.name];
+    }
+    else if ([type isEqualToString:@"unfriend"]) {
+        [self removeContact:person.name];
+    }
+}
 
 
 @end

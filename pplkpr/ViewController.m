@@ -36,31 +36,31 @@
     //[[InteractionData data] takeAction];
     
     
-    // PEND FAKE STUFF
-    [NSTimer scheduledTimerWithTimeInterval:6.0
-                                     target:self
-                                   selector:@selector(fakeSensor)
-                                   userInfo:nil
-                                    repeats:NO];
-    
-    [NSTimer scheduledTimerWithTimeInterval:7.5
-                                     target:self
-                                   selector:@selector(fakeMessage)
-                                   userInfo:nil
-                                    repeats:NO];
+//    // PEND FAKE STUFF
+//    [NSTimer scheduledTimerWithTimeInterval:6.0
+//                                     target:self
+//                                   selector:@selector(fakeSensor)
+//                                   userInfo:nil
+//                                    repeats:NO];
+//    
+//    [NSTimer scheduledTimerWithTimeInterval:7.5
+//                                     target:self
+//                                   selector:@selector(fakeMessage)
+//                                   userInfo:nil
+//                                    repeats:NO];
 }
 
 // PEND FAKE STUFF
-- (void)fakeSensor {
-    [self.monitorStatusIcon setHidden:false];
-    [self.monitorStatusIcon setAlpha:1.0];
-}
-
-- (void)fakeMessage {
-    NSLog(@"fake sensor");
-    AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
-    [appDelegate triggerNotification:@"hrv"];
-}
+//- (void)fakeSensor {
+//    [self.monitorStatusIcon setHidden:false];
+//    [self.monitorStatusIcon setAlpha:1.0];
+//}
+//
+//- (void)fakeMessage {
+//    NSLog(@"fake sensor");
+//    AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+//    [appDelegate triggerNotification:@"hrv"];
+//}
 
 - (void)didReceiveMemoryWarning
 {
@@ -94,6 +94,8 @@
     } else {
         if (![[FBHandler data] loggedIn]) {
             [self performSegueWithIdentifier:@"loginSegue" sender:self];
+        } else {
+            [self start];
         }
     }
 }
@@ -101,7 +103,7 @@
 - (void)start {
     
     [[HeartRateMonitor data] scheduleCheckSensor];
-    [[InteractionData data] scheduleCheckTakeAction];
+    [[InteractionData data] checkTakeAction];
     
     [[FBHandler data] logData:[[HeartRateAnalyzer data] getHRVDataString] withTag:@"rr" withCompletion:nil];
     [[FBHandler data] logData:[[HeartRateAnalyzer data] getRRDataString] withTag:@"hrv" withCompletion:^(NSData *data) {
@@ -293,8 +295,30 @@
     }
 }
 
--(BOOL)textViewShouldBeginEditing:(UITextView *)textView {
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView {
     return NO;
 }
+
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult) result {
+    switch (result) {
+        case MessageComposeResultCancelled:
+            break;
+            
+        case MessageComposeResultFailed:
+        {
+            UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Failed to send SMS!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [warningAlert show];
+            break;
+        }
+            
+        case MessageComposeResultSent:
+            break;
+            
+        default:
+            break;
+    }
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 
 @end

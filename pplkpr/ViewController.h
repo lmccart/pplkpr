@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
+#import <MessageUI/MessageUI.h>
 
-@interface ViewController : UIViewController <UITextFieldDelegate, UITextViewDelegate> {
+@interface ViewController : UIViewController <UITextFieldDelegate, UITextViewDelegate, MFMessageComposeViewControllerDelegate> {
 }
 
 - (IBAction)logoutFB:(id)sender;
