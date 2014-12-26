@@ -95,7 +95,7 @@
         // Present message view controller on screen
         [controller presentViewController:self.messageComposeController animated:YES completion:nil];
     } else {
-        [[FBHandler data] requestPost:person.fbid];
+        // [[FBHandler data] requestPost:person.fbid];
     }
     
 }

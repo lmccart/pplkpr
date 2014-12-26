@@ -34,7 +34,7 @@
 - (void)requestFriendsWithCompletion:(void (^)(NSArray *result))completionBlock;
 - (void)requestOwnProfile:(void (^)(NSDictionary *results))completionBlock;
 - (void)requestProfilePic:(NSString *)fbid  withType:(NSString *)type withCompletion:(void (^)(NSDictionary *results))completionBlock;
-- (void)requestPost:(NSString *)fbid;
+//- (void)requestPost:(NSString *)fbid;
 - (void)requestSendWarning:(Person *)person withEmotion:(NSString *)emotion;
 - (void)requestLogin:(NSString *)email withPass:(NSString *)pass withCompletion:(void (^)(NSDictionary *results))completionBlock;
 - (void)createFakebookRequest:(Person *)person withType:(NSString *)type withMessage:(NSString *)message withEmotion:(NSString *)emotion;
