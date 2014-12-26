@@ -102,7 +102,10 @@
 
 - (void)start {
     
-    [[HeartRateMonitor data] scheduleCheckSensor];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if([defaults boolForKey:@"useMonitor"]) { // only check if connected before
+        [[HeartRateMonitor data] scheduleCheckSensor];
+    }
     [[InteractionData data] checkTakeAction];
     
     [[FBHandler data] logData:[[HeartRateAnalyzer data] getHRVDataString] withTag:@"rr" withCompletion:nil];

@@ -161,6 +161,10 @@
 
 - (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)aPeripheral {
     
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setBool:true forKey:@"useMonitor"];
+    [defaults synchronize];
+    
     NSLog(@"Peripheral connected %@", self.viewController);
     self.sensorConnected = YES;
     

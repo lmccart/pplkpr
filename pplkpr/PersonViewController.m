@@ -8,10 +8,13 @@
 
 #import "PersonViewController.h"
 #import "SDWebImage/UIImageView+WebCache.h"
+#import "NSDate+DateTools.h"
 #import "FBHandler.h"
 #import "IOSHandler.h"
 #import "Constants.h"
 #import "InteractionData.h"
+#import "Report.h"
+#import "Person.h"
 
 @interface PersonViewController () {
 	
@@ -51,8 +54,6 @@
 		//NSLog(@"%@ %@", value, key);
 	}
     
-    [self.personPhoto.layer setBorderColor: [[UIColor blackColor] CGColor]];
-    [self.personPhoto.layer setBorderWidth: 1.5];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -172,6 +173,25 @@
             n++;
         }
     }
+    
+    // filler info
+    UITextView *tv = [[UITextView alloc] initWithFrame:CGRectMake(0, y, self.priorityView.frame.size.width, 50)];
+    [self.priorityView addSubview:tv];
+    
+    Report *recent_r;
+    for (Report *r in self.curPerson.reports) {
+        if (recent_r == nil || [r.date isLaterThan:recent_r.date]) {
+            recent_r = r;
+        }
+    }
+    if (recent_r != nil) {
+        
+        [tv setText:[NSString stringWithFormat:@"Made me feel %@ %@.", [recent_r.emotion lowercaseString], [[recent_r.date timeAgoSinceNow] lowercaseString]]];
+        [tv setFont:[GlobalMethods globalFont]];
+    }
+    
+    
+    
     [self.view layoutIfNeeded];
 }
 

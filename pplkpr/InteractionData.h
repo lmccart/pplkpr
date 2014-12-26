@@ -36,7 +36,6 @@
           withEmotion:(NSString *)emotion
            withRating:(NSNumber *)rating
              withDate:(NSDate *)date;
-- (NSArray*)getAllReports;
 - (NSArray*)getAllPeople;
 - (NSMutableDictionary *)getRankedPeople;
 - (NSMutableArray *)getPriorities;

@@ -134,17 +134,6 @@
 }
 
 
-- (NSArray*)getAllReports {
-	
-	NSFetchRequest *request = [[NSFetchRequest alloc] init];
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@", @"JOHN"];
-	[request setEntity:[NSEntityDescription entityForName:@"Report" inManagedObjectContext:_managedObjectContext]];
-	[request setPredicate:predicate];
-	NSError* error;
-	NSArray *fetchedReports = [self.managedObjectContext executeFetchRequest:request error:&error];
-	return fetchedReports;
-}
-
 // returns existing person or makes new one
 - (Person *)getPerson:(NSString *)name withFbid:(NSString *)fbid save:(BOOL)save {
     //NSLog(@"GETTING PERSON %@", fbid);
