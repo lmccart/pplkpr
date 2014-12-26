@@ -71,16 +71,28 @@
                                     boredMsgs, @"Bored",
                                     calmMsgs, @"Calm", nil];
         
+        if ([[FBHandler data] useFakebook]) {
         
-        self.descriptiveActionsDict = [[NSDictionary alloc] initWithObjectsAndKeys:
-           [[NSArray alloc] initWithObjects:@"Let them know?", @"I let them know.", nil], @"post",
-           [[NSArray alloc] initWithObjects:@"Poke them?", @"I poked them.", nil], @"poke",
-           [[NSArray alloc] initWithObjects:@"Invite them to hang out?", @"I invited them to hang out.", nil], @"join_event",
-           [[NSArray alloc] initWithObjects:@"Unblock them?", @"I unblocked them.", nil], @"unblock",
-           [[NSArray alloc] initWithObjects:@"Block them?", @"I blocked them.", nil], @"block",
-           [[NSArray alloc] initWithObjects:@"Unfriend them?", @"I unfriended them.", nil], @"unfriend",
-           [[NSArray alloc] initWithObjects:@"Friend them?", @"I friended them.", nil], @"friend", nil];
+            self.descriptiveActionsDict = [[NSDictionary alloc] initWithObjectsAndKeys:
+               [[NSArray alloc] initWithObjects:@"Let them know?", @"I let them know.", nil], @"post",
+               [[NSArray alloc] initWithObjects:@"Poke them?", @"I poked them.", nil], @"poke",
+               [[NSArray alloc] initWithObjects:@"Invite them to hang out?", @"I invited them to hang out.", nil], @"join_event",
+               [[NSArray alloc] initWithObjects:@"Unblock them?", @"I unblocked them.", nil], @"unblock",
+               [[NSArray alloc] initWithObjects:@"Block them?", @"I blocked them.", nil], @"block",
+               [[NSArray alloc] initWithObjects:@"Unfriend them?", @"I unfriended them.", nil], @"unfriend",
+               [[NSArray alloc] initWithObjects:@"Friend them?", @"I friended them.", nil], @"friend", nil];
 
+        } else {
+            
+            self.descriptiveActionsDict = [[NSDictionary alloc] initWithObjectsAndKeys:
+               [[NSArray alloc] initWithObjects:@"Poke them?", @"I poked them.", nil], @"post",
+               [[NSArray alloc] initWithObjects:@"Let them know?", @"I let them know.", nil], @"poke",
+               [[NSArray alloc] initWithObjects:@"Invite them to hang out?", @"I invited them to hang out.", nil], @"join_event",
+               [[NSArray alloc] initWithObjects:@"Unblock them?", @"I unblocked them.", nil], @"unblock",
+               [[NSArray alloc] initWithObjects:@"Delete their number?", @"I deleted their number.", nil], @"block",
+               [[NSArray alloc] initWithObjects:@"Delete their number?", @"I deleted their number.", nil], @"unfriend",
+               [[NSArray alloc] initWithObjects:@"Friend them?", @"I friended them.", nil], @"friend", nil];
+        }
         
 		self.locationsArray = [[NSMutableArray alloc] init];
 		self.summary = [[NSDictionary alloc] init];

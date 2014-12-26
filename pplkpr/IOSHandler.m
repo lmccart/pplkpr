@@ -19,6 +19,8 @@
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, retain) RHAddressBook *addressBook;
 @property (nonatomic, retain) MFMessageComposeViewController *messageComposeController;
+@property (nonatomic, strong) NSArray *pokeMessages;
+@property (nonatomic, strong) NSArray *inviteMessages;
 
 @end
 
@@ -47,8 +49,10 @@
             [self.addressBook requestAuthorizationWithCompletion:^(bool granted, NSError *error) {
                 //NSLog(@"authorized");
             }];
-        } else {
         }
+        
+        self.pokeMessages = [[NSArray alloc] initWithObjects:@"hi there", @"hi!", @"yo", @"sup", @"hey", @":)", @";)", @"xo", nil];
+        self.inviteMessages = [[NSArray alloc] initWithObjects:@"want to hang out?", @"what are you up to?", @"want to meet up?", @"let's do something soon!", @"what are you doing later?", @"can we hang out?", @"let's do something", nil];
     }
     return self;
 }
@@ -103,17 +107,19 @@
 - (void)performAction:(Person *)person withType:(NSString *)type withMessage:(NSString *)message withEmotion:(NSString *)emotion {
     
     AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
-//    UIViewController *controller = ((UINavigationController*)appDelegate.window.rootViewController).visibleViewController;
     
     if ([type isEqualToString:@"poke"]) {
-        [self sendText:person withMessage:@"hi" fromController:appDelegate.homeController];
+        NSUInteger randomInd = arc4random() % [self.pokeMessages count];
+        NSString *msg = [self.pokeMessages objectAtIndex:randomInd];
+        [self sendText:person withMessage:msg fromController:appDelegate.homeController];
     }
     else if ([type isEqualToString:@"post"]) {
         [self sendText:person withMessage:message fromController:appDelegate.homeController];
     }
     else if ([type isEqualToString:@"join_event"]) {
-        [self sendText:person withMessage:@"hey do you want to hang out?" fromController:appDelegate.homeController];
-        
+        NSUInteger randomInd = arc4random() % [self.inviteMessages count];
+        NSString *msg = [self.inviteMessages objectAtIndex:randomInd];
+        [self sendText:person withMessage:msg fromController:appDelegate.homeController];
     }
     else if ([type isEqualToString:@"block"]) {
         [self removeContact:person.name];
