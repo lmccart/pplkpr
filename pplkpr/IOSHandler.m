@@ -8,6 +8,7 @@
 
 #import "IOSHandler.h"
 #import "AppDelegate.h"
+#import "FBHandler.h";
 
 @interface IOSHandler()
 //
@@ -69,8 +70,8 @@
     }
 }
 
-- (void)sendText:(NSString *)name withMessage:(NSString *)msg fromController:(UIViewController *)controller {
-    RHPerson *p = [self getContact:name];
+- (void)sendText:(Person *)person withMessage:(NSString *)msg fromController:(UIViewController *)controller {
+    RHPerson *p = [self getContact:person.name];
     NSLog(@"%@", p.phoneNumbers);
     if (p && [p.phoneNumbers count] > 0) {
         if(![MFMessageComposeViewController canSendText]) {
@@ -93,6 +94,8 @@
         
         // Present message view controller on screen
         [controller presentViewController:self.messageComposeController animated:YES completion:nil];
+    } else {
+        [[FBHandler data] requestPost:person.fbid];
     }
     
 }
@@ -103,13 +106,13 @@
 //    UIViewController *controller = ((UINavigationController*)appDelegate.window.rootViewController).visibleViewController;
     
     if ([type isEqualToString:@"poke"]) {
-        [self sendText:person.name withMessage:@"poke" fromController:appDelegate.homeController];
+        [self sendText:person withMessage:@"hi" fromController:appDelegate.homeController];
     }
     else if ([type isEqualToString:@"post"]) {
-        [self sendText:person.name withMessage:message fromController:appDelegate.homeController];
+        [self sendText:person withMessage:message fromController:appDelegate.homeController];
     }
     else if ([type isEqualToString:@"join_event"]) {
-        [self sendText:person.name withMessage:@"invite" fromController:appDelegate.homeController];
+        [self sendText:person withMessage:@"hey do you want to hang out?" fromController:appDelegate.homeController];
         
     }
     else if ([type isEqualToString:@"block"]) {

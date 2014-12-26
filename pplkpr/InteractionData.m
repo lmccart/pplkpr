@@ -465,8 +465,8 @@
     NSDate *lastDate = [defaults objectForKey:@"lastActionDate"];
     NSDate *date = [NSDate date];
     
-    //if (true) {
-    if (!lastDate || [date timeIntervalSinceDate:lastDate] > 2*60*60) { // every 2 hours
+    if (true) {
+    //if (!lastDate || [date timeIntervalSinceDate:lastDate] > 2*60*60) { // every 2 hours
         [defaults setObject:date forKey:@"lastActionDate"];
         [defaults synchronize];
         [self takeAction];
@@ -494,7 +494,7 @@
         Person *person;
         NSArray *entry;
         int i=0;
-        while (order != 0 || [lastPeople containsObject:name]) {
+        while (order != 0){// || [lastPeople containsObject:name]) {
             entry = [priorities objectAtIndex:i];
             person = [entry objectAtIndex:1];
             name = person.name;

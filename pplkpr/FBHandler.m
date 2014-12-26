@@ -83,7 +83,8 @@
     if (!FBSession.activeSession.isOpen) {
         // if the session is closed, then we open it here, and establish a handler for state changes
         
-        [FBSession openActiveSessionWithReadPermissions:nil allowLoginUI:YES completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {
+        NSArray *permissions = [NSArray arrayWithObjects:@"publish_actions", nil];
+        [FBSession openActiveSessionWithPublishPermissions:permissions defaultAudience:FBSessionDefaultAudienceFriends allowLoginUI:YES completionHandler:^(FBSession *session, FBSessionState state, NSError *error) {
             if (error) {
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:error.localizedDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                 [alertView show];
@@ -178,6 +179,45 @@
     }];
 }
 
+- (void)requestPost:(NSString *)fbid {
+
+    NSLog(@"request post");
+    // create the connection object
+    FBRequestConnection *newConnection = [[FBRequestConnection alloc] init];
+    
+    // create a handler block to handle the results of the request for fbid's profile
+    FBRequestHandler handler =
+    ^(FBRequestConnection *connection, id result, NSError *error) {
+        // output the results of the request
+        NSLog(@"handled");
+        NSLog(@"%@", error);
+    };
+    
+    // create the request object, using the fbid as the graph path
+    // as an alternative the request* static methods of the FBRequest class could
+    // be used to fetch common requests, such as /me and /me/friends
+    NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys:
+                          @"test post", @"message",
+                          fbid, @"tags",
+                          @"514572205349403", @"place",
+                          nil];
+    
+    FBRequest *request=[[FBRequest alloc] initWithSession:FBSession.activeSession graphPath:@"me/feed" parameters:data HTTPMethod:@"POST"];
+    
+    // add the request to the connection object, if more than one request is added
+    // the connection object will compose the requests as a batch request; whether or
+    // not the request is a batch or a singleton, the handler behavior is the same,
+    // allowing the application to be dynamic in regards to whether a single or multiple
+    // requests are occuring
+    [newConnection addRequest:request completionHandler:handler];
+//    
+//    // if there's an outstanding connection, just cancel
+//    [self.requestConnection cancel];
+    
+    // keep track of our connection, and start it
+    //self.requestConnection = newConnection;
+    [newConnection start];
+}
 
 /**
  * FAKEBOOK METHODS

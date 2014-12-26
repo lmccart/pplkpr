@@ -233,7 +233,7 @@
             if ([[FBHandler data] useFakebook]) {
                 [[FBHandler data] requestSendWarning:p withEmotion:self.emotion];
             } else {
-                [[IOSHandler data] sendText:p.name withMessage:[NSString stringWithFormat:@"I am on my way to meet you and I am feeling %@.", [self.emotion lowercaseString]] fromController:self];
+                [[IOSHandler data] sendText:p withMessage:[NSString stringWithFormat:@"I am on my way to meet you and I am feeling %@.", [self.emotion lowercaseString]] fromController:self];
             }
         }
         
