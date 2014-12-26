@@ -248,21 +248,21 @@
     if (characterIndex < textView.textStorage.length) {
         
         NSRange range;
-        id value = [textView.attributedText attribute:@"personTag" atIndex:characterIndex effectiveRange:&range];
-        //NSLog(@"%@, %d, %d", value, range.location, range.length);
-        
-        if (value) {
-            [self pushPersonViewController:value];
-        }
-        
-        value = [textView.attributedText attribute:@"emotionTag" atIndex:characterIndex effectiveRange:&range];
+        id value = [textView.attributedText attribute:@"emotionTag" atIndex:characterIndex effectiveRange:&range];
         id order = [textView.attributedText attribute:@"orderTag" atIndex:characterIndex effectiveRange:&range];
         //NSLog(@"%@, %d, %d, %d", value, [order boolValue], range.location, range.length);
         
         if (value) {
             [self pushRankViewController:value withOrder:[order boolValue]];
+        } else {
+            id name = [textView.attributedText attribute:@"personTag" atIndex:0 effectiveRange:&range];
+            [self pushPersonViewController:name];
         }
         
+    } else {
+        NSRange range;
+        id name = [textView.attributedText attribute:@"personTag" atIndex:0 effectiveRange:&range];
+        [self pushPersonViewController:name];
     }
 }
 
