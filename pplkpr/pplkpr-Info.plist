@@ -6,6 +6,11 @@
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
 	<string>${PRODUCT_NAME}</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Karla-Regular.ttf</string>
+		<string>Karla-Bold.ttf</string>
+	</array>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIdentifier</key>

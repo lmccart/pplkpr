@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2710523F1A4E33C100A3D3CD /* Karla-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2710523D1A4E33C100A3D3CD /* Karla-Bold.ttf */; };
+		271052401A4E33C100A3D3CD /* Karla-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2710523E1A4E33C100A3D3CD /* Karla-Regular.ttf */; };
 		27DED48019CCAFBE00F9B543 /* home_sel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 27DED47A19CCAFBE00F9B543 /* home_sel@2x.png */; };
 		27DED48119CCAFBE00F9B543 /* home@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 27DED47B19CCAFBE00F9B543 /* home@2x.png */; };
 		27DED48219CCAFBE00F9B543 /* rank_sel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 27DED47C19CCAFBE00F9B543 /* rank_sel@2x.png */; };
@@ -145,6 +147,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2710523D1A4E33C100A3D3CD /* Karla-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Karla-Bold.ttf"; sourceTree = "<group>"; };
+		2710523E1A4E33C100A3D3CD /* Karla-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Karla-Regular.ttf"; sourceTree = "<group>"; };
 		27DED47A19CCAFBE00F9B543 /* home_sel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "home_sel@2x.png"; path = "assets/home_sel@2x.png"; sourceTree = "<group>"; };
 		27DED47B19CCAFBE00F9B543 /* home@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "home@2x.png"; path = "assets/home@2x.png"; sourceTree = "<group>"; };
 		27DED47C19CCAFBE00F9B543 /* rank_sel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "rank_sel@2x.png"; path = "assets/rank_sel@2x.png"; sourceTree = "<group>"; };
@@ -351,6 +355,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2710523C1A4E33C100A3D3CD /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				2710523D1A4E33C100A3D3CD /* Karla-Bold.ttf */,
+				2710523E1A4E33C100A3D3CD /* Karla-Regular.ttf */,
+			);
+			name = Fonts;
+			path = assets/Fonts;
+			sourceTree = "<group>";
+		};
 		27E0854319C525340071F9F8 /* linear */ = {
 			isa = PBXGroup;
 			children = (
@@ -508,6 +522,7 @@
 		65E398D81849619300E3B2B4 /* assets */ = {
 			isa = PBXGroup;
 			children = (
+				2710523C1A4E33C100A3D3CD /* Fonts */,
 				27DED47A19CCAFBE00F9B543 /* home_sel@2x.png */,
 				27DED47B19CCAFBE00F9B543 /* home@2x.png */,
 				27DED47C19CCAFBE00F9B543 /* rank_sel@2x.png */,
@@ -787,6 +802,8 @@
 				65F3F7CB1A23792D0098054D /* Icon-Small@2x.png in Resources */,
 				65909CFA19C708DF002953A2 /* Default.png in Resources */,
 				65909D0A19C70B6D002953A2 /* Icon.png in Resources */,
+				2710523F1A4E33C100A3D3CD /* Karla-Bold.ttf in Resources */,
+				271052401A4E33C100A3D3CD /* Karla-Regular.ttf in Resources */,
 				65200C6819CC9A8F00BABDD3 /* arrows-down.png in Resources */,
 				65F2962C19B93734007C1C06 /* aroused.png in Resources */,
 				65909CFB19C708DF002953A2 /* Default@2x.png in Resources */,
