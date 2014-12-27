@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface IntensitySlider : UISlider
+@interface FlatSlider : UISlider
 
 @end

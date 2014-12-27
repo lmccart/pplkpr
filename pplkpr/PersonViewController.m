@@ -186,7 +186,7 @@
     }
     if (recent_r != nil) {
         
-        [tv setText:[NSString stringWithFormat:@"Made me feel %@ %@.", [recent_r.emotion lowercaseString], [[recent_r.date timeAgoSinceNow] lowercaseString]]];
+        [tv setText:[NSString stringWithFormat:@"Made me %@ %@.", [recent_r.emotion lowercaseString], [[recent_r.date timeAgoSinceNow] lowercaseString]]];
         [tv setFont:[GlobalMethods globalFont]];
     }
     

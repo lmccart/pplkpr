@@ -34,6 +34,12 @@
 @property (retain, nonatomic) IBOutlet UISlider *intensitySlider;
 @property float imgSize;
 
+@property UIImage *halfImg;
+@property UIImage *yellowImg;
+@property UIImage *grayImg;
+
+@property BOOL needsReset;
+
 @property (retain, nonatomic) IBOutlet UISlider *timeSlider;
 @property (retain, nonatomic) NSDate *rangeStart;
 @property (retain, nonatomic) NSDate *rangeEnd;
@@ -41,9 +47,6 @@
 @property (retain, nonatomic) NSDateFormatter *dateFormatter;
 
 @property (retain, nonatomic) IBOutlet UIButton *submitButton;
-
-
-@property BOOL needsReset;
 
 @end
 
@@ -92,31 +95,42 @@
     [mask setFrame: CGRectMake(0, self.imgSize*1.1, self.emotionPicker.bounds.size.width, self.imgSize*1.04)];
     [self.emotionPicker.layer setMask: mask];
     
-    
     // make a yellow rect for slider imgs
-    CGSize size = CGSizeMake(self.intensitySlider.bounds.size.height, self.intensitySlider.bounds.size.height);
+    float thumbSize = self.intensitySlider.bounds.size.height;
+    CGSize size = CGSizeMake(thumbSize, thumbSize);
     UIGraphicsBeginImageContext(CGSizeMake(size.width, size.height));
-    [[GlobalMethods globalYellowColor] setFill];
-//    [[GlobalMethods globalLightGrayColor] setFill];
+    [[GlobalMethods globalLightGrayColor] setFill];
     UIRectFill(CGRectMake(0, 0, size.width, size.height));
     [[GlobalMethods globalYellowColor] setFill];
     UIRectFill(CGRectMake(0, 0, size.width / 2, size.height));
-    UIImage *fImg = UIGraphicsGetImageFromCurrentImageContext();
+    self.halfImg = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    UIGraphicsBeginImageContext(CGSizeMake(size.width, size.height));
+    [[GlobalMethods globalYellowColor] setFill];
+    UIRectFill(CGRectMake(0, 0, size.width, size.height));
+    self.yellowImg = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    UIGraphicsBeginImageContext(CGSizeMake(size.width, size.height));
+    [[GlobalMethods globalLightGrayColor] setFill];
+    UIRectFill(CGRectMake(0, 0, size.width, size.height));
+    self.grayImg = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
     // style time slider
-    [self.timeSlider setThumbImage:fImg forState:UIControlStateNormal];
-    [self.timeSlider setMinimumTrackImage:fImg forState:UIControlStateNormal];
-    [self.timeSlider setMaximumTrackTintColor:[GlobalMethods globalLightGrayColor]];
+    [self.timeSlider setThumbImage:self.halfImg forState:UIControlStateNormal];
+    [self.timeSlider setMinimumTrackImage:self.yellowImg forState:UIControlStateNormal];
+    [self.timeSlider setMaximumTrackImage:self.grayImg forState:UIControlStateNormal];
     
     // style intensity slider
-    [self.intensitySlider setThumbImage:fImg forState:UIControlStateNormal];
-    [self.intensitySlider setMinimumTrackImage:fImg forState:UIControlStateNormal];
-    [self.intensitySlider setMaximumTrackTintColor:[GlobalMethods globalLightGrayColor]];
+    [self.intensitySlider setThumbImage:self.halfImg forState:UIControlStateNormal];
+    [self.intensitySlider setMinimumTrackImage:self.yellowImg forState:UIControlStateNormal];
+    [self.intensitySlider setMaximumTrackImage:self.grayImg forState:UIControlStateNormal];
     
     // slider masking
-    float wPad = 10;
-    float hPad = 5;
+    float wPad = 2;
+    float hPad = 0;
     float h = self.whoTextField.frame.size.height;
     
     [self.intensitySlider setFrame:CGRectMake(self.intensitySlider.frame.origin.x, self.intensitySlider.frame.origin.y, self.intensitySlider.frame.size.width, h+2*hPad)];
@@ -341,12 +355,13 @@
 #pragma mark - Slider
 
 - (IBAction)sliderValueChanged:(UISlider *)sender {
-//    if (sender.value < 0.25) {
-//        [sender setValue:0.25];
-//    }
-//    if (sender.value > 0.92) {
-//        [sender setValue:0.92];
-//    }
+    if(sender.value == sender.maximumValue) {
+        [sender setThumbImage:self.yellowImg forState:UIControlStateNormal];
+    } else if(sender.value == sender.minimumValue) {
+        [sender setThumbImage:self.grayImg forState:UIControlStateNormal];
+    } else {
+        [sender setThumbImage:self.halfImg forState:UIControlStateNormal];
+    }
     if ([sender isEqual:self.timeSlider]) {
         [self updateTimeSlider];
     }

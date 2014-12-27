@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Lauren McCarthy. All rights reserved.
 //
 
-#import "IntensitySlider.h"
+#import "FlatSlider.h"
 
-@implementation IntensitySlider
+@implementation FlatSlider
 
 /*
 // Only override drawRect: if you perform custom drawing.

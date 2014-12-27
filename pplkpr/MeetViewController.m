@@ -36,6 +36,11 @@
 @property (retain, nonatomic) IBOutlet UIButton *submitButton;
 
 @property float imgSize;
+
+@property UIImage *halfImg;
+@property UIImage *yellowImg;
+@property UIImage *grayImg;
+
 @property BOOL needsReset;
 
 @end
@@ -85,27 +90,44 @@
     [mask setFrame: CGRectMake(0, self.imgSize*1.1, self.emotionPicker.bounds.size.width, self.imgSize*1.04)];
     [self.emotionPicker.layer setMask: mask];
     
-    // make a yellow rect for slider thumb img
-    CGSize size = CGSizeMake(self.intensitySlider.bounds.size.height, self.intensitySlider.bounds.size.height);
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(size.width, size.height), YES, 0.0);
-    [[GlobalMethods globalYellowColor] setFill];
+    // make a yellow rect for slider imgs
+    float thumbSize = self.intensitySlider.bounds.size.height;
+    CGSize size = CGSizeMake(thumbSize, thumbSize);
+    UIGraphicsBeginImageContext(CGSizeMake(size.width, size.height));
+    [[GlobalMethods globalLightGrayColor] setFill];
     UIRectFill(CGRectMake(0, 0, size.width, size.height));
-    UIImage *fImg = UIGraphicsGetImageFromCurrentImageContext();
+    [[GlobalMethods globalYellowColor] setFill];
+    UIRectFill(CGRectMake(0, 0, size.width / 2, size.height));
+    self.halfImg = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
-    [self.intensitySlider setThumbImage:fImg forState:UIControlStateNormal];
-    [self.intensitySlider setMinimumTrackImage:fImg forState:UIControlStateNormal];
-    [self.intensitySlider setMaximumTrackTintColor:[GlobalMethods globalLightGrayColor]];
+    UIGraphicsBeginImageContext(CGSizeMake(size.width, size.height));
+    [[GlobalMethods globalYellowColor] setFill];
+    UIRectFill(CGRectMake(0, 0, size.width, size.height));
+    self.yellowImg = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    UIGraphicsBeginImageContext(CGSizeMake(size.width, size.height));
+    [[GlobalMethods globalLightGrayColor] setFill];
+    UIRectFill(CGRectMake(0, 0, size.width, size.height));
+    self.grayImg = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    // style intensity slider
+    [self.intensitySlider setThumbImage:self.halfImg forState:UIControlStateNormal];
+    [self.intensitySlider setMinimumTrackImage:self.yellowImg forState:UIControlStateNormal];
+    [self.intensitySlider setMaximumTrackImage:self.grayImg forState:UIControlStateNormal];
     
     // slider masking
-    float wPad = 10;
-    float hPad = 5;
-    [self.intensitySlider setFrame:CGRectMake(self.intensitySlider.frame.origin.x, self.intensitySlider.frame.origin.y, self.intensitySlider.frame.size.width, self.whoTextField.frame.size.height+2*hPad)];
+    float wPad = 2;
+    float hPad = 0;
+    float h = self.whoTextField.frame.size.height;
     
-    CALayer* sliderMask = [[CALayer alloc] init];
-    [sliderMask setBackgroundColor: [UIColor blackColor].CGColor];
-    [sliderMask setFrame:CGRectMake(wPad, hPad, self.intensitySlider.bounds.size.width-2*wPad, self.intensitySlider.bounds.size.height-2*hPad)];
-    [self.intensitySlider.layer setMask:sliderMask];
+    [self.intensitySlider setFrame:CGRectMake(self.intensitySlider.frame.origin.x, self.intensitySlider.frame.origin.y, self.intensitySlider.frame.size.width, h+2*hPad)];
+    CALayer* iSliderMask = [[CALayer alloc] init];
+    [iSliderMask setBackgroundColor: [UIColor blackColor].CGColor];
+    [iSliderMask setFrame:CGRectMake(wPad, hPad, self.intensitySlider.bounds.size.width-2*wPad, self.intensitySlider.bounds.size.height-2*hPad)];
+    [self.intensitySlider.layer setMask:iSliderMask];
 
     // move submit button down if iphone5
     if (self.view.frame.size.height >= 568) {
@@ -285,13 +307,13 @@
 #pragma mark - Slider
 
 - (IBAction)sliderValueChanged:(UISlider *)sender {
-//    if (sender.value < 0.1) {
-//        [sender setValue:0.1];
-//    }
-//    if (sender.value > 0.92) {
-//        [sender setValue:0.92];
-//    }
-    //NSLog(@"slider value %f", sender.value);
+    if(sender.value == sender.maximumValue) {
+        [sender setThumbImage:self.yellowImg forState:UIControlStateNormal];
+    } else if(sender.value == sender.minimumValue) {
+        [sender setThumbImage:self.grayImg forState:UIControlStateNormal];
+    } else {
+        [sender setThumbImage:self.halfImg forState:UIControlStateNormal];
+    }
 }
 
 #pragma mark - MFMessageComposeViewController
