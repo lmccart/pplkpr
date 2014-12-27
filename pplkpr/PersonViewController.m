@@ -221,12 +221,11 @@
         
         if (action) {
             
+            NSString *msg = [[InteractionData data] getMessage:emotion];
             if ([[FBHandler data] useFakebook]) {
-                NSString *msg = [[InteractionData data] getMessage:emotion];
                 [[FBHandler data] createFakebookRequest:self.curPerson withType:action withMessage:msg withEmotion:emotion];
             } else {
-                NSString *msg = [NSString stringWithFormat:@"You make me feel very %@.", [emotion lowercaseString]];
-                [[IOSHandler data] sendText:self.curPerson withMessage:msg fromController:self];
+                [[IOSHandler data] performAction:self.curPerson withType:action withMessage:msg withEmotion:emotion fromController:self];
             }
             
             [textView.layer setBorderColor:[[GlobalMethods globalYellowColor] CGColor]];

@@ -75,51 +75,51 @@
 }
 
 - (void)sendText:(Person *)person withMessage:(NSString *)msg fromController:(UIViewController *)controller {
+    if(![MFMessageComposeViewController canSendText]) {
+        UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Your device doesn't support SMS!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [warningAlert show];
+        return;
+    }
+    
+    if (self.messageComposeController) {
+        self.messageComposeController = nil;
+    }
+    
+    self.messageComposeController = [[MFMessageComposeViewController alloc] init];
+    self.messageComposeController.messageComposeDelegate = controller;
+    [self.messageComposeController setBody:msg];
+    
+    
     RHPerson *p = [self getContact:person.name];
-    NSLog(@"%@", p.phoneNumbers);
     if (p && [p.phoneNumbers count] > 0) {
-        if(![MFMessageComposeViewController canSendText]) {
-            UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Your device doesn't support SMS!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            [warningAlert show];
-            return;
-        }
-        
-        if (self.messageComposeController) {
-            self.messageComposeController = nil;
-        }
-        self.messageComposeController = [[MFMessageComposeViewController alloc]init];
-        
+
         NSString *str = [p.phoneNumbers valueAtIndex:0];
         NSArray *recipents = @[str];
         
-        self.messageComposeController.messageComposeDelegate = controller;
         [self.messageComposeController setRecipients:recipents];
-        [self.messageComposeController setBody:msg];
         
-        // Present message view controller on screen
-        [controller presentViewController:self.messageComposeController animated:YES completion:nil];
-    } else {
-        // [[FBHandler data] requestPost:person.fbid];
     }
+    
+    // Present message view controller on screen
+    [controller presentViewController:self.messageComposeController animated:YES completion:nil];
     
 }
 
-- (void)performAction:(Person *)person withType:(NSString *)type withMessage:(NSString *)message withEmotion:(NSString *)emotion {
+- (void)performAction:(Person *)person withType:(NSString *)type withMessage:(NSString *)message withEmotion:(NSString *)emotion fromController:(UIViewController *)controller {
     
-    AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
-    
+    NSLog(@"type %@", type);
     if ([type isEqualToString:@"poke"]) {
         NSUInteger randomInd = arc4random() % [self.pokeMessages count];
         NSString *msg = [self.pokeMessages objectAtIndex:randomInd];
-        [self sendText:person withMessage:msg fromController:appDelegate.homeController];
+        [self sendText:person withMessage:msg fromController:controller];
     }
     else if ([type isEqualToString:@"post"]) {
-        [self sendText:person withMessage:message fromController:appDelegate.homeController];
+        [self sendText:person withMessage:message fromController:controller];
     }
     else if ([type isEqualToString:@"join_event"]) {
         NSUInteger randomInd = arc4random() % [self.inviteMessages count];
         NSString *msg = [self.inviteMessages objectAtIndex:randomInd];
-        [self sendText:person withMessage:msg fromController:appDelegate.homeController];
+        [self sendText:person withMessage:msg fromController:controller];
     }
     else if ([type isEqualToString:@"block"]) {
         [self removeContact:person.name];
@@ -129,6 +129,11 @@
     }
 }
 
+- (void)performAction:(Person *)person withType:(NSString *)type withMessage:(NSString *)message withEmotion:(NSString *)emotion {
+    
+    AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+    [self performAction:person withType:type withMessage:message withEmotion:emotion fromController:appDelegate.homeController];
+}
 
 @end
 

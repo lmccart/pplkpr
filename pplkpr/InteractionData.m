@@ -85,8 +85,8 @@
         } else {
             
             self.descriptiveActionsDict = [[NSDictionary alloc] initWithObjectsAndKeys:
-               [[NSArray alloc] initWithObjects:@"Poke them?", @"I poked them.", nil], @"post",
-               [[NSArray alloc] initWithObjects:@"Let them know?", @"I let them know.", nil], @"poke",
+               [[NSArray alloc] initWithObjects:@"Let them know?", @"I let them know.", nil], @"post",
+               [[NSArray alloc] initWithObjects:@"Poke them?", @"I poked them.", nil], @"poke",
                [[NSArray alloc] initWithObjects:@"Invite them to hang out?", @"I invited them to hang out.", nil], @"join_event",
                [[NSArray alloc] initWithObjects:@"Unblock them?", @"I unblocked them.", nil], @"unblock",
                [[NSArray alloc] initWithObjects:@"Delete their number?", @"I deleted their number.", nil], @"block",
@@ -466,8 +466,7 @@
     NSDate *lastDate = [defaults objectForKey:@"lastActionDate"];
     NSDate *date = [NSDate date];
     
-    if (true) {
-    //if (!lastDate || [date timeIntervalSinceDate:lastDate] > 2*60*60) { // every 2 hours
+    if (!lastDate || [date timeIntervalSinceDate:lastDate] > 2*60*60) { // every 2 hours
         [defaults setObject:date forKey:@"lastActionDate"];
         [defaults synchronize];
         [self takeAction];
@@ -475,7 +474,6 @@
 }
 
 - (void)takeAction {
-    NSLog(@"take action");
     NSArray *priorities = [self getSortedPriorities];
     if ([priorities count] > 0) {
     
@@ -495,7 +493,7 @@
         Person *person;
         NSArray *entry;
         int i=0;
-        while (order != 0){// || [lastPeople containsObject:name]) {
+        while (order != 0 || [lastPeople containsObject:name]) {
             entry = [priorities objectAtIndex:i];
             person = [entry objectAtIndex:1];
             name = person.name;
