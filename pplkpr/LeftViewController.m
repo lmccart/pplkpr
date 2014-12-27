@@ -266,6 +266,7 @@
         [alert show];
     } else {
         float val = [self.intensitySlider value];
+        NSLog(@"logging intensity: %f", val);
         float timeVal = [self.timeSlider value];
         NSDate *date = [self.rangeEnd dateByAddingTimeInterval:timeVal*60];
         Report *r = [[InteractionData data] addReport:self.whoName
@@ -340,9 +341,9 @@
 //    if (sender.value < 0.25) {
 //        [sender setValue:0.25];
 //    }
-    if (sender.value > 0.92) {
-        [sender setValue:0.92];
-    }
+//    if (sender.value > 0.92) {
+//        [sender setValue:0.92];
+//    }
     if ([sender isEqual:self.timeSlider]) {
         [self updateTimeSlider];
     }

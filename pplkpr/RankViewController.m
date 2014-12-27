@@ -195,17 +195,18 @@
 	if ([_rankData objectForKey:_emotion]) {
 		// walk from bottom or top based on order
 		int ind = (_order) ? [[_rankData objectForKey:_emotion] count] - indexPath.row - 1 : indexPath.row;
-		Person *p = [[_rankData objectForKey:_emotion] objectAtIndex:ind];
+        Person *p = [[_rankData objectForKey:_emotion] objectAtIndex:ind];
+        float leftPadding = -5;
         NSNumber *val = [p valueForKey:[_emotion lowercaseString]];
         
 		cell.textLabel.text = [NSString stringWithFormat:@"%@", [p valueForKey:@"name"]];
         cell.textLabel.font = [GlobalMethods globalFont];
         CGRect bounds = cell.bounds;
-        bounds.origin.x = 5;
+        bounds.origin.x = -leftPadding;
         cell.bounds = bounds;
         
         UIImageView *imgView = (UIImageView*)[cell viewWithTag:1];
-        [imgView setFrame:CGRectMake(0, 11, [val floatValue]*tableView.frame.size.width, 23)];
+        [imgView setFrame:CGRectMake(-leftPadding, 11, [val floatValue]*tableView.bounds.size.width, 23)];
 	}
     else {
         cell.textLabel.text = @"";

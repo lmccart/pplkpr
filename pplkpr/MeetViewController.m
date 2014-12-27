@@ -288,9 +288,9 @@
 //    if (sender.value < 0.1) {
 //        [sender setValue:0.1];
 //    }
-    if (sender.value > 0.92) {
-        [sender setValue:0.92];
-    }
+//    if (sender.value > 0.92) {
+//        [sender setValue:0.92];
+//    }
     //NSLog(@"slider value %f", sender.value);
 }
 
