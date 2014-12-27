@@ -14,8 +14,8 @@
 
 +(UIColor *) globalLightGrayColor { return [UIColor colorWithRed:(0.0f/255.0f) green:(0.0f/255.0f) blue:(0.0f/255.0f) alpha:0.1f]; }
 
-+(UIFont *)globalFont { return [UIFont fontWithName:@"TeluguSangamMN" size:16.0]; }
-+(UIFont *)globalBoldFont { return [UIFont fontWithName:@"TeluguSangamMN-Bold" size:16.0]; }
++(UIFont *)globalFont { return [UIFont fontWithName:@"Karla-Regular" size:16.0]; }
++(UIFont *)globalBoldFont { return [UIFont fontWithName:@"Karla-Bold" size:16.0]; }
 
 + (NSDictionary *)attrsDict { return [NSDictionary dictionaryWithObject:[GlobalMethods globalFont]
                                                                  forKey:NSFontAttributeName]; };
