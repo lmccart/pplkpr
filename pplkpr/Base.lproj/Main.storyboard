@@ -79,7 +79,7 @@
                                 <rect key="frame" x="30" y="135" width="260" height="276"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recently..." lineBreakMode="clip" baselineAdjustment="none" adjustsFontSizeToFit="NO" id="fG6-gK-fJS">
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recently . . ." lineBreakMode="clip" baselineAdjustment="none" adjustsFontSizeToFit="NO" id="fG6-gK-fJS">
                                 <rect key="frame" x="30" y="96" width="267" height="320"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Karla-Regular" family="Karla" pointSize="16"/>
@@ -126,18 +126,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="431"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="-120" minValue="-120" maxValue="0.0" id="JkY-er-b42" customClass="IntensitySlider">
-                                <rect key="frame" x="28" y="361" width="264" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="minimumTrackTintColor" red="0.99607843137254903" green="0.92156862745098034" blue="0.039215686274509803" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="maximumTrackTintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <action selector="sliderValueChanged:" destination="Z8x-sD-IGb" eventType="valueChanged" id="5EW-99-g77"/>
-                                </connections>
-                            </slider>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Around this time . . ." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Xcp-1n-aGb">
-                                <rect key="frame" x="30" y="322" width="260" height="26"/>
+                                <rect key="frame" x="30" y="334" width="260" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Karla-Regular" family="Karla" pointSize="16"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
@@ -154,7 +144,7 @@
                                 </connections>
                             </button>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="0db-y5-gVG" customClass="IntensitySlider">
-                                <rect key="frame" x="28" y="229" width="163" height="31"/>
+                                <rect key="frame" x="20" y="229" width="179" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.92549019610000005" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
                                 <color key="tintColor" red="0.99607849120000003" green="0.9215686917" blue="0.31372550129999999" alpha="1" colorSpace="deviceRGB"/>
@@ -165,7 +155,7 @@
                                 </connections>
                             </slider>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Made me feel . . ." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KC6-XV-M6X">
-                                <rect key="frame" x="30" y="199" width="159" height="26"/>
+                                <rect key="frame" x="30" y="196" width="159" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="Karla-Regular" family="Karla" pointSize="16"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
@@ -185,7 +175,7 @@
                                     <action selector="submit:" destination="Z8x-sD-IGb" eventType="touchUpInside" id="OLz-qX-Fkb"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" placeholder="Name" minimumFontSize="16" id="9fa-v4-3v6" customClass="MLPAutoCompleteTextField">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" minimumFontSize="16" id="9fa-v4-3v6" customClass="MLPAutoCompleteTextField">
                                 <rect key="frame" x="30" y="97" width="260" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.99607843137254903" green="0.92156862745098034" blue="0.039215686274509803" alpha="1" colorSpace="calibratedRGB"/>
@@ -205,8 +195,25 @@
                                 <rect key="frame" x="234" y="286" width="12" height="12"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="-120" minValue="-120" maxValue="0.0" id="JkY-er-b42" customClass="IntensitySlider">
+                                <rect key="frame" x="20" y="361" width="280" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="minimumTrackTintColor" red="0.99607843137254903" green="0.92156862745098034" blue="0.039215686274509803" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="maximumTrackTintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <action selector="sliderValueChanged:" destination="Z8x-sD-IGb" eventType="valueChanged" id="5EW-99-g77"/>
+                                </connections>
+                            </slider>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.40000000596046448" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5:00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="AXH-iZ-tLa">
+                                <rect key="frame" x="240" y="368" width="43" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Karla-Regular" family="Karla" pointSize="16"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <textView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="right" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" text="excited" textAlignment="right" selectable="NO" id="Xyc-Py-f9G">
-                                <rect key="frame" x="103" y="230" width="69" height="41"/>
+                                <rect key="frame" x="113" y="230" width="69" height="41"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <accessibility key="accessibilityConfiguration">
@@ -216,13 +223,6 @@
                                 <fontDescription key="fontDescription" name="Karla-Regular" family="Karla" pointSize="16"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5:00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ORG-qe-BAv">
-                                <rect key="frame" x="242" y="370" width="43" height="26"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="Karla-Regular" family="Karla" pointSize="16"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -234,7 +234,7 @@
                         <outlet property="emotionTextView" destination="Xyc-Py-f9G" id="Wbz-G0-ccM"/>
                         <outlet property="intensitySlider" destination="0db-y5-gVG" id="fLv-qq-N25"/>
                         <outlet property="submitButton" destination="gK4-Pv-IMD" id="wWW-QQ-xXJ"/>
-                        <outlet property="timeLabel" destination="ORG-qe-BAv" id="8yP-kr-Wtd"/>
+                        <outlet property="timeLabel" destination="AXH-iZ-tLa" id="Wki-Q6-252"/>
                         <outlet property="timeSlider" destination="JkY-er-b42" id="cwb-5z-GeN"/>
                         <outlet property="upArrow" destination="eaB-IO-oSK" id="3eA-Uj-MXy"/>
                         <outlet property="whoTextField" destination="9fa-v4-3v6" id="G1f-yl-pEv"/>
@@ -325,7 +325,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="431"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" placeholder="Name" minimumFontSize="16" id="gNz-Xz-RqH" customClass="MLPAutoCompleteTextField">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" minimumFontSize="16" id="gNz-Xz-RqH" customClass="MLPAutoCompleteTextField">
                                 <rect key="frame" x="30" y="156" width="260" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.92549019610000005" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -372,7 +372,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="NN1-DG-s1w" customClass="IntensitySlider">
-                                <rect key="frame" x="28" y="274" width="167" height="31"/>
+                                <rect key="frame" x="20" y="274" width="182" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="0.92549019610000005" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
                                 <color key="tintColor" red="0.99607849120000003" green="0.9215686917" blue="0.31372550129999999" alpha="1" colorSpace="deviceRGB"/>
@@ -549,10 +549,10 @@
                                 <rect key="frame" x="30" y="40" width="75" height="75"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="16" id="JaJ-rk-xtp">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Person Name" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="JaJ-rk-xtp">
                                 <rect key="frame" x="119" y="40" width="170" height="75"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="Karla-Regular" family="Karla" pointSize="21"/>
+                                <fontDescription key="fontDescription" name="Karla-Regular" family="Karla" pointSize="22"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view autoresizesSubviews="NO" tag="7" contentMode="scaleToFill" id="4P2-YV-Jjw">

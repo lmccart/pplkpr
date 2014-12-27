@@ -199,6 +199,7 @@
         NSNumber *val = [p valueForKey:[_emotion lowercaseString]];
         
 		cell.textLabel.text = [NSString stringWithFormat:@"%@", [p valueForKey:@"name"]];
+        cell.textLabel.font = [GlobalMethods globalFont];
         
         UIImageView *imgView = (UIImageView*)[cell viewWithTag:1];
         [imgView setFrame:CGRectMake(0, 11, [val floatValue]*tableView.frame.size.width, 23)];
