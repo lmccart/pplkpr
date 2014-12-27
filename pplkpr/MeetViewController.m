@@ -106,7 +106,7 @@
     [sliderMask setBackgroundColor: [UIColor blackColor].CGColor];
     [sliderMask setFrame:CGRectMake(wPad, hPad, self.intensitySlider.bounds.size.width-2*wPad, self.intensitySlider.bounds.size.height-2*hPad)];
     [self.intensitySlider.layer setMask:sliderMask];
-    
+
     // move submit button down if iphone5
     if (self.view.frame.size.height >= 568) {
         CGRect frame = self.submitButton.frame;

@@ -95,9 +95,12 @@
     
     // make a yellow rect for slider imgs
     CGSize size = CGSizeMake(self.intensitySlider.bounds.size.height, self.intensitySlider.bounds.size.height);
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(size.width, size.height), YES, 0.0);
+    UIGraphicsBeginImageContext(CGSizeMake(size.width, size.height));
     [[GlobalMethods globalYellowColor] setFill];
+//    [[GlobalMethods globalLightGrayColor] setFill];
     UIRectFill(CGRectMake(0, 0, size.width, size.height));
+    [[GlobalMethods globalYellowColor] setFill];
+    UIRectFill(CGRectMake(0, 0, size.width / 2, size.height));
     UIImage *fImg = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     

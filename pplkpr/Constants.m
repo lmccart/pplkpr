@@ -10,9 +10,10 @@
 
 @implementation GlobalMethods
 
-+(UIColor *) globalYellowColor { return [UIColor colorWithRed:(255.0f/255.0f) green:(236.0f/255.0f) blue:(0.0f/255.0f) alpha:1.0f]; }
+// r:255, g:236, b:0
++(UIColor *) globalYellowColor { return [UIColor colorWithRed:1 green:.925f blue:0 alpha:1]; }
 
-+(UIColor *) globalLightGrayColor { return [UIColor colorWithRed:(0.0f/255.0f) green:(0.0f/255.0f) blue:(0.0f/255.0f) alpha:0.1f]; }
++(UIColor *) globalLightGrayColor { return [UIColor colorWithRed:.9 green:.9 blue:.9 alpha:1]; }
 
 +(UIFont *)globalFont { return [UIFont fontWithName:@"Karla-Regular" size:16.0]; }
 +(UIFont *)globalBoldFont { return [UIFont fontWithName:@"Karla-Bold" size:16.0]; }
