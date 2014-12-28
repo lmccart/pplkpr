@@ -144,7 +144,7 @@
         //[self.priorityLabel sizeToFit];
     } else {
         for (int i=0; i < MIN(3, [self.priorityData count]); i++) {
-            [self.priorityLabel setText:@"Recently..."];
+            [self.priorityLabel setText:@"Recently . . ."];
             [self.priorityLabel setAlpha:0.4];
             [self.priorityLabel setTextAlignment:NSTextAlignmentLeft];
             [self.priorityLabel sizeToFit];
