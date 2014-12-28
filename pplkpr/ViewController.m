@@ -92,7 +92,7 @@
             [self start];
         }
     } else {
-        if (false) { // ![[FBHandler data] loggedIn]) {
+        if (![[FBHandler data] loggedIn]) {
             [self performSegueWithIdentifier:@"loginSegue" sender:self];
         } else {
             [self start];

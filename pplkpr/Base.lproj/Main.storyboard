@@ -462,23 +462,19 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <textView clipsSubviews="YES" contentMode="right" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" text="pplkpr is an app for tracking, analyzing, and auto-managing your relationships." textAlignment="center" selectable="NO" id="jAS-jI-ZI4">
-                                        <rect key="frame" x="41" y="130" width="178" height="167"/>
+                                        <rect key="frame" x="41" y="146" width="178" height="121"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" name="Karla-Regular" family="Karla" pointSize="16"/>
                                         <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
                                     </textView>
                                     <textView clipsSubviews="YES" contentMode="right" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" text="pplkpr measures your physical and emotional response to the people around you, and optimizes your social life accordingly." textAlignment="center" selectable="NO" id="65a-JN-odp">
-                                        <rect key="frame" x="38" y="259" width="185" height="161"/>
+                                        <rect key="frame" x="38" y="266" width="185" height="161"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" name="Karla-Regular" family="Karla" pointSize="16"/>
                                         <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
                                     </textView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="home.png" id="hj4-8K-GZq">
-                                        <rect key="frame" x="166" y="60" width="30" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="1gS-3g-rAa">
                                         <rect key="frame" x="111" y="60" width="38" height="38"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -490,6 +486,10 @@
                                             <action selector="faceLogin:" destination="SHJ-Mw-UT6" eventType="touchUpInside" id="4uD-3l-cUw"/>
                                         </connections>
                                     </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo.png" id="hj4-8K-GZq">
+                                        <rect key="frame" x="90" y="48" width="80" height="80"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
                                 </subviews>
                             </view>
                             <view hidden="YES" contentMode="scaleToFill" id="4VJ-dq-Zy8">
@@ -712,9 +712,9 @@
         <image name="arrows-up.png" width="41" height="41"/>
         <image name="back.png" width="42" height="29"/>
         <image name="heart.png" width="27" height="27"/>
-        <image name="home.png" width="30" height="30"/>
         <image name="left-small.png" width="20" height="38"/>
         <image name="left.png" width="92" height="85"/>
+        <image name="logo.png" width="80" height="80"/>
         <image name="logout.png" width="27" height="27"/>
         <image name="meet-small.png" width="20" height="38"/>
         <image name="meet.png" width="92" height="85"/>

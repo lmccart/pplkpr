@@ -38,6 +38,7 @@
 		27CEE50E1A50A18500B71BEB /* meet-small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 27CEE4F21A50A18500B71BEB /* meet-small@2x.png */; };
 		27CEE50F1A50A18500B71BEB /* meet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 27CEE4F31A50A18500B71BEB /* meet@2x.png */; };
 		27CEE5101A50A18500B71BEB /* plus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 27CEE4F41A50A18500B71BEB /* plus@2x.png */; };
+		27CEE5121A50B0CA00B71BEB /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 27CEE5111A50B0CA00B71BEB /* logo@2x.png */; };
 		27E0855D19C529240071F9F8 /* tron.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27E0855B19C529240071F9F8 /* tron.cpp */; };
 		27E0856419C5294D0071F9F8 /* daxpy.c in Sources */ = {isa = PBXBuildFile; fileRef = 27E0856019C5294D0071F9F8 /* daxpy.c */; };
 		27E0856519C5294D0071F9F8 /* ddot.c in Sources */ = {isa = PBXBuildFile; fileRef = 27E0856119C5294D0071F9F8 /* ddot.c */; };
@@ -177,6 +178,7 @@
 		27CEE4F21A50A18500B71BEB /* meet-small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "meet-small@2x.png"; sourceTree = "<group>"; };
 		27CEE4F31A50A18500B71BEB /* meet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "meet@2x.png"; sourceTree = "<group>"; };
 		27CEE4F41A50A18500B71BEB /* plus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plus@2x.png"; sourceTree = "<group>"; };
+		27CEE5111A50B0CA00B71BEB /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@2x.png"; sourceTree = "<group>"; };
 		27E0855B19C529240071F9F8 /* tron.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = tron.cpp; sourceTree = "<group>"; };
 		27E0855C19C529240071F9F8 /* tron.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tron.h; sourceTree = "<group>"; };
 		27E0855E19C5294D0071F9F8 /* blas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = blas.h; sourceTree = "<group>"; };
@@ -414,6 +416,7 @@
 		27CEE4E91A50A18500B71BEB /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				27CEE5111A50B0CA00B71BEB /* logo@2x.png */,
 				27CEE4EA1A50A18500B71BEB /* arrows-down.png */,
 				27CEE4EB1A50A18500B71BEB /* arrows-up.png */,
 				27CEE4EC1A50A18500B71BEB /* back@2x.png */,
@@ -836,6 +839,7 @@
 				27CEE50F1A50A18500B71BEB /* meet@2x.png in Resources */,
 				27CEE50D1A50A18500B71BEB /* logout@2x.png in Resources */,
 				2710523F1A4E33C100A3D3CD /* Karla-Bold.ttf in Resources */,
+				27CEE5121A50B0CA00B71BEB /* logo@2x.png in Resources */,
 				27CEE5031A50A18500B71BEB /* rank_sel@2x.png in Resources */,
 				27CEE5061A50A18500B71BEB /* arrows-down.png in Resources */,
 				27CEE4F91A50A18500B71BEB /* calm.png in Resources */,
