@@ -8,7 +8,8 @@
 
 #import "IOSHandler.h"
 #import "AppDelegate.h"
-#import "FBHandler.h";
+#import "FBHandler.h"
+#import "ViewController.h"
 
 @interface IOSHandler()
 //
@@ -91,17 +92,25 @@
     
     
     RHPerson *p = [self getContact:person.name];
+    
+    bool send = false;
     if (p && [p.phoneNumbers count] > 0) {
 
         NSString *str = [p.phoneNumbers valueAtIndex:0];
         NSArray *recipents = @[str];
         
         [self.messageComposeController setRecipients:recipents];
-        
+        send = true;
+    }
+    
+    if (![controller isKindOfClass:[ViewController class]]) {
+        send = true;
     }
     
     // Present message view controller on screen
-    [controller presentViewController:self.messageComposeController animated:YES completion:nil];
+    if (send) { // don't send from home screen with no recipient!
+        [controller presentViewController:self.messageComposeController animated:YES completion:nil];
+    }
     
 }
 
