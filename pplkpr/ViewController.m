@@ -43,11 +43,11 @@
 //                                   userInfo:nil
 //                                    repeats:NO];
 //    
-//    [NSTimer scheduledTimerWithTimeInterval:7.5
-//                                     target:self
-//                                   selector:@selector(fakeMessage)
-//                                   userInfo:nil
-//                                    repeats:NO];
+    [NSTimer scheduledTimerWithTimeInterval:4.0 
+                                     target:self
+                                   selector:@selector(fakeMessage)
+                                   userInfo:nil
+                                    repeats:NO];
 }
 
 // PEND FAKE STUFF
@@ -56,11 +56,11 @@
 //    [self.monitorStatusIcon setAlpha:1.0];
 //}
 //
-//- (void)fakeMessage {
-//    NSLog(@"fake sensor");
-//    AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
-//    [appDelegate triggerNotification:@"hrv"];
-//}
+- (void)fakeMessage {
+    NSLog(@"fake sensor");
+    AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
+    [appDelegate triggerNotification:@"hrv"];
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -106,7 +106,7 @@
     if([defaults boolForKey:@"useMonitor"]) { // only check if connected before
         [[HeartRateMonitor data] scheduleCheckSensor];
     }
-    [[InteractionData data] checkTakeAction];
+    //[[InteractionData data] checkTakeAction]; // PEND
     
     [[FBHandler data] logData:[[HeartRateAnalyzer data] getHRVDataString] withTag:@"rr" withCompletion:nil];
     [[FBHandler data] logData:[[HeartRateAnalyzer data] getRRDataString] withTag:@"hrv" withCompletion:^(NSData *data) {
