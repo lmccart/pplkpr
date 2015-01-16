@@ -16,6 +16,12 @@ In addition to the files included in the repo, you will also need to add two oth
 * https://developers.facebook.com/docs/ios/
 * https://github.com/heardrwt/RHAddressBook - a Cocoa / Objective-C library for interfacing with the iOS AddressBook
 
+Additional libraries used are included in the src of this repo. More information about them can be found here:
+
+* https://github.com/MatthewYork/DateTools
+* https://github.com/EddyBorja/MLPAutoCompleteTextField
+* https://github.com/rs/SDWebImage
+
 
 ##Thank you!
 
