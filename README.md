@@ -14,7 +14,7 @@ pplkpr was created by [Lauren McCarthy](http://lauren-mccarthy.com) and [Kyle Mc
 In addition to the files included in the repo, you will also need to add two other Frameworks/libraries. Follow the instructions at each of these links to add them:
 
 * https://developers.facebook.com/docs/ios/
-* https://github.com/heardrwt/RHAddressBook - a Cocoa / Objective-C library for interfacing with the iOS AddressBook
+* https://github.com/heardrwt/RHAddressBook
 
 Additional libraries used are included in the src of this repo. More information about them can be found here:
 
