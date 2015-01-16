@@ -15,3 +15,10 @@ In addition to the files included in the repo, you will also need to add two oth
 
 * https://developers.facebook.com/docs/ios/
 * https://github.com/heardrwt/RHAddressBook - a Cocoa / Objective-C library for interfacing with the iOS AddressBook
+
+
+##Thank you!
+
+<b>Identity</b> Remeike Forbes <b>Video</b> David Leonard <b>Additional Development</b> David Newbury <b>CMU Performance</b> Charlie Burlingham, Chris Copeland, Gui De Bree, Kira Melville, Miles Peyton, Charlotte Stiles, Alex Walker, Maddy Varner.
+
+This work was created with support from [Eyebeam](http://eyebeam.org) and the [CMU STUDIO for Creative Inquiry](http://studioforcreativeinquiry.org).
