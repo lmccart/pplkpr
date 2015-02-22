@@ -30,7 +30,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.0</string>
+	<string>1.1</string>
 	<key>FacebookAppID</key>
 	<string>350256398400270</string>
 	<key>FacebookDisplayName</key>
@@ -46,7 +46,6 @@
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
-		<string>location</string>
 		<string>bluetooth-central</string>
 	</array>
 	<key>UIFileSharingEnabled</key>
