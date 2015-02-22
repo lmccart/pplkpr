@@ -12,7 +12,6 @@
 #import "InteractionData.h"
 #import "HeartRateMonitor.h"
 #import "HeartRateAnalyzer.h"
-#import "FBHandler.h"
 #import "ReportViewController.h"
 
 @interface ViewController()
@@ -78,26 +77,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    if ([[FBHandler data] useFakebook]) {
-        
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        NSString *email = [defaults objectForKey:@"email"];
-        NSString *pass = [defaults objectForKey:@"pass"];
-        
-        if (!email || !pass) {
-            [self performSegueWithIdentifier:@"loginSegue" sender:self];
-        } else {
-            [[FBHandler data] setEmail:email];
-            [[FBHandler data] setPass:pass];
-            [self start];
-        }
-    } else {
-        if (![[FBHandler data] loggedIn]) {
-            [self performSegueWithIdentifier:@"loginSegue" sender:self];
-        } else {
-            [self start];
-        }
-    }
+    [self start];
 }
 
 - (void)start {
@@ -108,10 +88,10 @@
     }
     [[InteractionData data] checkTakeAction];
     
-    [[FBHandler data] logData:[[HeartRateAnalyzer data] getHRVDataString] withTag:@"rr" withCompletion:nil];
-    [[FBHandler data] logData:[[HeartRateAnalyzer data] getRRDataString] withTag:@"hrv" withCompletion:^(NSData *data) {
-        [[HeartRateAnalyzer data] resetRecentData];
-    }];
+//    [[FBHandler data] logData:[[HeartRateAnalyzer data] getHRVDataString] withTag:@"rr" withCompletion:nil];
+//    [[FBHandler data] logData:[[HeartRateAnalyzer data] getRRDataString] withTag:@"hrv" withCompletion:^(NSData *data) {
+//        [[HeartRateAnalyzer data] resetRecentData];
+//    }];
 }
 
 - (void)clearPriority {
@@ -286,14 +266,6 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == [alertView firstOtherButtonIndex]) {
-        if ([[FBHandler data] useFakebook]) {
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            [defaults removeObjectForKey:@"email"];
-            [defaults removeObjectForKey:@"pass"];
-            [defaults synchronize];
-        } else {
-            [[FBHandler data] logout];
-        }
         [self performSegueWithIdentifier:@"loginSegue" sender:self];
     }
 }

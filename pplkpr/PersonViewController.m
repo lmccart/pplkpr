@@ -9,7 +9,6 @@
 #import "PersonViewController.h"
 #import "SDWebImage/UIImageView+WebCache.h"
 #import "NSDate+DateTools.h"
-#import "FBHandler.h"
 #import "IOSHandler.h"
 #import "Constants.h"
 #import "InteractionData.h"
@@ -64,14 +63,9 @@
         [self.personLabel setText:self.curPerson.name];
         [[InteractionData data] setJumpToPerson:nil];
         
-        [[FBHandler data] requestProfilePic:self.curPerson.fbid withType:@"large" withCompletion:^(NSDictionary * result){
-            NSDictionary *pic = [result objectForKey:@"picture"];
-            NSDictionary *data = [pic objectForKey:@"data"];
-            NSString *url = [data objectForKey:@"url"];
-            
-            [self.personPhoto sd_setImageWithURL:[NSURL URLWithString:url]];
-        }];
-        
+        UIImage *img = [[IOSHandler data] getContactPic:self.curPerson];
+        [self.personPhoto setImage:img];
+
         [self updatePriority];
         
         // pend test this
@@ -222,11 +216,7 @@
         if (action) {
             
             NSString *msg = [[InteractionData data] getMessage:emotion];
-            if ([[FBHandler data] useFakebook]) {
-                [[FBHandler data] createFakebookRequest:self.curPerson withType:action withMessage:msg withEmotion:emotion];
-            } else {
-                [[IOSHandler data] performAction:self.curPerson withType:action withMessage:msg withEmotion:emotion fromController:self];
-            }
+            [[IOSHandler data] performAction:self.curPerson withType:action withMessage:msg withEmotion:emotion fromController:self];
             
             [textView.layer setBorderColor:[[GlobalMethods globalYellowColor] CGColor]];
             [textView.layer setBorderWidth:1];

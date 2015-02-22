@@ -14,7 +14,7 @@
 @interface Person : NSManagedObject
 
 @property (nonatomic, retain) NSString *name;
-@property (nonatomic, retain) NSString *fbid;
+@property (nonatomic, retain) NSString *number;
 @property (nonatomic, retain) NSDate *date;
 
 // tracking FB actions

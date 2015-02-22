@@ -14,11 +14,11 @@
 @implementation FriendsCustomAutoCompleteObject
 
 
-- (id)initWithName:(NSString *)name withFbid:(NSString *)fbid {
+- (id)initWithName:(NSString *)name withNumber:(NSString *)number {
     self = [super init];
     if (self) {
         [self setName:name];
-        [self setFbid:fbid];
+        [self setNumber:number];
     }
     return self;
 }

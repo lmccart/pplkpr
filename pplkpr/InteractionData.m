@@ -10,7 +10,6 @@
 #import "Report.h"
 #import "Person.h"
 #import "AppDelegate.h"
-#import "FBHandler.h"
 #import "IOSHandler.h"
 
 @interface InteractionData()
@@ -71,28 +70,16 @@
                                     boredMsgs, @"Bored",
                                     calmMsgs, @"Calm", nil];
         
-        if ([[FBHandler data] useFakebook]) {
-        
-            self.descriptiveActionsDict = [[NSDictionary alloc] initWithObjectsAndKeys:
-               [[NSArray alloc] initWithObjects:@"Let them know?", @"I let them know.", nil], @"post",
-               [[NSArray alloc] initWithObjects:@"Poke them?", @"I poked them.", nil], @"poke",
-               [[NSArray alloc] initWithObjects:@"Invite them to hang out?", @"I invited them to hang out.", nil], @"join_event",
-               [[NSArray alloc] initWithObjects:@"Unblock them?", @"I unblocked them.", nil], @"unblock",
-               [[NSArray alloc] initWithObjects:@"Block them?", @"I blocked them.", nil], @"block",
-               [[NSArray alloc] initWithObjects:@"Unfriend them?", @"I unfriended them.", nil], @"unfriend",
-               [[NSArray alloc] initWithObjects:@"Friend them?", @"I friended them.", nil], @"friend", nil];
 
-        } else {
-            
-            self.descriptiveActionsDict = [[NSDictionary alloc] initWithObjectsAndKeys:
-               [[NSArray alloc] initWithObjects:@"Let them know?", @"I let them know.", nil], @"post",
-               [[NSArray alloc] initWithObjects:@"Poke them?", @"I poked them.", nil], @"poke",
-               [[NSArray alloc] initWithObjects:@"Invite them to hang out?", @"I invited them to hang out.", nil], @"join_event",
-               [[NSArray alloc] initWithObjects:@"Unblock them?", @"I unblocked them.", nil], @"unblock",
-               [[NSArray alloc] initWithObjects:@"Delete their number?", @"I deleted their number.", nil], @"block",
-               [[NSArray alloc] initWithObjects:@"Delete their number?", @"I deleted their number.", nil], @"unfriend",
-               [[NSArray alloc] initWithObjects:@"Friend them?", @"I friended them.", nil], @"friend", nil];
-        }
+        self.descriptiveActionsDict = [[NSDictionary alloc] initWithObjectsAndKeys:
+           [[NSArray alloc] initWithObjects:@"Let them know?", @"I let them know.", nil], @"post",
+           [[NSArray alloc] initWithObjects:@"Poke them?", @"I poked them.", nil], @"poke",
+           [[NSArray alloc] initWithObjects:@"Invite them to hang out?", @"I invited them to hang out.", nil], @"join_event",
+           [[NSArray alloc] initWithObjects:@"Unblock them?", @"I unblocked them.", nil], @"unblock",
+           [[NSArray alloc] initWithObjects:@"Delete their number?", @"I deleted their number.", nil], @"block",
+           [[NSArray alloc] initWithObjects:@"Delete their number?", @"I deleted their number.", nil], @"unfriend",
+           [[NSArray alloc] initWithObjects:@"Friend them?", @"I friended them.", nil], @"friend", nil];
+    
         
 		self.locationsArray = [[NSMutableArray alloc] init];
 		self.summary = [[NSDictionary alloc] init];
@@ -147,11 +134,11 @@
 
 
 // returns existing person or makes new one
-- (Person *)getPerson:(NSString *)name withFbid:(NSString *)fbid save:(BOOL)save {
+- (Person *)getPerson:(NSString *)name withNumber:(NSString *)number save:(BOOL)save {
     //NSLog(@"GETTING PERSON %@", fbid);
     
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"fbid == %@", fbid];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"number == %@", number];
     [request setEntity:[NSEntityDescription entityForName:@"Person" inManagedObjectContext:_managedObjectContext]];
     [request setPredicate:predicate];
     
@@ -171,7 +158,7 @@
             person = [NSEntityDescription insertNewObjectForEntityForName:@"Person"
                                                    inManagedObjectContext:_managedObjectContext];
             [person setName:name];
-            [person setFbid:fbid];
+            [person setNumber:number];
             [person setDate:[NSDate date]]; // update for recency
             
             NSMutableDictionary *tickets_dict = [[NSMutableDictionary alloc] init];
@@ -190,7 +177,7 @@
 }
 
 - (Report *)addReport:(NSString *)name
-             withFbid:(NSString *)fbid
+             withNumber:(NSString *)number
           withEmotion:(NSString *)emotion
            withRating:(NSNumber *)rating
              withDate:(NSDate *)date; {
@@ -207,7 +194,7 @@
     [newReport setDate:date];
     
     // add report to person
-    Person *person = [self getPerson:name withFbid:fbid save:false];
+    Person *person = [self getPerson:name withNumber:number save:false];
     newReport.person = person;
     
     // update totals
@@ -458,10 +445,7 @@
 }
 
 - (void)checkTakeAction {
-    if ([[FBHandler data] useFakebook]) {
-        [self checkTickets];
-    }
-    
+
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSDate *lastDate = [defaults objectForKey:@"lastActionDate"];
     NSDate *date = [NSDate date];
@@ -543,11 +527,7 @@
     
     NSString *msg = [self getMessage:emotion];
     
-    if ([[FBHandler data] useFakebook]) {
-        [[FBHandler data] createFakebookRequest:person withType:action withMessage:msg withEmotion:emotion];
-    } else {
-        [[IOSHandler data] performAction:person withType:action withMessage:msg withEmotion:emotion];
-    }
+    [[IOSHandler data] performAction:person withType:action withMessage:msg withEmotion:emotion];
     
     // log action
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -556,8 +536,8 @@
     [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"];
     NSString *date = [dateFormatter stringFromDate:[NSDate date]];
     
-    NSString *actionData = [NSString stringWithFormat:@"%@\t%@\t%@\t%@\t%@\t%@\n", date, person.name, person.fbid, emotion, action, msg];
-    [[FBHandler data] logData:actionData withTag:@"action" withCompletion:nil];
+    NSString *actionData = [NSString stringWithFormat:@"%@\t%@\t%@\t%@\t%@\t%@\n", date, person.name, person.number, emotion, action, msg];
+    //[[FBHandler data] logData:actionData withTag:@"action" withCompletion:nil];
 }
 
 - (NSString *)getMessage:(NSString *)emotion {
@@ -609,26 +589,15 @@
         }
         for (NSString *tick in p.fbTickets) {
             NSArray *arr = [tick componentsSeparatedByString:@":"];
-            NSString *tick_id = arr[0];
             NSString *emotion = arr[1];
-            [[FBHandler data] checkTicket:tick_id withCompletion:^(int status) {
-                NSString *action = [p.fbTickets objectForKey:tick];
-                if (status == 1) {
-                    //NSLog(@"ticket successful %@ %@", tick, action);
-                    [p.fbTickets removeObjectForKey:tick];
-                    if (action) {
-                        NSMutableArray *emo_actions = [p.fbActions valueForKey:emotion];
-                        [emo_actions addObject:action];
-                        //NSLog(@"tickets %@", p.fbTickets);
-                        //NSLog(@"actions %@", p.fbActions);
-                    }
-                } else if (status == 0) {
-                    //NSLog(@"ticket processing %@", tick);
-                } else if (status == -1) {
-                    //NSLog(@"ticket failed %@", tick);
-                    [p.fbTickets removeObjectForKey:tick];
-                }
-            }];
+            NSString *action = [p.fbTickets objectForKey:tick];
+            [p.fbTickets removeObjectForKey:tick];
+            if (action) {
+                NSMutableArray *emo_actions = [p.fbActions valueForKey:emotion];
+                [emo_actions addObject:action];
+                //NSLog(@"tickets %@", p.fbTickets);
+                //NSLog(@"actions %@", p.fbActions);
+            }
             
         }
     }

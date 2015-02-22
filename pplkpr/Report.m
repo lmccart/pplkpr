@@ -26,6 +26,6 @@
     
     NSString *date = [dateFormatter stringFromDate:self.date];
     
-    return [NSString stringWithFormat:@"%@\t%@\t%@\t%@\t%@\n", date, self.person.name, self.person.fbid, self.emotion, self.rating];
+    return [NSString stringWithFormat:@"%@\t%@\t%@\t%@\t%@\n", date, self.person.name, self.person.number, self.emotion, self.rating];
 }
 @end

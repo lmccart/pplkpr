@@ -13,7 +13,7 @@
 @implementation Person
 
 @dynamic name;
-@dynamic fbid;
+@dynamic number;
 @dynamic date;
 
 @dynamic fbTickets;

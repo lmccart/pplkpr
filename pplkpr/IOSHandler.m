@@ -8,7 +8,6 @@
 
 #import "IOSHandler.h"
 #import "AppDelegate.h"
-#import "FBHandler.h"
 #import "ViewController.h"
 
 @interface IOSHandler()
@@ -58,6 +57,10 @@
     return self;
 }
 
+- (NSArray *)getContacts {
+    return [self.addressBook peopleOrderedByFirstName];
+}
+
 - (RHPerson *)getContact:(NSString *)name {
     NSArray *matches = [self.addressBook peopleWithName:name];
     NSLog(@"%@ %@", name, matches);
@@ -67,6 +70,20 @@
     else return nil;
     
 }
+
+
+- (UIImage *)getContactPic:(Person *)person {
+    RHPerson *p = [self getContact:person.name];
+    if (p) {
+        if (!p.hasImage) {
+            return nil;
+        } else {
+            return p.originalImage;
+        }
+    }
+    return nil;
+}
+
 - (void)removeContact:(NSString *)name {
     RHPerson *p = [self getContact:name];
     if (p) {

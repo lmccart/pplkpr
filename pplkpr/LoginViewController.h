@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "InteractionData.h"
 
-@interface LoginViewController : UIViewController <UITextFieldDelegate, UINavigationControllerDelegate>
+@interface LoginViewController : UIViewController <UINavigationControllerDelegate>
 
 
 @end

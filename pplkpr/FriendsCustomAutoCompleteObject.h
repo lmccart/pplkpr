@@ -12,8 +12,8 @@
 @interface FriendsCustomAutoCompleteObject : NSObject <MLPAutoCompletionObject>
 
 @property (strong) NSString *name;
-@property (strong) NSString *fbid;
+@property (strong) NSString *number;
 
-- (id)initWithName:(NSString *)name withFbid:(NSString *)fbid;
+- (id)initWithName:(NSString *)name withNumber:(NSString *)number;
 
 @end

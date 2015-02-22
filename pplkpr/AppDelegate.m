@@ -9,7 +9,6 @@
 #import "AppDelegate.h"
 #import "InteractionData.h"
 #import "HeartRateMonitor.h"
-#import "FBHandler.h"
 #import "IOSHandler.h"
 #import "HeartRateAnalyzer.h"
 
@@ -24,10 +23,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
-    // Toggle Fakebook!
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setBool:false forKey:@"useFakebook"];
-    [defaults synchronize];
     
 	[self startUpdatingLocation];
     
@@ -53,7 +48,6 @@
     [[HeartRateMonitor data] setViewController:self.homeController];
     
     // Init data
-    [[FBHandler data] init];
     [[IOSHandler data] init];
     [[InteractionData data] checkTickets];
     self.alertShowing = NO;
@@ -118,20 +112,11 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    [[FBHandler data] handleActivate];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    [[FBHandler data] closeSession];
-}
-
-- (BOOL)application:(UIApplication *)application
-            openURL:(NSURL *)url
-  sourceApplication:(NSString *)sourceApplication
-         annotation:(id)annotation {
-    return [[FBHandler data] handleOpenURL:url sourceApplication:sourceApplication];
 }
 
 
@@ -260,29 +245,27 @@
 
 - (void)triggerNotification:(NSString *)type {
     
-    if ([[FBHandler data] loggedIn]) {
-        NSString *msg;
-        if ([type isEqualToString:@"hrv"]) {
-            msg = @"Are you feeling something?";
-        } else if ([type isEqualToString:@"location"]) {
-            msg = @"Are you about to meet someone or did you just leave someone?";
-        } else if ([type isEqualToString:@"hr_monitor"]) {
-            msg = @"Heart rate monitor is not connected.";
-        } else if ([type isEqualToString:@"hr_battery"]) {
-            msg = @"Heart rate monitor battery is low.";
-        }
-        UILocalNotification * notification = [[UILocalNotification alloc] init];
-        notification.alertBody = msg;
-        notification.alertAction = @"Report";
-        notification.hasAction = YES;
-        notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
-        
-        NSDictionary *infoDict = [NSDictionary dictionaryWithObject:type forKey:@"type"];
-        notification.userInfo = infoDict;
-        
-        [[UIApplication sharedApplication] scheduleLocalNotification:notification];
-        NSLog(@"sending notification");
+    NSString *msg;
+    if ([type isEqualToString:@"hrv"]) {
+        msg = @"Are you feeling something?";
+    } else if ([type isEqualToString:@"location"]) {
+        msg = @"Are you about to meet someone or did you just leave someone?";
+    } else if ([type isEqualToString:@"hr_monitor"]) {
+        msg = @"Heart rate monitor is not connected.";
+    } else if ([type isEqualToString:@"hr_battery"]) {
+        msg = @"Heart rate monitor battery is low.";
     }
+    UILocalNotification * notification = [[UILocalNotification alloc] init];
+    notification.alertBody = msg;
+    notification.alertAction = @"Report";
+    notification.hasAction = YES;
+    notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
+    
+    NSDictionary *infoDict = [NSDictionary dictionaryWithObject:type forKey:@"type"];
+    notification.userInfo = infoDict;
+    
+    [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+    NSLog(@"sending notification");
 }
 
 // fired in all when app notif received while app is foregrounded

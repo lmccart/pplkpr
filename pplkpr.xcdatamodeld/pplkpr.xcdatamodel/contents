@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6220.14" systemVersion="13E28" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6252" systemVersion="14A389" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Person" representedClassName="Person" syncable="YES">
         <attribute name="angry" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="angryN" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
@@ -15,9 +15,9 @@
         <attribute name="excited" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="excitedN" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="fbActions" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="fbid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="fbTickets" optional="YES" attributeType="Transformable" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="number" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="scared" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="scaredN" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <relationship name="reports" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Report" inverseName="person" inverseEntity="Report" syncable="YES"/>

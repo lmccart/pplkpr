@@ -9,7 +9,6 @@
 #import "MeetViewController.h"
 #import "InteractionData.h"
 #import "HeartRateAnalyzer.h"
-#import "FBHandler.h"
 #import "IOSHandler.h"
 #import "MLPAutoCompleteTextField.h"
 #import "CustomAutoCompleteCell.h"
@@ -23,7 +22,7 @@
 @property (strong, nonatomic) IBOutlet FriendsCompleteDataSource *autoCompleteDataSource;
 @property (weak) IBOutlet MLPAutoCompleteTextField *whoTextField;
 @property (retain) NSString *whoName;
-@property (retain) NSString *whoFbid;
+@property (retain) NSString *whoNumber;
 
 @property (strong, nonatomic) IBOutlet UITextView *emotionTextView;
 @property (retain, nonatomic) IBOutlet UIPickerView *emotionPicker;
@@ -57,7 +56,7 @@
         // Custom initialization
         self.needsReset = false;
         self.whoName = @"";
-        self.whoFbid = @"";
+        self.whoNumber = @"";
     }
     return self;
 }
@@ -168,7 +167,7 @@
     [self.whoTextField resignFirstResponder];
     if ([self.whoTextField.text length] == 0) {
         [self setWhoName:@""];
-        [self setWhoFbid:@""];
+        [self setWhoNumber:@""];
     } else {
         [self.whoTextField setText:self.whoName];
     }
@@ -248,15 +247,11 @@
                                               otherButtonTitles:nil];
         [alert show];
     } else {
-        Person *p = [[InteractionData data] getPerson:self.whoName withFbid:self.whoFbid save:true];
+        Person *p = [[InteractionData data] getPerson:self.whoName withNumber:self.whoNumber save:true];
         
         float val = [self.intensitySlider value];
         if (val > 0.75) {
-            if ([[FBHandler data] useFakebook]) {
-                [[FBHandler data] requestSendWarning:p withEmotion:self.emotion];
-            } else {
-                [[IOSHandler data] sendText:p withMessage:[NSString stringWithFormat:@"I am on my way to meet you and I am feeling %@.", [self.emotion lowercaseString]] fromController:self];
-            }
+            [[IOSHandler data] sendText:p withMessage:[NSString stringWithFormat:@"I am on my way to meet you and I am feeling %@.", [self.emotion lowercaseString]] fromController:self];
         }
         
         // save last report date
@@ -279,7 +274,7 @@
     
     [self.whoTextField setText:@""];
     [self setWhoName:@""];
-    [self setWhoFbid:@""];
+    [self setWhoNumber:@""];
     
     [self.emotionPicker reloadAllComponents];
     [self.emotionPicker selectRow:0 inComponent:0 animated:NO];
@@ -298,7 +293,7 @@
     if (selectedObject) {
         FriendsCustomAutoCompleteObject *fObj = (FriendsCustomAutoCompleteObject *)selectedObject;
         [self setWhoName:fObj.name];
-        [self setWhoFbid:fObj.fbid];
+        [self setWhoNumber:fObj.number];
         
     }
 }

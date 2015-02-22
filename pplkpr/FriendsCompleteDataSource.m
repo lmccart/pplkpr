@@ -8,8 +8,8 @@
 
 #import "FriendsCompleteDataSource.h"
 #import "FriendsCustomAutoCompleteObject.h"
-#import "FBHandler.h"
 #import "InteractionData.h"
+#import "IOSHandler.h"
 
 @interface FriendsCompleteDataSource()
 
@@ -26,13 +26,31 @@
     NSMutableArray *mutableFriends = [NSMutableArray new];
 
     NSLog(@"updating friends");
-    [[FBHandler data] requestFriendsWithCompletion:^(NSArray *result) {
-        for (NSDictionary<FBGraphUser>* friend in result) {
-            FriendsCustomAutoCompleteObject *friendObj = [[FriendsCustomAutoCompleteObject alloc] initWithName:friend.name withFbid:friend.id];
+    NSArray *result = [[IOSHandler data] getContacts];
+    NSString *last;
+    for (RHPerson* friend in result) {
+        NSString *num = ([friend.phoneNumbers count] > 0) ? [friend.phoneNumbers valueAtIndex:0] : @"0";
+        
+        // take care of holdover
+        if (last && ![friend.name isEqualToString:last]) {
+            FriendsCustomAutoCompleteObject *friendObj = [[FriendsCustomAutoCompleteObject alloc] initWithName:last withNumber:@"0"];
             [mutableFriends addObject:friendObj];
+            NSLog(@"%@ %@", last, @"0");
         }
-        [self setFriendObjects: [NSArray arrayWithArray:mutableFriends]];
-    }];
+        
+        if ([num isEqualToString:@"0"]) {
+            last = friend.name; // if no num, save in case duplicates
+        } else {
+            last = nil;
+            if (friend.name && num) {
+                FriendsCustomAutoCompleteObject *friendObj = [[FriendsCustomAutoCompleteObject alloc] initWithName:friend.name withNumber:num];
+                [mutableFriends addObject:friendObj];
+                NSLog(@"%@ %@", friend.name, num);
+            }
+        }
+        
+    }
+    [self setFriendObjects: [NSArray arrayWithArray:mutableFriends]];
     
 }
 
@@ -66,7 +84,7 @@
     NSMutableArray *mutableRecents = [NSMutableArray new];
     
     for (Person *p in recents) {
-        FriendsCustomAutoCompleteObject *friendObj = [[FriendsCustomAutoCompleteObject alloc] initWithName:p.name withFbid:p.fbid];
+        FriendsCustomAutoCompleteObject *friendObj = [[FriendsCustomAutoCompleteObject alloc] initWithName:p.name withNumber:p.number];
         [mutableRecents addObject:friendObj];
     }
     return mutableRecents;

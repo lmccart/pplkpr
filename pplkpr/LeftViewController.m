@@ -10,7 +10,6 @@
 #import "InteractionData.h"
 #import "Report.h"
 #import "HeartRateAnalyzer.h"
-#import "FBHandler.h"
 #import "MLPAutoCompleteTextField.h"
 #import "CustomAutoCompleteCell.h"
 #import "FriendsCompleteDataSource.h"
@@ -23,7 +22,7 @@
 @property (strong, nonatomic) IBOutlet FriendsCompleteDataSource *autoCompleteDataSource;
 @property (weak) IBOutlet MLPAutoCompleteTextField *whoTextField;
 @property (retain) NSString *whoName;
-@property (retain) NSString *whoFbid;
+@property (retain) NSString *whoNumber;
 
 @property (strong, nonatomic) IBOutlet UITextView *emotionTextView;
 @property (retain, nonatomic) IBOutlet UIPickerView *emotionPicker;
@@ -62,7 +61,7 @@
         // Custom initialization
         self.needsReset = false;
         self.whoName = @"";
-        self.whoFbid = @"";
+        self.whoNumber = @"";
     }
     return self;
 }
@@ -189,7 +188,7 @@
     [self.whoTextField resignFirstResponder];
     if ([self.whoTextField.text length] == 0) {
         [self setWhoName:@""];
-        [self setWhoFbid:@""];
+        [self setWhoNumber:@""];
     } else {
         [self.whoTextField setText:self.whoName];
     }
@@ -287,12 +286,12 @@
         float timeVal = [self.timeSlider value];
         NSDate *date = [self.rangeEnd dateByAddingTimeInterval:timeVal*60];
         Report *r = [[InteractionData data] addReport:self.whoName
-                                             withFbid:self.whoFbid
+                                             withNumber:self.whoNumber
                                           withEmotion:self.emotion
                                            withRating:[NSNumber numberWithFloat:val]
                                              withDate:date];
         
-        [[FBHandler data] logData:[r toString] withTag:@"report" withCompletion:nil];
+        //[[FBHandler data] logData:[r toString] withTag:@"report" withCompletion:nil];
         
         // save last report date
         [[InteractionData data] saveLastReportDate:[NSDate date]];
@@ -315,7 +314,7 @@
     
     [self.whoTextField setText:@""];
     [self setWhoName:@""];
-    [self setWhoFbid:@""];
+    [self setWhoNumber:@""];
     
 	[self.emotionPicker reloadAllComponents];
 	[self.emotionPicker selectRow:0 inComponent:0 animated:NO];
@@ -347,7 +346,7 @@
     if (selectedObject) {
         FriendsCustomAutoCompleteObject *fObj = (FriendsCustomAutoCompleteObject *)selectedObject;
         [self setWhoName:fObj.name];
-        [self setWhoFbid:fObj.fbid];
+        [self setWhoNumber:fObj.number];
         
     }
 }

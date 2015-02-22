@@ -92,7 +92,6 @@
 		65CA14AC19AD173100130EEB /* CustomAutoCompleteCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 65CA14AB19AD173100130EEB /* CustomAutoCompleteCell.m */; };
 		65E88A4D19BB8E6A00379268 /* FlatSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 65E88A4C19BB8E6A00379268 /* FlatSlider.m */; };
 		65E88A5619BE0F9400379268 /* credentials.txt in Resources */ = {isa = PBXBuildFile; fileRef = 65E88A5519BE0F9300379268 /* credentials.txt */; };
-		65F2961319B7D14B007C1C06 /* FBHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F2961219B7D14B007C1C06 /* FBHandler.m */; };
 		65F2961619B8DE5F007C1C06 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F2961519B8DE5F007C1C06 /* LoginViewController.m */; };
 		65F2961919B8FF7F007C1C06 /* Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F2961819B8FF7F007C1C06 /* Constants.m */; };
 		65F2963F19BA545A007C1C06 /* ReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F2963E19BA545A007C1C06 /* ReportViewController.m */; };
@@ -282,8 +281,6 @@
 		65E88A4B19BB8E6A00379268 /* FlatSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlatSlider.h; sourceTree = "<group>"; };
 		65E88A4C19BB8E6A00379268 /* FlatSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlatSlider.m; sourceTree = "<group>"; };
 		65E88A5519BE0F9300379268 /* credentials.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = credentials.txt; path = assets/credentials.txt; sourceTree = "<group>"; };
-		65F2961119B7D14B007C1C06 /* FBHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBHandler.h; sourceTree = "<group>"; };
-		65F2961219B7D14B007C1C06 /* FBHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBHandler.m; sourceTree = "<group>"; };
 		65F2961419B8DE5F007C1C06 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		65F2961519B8DE5F007C1C06 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		65F2961719B8FF7E007C1C06 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
@@ -484,8 +481,6 @@
 			children = (
 				65909D1419C76724002953A2 /* DayLog.h */,
 				65909D1519C76724002953A2 /* DayLog.m */,
-				65F2961119B7D14B007C1C06 /* FBHandler.h */,
-				65F2961219B7D14B007C1C06 /* FBHandler.m */,
 				65F3F70F1A22BD8D0098054D /* IOSHandler.h */,
 				65F3F7101A22BD8D0098054D /* IOSHandler.m */,
 				65251866197B5B1100AF6981 /* HeartRateMonitor.h */,
@@ -880,7 +875,6 @@
 				27E0856419C5294D0071F9F8 /* daxpy.c in Sources */,
 				65CA14A619ACD93200130EEB /* NSString+Levenshtein.m in Sources */,
 				658308C719B104C100C385EB /* UIImage+WebP.m in Sources */,
-				65F2961319B7D14B007C1C06 /* FBHandler.m in Sources */,
 				658308BC19B104C100C385EB /* NSData+ImageContentType.m in Sources */,
 				6525185F19708B1000AF6981 /* PersonViewController.m in Sources */,
 				27E0856719C5294D0071F9F8 /* dscal.c in Sources */,

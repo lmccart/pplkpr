@@ -30,9 +30,9 @@
 - (id)init;
 + (NSDate *)getTodayDate;
 
-- (Person *)getPerson:(NSString *)name withFbid:(NSString *)fbid save:(BOOL)save;
+- (Person *)getPerson:(NSString *)name withNumber:(NSString *)number save:(BOOL)save;
 - (Report *)addReport:(NSString *)name
-             withFbid:(NSString *)fbid
+             withNumber:(NSString *)number
           withEmotion:(NSString *)emotion
            withRating:(NSNumber *)rating
              withDate:(NSDate *)date;
