@@ -440,7 +440,6 @@
         <!--Login View Controller-->
         <scene sceneID="VUt-CO-DiR">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="9Qd-jn-gTa" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController hidesBottomBarWhenPushed="YES" id="SHJ-Mw-UT6" customClass="LoginViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="FmY-So-27e">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="431"/>
@@ -484,6 +483,7 @@
                         <outlet property="personImage" destination="aVj-tG-Kut" id="bIC-EJ-po9"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9Qd-jn-gTa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1584" y="-1297"/>
         </scene>
