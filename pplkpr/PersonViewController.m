@@ -64,7 +64,18 @@
         [[InteractionData data] setJumpToPerson:nil];
         
         UIImage *img = [[IOSHandler data] getContactPic:self.curPerson];
-        [self.personPhoto setImage:img];
+        
+        CGRect f = self.personLabel.frame;
+        
+        if (img) {
+            [self.personPhoto setHidden:false];
+            [self.personPhoto setImage:img];
+            f.origin.x = 119;
+        } else {
+            [self.personPhoto setHidden:true];
+            f.origin.x = 30;
+        }
+        [self.personLabel setFrame:f];
 
         [self updatePriority];
         
@@ -135,16 +146,13 @@
             UITextView *tv = [[UITextView alloc] initWithFrame:CGRectMake(0, y, self.priorityView.frame.size.width, 50)];
             [tv setDelegate:self];
             if (tap) {
-                [tv setBackgroundColor:[GlobalMethods globalYellowColor]];
                 UITapGestureRecognizer *gr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(textTapped:)];
                 [tv addGestureRecognizer:gr];
                 [attributedString addAttribute:@"emotionTag" value:emotion range:NSMakeRange(0, [attributedString length])];
                 NSString *action = [[InteractionData data] getFutureAction:emotion forIndex:0];
                 [attributedString addAttribute:@"actionTag" value:action range:NSMakeRange(0, [attributedString length])];
-            } else {
-                [tv.layer setBorderColor:[[GlobalMethods globalYellowColor] CGColor]];
-                [tv.layer setBorderWidth:1];
             }
+            [tv setBackgroundColor:[GlobalMethods globalYellowColor]];
             
             [tv setAttributedText:attributedString];
             
@@ -217,10 +225,6 @@
             
             NSString *msg = [[InteractionData data] getMessage:emotion];
             [[IOSHandler data] performAction:self.curPerson withType:action withMessage:msg withEmotion:emotion fromController:self];
-            
-            [textView.layer setBorderColor:[[GlobalMethods globalYellowColor] CGColor]];
-            [textView.layer setBorderWidth:1];
-            [textView setBackgroundColor:[UIColor whiteColor]];
             
             NSString *newStr = [NSString stringWithFormat:@"%@\nI let them know.", [textView.attributedText.string componentsSeparatedByString:@"\n"][0]];
             NSMutableAttributedString* attributedString = [[NSMutableAttributedString alloc] initWithString:newStr attributes:[GlobalMethods attrsDict]];

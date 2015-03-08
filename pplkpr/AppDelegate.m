@@ -50,10 +50,8 @@
     // Init data
     [[IOSHandler data] init];
     [[InteractionData data] checkTickets];
-    self.alertShowing = NO;
     
     // Make sure notifs are allowed
-
     if ([UIApplication instancesRespondToSelector:@selector(registerUserNotificationSettings:)]) {
         [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeSound categories:nil]];
     }
@@ -71,26 +69,26 @@
 	return YES;
 }
 
--(void) writeToLogFile:(NSString*)content{
-    content = [NSString stringWithFormat:@"%@\n",content];
-	
-    //get the documents directory:
-    NSString *documentsDirectory = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
-    NSString *fileName = [NSString stringWithFormat:@"%@/log.txt", documentsDirectory];
-	
-    NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:fileName];
-    if (fileHandle){
-        [fileHandle seekToEndOfFile];
-        [fileHandle writeData:[content dataUsingEncoding:NSUTF8StringEncoding]];
-        [fileHandle closeFile];
-    }
-    else{
-        [content writeToFile:fileName
-                  atomically:NO
-                    encoding:NSStringEncodingConversionAllowLossy
-                       error:nil];
-    }
-}
+//-(void) writeToLogFile:(NSString*)content{
+//    content = [NSString stringWithFormat:@"%@\n",content];
+//	
+//    //get the documents directory:
+//    NSString *documentsDirectory = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+//    NSString *fileName = [NSString stringWithFormat:@"%@/log.txt", documentsDirectory];
+//	
+//    NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:fileName];
+//    if (fileHandle){
+//        [fileHandle seekToEndOfFile];
+//        [fileHandle writeData:[content dataUsingEncoding:NSUTF8StringEncoding]];
+//        [fileHandle closeFile];
+//    }
+//    else{
+//        [content writeToFile:fileName
+//                  atomically:NO
+//                    encoding:NSStringEncodingConversionAllowLossy
+//                       error:nil];
+//    }
+//}
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
@@ -245,27 +243,41 @@
 
 - (void)triggerNotification:(NSString *)type {
     
-    NSString *msg;
-    if ([type isEqualToString:@"hrv"]) {
-        msg = @"Are you feeling something?";
-    } else if ([type isEqualToString:@"location"]) {
-        msg = @"Are you about to meet someone or did you just leave someone?";
-    } else if ([type isEqualToString:@"hr_monitor"]) {
-        msg = @"Heart rate monitor is not connected.";
-    } else if ([type isEqualToString:@"hr_battery"]) {
-        msg = @"Heart rate monitor battery is low.";
+    NSLog(@"trying to send notification");
+    
+    bool exists = false;
+    
+    for(UILocalNotification *n in [[UIApplication sharedApplication] scheduledLocalNotifications]) {
+        NSString *t = [n.userInfo objectForKey:@"type"];
+        if([t isEqualToString:type]) {
+            exists = true;
+        }
     }
-    UILocalNotification * notification = [[UILocalNotification alloc] init];
-    notification.alertBody = msg;
-    notification.alertAction = @"Report";
-    notification.hasAction = YES;
-    notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
     
-    NSDictionary *infoDict = [NSDictionary dictionaryWithObject:type forKey:@"type"];
-    notification.userInfo = infoDict;
     
-    [[UIApplication sharedApplication] scheduleLocalNotification:notification];
-    NSLog(@"sending notification");
+    if (!exists) {
+        NSString *msg;
+        if ([type isEqualToString:@"hrv"]) {
+            msg = @"Are you feeling something?";
+        } else if ([type isEqualToString:@"location"]) {
+            msg = @"Are you about to meet someone or did you just leave someone?";
+        } else if ([type isEqualToString:@"hr_monitor"]) {
+            msg = @"Heart rate monitor is not connected.";
+        } else if ([type isEqualToString:@"hr_battery"]) {
+            msg = @"Heart rate monitor battery is low.";
+        }
+        UILocalNotification * notification = [[UILocalNotification alloc] init];
+        notification.alertBody = msg;
+        notification.alertAction = @"Report";
+        notification.hasAction = YES;
+        notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:1];
+        
+        NSDictionary *infoDict = [NSDictionary dictionaryWithObject:type forKey:@"type"];
+        notification.userInfo = infoDict;
+        
+        [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+        NSLog(@"sending notification");
+    }
 }
 
 // fired in all when app notif received while app is foregrounded
@@ -283,7 +295,7 @@
         
         else if (application.applicationState == UIApplicationStateActive) {
             UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
-            if ([tabBarController selectedIndex] != 2 && !self.alertShowing) { // only show if not already reporting
+            if ([tabBarController selectedIndex] != 2) {
                 
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hey!"
                                                                 message:[notification alertBody]
@@ -291,20 +303,16 @@
                                                       cancelButtonTitle:@"No"
                                                       otherButtonTitles:@"Yes", nil];
                 [alert show];
-                self.alertShowing = YES;
             }
         }
     } else if ([type isEqualToString:@"hr_monitor"]) {
-        if (application.applicationState == UIApplicationStateInactive) {
-            [[HeartRateMonitor data] setSensorWarned:YES];
-        } else if (application.applicationState == UIApplicationStateActive && !self.alertShowing) {
+        if (application.applicationState == UIApplicationStateActive) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hey!"
                                                             message:[notification alertBody]
                                                            delegate:self
                                                   cancelButtonTitle:@"Ok"
                                                   otherButtonTitles:nil];
             [alert show];
-            self.alertShowing = YES;
         }
     } else if ([type isEqualToString:@"hr_battery"]) {
         if (application.applicationState == UIApplicationStateActive) {
@@ -323,8 +331,6 @@
     NSString *type = [notification.userInfo objectForKey:@"type"];
     if ([type isEqualToString:@"hrv"] || [type isEqualToString:@"location"]) {
         [self popToReportView];
-    } else if ([type isEqualToString:@"hr_monitor"]) {
-        [[HeartRateMonitor data] setSensorWarned:YES];
     }
     completionHandler();
 }
@@ -334,7 +340,6 @@
     if (buttonIndex == [alertView firstOtherButtonIndex]) {
         [self popToReportView];
     }
-    self.alertShowing = NO;
 }
 
 - (void)popToReportView {

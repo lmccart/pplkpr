@@ -63,7 +63,6 @@
 
 - (RHPerson *)getContact:(NSString *)name {
     NSArray *matches = [self.addressBook peopleWithName:name];
-    NSLog(@"%@ %@", name, matches);
     if ([matches count] > 0) {
         return [matches objectAtIndex:0]; // duplicate names? hell just pick the first sucker :)
     }

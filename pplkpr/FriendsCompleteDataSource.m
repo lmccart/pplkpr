@@ -35,7 +35,6 @@
         if (last && ![friend.name isEqualToString:last]) {
             FriendsCustomAutoCompleteObject *friendObj = [[FriendsCustomAutoCompleteObject alloc] initWithName:last withNumber:@"0"];
             [mutableFriends addObject:friendObj];
-            NSLog(@"%@ %@", last, @"0");
         }
         
         if ([num isEqualToString:@"0"]) {
@@ -45,7 +44,6 @@
             if (friend.name && num) {
                 FriendsCustomAutoCompleteObject *friendObj = [[FriendsCustomAutoCompleteObject alloc] initWithName:friend.name withNumber:num];
                 [mutableFriends addObject:friendObj];
-                NSLog(@"%@ %@", friend.name, num);
             }
         }
         

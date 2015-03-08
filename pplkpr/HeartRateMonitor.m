@@ -50,7 +50,6 @@
         AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
         self.managedObjectContext = appDelegate.managedObjectContext;
         self.manager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
-        self.sensorWarned = NO;
         self.sensorConnected = NO;
 	}
     
@@ -59,23 +58,6 @@
 
 - (void)setViewController:(ViewController *)viewController {
     _viewController = viewController;
-}
-
-- (void)scheduleCheckSensor {
-    self.sensorWarned = NO;
-    [NSTimer scheduledTimerWithTimeInterval:45.0
-                                     target:self
-                                   selector:@selector(checkSensor)
-                                   userInfo:nil
-                                    repeats:NO];
-}
-
-- (void)checkSensor {
-    if (!self.sensorConnected && !self.sensorWarned) {
-        AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
-        [appDelegate triggerNotification:@"hr_monitor"];
-        self.sensorWarned = YES;
-    }
 }
 
 #pragma mark - Start/Stop Scan methods
@@ -160,11 +142,7 @@
 }
 
 - (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)aPeripheral {
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setBool:true forKey:@"useMonitor"];
-    [defaults synchronize];
-    
+
     NSLog(@"Peripheral connected %@", self.viewController);
     self.sensorConnected = YES;
     
@@ -354,7 +332,6 @@ didDisconnectPeripheral:(CBPeripheral *)aPeripheral
     // trigger alert
     AppDelegate* appDelegate = (AppDelegate*)[UIApplication sharedApplication].delegate;
     [appDelegate triggerNotification:@"hr_monitor"];
-    self.sensorWarned = YES;
     
     
     if (self.peripheral) {
