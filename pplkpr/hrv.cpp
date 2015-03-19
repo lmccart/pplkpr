@@ -34,7 +34,7 @@ namespace hrv {
     }
     
     vector<float> sq(const vector<float>& data) {
-        int n = data.size();
+        int n = (int)data.size();
         vector<float> results(n);
         for(int i = 0; i < n; i++) {
             float x = data[i];
@@ -94,7 +94,7 @@ namespace hrv {
     }
     
     vector<float> successiveDifferences(const vector<float>& data, int lag = 1) {
-        int n = data.size() - lag;
+        int n = (int)data.size() - lag;
         vector<float> results(n);
         for(int i = 0; i < n; i++) {
             results[i] = data[i + lag] - data[i];
@@ -103,7 +103,7 @@ namespace hrv {
     }
     
     vector<float> successiveRatios(const vector<float>& data, int lag = 1) {
-        int n = data.size() - lag;
+        int n = (int)data.size() - lag;
         vector<float> results(n);
         for(int i = 0; i < n; i++) {
             results[i] = data[i + lag] / data[i];

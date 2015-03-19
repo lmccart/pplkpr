@@ -19,7 +19,5 @@
 -(void) startScan;
 -(void) stopScan;
 -(void)setViewController:(ViewController *)viewController;
--(void)scheduleCheckSensor;
--(void)checkSensor;
 
 @end

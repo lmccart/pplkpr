@@ -174,7 +174,7 @@ didDiscoverCharacteristicsForService:(CBService *)service
 		if([[characteristic.UUID data] isEqualToData:[hrTarget data]] ||
            [[characteristic.UUID data] isEqualToData:[batteryTarget data]]) {
             [peripheral readValueForCharacteristic:characteristic];
-            NSLog(@"Discovered characteristic %@ for service %@ notifying %hhd", characteristic.UUID, service.UUID, characteristic.isNotifying);
+            NSLog(@"Discovered characteristic %@ for service %@ notifying %d", characteristic.UUID, service.UUID, characteristic.isNotifying);
 		}
 		[peripheral discoverDescriptorsForCharacteristic:characteristic];
     }

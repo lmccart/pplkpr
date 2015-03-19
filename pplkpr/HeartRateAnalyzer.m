@@ -100,7 +100,7 @@
     if (!self.lastStressUpdateTime) {
         self.lastStressUpdateTime = time;
     } else if ([time timeIntervalSinceDate:self.lastStressUpdateTime] > self.stressUpdateInterval) {
-        int n = [self.rrs count];
+        int n = (int)[self.rrs count];
         
         // if there isn't enough data available, forget about calculating hrv metrics
         float minimumHeartrate = 30;
@@ -123,7 +123,7 @@
         std::vector<double> hrvMetrics = hrv::buildMetrics(rrms);
         
         // prepare hrv metrics in feature_nodes
-        int featureCount = hrvMetrics.size();
+        int featureCount = (int)hrvMetrics.size();
         std::vector<feature_node> data(featureCount + 1); // need extra for end feature
         for(int i = 0; i < featureCount; i++) {
             data[i].index = i + 1; // features are 1-indexed for liblinear

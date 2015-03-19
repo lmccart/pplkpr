@@ -16,7 +16,6 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) UIViewController *homeController;
 
-- (void) writeToLogFile:(NSString*)content;
 #pragma mark data
 
 @property (nonatomic, retain, readonly) NSManagedObjectModel *managedObjectModel;

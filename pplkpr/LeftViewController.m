@@ -292,6 +292,7 @@
                                              withDate:date];
         
         //[[FBHandler data] logData:[r toString] withTag:@"report" withCompletion:nil];
+        [self sendReport:self.whoName withNumber:self.whoNumber withEmotion:self.emotion withValue:val];
         
         // save last report date
         [[InteractionData data] saveLastReportDate:[NSDate date]];
@@ -376,6 +377,26 @@
     NSDate *date = [self.rangeEnd dateByAddingTimeInterval:timeVal*60];
     [self.timeLabel setText:[self.dateFormatter stringFromDate:date]];
 }
+
+
+- (void)sendReport:(NSString *)name withNumber:(NSString *)number withEmotion:(NSString *)emotion withValue:(float)value {
+    
+    NSString *urlString = [NSString stringWithFormat:@"http://pplkpr-node-server.herokuapp.com/add_report?name=%@&number=%@&emotion=%@&value=%f", name, number, emotion, value];
+    NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
+    
+    NSLog(@"URL %@", urlString);
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:url];
+    [request setHTTPMethod:@"GET"];
+    
+    [NSURLConnection sendAsynchronousRequest:request
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                               if (error) { NSLog(@"error: %@", error); }
+                           }];
+}
+
 
 
 @end

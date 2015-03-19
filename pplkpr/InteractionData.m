@@ -530,13 +530,13 @@
     [[IOSHandler data] performAction:person withType:action withMessage:msg withEmotion:emotion];
     
     // log action
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    NSLocale *enUSPOSIXLocale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
-    [dateFormatter setLocale:enUSPOSIXLocale];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"];
-    NSString *date = [dateFormatter stringFromDate:[NSDate date]];
+//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//    NSLocale *enUSPOSIXLocale = [NSLocale localeWithLocaleIdentifier:@"en_US_POSIX"];
+//    [dateFormatter setLocale:enUSPOSIXLocale];
+//    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ"];
+//    NSString *date = [dateFormatter stringFromDate:[NSDate date]];
     
-    NSString *actionData = [NSString stringWithFormat:@"%@\t%@\t%@\t%@\t%@\t%@\n", date, person.name, person.number, emotion, action, msg];
+    //NSString *actionData = [NSString stringWithFormat:@"%@\t%@\t%@\t%@\t%@\t%@\n", date, person.name, person.number, emotion, action, msg];
     //[[FBHandler data] logData:actionData withTag:@"action" withCompletion:nil];
 }
 
