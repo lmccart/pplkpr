@@ -170,7 +170,7 @@
                                 <color key="backgroundColor" red="0.99607843137254903" green="0.92156862745098034" blue="0.039215686274509803" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="tintColor" red="0.9960784912109375" green="0.92156869173049927" blue="0.31372550129890442" alpha="1" colorSpace="deviceRGB"/>
                                 <fontDescription key="fontDescription" name="Karla-Regular" family="Karla" pointSize="16"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" spellCheckingType="no"/>
                                 <connections>
                                     <outlet property="autoCompleteDataSource" destination="1El-By-SEU" id="MYx-Di-PQL"/>
                                     <outlet property="autoCompleteDelegate" destination="Z8x-sD-IGb" id="t6j-ra-80c"/>
@@ -328,7 +328,7 @@
                                 <color key="backgroundColor" red="1" green="0.92549019610000005" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="tintColor" red="0.99607849120000003" green="0.9215686917" blue="0.31372550129999999" alpha="1" colorSpace="deviceRGB"/>
                                 <fontDescription key="fontDescription" name="Karla-Regular" family="Karla" pointSize="16"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" spellCheckingType="no"/>
                                 <connections>
                                     <outlet property="autoCompleteDataSource" destination="DQq-eU-WHi" id="JNv-DX-t2K"/>
                                     <outlet property="autoCompleteDelegate" destination="F0H-pm-mTz" id="WOW-xn-BjB"/>

@@ -115,6 +115,7 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    [self stopUpdatingLocation];
 }
 
 
@@ -184,36 +185,34 @@
 // Delegate method from the CLLocationManagerDelegate protocol.
 - (void)locationManager:(CLLocationManager *)manager
      didUpdateLocations:(NSArray *)locations {
-	
-	NSMutableArray* locationsArray = [[InteractionData data] locationsArray];
-	[locationsArray addObjectsFromArray:locations];
-	CLLocation* current = [locationsArray lastObject];
+    
+    CLLocation* current = [locations lastObject];
     
 	NSLog(@"didUpdateLocations: %+.6f, %+.6f\n",
           current.coordinate.latitude,
           current.coordinate.longitude);
 	
 	NSTimeInterval timeThresholdInSeconds = 15 * 60; // 15 minutes
-	CLLocationDistance distanceThresholdInMeters = 100; // 100 meters
+//	CLLocationDistance distanceThresholdInMeters = 100; // 100 meters
 	
-	NSUInteger count = [locationsArray count];
-	if(count > 1) {
-		CLLocation* previous = [locationsArray objectAtIndex:(count - 2)];
-		NSTimeInterval time = [[current timestamp] timeIntervalSinceDate:[previous timestamp]];
-		if(time < timeThresholdInSeconds) {
-			//NSLog(@"too recent: %f < %f\n", time, timeThresholdInSeconds);
-			return;
-		}
-		CLLocationDistance distance = [current distanceFromLocation:previous];
-		if(distance < distanceThresholdInMeters) {
-			//NSLog(@"too close: %f < %f\n", distance, distanceThresholdInMeters);
-			return;
-		}
-	}
+    CLLocation *lastLoc = [[InteractionData data] lastLoc];
     
-    // trigger alert
-    [self triggerNotification:@"location"];
-	
+	if(lastLoc) {
+		NSTimeInterval time = [[current timestamp] timeIntervalSinceDate:[lastLoc timestamp]];
+		if(time < timeThresholdInSeconds) {
+			NSLog(@"too recent: %f < %f\n", time, timeThresholdInSeconds);
+			//return;
+		}
+//		CLLocationDistance distance = [current distanceFromLocation:lastLoc];
+//		if(distance < distanceThresholdInMeters) {
+//			//NSLog(@"too close: %f < %f\n", distance, distanceThresholdInMeters);
+//			return;
+//        }
+        
+        // trigger alert
+        [self triggerNotification:@"location"];
+	}
+    [[InteractionData data] setLastLoc:current];
 }
 
 
@@ -222,14 +221,19 @@
 }
 
 - (void)startUpdatingLocation {
-	NSLog(@"startUpdatingLocation");
 	if ([CLLocationManager locationServicesEnabled]) {
-		if (locationManager == nil) {
-			locationManager = [[CLLocationManager alloc] init];
+		if (self.locationManager == nil) {
+            self.locationManager = [[CLLocationManager alloc] init];
+            self.locationManager.delegate = self;
+            self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
+            self.locationManager.distanceFilter = 100.0f;
 		}
-		locationManager.delegate = self;
-        [locationManager startUpdatingLocation];
-		[locationManager startMonitoringSignificantLocationChanges];
+        
+        if ([self.locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
+            [self.locationManager requestAlwaysAuthorization];
+        }
+        
+		[self.locationManager startMonitoringSignificantLocationChanges];
 	} else {
 		UIAlertView *servicesDisabledAlert = [[UIAlertView alloc] initWithTitle:@"Location Services Disabled" message:@"You currently have all location services for this device disabled. Please enable them in Settings." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
 		[servicesDisabledAlert show];
@@ -238,8 +242,9 @@
 
 - (void)stopUpdatingLocation {
 	NSLog(@"stopUpdatingLocation");
-	[locationManager stopMonitoringSignificantLocationChanges];
-	locationManager.delegate = nil;
+	[self.locationManager stopMonitoringSignificantLocationChanges];
+	self.locationManager.delegate = nil;
+    self.locationManager = nil;
 }
 
 - (void)triggerNotification:(NSString *)type {

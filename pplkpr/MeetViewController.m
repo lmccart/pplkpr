@@ -338,9 +338,11 @@
 
 - (void)sendReport:(NSString *)name withNumber:(NSString *)number withEmotion:(NSString *)emotion {
     
+    CLLocation *location = [[InteractionData data] lastLoc];
+    float lat = location ? location.coordinate.latitude : 0;
+    float lon = location ? location.coordinate.longitude : 0;
     
-    CLLocation *location = [[[InteractionData data] locationsArray] lastObject];
-    NSString *urlString = [NSString stringWithFormat:@"http://pplkpr-node-server.herokuapp.com/add_report?name=%@&number=%@&emotion=%@&value=0.5&location=%@", name, number, emotion, [location description]];
+    NSString *urlString = [NSString stringWithFormat:@"http://pplkpr-node-server.herokuapp.com/add_report?name=%@&number=%@&emotion=%@&value=0.5&lat=%f&lon=%f", name, number, emotion, lat, lon];
     NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
     
     NSLog(@"URL %@", urlString);

@@ -24,7 +24,7 @@
 
 #pragma mark location
 
-@property (retain, nonatomic) CLLocationManager *locationManager;
+@property (strong, nonatomic) CLLocationManager *locationManager;
 @property BOOL alertShowing;
 
 - (void) triggerNotification:(NSString *)type;

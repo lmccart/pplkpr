@@ -81,7 +81,7 @@
            [[NSArray alloc] initWithObjects:@"Friend them?", @"I friended them.", nil], @"friend", nil];
     
         
-		self.locationsArray = [[NSMutableArray alloc] init];
+        self.lastLoc = nil;
 		self.summary = [[NSDictionary alloc] init];
 		
 		self.jumpToPerson = nil;

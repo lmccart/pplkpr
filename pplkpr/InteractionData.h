@@ -7,11 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 #import "Person.h"
 
 @interface InteractionData : NSObject
 
-@property (retain) NSMutableArray *locationsArray;
+@property (retain) CLLocation *lastLoc;
 
 @property (retain) NSDictionary *summary;
 
