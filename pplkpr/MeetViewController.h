@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
 #import <MessageUI/MessageUI.h>
 #import "MLPAutoCompleteTextFieldDelegate.h"
 #import "PersonViewController.h"

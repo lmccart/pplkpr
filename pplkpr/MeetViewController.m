@@ -254,6 +254,8 @@
             [[IOSHandler data] sendText:p withMessage:[NSString stringWithFormat:@"I am on my way to meet you and I am feeling %@.", [self.emotion lowercaseString]] fromController:self];
         }
         
+        [self sendReport:self.whoName withNumber:self.whoNumber withEmotion:self.emotion];
+        
         // save last report date
         [[InteractionData data] saveLastReportDate:[NSDate date]];
         
@@ -332,6 +334,26 @@
             break;
     }
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)sendReport:(NSString *)name withNumber:(NSString *)number withEmotion:(NSString *)emotion {
+    
+    
+    CLLocation *location = [[[InteractionData data] locationsArray] lastObject];
+    NSString *urlString = [NSString stringWithFormat:@"http://pplkpr-node-server.herokuapp.com/add_report?name=%@&number=%@&emotion=%@&value=0.5&location=%@", name, number, emotion, [location description]];
+    NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
+    
+    NSLog(@"URL %@", urlString);
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:url];
+    [request setHTTPMethod:@"GET"];
+    
+    [NSURLConnection sendAsynchronousRequest:request
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                               if (error) { NSLog(@"error: %@", error); }
+                           }];
 }
 
 

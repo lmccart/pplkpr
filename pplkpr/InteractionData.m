@@ -138,7 +138,7 @@
     //NSLog(@"GETTING PERSON %@", fbid);
     
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"number == %@", number];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@ AND number == %@", name, number];
     [request setEntity:[NSEntityDescription entityForName:@"Person" inManagedObjectContext:_managedObjectContext]];
     [request setPredicate:predicate];
     
@@ -146,7 +146,6 @@
     NSArray *result = [_managedObjectContext executeFetchRequest:request error:&error];
     
     Person *person;
-    
     
     if (result == nil) {
         //NSLog(@"fetch result = nil");

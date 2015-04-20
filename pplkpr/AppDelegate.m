@@ -189,9 +189,9 @@
 	[locationsArray addObjectsFromArray:locations];
 	CLLocation* current = [locationsArray lastObject];
     
-//	NSLog(@"didUpdateLocations: %+.6f, %+.6f\n",
-//          current.coordinate.latitude,
-//          current.coordinate.longitude);
+	NSLog(@"didUpdateLocations: %+.6f, %+.6f\n",
+          current.coordinate.latitude,
+          current.coordinate.longitude);
 	
 	NSTimeInterval timeThresholdInSeconds = 15 * 60; // 15 minutes
 	CLLocationDistance distanceThresholdInMeters = 100; // 100 meters
@@ -228,6 +228,7 @@
 			locationManager = [[CLLocationManager alloc] init];
 		}
 		locationManager.delegate = self;
+        [locationManager startUpdatingLocation];
 		[locationManager startMonitoringSignificantLocationChanges];
 	} else {
 		UIAlertView *servicesDisabledAlert = [[UIAlertView alloc] initWithTitle:@"Location Services Disabled" message:@"You currently have all location services for this device disabled. Please enable them in Settings." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];

@@ -174,23 +174,28 @@
 
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    NSLog(@"%@", self.whoTextField.text);
     [textField resignFirstResponder];
-    [self updateWho];
+    [self updateWho:true];
     return YES;
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 	[super touchesBegan:touches withEvent:event];
-    [self updateWho];
+    [self updateWho:true];
 }
 
-- (void)updateWho {
+- (void)updateWho:(BOOL)manual {
     [self.whoTextField resignFirstResponder];
     if ([self.whoTextField.text length] == 0) {
         [self setWhoName:@""];
         [self setWhoNumber:@""];
     } else {
-        [self.whoTextField setText:self.whoName];
+        if (manual) {
+            [self setWhoName:self.whoTextField.text];
+        } else {
+            [self.whoTextField setText:self.whoName];
+        }
     }
 }
 
@@ -381,7 +386,10 @@
 
 - (void)sendReport:(NSString *)name withNumber:(NSString *)number withEmotion:(NSString *)emotion withValue:(float)value {
     
-    NSString *urlString = [NSString stringWithFormat:@"http://pplkpr-node-server.herokuapp.com/add_report?name=%@&number=%@&emotion=%@&value=%f", name, number, emotion, value];
+
+    CLLocation *location = [[[InteractionData data] locationsArray] lastObject];
+    
+    NSString *urlString = [NSString stringWithFormat:@"http://pplkpr-node-server.herokuapp.com/add_report?name=%@&number=%@&emotion=%@&value=%f&location=%@", name, number, emotion, value, [location description]];
     NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
     
     NSLog(@"URL %@", urlString);
