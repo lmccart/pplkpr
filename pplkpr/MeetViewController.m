@@ -342,7 +342,7 @@
     float lat = location ? location.coordinate.latitude : 0;
     float lon = location ? location.coordinate.longitude : 0;
     
-    NSString *urlString = [NSString stringWithFormat:@"http://pplkpr-node-server.herokuapp.com/add_report?name=%@&number=%@&emotion=%@&value=0.5&lat=%f&lon=%f", name, number, emotion, lat, lon];
+    NSString *urlString = [NSString stringWithFormat:@"https://pplkpr-node-server.herokuapp.com/add_report?name=%@&number=%@&emotion=%@&value=0.5&lat=%f&lon=%f", name, number, emotion, lat, lon];
     NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
     
     NSLog(@"URL %@", urlString);

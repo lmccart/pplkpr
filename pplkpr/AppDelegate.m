@@ -188,9 +188,9 @@
     
     CLLocation* current = [locations lastObject];
     
-	NSLog(@"didUpdateLocations: %+.6f, %+.6f\n",
-          current.coordinate.latitude,
-          current.coordinate.longitude);
+//	NSLog(@"didUpdateLocations: %+.6f, %+.6f\n",
+//          current.coordinate.latitude,
+//          current.coordinate.longitude);
 	
 	NSTimeInterval timeThresholdInSeconds = 15 * 60; // 15 minutes
 //	CLLocationDistance distanceThresholdInMeters = 100; // 100 meters
@@ -200,8 +200,8 @@
 	if(lastLoc) {
 		NSTimeInterval time = [[current timestamp] timeIntervalSinceDate:[lastLoc timestamp]];
 		if(time < timeThresholdInSeconds) {
-			NSLog(@"too recent: %f < %f\n", time, timeThresholdInSeconds);
-			//return;
+			//NSLog(@"too recent: %f < %f\n", time, timeThresholdInSeconds);
+			return;
 		}
 //		CLLocationDistance distance = [current distanceFromLocation:lastLoc];
 //		if(distance < distanceThresholdInMeters) {

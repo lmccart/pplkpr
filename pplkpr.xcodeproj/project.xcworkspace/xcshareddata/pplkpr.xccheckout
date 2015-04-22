@@ -7,20 +7,16 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>18D5A57C-51C7-4033-8AFA-FEEE3881617A</string>
 	<key>IDESourceControlProjectName</key>
-	<string>pplkpr</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>9B743EAFE885833D5C3FB79C6F033B93695A0689</key>
-		<string>github.com:kevinlawler/NSDate-TimeAgo.git</string>
 		<key>FDFBB37C4A586063685E8CBA879996EFE3D0E7B2</key>
 		<string>github.com:lmccart/pplkpr.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>pplkpr.xcodeproj</string>
+	<string>pplkpr.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>9B743EAFE885833D5C3FB79C6F033B93695A0689</key>
-		<string>../../pplkpr/NSDate-TimeAgo</string>
 		<key>FDFBB37C4A586063685E8CBA879996EFE3D0E7B2</key>
 		<string>../..</string>
 	</dict>
@@ -32,14 +28,6 @@
 	<string>FDFBB37C4A586063685E8CBA879996EFE3D0E7B2</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
-		<dict>
-			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.git</string>
-			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>9B743EAFE885833D5C3FB79C6F033B93695A0689</string>
-			<key>IDESourceControlWCCName</key>
-			<string>NSDate-TimeAgo</string>
-		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>

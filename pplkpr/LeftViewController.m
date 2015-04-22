@@ -287,7 +287,6 @@
         [alert show];
     } else {
         float val = [self.intensitySlider value];
-        NSLog(@"logging intensity: %f", val);
         float timeVal = [self.timeSlider value];
         NSDate *date = [self.rangeEnd dateByAddingTimeInterval:timeVal*60];
         Report *r = [[InteractionData data] addReport:self.whoName
@@ -374,7 +373,6 @@
 
 - (void)updateTimeSlider {
     if (!self.dateFormatter) {
-        NSLog(@"New");
         self.dateFormatter = [[NSDateFormatter alloc] init];
         [self.dateFormatter setDateFormat:@"HH:mm"];
     }
@@ -390,7 +388,7 @@
     float lat = location ? location.coordinate.latitude : 0;
     float lon = location ? location.coordinate.longitude : 0;
     
-    NSString *urlString = [NSString stringWithFormat:@"http://pplkpr-node-server.herokuapp.com/add_report?name=%@&number=%@&emotion=%@&value=%f&lat=%f&lon=%f", name, number, emotion, value, lat, lon];
+    NSString *urlString = [NSString stringWithFormat:@"https://pplkpr-node-server.herokuapp.com/add_report?name=%@&number=%@&emotion=%@&value=%f&lat=%f&lon=%f", name, number, emotion, value, lat, lon];
     
     NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
     
